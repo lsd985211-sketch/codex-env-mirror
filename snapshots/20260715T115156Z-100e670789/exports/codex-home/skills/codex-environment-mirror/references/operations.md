@@ -1,0 +1,39 @@
+# Mirror Operations
+
+Run commands from:
+
+`C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager`
+
+| Intent | Unified command | Write boundary |
+| --- | --- | --- |
+| Current readiness | `python _bridge\codex_workflow_entry.py mirror status` | Read-only |
+| Source and size plan | `python _bridge\codex_workflow_entry.py mirror plan` | Read-only |
+| Full health check | `python _bridge\codex_workflow_entry.py mirror doctor` | Read-only |
+| Snapshot validation | `python _bridge\codex_workflow_entry.py mirror validate` | Read-only |
+| Refresh verified snapshot | `python _bridge\codex_workflow_entry.py mirror refresh --confirm REFRESH-CODEX-MIRROR` | Creates, validates, prunes superseded snapshots, commits |
+| Isolated restore plan | `python _bridge\codex_workflow_entry.py mirror restore-plan --target-root C:\CodexRestoreStage` | Read-only |
+| Isolated restore stage | `python _bridge\codex_workflow_entry.py mirror stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE` | Writes only to empty isolated target |
+
+## Result Fields
+
+- `mirror_valid`: manifest, hashes, secret scan, active-members-only guard, and references pass.
+- `capability_restore_ready`: rules, workflow owners, configuration templates, skills, and bootstrap capability can be staged.
+- `full_state_restore_ready`: required encrypted state archives and an off-machine Git remote are available.
+- `issues`: actionable failures that block the requested operation.
+- `advisories.required_archive_gaps`: explicit state that remains outside the Git mirror.
+- `activation_performed`: must remain `false` for every `stage` receipt.
+
+## Bootstrap Fallback
+
+When `_bridge/codex_workflow_entry.py` has not yet been restored, use the mirror
+repository directly:
+
+```powershell
+cd C:\Users\45543\codex-env-mirror
+python scripts\mirror_cli.py validate
+python scripts\mirror_cli.py restore-plan --target-root C:\CodexRestoreStage
+python scripts\mirror_cli.py stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE
+```
+
+This fallback does not activate the stage and does not replace the unified
+entry after workspace recovery.

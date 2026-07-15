@@ -1,7 +1,7 @@
 {
   "schema": "local-pmb-memory.snapshot.v1",
   "ok": true,
-  "generated_at": "2026-07-15T11:37:48.415108+00:00",
+  "generated_at": "2026-07-15T11:52:25.100974+00:00",
   "root": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
   "pmb": {
     "home": "C:\\Users\\45543\\Desktop\\CODEX~1\\memory\\pmb\\data",
@@ -17,7 +17,7 @@
       "ok": true,
       "running": true,
       "warm": true,
-      "status_preview": "Daemon running · pid 13028 · port 8765 · uptime 37min\n  v1.2.2 · workspace mcsmanager · warm=True",
+      "status_preview": "Daemon running · pid 13028 · port 8765 · uptime 51min\n  v1.2.2 · workspace mcsmanager · warm=True",
       "raw": {
         "ok": true,
         "returncode": 0,
@@ -26,7 +26,7 @@
           "daemon",
           "status"
         ],
-        "stdout": "Daemon running · pid 13028 · port 8765 · uptime 37min\n  v1.2.2 · workspace mcsmanager · warm=True\n",
+        "stdout": "Daemon running · pid 13028 · port 8765 · uptime 51min\n  v1.2.2 · workspace mcsmanager · warm=True\n",
         "stderr": ""
       },
       "policy": {
@@ -49,7 +49,7 @@
           "name": "pythonw.exe",
           "command_line": "\"C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe\" -m pmb.cli daemon run --port 8765 --host 127.0.0.1",
           "start_time": "2026-07-15T19:00:51.7889392+08:00",
-          "working_set_mb": 15.9,
+          "working_set_mb": 16,
           "port": 8765
         }
       ],
@@ -74,7 +74,7 @@
             "name": "pythonw.exe",
             "command_line": "\"C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe\" -m pmb.cli daemon run --port 8765 --host 127.0.0.1",
             "start_time": "2026-07-15T19:00:51.7889392+08:00",
-            "working_set_mb": 15.9
+            "working_set_mb": 16
           }
         ],
         "stderr_preview": ""
@@ -609,7 +609,7 @@
       {
         "root": "C:\\Users\\45543\\.codex\\skills",
         "exists": true,
-        "skill_count": 151
+        "skill_count": 152
       },
       {
         "root": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\.codex\\skills",

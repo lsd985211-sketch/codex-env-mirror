@@ -22,7 +22,6 @@
         "niao "
       ],
       "019f1c72-03c3-7032-aa56-dff625d7c720": [
-        "继续",
         "？",
         "除了规范的架构优化，还要针对规则内容与所属分层的关系，进行调整，避免出现规则虽然有内容，但是并没有在工作中真正发挥作用，引导codex走向正确合理的方向",
         "继续",
@@ -41,7 +40,8 @@
         "好，你来结合本地具体情况，给出全面完整的镜像计划吧",
         "<codex_delegation>\n  <source>mobile-openclaw-bridge</source>\n  <input>\nprompt_schema=mobile-openclaw-final-reply/v2\nMobile bridge received 1 new message(s). Process them in order:\nmobile_batch_id=mobile-openclaw-20260715T102249224716-ae7b98c48210\nrules={\"ack_first\":true,\"ack_means_received_only\":true,\"ack_must_continue\":true,\"ack_only_is_protocol_failure\":true,\"result_after_work_only\":true,\"result_markers_only\":true,\"mobile_equals_desktop_quality\":true,\"permission_table\":\"_bridge\\\\mobile_openclaw_bridge\\\\permission_table.json\",\"ordinary_user_deny_beyond_profile\":true,\"admin_superuser_audit_risk_controls\":true}\nprotocol task_id=c4fe11dfe0b6 ack=[[mobile_ack:c4fe11dfe0b6:608ef75c9c3c]] result_begin=[[mobile_result_begin:c4fe11dfe0b6:1d88f4d47452]] result_end=[[mobile_result_end:c4fe11dfe0b6:1d88f4d47452]]\noutput_contract task_id=c4fe11dfe0b6 first=ack_then_continue final=exact_begin+weixin_text+exact_end forbid=outside|placeholder|explain|missing\nlegacy_required_result_markers=[[mobile_task_id:c4fe11dfe0b6]]\nrequired_result_markers=[[mobile_task_id:c4fe11dfe0b6]]\nsupplement_contract={\"consume\":\"incorporate_all_applicable_items_then_ack_each\",\"fail_closed\":true,\"fallback\":\"supplement-fallback-v1\",\"fallback_on\":[\"transport_closed\",\"tool_unbound\",\"unsupported_call\",\"unknown_tool\",\"dispatch_failure\"],\"required\":true,\"result_scope\":\"active_task_markers_only\",\"thread_id\":\"019eca51-3ce9-76e2-9795-83f3af451f3a\",\"tools\":[\"bridge.get_pending_batch\",\"bridge.ack_message\"],\"when\":[\"after_ack_before_work\",\"before_final_result\"]}\n1. task_id=c4fe11dfe0b6 risk=L1 from=o9cq80_7_t7OGRYescsBdqz_4YrI@im.wechat command=/ask text=汇报目前工作状况\n   permission={\"account_id\": \"primary\", \"admin_superuser\": true, \"allowed_for_ask\": true, \"auth\": \"verified\", \"generated_artifact_dir\": \"\", \"ordinary_user_must_refuse_missing_action\": false, \"permission_profile\": \"admin\", \"permission_table_ref\": \"mobile-weixin-bridge/permission_table:v1\", \"requires_confirmation_for_l3\": false, \"risk_level\": \"L1\", \"schema\": \"mobile-permission-context-compact/v1\", \"temporary_capabilities\": [], \"unknown_action_policy\": \"allow_audit\"}\n  </input>\n</codex_delegation>",
         "删除它，从新创建",
-        "退役成员和墓碑不应该再放入镜像"
+        "退役成员和墓碑不应该再放入镜像",
+        "将镜像流程格式化，设置统一命令入口，并且创建相应技能"
       ],
       "019f4b02-4562-7f83-a1c9-e0154223a2f8": [
         "你好",

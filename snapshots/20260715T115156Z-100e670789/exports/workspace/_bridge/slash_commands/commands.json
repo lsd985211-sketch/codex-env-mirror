@@ -1,7 +1,7 @@
 {
   "schema": "custom_slash_commands.v1",
-  "version": 7,
-  "updated_at": "2026-07-04T13:03:05.598817+00:00",
+  "version": 8,
+  "updated_at": "2026-07-15T11:51:04.905003+00:00",
   "commands": [
     {
       "name": "workflow-router",
@@ -514,6 +514,22 @@
         "boundary"
       ],
       "template": "Govern slash template change intent={{intent}} name={{name}} category={{category}} boundary={{boundary}}. First run slash_command_governance.py snapshot and validate. Draft a proposal with name, aliases, category, description, target_module, output_contract, variables, and template text. Confirm the rendered text is only a checklist/prompt and does not execute commands or bypass approval. Apply only through slash_command_governance.py apply --confirm-apply after routed backup, then run validate plus render-smoke and update docs or rules only if routing changed."
+    },
+    {
+      "name": "codex-environment-mirror",
+      "aliases": [
+        "environment-mirror",
+        "recovery-mirror"
+      ],
+      "category": "maintenance",
+      "description": "Render the governed Codex environment mirror status, refresh, validation, and isolated recovery flow.",
+      "target_module": "codex_environment_mirror",
+      "output_contract": "codex_environment_mirror_plan",
+      "variables": [
+        "action",
+        "target_root"
+      ],
+      "template": "Operate the Codex environment mirror action={{action}} target_root={{target_root}}. Load the codex-environment-mirror skill, then use python _bridge\\\\codex_workflow_entry.py mirror as the only normal entry. Start with status; use plan before uncertain refreshes; require REFRESH-CODEX-MIRROR for refresh and STAGE-RESTORE for isolated stage. Consume structured readiness and hash results. Never activate staged state, mirror secrets/runtime databases, or bypass active-root and owner boundaries."
     }
   ]
 }

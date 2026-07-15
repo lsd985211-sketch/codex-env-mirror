@@ -23,6 +23,24 @@ working environment on this machine. It is not a live configuration authority.
 
 ## Commands
 
+Use the workspace workflow facade as the normal entrypoint:
+
+```powershell
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror status
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror plan
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror refresh --confirm REFRESH-CODEX-MIRROR
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror doctor
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror restore-plan --target-root C:\CodexRestoreStage
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE
+```
+
+`refresh` is the standard capture path: plan, create, validate, prune the
+superseded local snapshot, and commit the verified result. `stage` remains
+isolated and never activates recovered state.
+
+The underlying owner commands remain available for bootstrap recovery when the
+workspace facade has not yet been restored:
+
 ```powershell
 python scripts\mirror_cli.py plan
 python scripts\mirror_cli.py snapshot --apply
@@ -48,4 +66,3 @@ environment's owners after backup and validation.
 The repository may be mirror-valid before full-state readiness is achieved. A
 missing archive must be reported explicitly and can never be represented as a
 successful full restore.
-

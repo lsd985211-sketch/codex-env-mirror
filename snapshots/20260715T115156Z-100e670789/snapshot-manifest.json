@@ -1,7 +1,7 @@
 {
   "schema": "codex_mirror.snapshot_manifest.v1",
-  "snapshot_id": "20260715T113721Z-61608f4f4e",
-  "created_at": "2026-07-15T11:37:51.692157+00:00",
+  "snapshot_id": "20260715T115156Z-100e670789",
+  "created_at": "2026-07-15T11:52:28.785209+00:00",
   "authority_mode": "derived_snapshot",
   "source_manifest": "manifests/source-authorities.json",
   "governance_hashes": {
@@ -11,7 +11,7 @@
     "manifests/secret-requirements.json": "0f7ce47fc6005d584dad46b1982ef65fad40e665f4661096658a91e983fb0d8f",
     "manifests/source-authorities.json": "71e0d6bc33687f16af9e1d6ebd7309145ad6ebbe9f602bf0768f6844c71cebe5",
     "manifests/verification-matrix.json": "31b4be5bd60ad6dbd3b0819b9ec3920979e95762e517a037f0a92aceba911ca1",
-    "README.md": "043f72f5b81f247a59a26aead4d65affcfe8f230032b391a9566340bd2ba7211",
+    "README.md": "05ce4ba9b4321f07c3c86d46779c9c3d359c8ce2e106baac04ac705fbc99f255",
     "BOOTSTRAP.md": "5bc7d036c535c5ceb48af0273864010648407831fb068b4e1c1317e1e8de58b3",
     "MIRROR_POLICY.md": "a5ae69d741dd578556d2ff149dd9d7eab2431b38e1c57d91a6c2bb132ea348d4",
     "RESTORE.md": "1bc9e399174f8773eaef9ea937e525c1f44bf56696318dd79b57bff295df8159",
@@ -92,8 +92,8 @@
       "source_path": "C:\\Users\\45543\\.codex\\.codex-global-state.json",
       "snapshot_path": "exports/codex-home/codex-global-state.template.json",
       "restore_template": "${CODEX_HOME}\\.codex-global-state.json",
-      "sha256": "91311dc60ff182d81fb12dce7c1f91b8d8a6dcab5ab44c34d5a51bf695f663cd",
-      "bytes": 26879,
+      "sha256": "fabbf13de0c9f853c3310ed2bb6c63cedc62b6a0631aa8846f1a95b501b921b9",
+      "bytes": 26951,
       "owner": "codex_state_repair",
       "classification": "configuration_template",
       "mode": "redact_json"
@@ -5236,6 +5236,39 @@
       "mode": "copy"
     },
     {
+      "asset_id": "codex-skills:codex-environment-mirror/SKILL.md",
+      "source_path": "C:\\Users\\45543\\.codex\\skills\\codex-environment-mirror\\SKILL.md",
+      "snapshot_path": "exports/codex-home/skills/codex-environment-mirror/SKILL.md",
+      "restore_template": "${CODEX_HOME}\\skills\\codex-environment-mirror\\SKILL.md",
+      "sha256": "67ce13a104f1ebb0a364bdc9b611048e0669bf8aac1f1bb588d963c9844885ef",
+      "bytes": 3379,
+      "owner": "skill_lifecycle_governance",
+      "classification": "authority_export",
+      "mode": "copy"
+    },
+    {
+      "asset_id": "codex-skills:codex-environment-mirror/agents/openai.yaml",
+      "source_path": "C:\\Users\\45543\\.codex\\skills\\codex-environment-mirror\\agents\\openai.yaml",
+      "snapshot_path": "exports/codex-home/skills/codex-environment-mirror/agents/openai.yaml",
+      "restore_template": "${CODEX_HOME}\\skills\\codex-environment-mirror\\agents\\openai.yaml",
+      "sha256": "a9e60a4d090acf8c3d9ce1a832494971fd31b42385d91406debb79b4e4d2783b",
+      "bytes": 249,
+      "owner": "skill_lifecycle_governance",
+      "classification": "authority_export",
+      "mode": "copy"
+    },
+    {
+      "asset_id": "codex-skills:codex-environment-mirror/references/operations.md",
+      "source_path": "C:\\Users\\45543\\.codex\\skills\\codex-environment-mirror\\references\\operations.md",
+      "snapshot_path": "exports/codex-home/skills/codex-environment-mirror/references/operations.md",
+      "restore_template": "${CODEX_HOME}\\skills\\codex-environment-mirror\\references\\operations.md",
+      "sha256": "6cf6a4b9b6518020beda8291fee67b5f6deafb6dc86c193a27f26c3d43f5da12",
+      "bytes": 2117,
+      "owner": "skill_lifecycle_governance",
+      "classification": "authority_export",
+      "mode": "copy"
+    },
+    {
       "asset_id": "codex-skills:commercial-brief/SKILL.md",
       "source_path": "C:\\Users\\45543\\.codex\\skills\\commercial-brief\\SKILL.md",
       "snapshot_path": "exports/codex-home/skills/commercial-brief/SKILL.md",
@@ -9999,6 +10032,28 @@
       "mode": "copy"
     },
     {
+      "asset_id": "workspace-bridge-source:codex_environment_mirror.py",
+      "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_environment_mirror.py",
+      "snapshot_path": "exports/workspace/_bridge/codex_environment_mirror.py",
+      "restore_template": "${WORKSPACE_ROOT}\\_bridge\\codex_environment_mirror.py",
+      "sha256": "95641d2842d06fe9650e7a6388bf027fe148d539e15d43b2e270a413332ef744",
+      "bytes": 11322,
+      "owner": "system_membership",
+      "classification": "authority_export",
+      "mode": "copy"
+    },
+    {
+      "asset_id": "workspace-bridge-source:codex_environment_mirror_tests.py",
+      "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_environment_mirror_tests.py",
+      "snapshot_path": "exports/workspace/_bridge/codex_environment_mirror_tests.py",
+      "restore_template": "${WORKSPACE_ROOT}\\_bridge\\codex_environment_mirror_tests.py",
+      "sha256": "5d367e8b9f87cb0613c6f6617fa546381a96ab40548a72037ecac98b6c558134",
+      "bytes": 1811,
+      "owner": "system_membership",
+      "classification": "authority_export",
+      "mode": "copy"
+    },
+    {
       "asset_id": "workspace-bridge-source:codex_model_provider_tests.py",
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_model_provider_tests.py",
       "snapshot_path": "exports/workspace/_bridge/codex_model_provider_tests.py",
@@ -10135,8 +10190,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_workflow_entry.py",
       "snapshot_path": "exports/workspace/_bridge/codex_workflow_entry.py",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\codex_workflow_entry.py",
-      "sha256": "6ba3c73e659e10c901ad09d150dcc1a3ab81feac0253f75e88fe7d1ae21ff30c",
-      "bytes": 49634,
+      "sha256": "3c485a58ed2a66e16ba792bc1c3e0202213941b6c5114330a2a66deeb0a921ab",
+      "bytes": 50541,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -13138,8 +13193,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\docs\\maintenance_surface_map.md",
       "snapshot_path": "exports/workspace/_bridge/docs/maintenance_surface_map.md",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\docs\\maintenance_surface_map.md",
-      "sha256": "8a320cb7ca099c9696ee317671196b2c44e4e54bc94ad4ed10ca251b869a7d55",
-      "bytes": 66404,
+      "sha256": "48c4c171e86e269cd43c30cc1be6eefbe51f2da7f5aa6c6cc8ba720e1d71d8c0",
+      "bytes": 67018,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -18726,8 +18781,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\slash_commands\\commands.json",
       "snapshot_path": "exports/workspace/_bridge/slash_commands/commands.json",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\slash_commands\\commands.json",
-      "sha256": "17235f69d3ac79b8e4dcbf3d8a4718d4b6c23d70849f173278317d3338af258d",
-      "bytes": 25948,
+      "sha256": "4e90218d0e7a8a19c96eb8876c0136c8914aea847bac01b74101057095826c7d",
+      "bytes": 26962,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -19903,7 +19958,7 @@
       "source_path": "",
       "snapshot_path": "exports/derived/system-membership.json",
       "restore_template": "",
-      "sha256": "4157459103fb974b9aa35b86368fad9901e968b465e8c39d52f1e6598a65076c",
+      "sha256": "1bff8c9b12ee63d84c8396296fd819bb9abe8c9295d76ca8182de44b0e37b66a",
       "bytes": 204542,
       "owner": "system_membership",
       "classification": "authority_export",
@@ -19914,7 +19969,7 @@
       "source_path": "",
       "snapshot_path": "exports/derived/rule-governance.json",
       "restore_template": "",
-      "sha256": "9850c6cb9097b68cba842b8408051aa421fe7dcfa2b9e918e731520897f8018e",
+      "sha256": "94e5dd1e913da28157e19b51ab9aa38eb74dbdace1e041400d65f2696f209f31",
       "bytes": 25867,
       "owner": "rule_governance",
       "classification": "authority_export",
@@ -19925,8 +19980,8 @@
       "source_path": "",
       "snapshot_path": "exports/derived/maintenance-capabilities.json",
       "restore_template": "",
-      "sha256": "cbb8a39b4a33981cc48faa0b00cca234af4e74dacb6493b20858dbbdfb601774",
-      "bytes": 672,
+      "sha256": "142748109bca91e41d7529d4d57a03fba839f0bf8f1973b09578a6d8ac287f6c",
+      "bytes": 673,
       "owner": "maintenance_capability_registry",
       "classification": "authority_export",
       "mode": "command_json"
@@ -19947,8 +20002,8 @@
       "source_path": "",
       "snapshot_path": "exports/derived/memory-snapshot.json",
       "restore_template": "",
-      "sha256": "156f16261d633d793bfae9137987dcb17c4ecb12ba153618a37ef405382cab25",
-      "bytes": 26577,
+      "sha256": "c4897f6171d91dcd2417a9f5f978b2d43e718e14a0b6c02c79f1288e475a04f1",
+      "bytes": 26573,
       "owner": "memory_governance",
       "classification": "authority_export",
       "mode": "command_json+inactive_member_sanitized"
@@ -19958,7 +20013,7 @@
       "source_path": "",
       "snapshot_path": "exports/derived/secret-vault-metadata.json",
       "restore_template": "",
-      "sha256": "e2f2affc13df8769409e2c727eb1b2588ed1acbd5fab4d8cceae50e746ac4004",
+      "sha256": "e6296e747767e9ff532c8a24256b0d5f1a5c178e1d82d2927cc8c8890133662e",
       "bytes": 1805,
       "owner": "secret_vault",
       "classification": "configuration_template",
@@ -19991,7 +20046,7 @@
       "source_path": "",
       "snapshot_path": "exports/runtime/runtime-versions.json",
       "restore_template": "",
-      "sha256": "2a7ca0d66af108e15bb628234943bdf6a6817f2aa7c0b4b4ea2a1416f757f9b4",
+      "sha256": "9a0bcf3c7b0ea59292721d40dc1be690dc12889908411a99f7582da507510d67",
       "bytes": 647,
       "owner": "runtime",
       "classification": "bootstrap_source",
@@ -20150,8 +20205,8 @@
     ]
   },
   "summary": {
-    "asset_count": 1816,
-    "total_bytes": 15830530,
+    "asset_count": 1821,
+    "total_bytes": 15852012,
     "required_sources_missing": []
   }
 }

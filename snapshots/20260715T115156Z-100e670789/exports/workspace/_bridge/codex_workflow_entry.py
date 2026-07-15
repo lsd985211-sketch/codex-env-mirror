@@ -20,6 +20,7 @@ from maintenance_capability_registry import build_index as build_maintenance_ind
 from maintenance_capability_registry import doctor as maintenance_registry_doctor
 from maintenance_capability_registry import metrics as maintenance_registry_metrics
 from maintenance_capability_registry import query_registry as query_maintenance_registry
+from codex_environment_mirror import execute as execute_mirror_command
 from workflow_orchestrator import build_plan
 from workflow_owner_facade import (
     action_from_run_ref,
@@ -932,6 +933,17 @@ def main(argv: list[str] | None = None) -> int:
     maintenance_run.add_argument("--action", required=True)
     maintenance_run.add_argument("--cli-arg", action="append", default=[])
     maintenance_run.add_argument("--timeout", type=int, default=300)
+    mirror = sub.add_parser("mirror")
+    mirror_sub = mirror.add_subparsers(dest="mirror_action", required=True)
+    for name in ("status", "plan", "doctor", "validate"):
+        mirror_sub.add_parser(name)
+    mirror_refresh = mirror_sub.add_parser("refresh")
+    mirror_refresh.add_argument("--confirm", default="")
+    mirror_restore = mirror_sub.add_parser("restore-plan")
+    mirror_restore.add_argument("--target-root", required=True)
+    mirror_stage = mirror_sub.add_parser("stage")
+    mirror_stage.add_argument("--target-root", required=True)
+    mirror_stage.add_argument("--confirm", default="")
     args = parser.parse_args(argv)
     if args.command == "plan":
         payload = compact_plan(
@@ -1048,6 +1060,12 @@ def main(argv: list[str] | None = None) -> int:
             prevention_guard=args.prevention_guard,
             repeated_manual_step=args.repeated_manual_step,
             save=args.save,
+        )
+    elif args.command == "mirror":
+        payload = execute_mirror_command(
+            args.mirror_action,
+            target_root=getattr(args, "target_root", ""),
+            confirm=getattr(args, "confirm", ""),
         )
     elif args.command == "maintenance":
         if args.maintenance_command == "catalog":

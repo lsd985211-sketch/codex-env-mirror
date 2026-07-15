@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""Unified owner adapter for the external Codex recovery mirror.
+
+The external mirror CLI remains the implementation authority. This adapter
+standardizes lifecycle commands, confirmations, receipts, retention, and Git
+commit behavior for the workspace workflow facade.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import shutil
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+
+REFRESH_CONFIRMATION = "REFRESH-CODEX-MIRROR"
+STAGE_CONFIRMATION = "STAGE-RESTORE"
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def mirror_root() -> Path:
+    configured = os.environ.get("CODEX_ENV_MIRROR_ROOT", "").strip()
+    return Path(configured).expanduser().resolve() if configured else (Path.home() / "codex-env-mirror").resolve()
+
+
+def mirror_cli() -> Path:
+    return mirror_root() / "scripts" / "mirror_cli.py"
+
+
+def print_json(value: Any) -> None:
+    print(json.dumps(value, ensure_ascii=False, indent=2))
+
+
+def run_json(command: list[str], *, timeout: int = 300) -> dict[str, Any]:
+    try:
+        completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return {"ok": False, "reason": f"{type(exc).__name__}:{exc}"}
+    try:
+        payload = json.loads(completed.stdout.lstrip("\ufeff"))
+    except json.JSONDecodeError:
+        return {
+            "ok": False,
+            "reason": "owner_output_not_json",
+            "returncode": completed.returncode,
+            "stderr_tail": completed.stderr[-2000:],
+            "stdout_tail": completed.stdout[-2000:],
+        }
+    if completed.returncode != 0 and payload.get("ok") is not False:
+        payload = {**payload, "ok": False, "returncode": completed.returncode}
+    return payload
+
+
+def run_mirror(args: list[str], *, timeout: int = 300) -> dict[str, Any]:
+    cli = mirror_cli()
+    if not cli.is_file():
+        return {"ok": False, "reason": "mirror_cli_missing", "path": str(cli)}
+    return run_json([sys.executable, str(cli), *args], timeout=timeout)
+
+
+def git_result(args: list[str], *, timeout: int = 120) -> dict[str, Any]:
+    root = mirror_root()
+    try:
+        completed = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return {"ok": False, "reason": f"{type(exc).__name__}:{exc}"}
+    return {
+        "ok": completed.returncode == 0,
+        "returncode": completed.returncode,
+        "stdout": completed.stdout.strip(),
+        "stderr_tail": completed.stderr[-2000:],
+    }
+
+
+def latest_snapshot_id() -> str:
+    latest = mirror_root() / "snapshots" / "latest.json"
+    if not latest.is_file():
+        return ""
+    try:
+        return str(json.loads(latest.read_text(encoding="utf-8-sig")).get("snapshot_id") or "")
+    except (OSError, json.JSONDecodeError):
+        return ""
+
+
+def status() -> dict[str, Any]:
+    root = mirror_root()
+    validation = run_mirror(["validate"], timeout=180)
+    git_status = git_result(["status", "--short"]) if (root / ".git").is_dir() else {"ok": False, "reason": "git_not_initialized"}
+    git_head = git_result(["rev-parse", "--short", "HEAD"]) if git_status.get("ok") else {"ok": False}
+    remotes = git_result(["remote"]) if git_status.get("ok") else {"ok": False}
+    snapshots = sorted(path.name for path in (root / "snapshots").iterdir() if path.is_dir()) if (root / "snapshots").is_dir() else []
+    return {
+        "schema": "codex_environment_mirror.status.v1",
+        "ok": bool(validation.get("ok")) and bool(git_status.get("ok")),
+        "generated_at": now_iso(),
+        "mirror_root": str(root),
+        "latest_snapshot_id": latest_snapshot_id(),
+        "snapshot_count": len(snapshots),
+        "git": {
+            "initialized": (root / ".git").is_dir(),
+            "clean": git_status.get("stdout", "") == "",
+            "head": git_head.get("stdout", ""),
+            "remotes": [item for item in remotes.get("stdout", "").splitlines() if item],
+        },
+        "readiness": {
+            "mirror_valid": validation.get("mirror_valid", False),
+            "capability_restore_ready": validation.get("capability_restore_ready", False),
+            "full_state_restore_ready": validation.get("full_state_restore_ready", False),
+        },
+        "issues": validation.get("issues", []),
+        "advisories": validation.get("advisories", {}),
+    }
+
+
+def doctor() -> dict[str, Any]:
+    root = mirror_root()
+    tests = subprocess.run(
+        [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-q"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=180,
+    ) if root.is_dir() else None
+    state = status()
+    test_ok = bool(tests and tests.returncode == 0)
+    issues = list(state.get("issues", []))
+    if not test_ok:
+        issues.append({"code": "mirror_unit_tests_failed", "detail": (tests.stderr[-2000:] if tests else "mirror_root_missing")})
+    return {
+        "schema": "codex_environment_mirror.doctor.v1",
+        "ok": bool(state.get("ok")) and test_ok,
+        "generated_at": now_iso(),
+        "status": state,
+        "tests": {"ok": test_ok, "summary": (tests.stderr or tests.stdout).strip()[-2000:] if tests else "not_run"},
+        "issues": issues,
+    }
+
+
+def prune_superseded_snapshots(keep_snapshot_id: str) -> list[str]:
+    root = mirror_root()
+    snapshot_root = (root / "snapshots").resolve()
+    if not snapshot_root.is_dir() or not keep_snapshot_id:
+        return []
+    removed: list[str] = []
+    for path in snapshot_root.iterdir():
+        if not path.is_dir() or path.name == keep_snapshot_id:
+            continue
+        target = path.resolve()
+        try:
+            target.relative_to(snapshot_root)
+        except ValueError as exc:
+            raise RuntimeError(f"snapshot_path_escaped:{target}") from exc
+        shutil.rmtree(target)
+        removed.append(path.name)
+    return sorted(removed)
+
+
+def commit_refresh(snapshot_id: str) -> dict[str, Any]:
+    add = git_result(["add", "-A"])
+    if not add.get("ok"):
+        return {"ok": False, "reason": "git_add_failed", "detail": add}
+    staged = git_result(["diff", "--cached", "--quiet"])
+    if staged.get("returncode") == 0:
+        head = git_result(["rev-parse", "--short", "HEAD"])
+        return {"ok": True, "committed": False, "head": head.get("stdout", "")}
+    commit = git_result(["commit", "-m", f"Refresh Codex environment mirror {snapshot_id}"], timeout=300)
+    if not commit.get("ok"):
+        return {"ok": False, "reason": "git_commit_failed", "detail": commit}
+    head = git_result(["rev-parse", "--short", "HEAD"])
+    return {"ok": True, "committed": True, "head": head.get("stdout", "")}
+
+
+def refresh(confirm: str) -> dict[str, Any]:
+    if confirm != REFRESH_CONFIRMATION:
+        return {
+            "schema": "codex_environment_mirror.refresh.v1",
+            "ok": False,
+            "reason": "confirmation_required",
+            "required_confirmation": REFRESH_CONFIRMATION,
+        }
+    plan = run_mirror(["plan"], timeout=180)
+    if not plan.get("ok"):
+        return {"schema": "codex_environment_mirror.refresh.v1", "ok": False, "phase": "plan", "result": plan}
+    snapshot = run_mirror(["snapshot", "--apply"], timeout=600)
+    if not snapshot.get("ok"):
+        return {"schema": "codex_environment_mirror.refresh.v1", "ok": False, "phase": "snapshot", "result": snapshot}
+    validation = run_mirror(["validate"], timeout=300)
+    if not validation.get("ok"):
+        return {"schema": "codex_environment_mirror.refresh.v1", "ok": False, "phase": "validate", "snapshot": snapshot, "validation": validation}
+    snapshot_id = str(snapshot.get("snapshot_id") or latest_snapshot_id())
+    removed = prune_superseded_snapshots(snapshot_id)
+    commit = commit_refresh(snapshot_id)
+    if not commit.get("ok"):
+        return {"schema": "codex_environment_mirror.refresh.v1", "ok": False, "phase": "commit", "snapshot_id": snapshot_id, "removed_snapshots": removed, "commit": commit}
+    return {
+        "schema": "codex_environment_mirror.refresh.v1",
+        "ok": True,
+        "generated_at": now_iso(),
+        "snapshot_id": snapshot_id,
+        "removed_snapshots": removed,
+        "commit": commit,
+        "readiness": {
+            "mirror_valid": validation.get("mirror_valid", False),
+            "capability_restore_ready": validation.get("capability_restore_ready", False),
+            "full_state_restore_ready": validation.get("full_state_restore_ready", False),
+        },
+        "advisories": validation.get("advisories", {}),
+    }
+
+
+def execute(action: str, *, target_root: str = "", confirm: str = "") -> dict[str, Any]:
+    if action == "status":
+        return status()
+    if action == "doctor":
+        return doctor()
+    if action == "plan":
+        return {"schema": "codex_environment_mirror.plan.v1", **run_mirror(["plan"], timeout=180)}
+    if action == "validate":
+        return {"schema": "codex_environment_mirror.validate.v1", **run_mirror(["validate"], timeout=300)}
+    if action == "refresh":
+        return refresh(confirm)
+    if action == "restore-plan":
+        if not target_root:
+            return {"schema": "codex_environment_mirror.restore_plan.v1", "ok": False, "reason": "target_root_required"}
+        return {"schema": "codex_environment_mirror.restore_plan.v1", **run_mirror(["restore-plan", "--target-root", target_root], timeout=300)}
+    if action == "stage":
+        if not target_root:
+            return {"schema": "codex_environment_mirror.stage.v1", "ok": False, "reason": "target_root_required"}
+        if confirm != STAGE_CONFIRMATION:
+            return {"schema": "codex_environment_mirror.stage.v1", "ok": False, "reason": "confirmation_required", "required_confirmation": STAGE_CONFIRMATION}
+        return {"schema": "codex_environment_mirror.stage.v1", **run_mirror(["stage", "--target-root", target_root, "--confirm", STAGE_CONFIRMATION], timeout=600)}
+    return {"schema": "codex_environment_mirror.command.v1", "ok": False, "reason": "unknown_action", "action": action}
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Unified Codex environment mirror owner adapter")
+    sub = parser.add_subparsers(dest="action", required=True)
+    for name in ("status", "plan", "doctor", "validate"):
+        sub.add_parser(name)
+    refresh_parser = sub.add_parser("refresh")
+    refresh_parser.add_argument("--confirm", default="")
+    restore_parser = sub.add_parser("restore-plan")
+    restore_parser.add_argument("--target-root", required=True)
+    stage_parser = sub.add_parser("stage")
+    stage_parser.add_argument("--target-root", required=True)
+    stage_parser.add_argument("--confirm", default="")
+    args = parser.parse_args(argv)
+    payload = execute(args.action, target_root=getattr(args, "target_root", ""), confirm=getattr(args, "confirm", ""))
+    print_json(payload)
+    return 0 if payload.get("ok") else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
