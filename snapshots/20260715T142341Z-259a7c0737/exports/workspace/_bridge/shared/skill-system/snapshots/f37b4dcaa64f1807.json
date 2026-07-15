@@ -1,0 +1,20 @@
+{
+  "skill_id": "f37b4dcaa64f1807",
+  "name": "developer-growth-analysis",
+  "path": "C:\\Users\\45543\\.codex\\skills\\developer-growth-analysis",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "0d69786a9197e38c5f056eacd4b24b4766b7b380507494991716f21ef582fccd",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
