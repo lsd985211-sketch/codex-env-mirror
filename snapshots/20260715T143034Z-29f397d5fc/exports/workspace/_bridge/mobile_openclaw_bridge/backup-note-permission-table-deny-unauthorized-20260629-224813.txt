@@ -1,0 +1,1 @@
+Backups for permission table hardening. Scope: clarify ask does not grant local data access, require Codex to refuse requests outside permission profile/table even if user asks, add local data action categories for future enforcement.
