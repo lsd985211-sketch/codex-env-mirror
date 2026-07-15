@@ -16,6 +16,11 @@ must not redefine active owners, rules, routes, or permissions.
   checks, and required-source checks pass.
 - Never update an existing snapshot directory.
 - Update `snapshots/latest.json` atomically after publication.
+- Treat `latest.json` as a transactional pointer. Validation failure removes
+  the candidate and restores the previous pointer; bounded retries apply only
+  when every issue is source-consistency drift.
+- Remove superseded snapshots only after the new candidate is validated and
+  committed. Retention failure restores quarantined snapshots.
 - Consult the live membership owner during snapshot creation, exclude inactive
   implementations and registrations, then remove inactive lifecycle records
   from the exported membership snapshot. The mirror retains only irreversible
@@ -40,6 +45,13 @@ Approved binary assets are copied byte-for-byte and verified by size and SHA-256
 they are never text-decoded, secret-scanned as text, or rewritten by membership
 sanitization. Coverage-required sources must contain every currently eligible
 asset and no stale asset.
+
+Top-level source coverage is deny-by-default. Each asset under the inventoried
+Codex, Agent compatibility, and CC Switch homes must resolve to one of:
+`mirrored`, `generated_representation`, `external_archive`, `reacquire`,
+`regenerate`, `runtime_companion`, or `historical`. An unclassified asset blocks
+capture. This prevents completeness from depending on an extension list or an
+operator remembering a newly added capability.
 
 Active user-skill sources under `.codex` and the compatibility `.agents` root
 exclude `.disabled`, `.system`, backups, caches, compiled files, and junk.

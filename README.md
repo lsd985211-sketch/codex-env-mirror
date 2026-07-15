@@ -2,6 +2,9 @@
 
 This private repository is a derived recovery product for the active Codex
 working environment on this machine. It is not a live configuration authority.
+Agents entering this repository automatically receive the recovery boundary and
+entry sequence from `AGENTS.md`; detailed capability and lifecycle facts remain
+in machine-readable manifests rather than being duplicated in prose.
 
 ## Authority Boundary
 
@@ -23,6 +26,13 @@ working environment on this machine. It is not a live configuration authority.
 | Resource library | `C:\Users\45543\Desktop\Codex资源库` | separate asset repository/archive; only a recovery pointer is stored here |
 | Windows integration | scheduled tasks and desktop shortcuts | structured specifications, not raw runtime state |
 
+Every top-level asset in the inventoried Codex, Agent compatibility, and CC
+Switch homes must also have an explicit disposition in
+`manifests/asset-dispositions.json`. An unknown item blocks refresh, so a new
+valuable capability cannot be silently omitted. Private or version-sensitive
+state remains an explicit external-archive gap instead of being copied into the
+capability snapshot.
+
 ## Commands
 
 Use the workspace workflow facade as the normal entrypoint:
@@ -36,9 +46,11 @@ python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\co
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE
 ```
 
-`refresh` is the standard capture path: plan, create, validate, prune the
-superseded local snapshot, and commit the verified result. `stage` remains
-isolated and never activates recovered state.
+`refresh` is the standard transactional capture path: reconcile an invalid
+uncommitted candidate, plan, create, validate, retry bounded source drift,
+commit the verified candidate, then retire superseded snapshots in a separate
+commit. A failed candidate is removed and `latest.json` is restored atomically.
+`stage` remains isolated and never activates recovered state.
 
 The underlying owner commands remain available for bootstrap recovery when the
 workspace facade has not yet been restored:

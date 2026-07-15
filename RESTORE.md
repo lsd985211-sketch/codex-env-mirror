@@ -10,6 +10,9 @@
 - Confirm the membership export is active-members-only and the membership guard
   reports no blocked asset or registration. Inactive member records are not
   part of the mirror and cannot be staged.
+- Confirm the asset disposition inventory has no unknown top-level source item.
+  External, reacquired, regenerated, runtime, and historical dispositions are
+  explicit recovery decisions, not silent omissions.
 - Stop if the target directory is an active source root.
 
 ## Phase 2: Isolated Stage

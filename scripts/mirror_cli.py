@@ -1242,6 +1242,25 @@ def restore_graph_issues() -> list[dict[str, Any]]:
     return issues
 
 
+def agent_bootstrap_issues() -> list[dict[str, Any]]:
+    path = ROOT / "AGENTS.md"
+    if not path.is_file():
+        return [{"code": "agent_bootstrap_missing", "path": "AGENTS.md"}]
+    text = re.sub(r"\s+", " ", read_text(path)).lower()
+    required_semantics = {
+        "derived_authority_boundary": "derived, hashed recovery product",
+        "validate_entry": "python scripts/mirror_cli.py validate",
+        "isolated_stage": "empty isolated target",
+        "activation_boundary": "staging never activates",
+        "unknown_asset_guard": "unknown top-level source assets block refresh",
+    }
+    return [
+        {"code": "agent_bootstrap_semantic_missing", "semantic": semantic, "path": "AGENTS.md"}
+        for semantic, phrase in required_semantics.items()
+        if phrase not in text
+    ]
+
+
 def repository_secret_findings() -> list[dict[str, str]]:
     findings: list[dict[str, str]] = []
     roots = [ROOT / name for name in ("manifests", "scripts", "tests")]
@@ -1450,6 +1469,7 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
         if current_hashes.get(name) != expected:
             issues.append({"code": "governance_drift", "path": name, "snapshot_hash": expected, "current_hash": current_hashes.get(name, "missing")})
     issues.extend(restore_graph_issues())
+    issues.extend(agent_bootstrap_issues())
     issues.extend({"code": "repository_secret_detected", **finding} for finding in repository_secret_findings())
     try:
         if guard.get("schema") != "codex_mirror.active_membership_guard.v1":

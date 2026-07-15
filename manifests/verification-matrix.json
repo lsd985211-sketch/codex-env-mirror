@@ -4,6 +4,9 @@
     {"id": "manifest-parse", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "all manifests parse and required fields exist"},
     {"id": "asset-hashes", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "every text and binary snapshot asset exists and matches SHA-256"},
     {"id": "source-coverage", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "coverage-required sources contain every currently eligible asset and no stale asset"},
+    {"id": "asset-dispositions", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "every top-level asset in each inventoried live root has an explicit mirrored, generated, external, reacquire, regenerate, runtime, or historical disposition"},
+    {"id": "agent-bootstrap", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "root AGENTS.md declares the derived authority boundary, validation entry, isolated staging rule, and activation prohibition"},
+    {"id": "refresh-transaction", "tier": "mirror", "required": true, "owner": "codex_environment_mirror", "predicate": "failed candidates are removed, latest is restored atomically, retries are consistency-only, and prior snapshots survive until verified commit"},
     {"id": "active-skill-scope", "tier": "mirror", "required": true, "owner": "skill_lifecycle_governance", "predicate": "active user skills and their approved dependencies are complete; .disabled, .system, backups, caches, and junk are absent"},
     {"id": "secret-scan", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "all text assets contain no prohibited token pattern or sensitive assignment; binary assets remain hash-only"},
     {"id": "snapshot-budget", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "file and total size budgets are respected"},
@@ -23,4 +26,3 @@
     {"id": "closeout", "tier": "activation", "required": true, "owner": "workflow_finalization", "predicate": "restore receipt links snapshot, backups, validators, unresolved items, and activation result"}
   ]
 }
-

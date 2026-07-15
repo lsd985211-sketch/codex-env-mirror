@@ -4,6 +4,7 @@ import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -110,6 +111,32 @@ class MirrorCliTests(unittest.TestCase):
                 self.assertEqual(mirror_cli.source_coverage_issues(manifest), [])
             finally:
                 mirror_cli.SOURCE_MANIFEST = old_manifest
+
+    def test_asset_disposition_inventory_blocks_unknown_top_level_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            live = root / "live"
+            live.mkdir()
+            (live / "known.md").write_text("known", encoding="utf-8")
+            (live / "unknown.bin").write_bytes(b"unknown")
+            dispositions = root / "asset-dispositions.json"
+            dispositions.write_text(json.dumps({
+                "schema": "codex_mirror.asset_dispositions.v1",
+                "roots": [{"id": "live", "root": str(live), "required": True, "rules": []}],
+            }), encoding="utf-8")
+            archives = root / "external-archives.json"
+            archives.write_text(json.dumps({"assets": [], "reacquire_instead_of_archive": [], "regenerate_instead_of_archive": []}), encoding="utf-8")
+            config = {
+                "variables": {},
+                "sources": [{"id": "known", "source": str(live / "known.md")}],
+            }
+            with patch.object(mirror_cli, "ASSET_DISPOSITIONS", dispositions), patch.object(mirror_cli, "EXTERNAL_ARCHIVES", archives):
+                payload = mirror_cli.collect_asset_dispositions(config)
+            self.assertFalse(payload["ok"])
+            self.assertEqual(payload["issues"][0]["name"], "unknown.bin")
+
+    def test_agent_bootstrap_contract_is_present(self) -> None:
+        self.assertEqual(mirror_cli.agent_bootstrap_issues(), [])
 
     def test_binary_asset_is_hash_validated_without_text_decoding(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

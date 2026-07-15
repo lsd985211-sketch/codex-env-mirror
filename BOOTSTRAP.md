@@ -5,7 +5,8 @@ Use this document when the original Codex environment is unavailable.
 1. Verify this repository came from the expected private remote or offline
    copy and inspect the latest signed/tagged release when available.
 2. Run `python scripts/mirror_cli.py validate` using Python 3.11 or newer.
-3. Read `manifests/source-authorities.json`, `restore-order.json`,
+3. Read `AGENTS.md`, `manifests/source-authorities.json`,
+   `asset-dispositions.json`, `restore-order.json`,
    `secret-requirements.json`, and `external-archives.json`.
 4. Run `restore-plan` against an empty isolated target directory.
 5. Resolve required secrets and encrypted archive receipts without placing
