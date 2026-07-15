@@ -1,0 +1,76 @@
+{
+  "schema": "codex_mirror.restore_order.v1",
+  "activation_rule": "Bootstrap may stage; live activation remains owner-driven and approval-gated.",
+  "steps": [
+    {
+      "id": "platform-preflight",
+      "depends_on": [],
+      "owner": "runtime",
+      "action": "verify OS, identity, disk, Python, PowerShell, Git, and repository integrity"
+    },
+    {
+      "id": "rules-stage",
+      "depends_on": ["platform-preflight"],
+      "owner": "rule_governance",
+      "action": "stage global and workspace rule exports"
+    },
+    {
+      "id": "workflow-stage",
+      "depends_on": ["rules-stage"],
+      "owner": "system_membership",
+      "action": "stage workflow, member, rule, maintenance, and owner source"
+    },
+    {
+      "id": "config-plan",
+      "depends_on": ["workflow-stage"],
+      "owner": "codex_config_guard",
+      "action": "compare templates with target config; never overwrite wholesale"
+    },
+    {
+      "id": "provider-plan",
+      "depends_on": ["config-plan"],
+      "owner": "codex_model_provider",
+      "action": "reapply CC Switch provider catalog and model projection through current owner"
+    },
+    {
+      "id": "mcp-plan",
+      "depends_on": ["config-plan"],
+      "owner": "mcp_capability_routes",
+      "action": "restore profile definitions and regenerate route projections"
+    },
+    {
+      "id": "skills-plan",
+      "depends_on": ["workflow-stage"],
+      "owner": "skill_lifecycle_governance",
+      "action": "restore active global skills and run lifecycle validation"
+    },
+    {
+      "id": "memory-plan",
+      "depends_on": ["workflow-stage"],
+      "owner": "memory_governance",
+      "action": "import semantic memory exports; raw databases only through compatible owner import"
+    },
+    {
+      "id": "windows-integration-plan",
+      "depends_on": ["config-plan", "mcp-plan"],
+      "owner": "windows_integration",
+      "action": "recreate approved scheduled tasks and shortcuts from structured specifications"
+    },
+    {
+      "id": "external-state-plan",
+      "depends_on": ["platform-preflight"],
+      "owner": "external_archive",
+      "action": "verify encrypted archive receipts and restore only owner-supported state"
+    },
+    {
+      "id": "acceptance",
+      "depends_on": [
+        "provider-plan", "mcp-plan", "skills-plan", "memory-plan",
+        "windows-integration-plan", "external-state-plan"
+      ],
+      "owner": "workflow_finalization",
+      "action": "run verification matrix and emit snapshot-linked restore receipt"
+    }
+  ]
+}
+

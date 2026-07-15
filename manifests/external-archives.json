@@ -1,0 +1,91 @@
+{
+  "schema": "codex_mirror.external_archives.v1",
+  "rule": "Git stores references and receipts only; archive payloads must be encrypted and independently verified.",
+  "backend": {
+    "preferred": "restic",
+    "installed": false,
+    "repository": "unconfigured",
+    "password_requirement": "RESTIC_REPOSITORY_PASSWORD",
+    "status": "pending_user_configuration"
+  },
+  "assets": [
+    {
+      "asset_id": "cc-switch-database",
+      "source": "C:\\Users\\45543\\.cc-switch\\cc-switch.db",
+      "owner": "cc_switch",
+      "classification": "private",
+      "required_for": "provider_and_model_fidelity",
+      "restore_mode": "owner_import_or_version-compatible_database_restore",
+      "status": "archive_receipt_missing"
+    },
+    {
+      "asset_id": "codex-native-memory-state",
+      "source": "C:\\Users\\45543\\.codex\\memories_1.sqlite",
+      "owner": "memory_governance",
+      "classification": "private",
+      "required_for": "native_memory_continuity",
+      "restore_mode": "owner_import_only",
+      "status": "archive_receipt_missing"
+    },
+    {
+      "asset_id": "codex-goal-state",
+      "source": "C:\\Users\\45543\\.codex\\goals_1.sqlite",
+      "owner": "goal_owner",
+      "classification": "private",
+      "required_for": "active_goal_continuity",
+      "restore_mode": "owner_import_only",
+      "status": "archive_receipt_missing"
+    },
+    {
+      "asset_id": "codex-resource-library",
+      "source": "C:\\Users\\45543\\Desktop\\Codex资源库",
+      "owner": "resource_library",
+      "classification": "private",
+      "required_for": "user_resource_continuity",
+      "restore_mode": "separate_repository_and_encrypted_archive",
+      "status": "local_git_repository_without_remote"
+    },
+    {
+      "asset_id": "bridge-runtime-continuity",
+      "source": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\bridge.db",
+      "owner": "bridge",
+      "classification": "private",
+      "required_for": "queue_and_runtime_continuity_only",
+      "restore_mode": "owner_migration_only",
+      "status": "optional_archive_receipt_missing"
+    },
+    {
+      "asset_id": "mail-and-scheduler-state",
+      "source": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\email_scheduler_state",
+      "owner": "mail_scheduler",
+      "classification": "private",
+      "required_for": "pending_delivery_and_schedule_continuity",
+      "restore_mode": "owner_import_only",
+      "status": "archive_receipt_missing"
+    },
+    {
+      "asset_id": "owner-checkpoint-history",
+      "source": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\checkpoints",
+      "owner": "project_checkpoint_finalize",
+      "classification": "internal",
+      "required_for": "historical_audit_and_deep_recovery_context",
+      "restore_mode": "external_archive_or_separate_history_repository",
+      "status": "optional_archive_receipt_missing"
+    }
+  ],
+  "reacquire_instead_of_archive": [
+    "C:\\Users\\45543\\.codex\\auth.json",
+    "C:\\Users\\45543\\.codex\\secrets",
+    "C:\\Users\\45543\\.codex\\browser",
+    "C:\\Users\\45543\\.codex\\sessions",
+    "C:\\Users\\45543\\.cc-switch\\copilot_auth.json"
+  ],
+  "regenerate_instead_of_archive": [
+    "C:\\Users\\45543\\.codex\\logs_2.sqlite",
+    "C:\\Users\\45543\\.codex\\cache",
+    "C:\\Users\\45543\\.codex\\plugins\\cache",
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\runtime",
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\resources",
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\runtime_dependencies"
+  ]
+}

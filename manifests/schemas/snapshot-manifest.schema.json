@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "codex_mirror.snapshot_manifest.v1",
+  "type": "object",
+  "required": ["schema", "snapshot_id", "created_at", "authority_mode", "assets", "membership_guard", "summary"],
+  "properties": {
+    "schema": {"const": "codex_mirror.snapshot_manifest.v1"},
+    "snapshot_id": {"type": "string", "minLength": 8},
+    "created_at": {"type": "string"},
+    "authority_mode": {"const": "derived_snapshot"},
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "snapshot_path", "sha256", "bytes", "owner", "classification"]
+      }
+    },
+    "membership_guard": {
+      "type": "object",
+      "required": ["schema", "membership_asset_id", "source_owner_verified", "membership_export_sanitized", "excluded_asset_count", "sanitized_asset_count", "registration_conflict_count", "blocked_member_fingerprints", "blocked_member_lengths", "blocked_path_fingerprints", "excluded_asset_fingerprints", "activation_policy"]
+    },
+    "summary": {
+      "type": "object",
+      "required": ["asset_count", "total_bytes", "required_sources_missing"]
+    }
+  }
+}

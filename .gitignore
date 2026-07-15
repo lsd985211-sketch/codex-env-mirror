@@ -1,0 +1,17 @@
+runtime/
+*.tmp
+*.log
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+*.db-shm
+*.db-wal
+*.pyc
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+
+# External encrypted archives are referenced by receipts, never committed.
+archives/
+

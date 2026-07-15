@@ -1,0 +1,38 @@
+[
+  {
+    "name": "CC Switch.lnk",
+    "location": "C:\\Users\\45543\\Desktop",
+    "target_path": "C:\\Users\\45543\\AppData\\Local\\Programs\\CC Switch\\cc-switch.exe",
+    "arguments": "",
+    "working_directory": "C:\\Users\\45543\\AppData\\Local\\Programs\\CC Switch\\",
+    "icon_location": "C:\\Users\\45543\\AppData\\Roaming\\Microsoft\\Installer\\{7D49DBD2-BDCA-4580-AA40-444990D4BF01}\\ProductIcon,0",
+    "window_style": 1
+  },
+  {
+    "name": "Codex Current Admin.lnk",
+    "location": "C:\\Users\\45543\\Desktop",
+    "target_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "arguments": "-NoProfile -ExecutionPolicy Bypass -File \"C:\\Users\\45543\\.codex\\scripts\\start-codex-desktop-elevated.ps1\"",
+    "working_directory": "C:\\Users\\45543\\.codex\\scripts",
+    "icon_location": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.707.9981.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe,0",
+    "window_style": 1
+  },
+  {
+    "name": "Codex++ 管理工具.lnk",
+    "location": "C:\\Users\\45543\\Desktop",
+    "target_path": "C:\\Users\\45543\\AppData\\Local\\Programs\\Codex++\\codex-plus-plus-manager.exe",
+    "arguments": "",
+    "working_directory": "C:\\Users\\45543\\AppData\\Local\\Programs\\Codex++",
+    "icon_location": "C:\\Users\\45543\\AppData\\Local\\Programs\\Codex++\\codex-plus-plus-manager.exe,0",
+    "window_style": 1
+  },
+  {
+    "name": "Codex++.lnk",
+    "location": "C:\\Users\\45543\\Desktop",
+    "target_path": "C:\\Users\\45543\\AppData\\Local\\Programs\\Codex++\\codex-plus-plus.exe",
+    "arguments": "",
+    "working_directory": "C:\\Users\\45543\\AppData\\Local\\Programs\\Codex++",
+    "icon_location": "C:\\Users\\45543\\AppData\\Local\\Programs\\Codex++\\codex-plus-plus.exe,0",
+    "window_style": 1
+  }
+]

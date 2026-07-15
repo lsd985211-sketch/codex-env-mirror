@@ -1,0 +1,293 @@
+{
+  "schema": "codex_mirror.source_authorities.v1",
+  "authority_mode": "derived_snapshot",
+  "variables": {
+    "USERPROFILE": "C:\\Users\\45543",
+    "CODEX_HOME": "${USERPROFILE}\\.codex",
+    "WORKSPACE_ROOT": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+    "CC_SWITCH_HOME": "${USERPROFILE}\\.cc-switch",
+    "RESOURCE_LIBRARY": "${USERPROFILE}\\Desktop\\Codex资源库"
+  },
+  "policy": {
+    "max_file_bytes": 5242880,
+    "max_snapshot_bytes": 134217728,
+    "max_snapshot_relative_path_chars": 220,
+    "allowed_extensions": [
+      ".bat", ".cfg", ".cmd", ".css", ".html", ".ini", ".js", ".json",
+      ".jsx", ".md", ".mjs", ".ps1", ".py", ".sql", ".toml", ".ts",
+      ".tsx", ".txt", ".xml", ".yaml", ".yml"
+    ],
+    "prohibited_extensions": [
+      ".7z", ".avi", ".bin", ".db", ".dll", ".exe", ".gif", ".gz",
+      ".jpeg", ".jpg", ".mov", ".mp3", ".mp4", ".msi", ".pdf", ".png",
+      ".sqlite", ".tar", ".webp", ".zip"
+    ],
+    "global_exclude_dirs": [
+      ".backups", ".git", ".pytest_cache", ".ruff_cache", "__pycache__", "attachments",
+      "backups", "cache", "generated_images", "logs", "node_modules",
+      "resources", "runtime", "runtime_dependencies", "sessions", "tmp",
+      "venvs", "wheelhouse", "wheels"
+    ],
+    "global_exclude_files": [
+      ".run-jitter-salt", "auth.json", "cap_sid", "copilot_auth.json"
+    ]
+  },
+  "sources": [
+    {
+      "id": "codex-global-agents",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\AGENTS.md",
+      "destination": "exports/codex-home/AGENTS.md",
+      "restore_path": "${CODEX_HOME}\\AGENTS.md",
+      "mode": "copy",
+      "classification": "authority_export",
+      "owner": "rule_governance",
+      "required": true
+    },
+    {
+      "id": "codex-user-preferences",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\USER_WORKING_PREFERENCES.md",
+      "destination": "exports/codex-home/USER_WORKING_PREFERENCES.md",
+      "restore_path": "${CODEX_HOME}\\USER_WORKING_PREFERENCES.md",
+      "mode": "copy",
+      "classification": "authority_export",
+      "owner": "memory_governance",
+      "required": true
+    },
+    {
+      "id": "codex-memory-index",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\MEMORY.md",
+      "destination": "exports/codex-home/MEMORY.md",
+      "restore_path": "${CODEX_HOME}\\MEMORY.md",
+      "mode": "copy",
+      "classification": "authority_export",
+      "owner": "memory_governance",
+      "required": false
+    },
+    {
+      "id": "codex-version",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\version.json",
+      "destination": "exports/codex-home/version.json",
+      "restore_path": "${CODEX_HOME}\\version.json",
+      "mode": "copy",
+      "classification": "bootstrap_source",
+      "owner": "codex_cli",
+      "required": true
+    },
+    {
+      "id": "codex-model-catalog",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\cc-switch-model-catalog.json",
+      "destination": "exports/codex-home/cc-switch-model-catalog.json",
+      "restore_path": "${CODEX_HOME}\\cc-switch-model-catalog.json",
+      "mode": "copy",
+      "classification": "configuration_template",
+      "owner": "codex_model_provider",
+      "required": true
+    },
+    {
+      "id": "codex-config-template",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\config.toml",
+      "destination": "exports/codex-home/config.template.toml",
+      "restore_path": "${CODEX_HOME}\\config.toml",
+      "mode": "redact_toml",
+      "classification": "configuration_template",
+      "owner": "codex_config_guard",
+      "activation": "owner_merge_only",
+      "required": true
+    },
+    {
+      "id": "codex-global-state-template",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\.codex-global-state.json",
+      "destination": "exports/codex-home/codex-global-state.template.json",
+      "restore_path": "${CODEX_HOME}\\.codex-global-state.json",
+      "mode": "redact_json",
+      "classification": "configuration_template",
+      "owner": "codex_state_repair",
+      "activation": "owner_merge_only",
+      "required": false
+    },
+    {
+      "id": "codex-skills",
+      "kind": "tree",
+      "source": "${CODEX_HOME}\\skills",
+      "destination": "exports/codex-home/skills",
+      "restore_path": "${CODEX_HOME}\\skills",
+      "mode": "copy_tree",
+      "classification": "authority_export",
+      "owner": "skill_lifecycle_governance",
+      "exclude_dirs": ["_backups"],
+      "required": true
+    },
+    {
+      "id": "codex-rules",
+      "kind": "tree",
+      "source": "${CODEX_HOME}\\rules",
+      "destination": "exports/codex-home/rules",
+      "restore_path": "${CODEX_HOME}\\rules",
+      "mode": "copy_tree",
+      "classification": "authority_export",
+      "owner": "rule_governance",
+      "required": false
+    },
+    {
+      "id": "codex-scripts",
+      "kind": "tree",
+      "source": "${CODEX_HOME}\\scripts",
+      "destination": "exports/codex-home/scripts",
+      "restore_path": "${CODEX_HOME}\\scripts",
+      "mode": "copy_tree",
+      "classification": "bootstrap_source",
+      "owner": "codex_cli",
+      "required": false
+    },
+    {
+      "id": "codex-automations",
+      "kind": "tree",
+      "source": "${CODEX_HOME}\\automations",
+      "destination": "exports/codex-home/automations",
+      "restore_path": "${CODEX_HOME}\\automations",
+      "mode": "copy_tree",
+      "classification": "configuration_template",
+      "owner": "automation_owner",
+      "required": false
+    },
+    {
+      "id": "workspace-agents",
+      "kind": "file",
+      "source": "${WORKSPACE_ROOT}\\AGENTS.md",
+      "destination": "exports/workspace/AGENTS.md",
+      "restore_path": "${WORKSPACE_ROOT}\\AGENTS.md",
+      "mode": "copy",
+      "classification": "authority_export",
+      "owner": "rule_governance",
+      "required": true
+    },
+    {
+      "id": "workspace-bridge-source",
+      "kind": "tree",
+      "source": "${WORKSPACE_ROOT}\\_bridge",
+      "destination": "exports/workspace/_bridge",
+      "restore_path": "${WORKSPACE_ROOT}\\_bridge",
+      "mode": "copy_tree",
+      "classification": "authority_export",
+      "owner": "system_membership",
+      "exclude_dirs": [
+        ".backups", "archive", "audio_diagnostics", "backups", "bootstrap", "checkpoints",
+        "email_scheduler_state", "resources", "runtime", "runtime_dependencies",
+        "tmp", "unresolved-items", "venvs", "wheelhouse", "wheels"
+      ],
+      "required": true
+    },
+    {
+      "id": "cc-switch-settings",
+      "kind": "file",
+      "source": "${CC_SWITCH_HOME}\\settings.json",
+      "destination": "exports/cc-switch/settings.template.json",
+      "restore_path": "${CC_SWITCH_HOME}\\settings.json",
+      "mode": "redact_json",
+      "classification": "configuration_template",
+      "owner": "cc_switch",
+      "activation": "owner_merge_only",
+      "required": true
+    },
+    {
+      "id": "cc-switch-skills",
+      "kind": "tree",
+      "source": "${CC_SWITCH_HOME}\\skills",
+      "destination": "exports/cc-switch/skills",
+      "restore_path": "${CC_SWITCH_HOME}\\skills",
+      "mode": "copy_tree",
+      "classification": "authority_export",
+      "owner": "cc_switch",
+      "required": false
+    }
+  ],
+  "generated_sources": [
+    {
+      "id": "system-membership-snapshot",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\system_membership.py", "snapshot"],
+      "destination": "exports/derived/system-membership.json",
+      "classification": "authority_export",
+      "owner": "system_membership",
+      "required": true
+    },
+    {
+      "id": "rule-governance-snapshot",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\rule_governance.py", "snapshot", "--full"],
+      "destination": "exports/derived/rule-governance.json",
+      "classification": "authority_export",
+      "owner": "rule_governance",
+      "required": true
+    },
+    {
+      "id": "maintenance-capability-snapshot",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\maintenance_capability_registry.py", "snapshot"],
+      "destination": "exports/derived/maintenance-capabilities.json",
+      "classification": "authority_export",
+      "owner": "maintenance_capability_registry",
+      "required": true
+    },
+    {
+      "id": "mcp-route-snapshot",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\mcp_capability_routes.py", "snapshot"],
+      "destination": "exports/derived/mcp-capability-routes.json",
+      "classification": "authority_export",
+      "owner": "mcp_capability_routes",
+      "required": true
+    },
+    {
+      "id": "memory-snapshot",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\local_pmb_memory.py", "snapshot"],
+      "destination": "exports/derived/memory-snapshot.json",
+      "classification": "authority_export",
+      "owner": "memory_governance",
+      "required": false
+    },
+    {
+      "id": "secret-requirement-snapshot",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\secret_vault.py", "snapshot"],
+      "destination": "exports/derived/secret-vault-metadata.json",
+      "classification": "configuration_template",
+      "owner": "secret_vault",
+      "required": false
+    },
+    {
+      "id": "windows-scheduled-tasks",
+      "kind": "windows_tasks",
+      "destination": "exports/windows/scheduled-tasks.json",
+      "classification": "configuration_template",
+      "owner": "windows_integration",
+      "required": true,
+      "patterns": ["Codex", "CC Switch", "MCP", "PMB", "OpenClaw"]
+    },
+    {
+      "id": "windows-shortcuts",
+      "kind": "windows_shortcuts",
+      "destination": "exports/windows/shortcuts.json",
+      "classification": "configuration_template",
+      "owner": "windows_integration",
+      "required": false,
+      "patterns": ["Codex", "CC Switch", "OpenClaw"]
+    },
+    {
+      "id": "runtime-versions",
+      "kind": "runtime_versions",
+      "destination": "exports/runtime/runtime-versions.json",
+      "classification": "bootstrap_source",
+      "owner": "runtime",
+      "required": true
+    }
+  ]
+}

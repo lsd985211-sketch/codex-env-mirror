@@ -1,0 +1,20 @@
+{
+  "schema": "codex_mirror.verification_matrix.v1",
+  "checks": [
+    {"id": "manifest-parse", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "all manifests parse and required fields exist"},
+    {"id": "asset-hashes", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "every snapshot asset exists and matches SHA-256"},
+    {"id": "secret-scan", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "no prohibited token pattern or sensitive assignment exists"},
+    {"id": "snapshot-budget", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "file and total size budgets are respected"},
+    {"id": "authority-boundary", "tier": "mirror", "required": true, "owner": "rule_governance", "predicate": "exports declare derived_snapshot and do not claim live authority"},
+    {"id": "restore-dag", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "restore dependencies resolve without cycles"},
+    {"id": "stage-hashes", "tier": "stage", "required": true, "owner": "mirror_cli", "predicate": "isolated staged assets match snapshot hashes"},
+    {"id": "system-membership", "tier": "activation", "required": true, "owner": "system_membership", "predicate": "target member validator and changed-file reconciliation pass"},
+    {"id": "rule-governance", "tier": "activation", "required": true, "owner": "rule_governance", "predicate": "target rule authority and lifecycle validation pass"},
+    {"id": "mcp-routes", "tier": "activation", "required": true, "owner": "mcp_capability_routes", "predicate": "target route projection validates and preserves forward fallback"},
+    {"id": "provider-models", "tier": "activation", "required": true, "owner": "codex_model_provider", "predicate": "provider catalog, Desktop model projection, and reasoning controls agree"},
+    {"id": "memory-recall", "tier": "activation", "required": true, "owner": "memory_governance", "predicate": "stable facts, owner routes, and fallback knowledge are recallable"},
+    {"id": "external-archives", "tier": "full_state", "required": true, "owner": "external_archive", "predicate": "required archive receipts exist, hashes verify, and restore test is current"},
+    {"id": "closeout", "tier": "activation", "required": true, "owner": "workflow_finalization", "predicate": "restore receipt links snapshot, backups, validators, unresolved items, and activation result"}
+  ]
+}
+
