@@ -15,9 +15,10 @@ working environment on this machine. It is not a live configuration authority.
 
 | Area | Active source | Recovery treatment |
 | --- | --- | --- |
-| Codex home | `C:\Users\45543\.codex` | selected source/config exports; secrets and runtime DBs excluded |
-| Workspace governance | `C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager` | `AGENTS.md` plus `_bridge` source, policies, docs, tests, and scripts |
-| CC Switch | `C:\Users\45543\.cc-switch` | settings and skills mirrored; database requires encrypted archive |
+| Codex home | `C:\Users\45543\.codex` | active user skills with required dependencies, rules, scripts, tools, templates, and runtime compatibility evidence; platform/plugin caches and secrets excluded |
+| Workspace governance | `C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager` | `AGENTS.md` plus `_bridge` source, policies, docs, tests, scripts, and a manifest-selected current checkpoint export |
+| CC Switch | `C:\Users\45543\.cc-switch` | settings, skills, and a recursively redacted semantic database export; raw database remains an encrypted external archive |
+| Codex plugins | enabled entries in `config.toml` plus plugin cache manifests | identity, marketplace, version/revision, and manifest hash only; plugin payloads are reacquired |
 | Resource library | `C:\Users\45543\Desktop\Codex资源库` | separate asset repository/archive; only a recovery pointer is stored here |
 | Windows integration | scheduled tasks and desktop shortcuts | structured specifications, not raw runtime state |
 
@@ -56,7 +57,8 @@ environment's owners after backup and validation.
 
 ## Readiness States
 
-- `mirror_valid`: manifests, hashes, secret scan, references, and snapshot
+- `mirror_valid`: manifests, text/binary hashes, text secret scans,
+  source-coverage checks, generated semantic exports, references, and snapshot
   content are internally valid.
 - `capability_restore_ready`: rules, owner source, configuration templates,
   skills, and bootstrap evidence can be staged and validated.

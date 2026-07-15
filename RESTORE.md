@@ -2,8 +2,9 @@
 
 ## Phase 1: Preflight
 
-- Confirm OS, user identity, target paths, Python/PowerShell versions, free
-  disk space, and repository integrity.
+- Confirm OS, user identity, target paths, Python/PowerShell versions, Codex
+  Desktop version, native-host compatibility, free disk space, and repository
+  integrity.
 - Confirm the snapshot compatibility range and inspect all unresolved external
   archives and secret requirements.
 - Confirm the membership export is active-members-only and the membership guard
@@ -25,18 +26,22 @@ Validate in dependency order:
 2. global and workspace rules;
 3. workflow, membership, and rule-governance source;
 4. maintenance capability and MCP route source;
-5. Codex configuration template and CC Switch provider state;
-6. skills and automations;
-7. memory semantic exports;
-8. Windows scheduled-task and shortcut specifications;
-9. external encrypted archives and secret requirements.
+5. user-owned Codex helper tools and runtime prerequisites;
+6. Codex configuration template and sanitized CC Switch semantic state;
+7. enabled plugin inventory and owner-driven plugin reacquisition;
+8. active user skills with text and binary dependencies, then automations;
+9. memory semantic exports and the manifest-selected current checkpoints;
+10. Windows scheduled-task and shortcut specifications;
+11. external encrypted archives and secret requirements.
 
 ## Phase 4: Owner Activation
 
 Activation is performed in the target environment, not by `mirror_cli.py`.
 Each owner must create a target backup, apply its supported migration/import,
-run the smallest relevant validator, and emit a receipt. Configuration must be
-merged through current Codex owners rather than copied wholesale.
+run the smallest relevant validator, and emit a receipt. Configuration and
+CC Switch semantic state must be merged/imported through current owners rather
+than copied wholesale. Platform and plugin-managed skills must be reacquired
+from the recorded inventory; only active user-owned skills are file-restored.
 
 ## Phase 5: Acceptance
 

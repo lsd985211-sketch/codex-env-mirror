@@ -9,11 +9,13 @@ import json
 import os
 import re
 import shutil
+import sqlite3
 import subprocess
 import sys
 import tempfile
 import time
 import tomllib
+import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -46,6 +48,17 @@ INLINE_SENSITIVE_PATTERN = re.compile(
 )
 CONFIG_EXTENSIONS = {".cfg", ".ini", ".json", ".toml", ".yaml", ".yml"}
 MEMBERSHIP_ASSET_ID = "system-membership-snapshot"
+CC_SWITCH_SEMANTIC_TABLES = (
+    "providers",
+    "provider_endpoints",
+    "mcp_servers",
+    "prompts",
+    "proxy_config",
+    "settings",
+    "skills",
+    "skill_repos",
+    "model_pricing",
+)
 
 
 def now_iso() -> str:
@@ -143,6 +156,32 @@ def redact_toml(path: Path) -> bytes:
     return ("\n".join(lines) + "\n").encode("utf-8")
 
 
+def redact_url_value(value: str) -> str:
+    try:
+        parsed = urllib.parse.urlsplit(value)
+    except ValueError:
+        return value
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return value
+    hostname = parsed.hostname or ""
+    if ":" in hostname and not hostname.startswith("["):
+        hostname = f"[{hostname}]"
+    port = f":{parsed.port}" if parsed.port else ""
+    netloc = hostname + port
+    query = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
+    redacted_query = [
+        (key, "<SECRET:" + re.sub(r"[^A-Za-z0-9]+", "_", key).upper().strip("_") + ">")
+        if SENSITIVE_KEY.search(key)
+        else (key, scrub_known_tokens(item))
+        for key, item in query
+    ]
+    return urllib.parse.urlunsplit((parsed.scheme, netloc, parsed.path, urllib.parse.urlencode(redacted_query), parsed.fragment))
+
+
+def redact_string_value(value: str) -> str:
+    return redact_url_value(scrub_known_tokens(value))
+
+
 def redact_json_value(value: Any) -> Any:
     if isinstance(value, dict):
         return {
@@ -154,7 +193,7 @@ def redact_json_value(value: Any) -> Any:
     if isinstance(value, list):
         return [redact_json_value(item) for item in value]
     if isinstance(value, str):
-        return scrub_known_tokens(value)
+        return redact_string_value(value)
     return value
 
 
@@ -182,8 +221,13 @@ def iter_source_files(root: Path, spec: dict[str, Any], policy: dict[str, Any]) 
     excluded_files = {str(item).lower() for item in policy.get("global_exclude_files", [])}
     excluded_files.update(str(item).lower() for item in spec.get("exclude_files", []))
     allowed = {str(item).lower() for item in policy.get("allowed_extensions", [])}
-    prohibited = {str(item).lower() for item in policy.get("prohibited_extensions", [])}
-    max_bytes = int(policy.get("max_file_bytes", 5 * 1024 * 1024))
+    allowed.update(str(item).lower() for item in spec.get("extra_allowed_extensions", []))
+    binary = {str(item).lower() for item in spec.get("binary_extensions", [])}
+    explicitly_allowed = allowed | binary
+    prohibited = {str(item).lower() for item in policy.get("prohibited_extensions", [])} - explicitly_allowed
+    allowed_filenames = {str(item).lower() for item in spec.get("allowed_filenames", [])}
+    allow_extensionless = bool(spec.get("allow_extensionless"))
+    max_bytes = int(spec.get("max_file_bytes", policy.get("max_file_bytes", 5 * 1024 * 1024)))
     for current_root, dirs, files in os.walk(root, followlinks=False):
         dirs[:] = [name for name in dirs if name.lower() not in excluded_dirs and not (Path(current_root) / name).is_symlink()]
         for name in files:
@@ -191,7 +235,9 @@ def iter_source_files(root: Path, spec: dict[str, Any], policy: dict[str, Any]) 
             if name.lower() in excluded_files or path.is_symlink():
                 continue
             suffix = path.suffix.lower()
-            if suffix in prohibited or suffix not in allowed:
+            if suffix in prohibited:
+                continue
+            if name.lower() not in allowed_filenames and suffix not in explicitly_allowed and not (allow_extensionless and not suffix):
                 continue
             try:
                 if path.stat().st_size > max_bytes:
@@ -201,16 +247,26 @@ def iter_source_files(root: Path, spec: dict[str, Any], policy: dict[str, Any]) 
             yield path
 
 
-def source_payload(path: Path, mode: str) -> tuple[bytes, str]:
+def source_content_kind(path: Path, spec: dict[str, Any]) -> str:
+    binary = {str(item).lower() for item in spec.get("binary_extensions", [])}
+    binary_filenames = {str(item).lower() for item in spec.get("binary_filenames", [])}
+    return "binary" if path.suffix.lower() in binary or path.name.lower() in binary_filenames else "text"
+
+
+def source_payload(path: Path, mode: str, content_kind: str = "text") -> tuple[bytes, str, str]:
+    if content_kind == "binary":
+        if mode in {"redact_toml", "redact_json"}:
+            raise ValueError(f"binary_redaction_mode_invalid:{path}")
+        return path.read_bytes(), mode, content_kind
     if mode == "redact_toml":
-        return redact_toml(path), mode
+        return redact_toml(path), mode, content_kind
     if mode == "redact_json":
-        return redact_json(path), mode
+        return redact_json(path), mode, content_kind
     text = read_text(path)
     scrubbed = scrub_known_tokens(text)
     if scrubbed != text:
-        return scrubbed.encode("utf-8"), "copy_with_token_redaction"
-    return path.read_bytes(), mode
+        return scrubbed.encode("utf-8"), "copy_with_token_redaction", content_kind
+    return path.read_bytes(), mode, content_kind
 
 
 def add_asset(
@@ -224,14 +280,16 @@ def add_asset(
     source_path: str = "",
     restore_template: str = "",
     mode: str = "copy",
+    content_kind: str = "text",
 ) -> dict[str, Any]:
     destination = stage / Path(snapshot_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_bytes(data)
-    text = read_text(destination)
-    findings = secret_findings(text, path=snapshot_path, config_file=destination.suffix.lower() in CONFIG_EXTENSIONS)
-    if findings:
-        raise ValueError("secret_scan_failed:" + json.dumps(findings, ensure_ascii=False))
+    if content_kind == "text":
+        text = read_text(destination)
+        findings = secret_findings(text, path=snapshot_path, config_file=destination.suffix.lower() in CONFIG_EXTENSIONS)
+        if findings:
+            raise ValueError("secret_scan_failed:" + json.dumps(findings, ensure_ascii=False))
     return {
         "asset_id": asset_id,
         "source_path": source_path,
@@ -242,6 +300,7 @@ def add_asset(
         "owner": owner,
         "classification": classification,
         "mode": mode,
+        "content_kind": content_kind,
     }
 
 
@@ -313,7 +372,170 @@ $items=foreach($root in $roots){{
     return powershell_json(script)
 
 
-def export_runtime_versions() -> bytes:
+def json_bytes(value: Any) -> bytes:
+    return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
+
+def redact_semantic_value(value: Any) -> Any:
+    if isinstance(value, bytes):
+        return {"binary_sha256": sha256_bytes(value), "bytes": len(value)}
+    if not isinstance(value, str):
+        return value
+    stripped = value.strip()
+    if stripped.startswith(("{", "[")):
+        try:
+            return redact_json_value(json.loads(stripped))
+        except json.JSONDecodeError:
+            pass
+    return redact_string_value(value)
+
+
+def export_cc_switch_semantic(source: Path) -> bytes:
+    if not source.is_file():
+        raise FileNotFoundError(f"cc_switch_database_missing:{source}")
+    connection = sqlite3.connect(source.resolve().as_uri() + "?mode=ro", uri=True)
+    connection.row_factory = sqlite3.Row
+    try:
+        available = {
+            str(row[0])
+            for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        }
+        missing = [name for name in CC_SWITCH_SEMANTIC_TABLES if name not in available]
+        if missing:
+            raise ValueError("cc_switch_semantic_tables_missing:" + ",".join(missing))
+        tables: dict[str, Any] = {}
+        for table in CC_SWITCH_SEMANTIC_TABLES:
+            rows: list[dict[str, Any]] = []
+            for raw in connection.execute(f'SELECT * FROM "{table}"'):
+                row: dict[str, Any] = {}
+                for key in raw.keys():
+                    value = raw[key]
+                    if SENSITIVE_KEY.search(str(key)):
+                        row[str(key)] = "<SECRET:" + re.sub(r"[^A-Za-z0-9]+", "_", str(key)).upper().strip("_") + ">"
+                    else:
+                        row[str(key)] = redact_semantic_value(value)
+                if table == "settings" and SENSITIVE_KEY.search(str(row.get("key") or "")):
+                    row["value"] = "<SECRET:SETTING_VALUE>"
+                rows.append(row)
+            tables[table] = {"row_count": len(rows), "rows": rows}
+        payload = {
+            "schema": "codex_mirror.cc_switch_semantic_export.v1",
+            "generated_at": now_iso(),
+            "authority": "derived_from_cc_switch_database",
+            "source_sha256": sha256_file(source),
+            "excluded_state": [
+                "request_logs",
+                "usage_logs",
+                "stream_logs",
+                "health_state",
+                "transient_backups",
+                "raw_credentials",
+            ],
+            "tables": tables,
+        }
+        return json_bytes(payload)
+    finally:
+        connection.close()
+
+
+def export_plugin_inventory(config_path: Path, cache_root: Path) -> bytes:
+    config = tomllib.loads(read_text(config_path))
+    plugins = config.get("plugins", {})
+    entries: list[dict[str, Any]] = []
+    for identity, settings in sorted(plugins.items() if isinstance(plugins, dict) else []):
+        if not isinstance(settings, dict) or settings.get("enabled") is not True:
+            continue
+        name, separator, marketplace = str(identity).rpartition("@")
+        if not separator or not name or not marketplace:
+            entries.append({"identity": identity, "enabled": True, "status": "identity_invalid"})
+            continue
+        plugin_root = cache_root / marketplace / name
+        candidates = [
+            path
+            for path in plugin_root.glob("*/.codex-plugin/plugin.json")
+            if path.is_file() and not any(part.startswith("plugin-install-") for part in path.parts)
+        ]
+        if not candidates:
+            entries.append({
+                "identity": identity,
+                "name": name,
+                "marketplace": marketplace,
+                "enabled": True,
+                "status": "manifest_missing",
+                "reacquisition": "install_enabled_plugin_through_codex_plugin_owner",
+            })
+            continue
+        manifest_path = max(candidates, key=lambda path: path.stat().st_mtime_ns)
+        manifest = json.loads(read_text(manifest_path))
+        entries.append({
+            "identity": identity,
+            "name": name,
+            "marketplace": marketplace,
+            "enabled": True,
+            "status": "resolved",
+            "cache_revision": manifest_path.parents[1].name,
+            "manifest_version": manifest.get("version"),
+            "manifest_sha256": sha256_file(manifest_path),
+            "repository": redact_semantic_value(manifest.get("repository")),
+            "license": manifest.get("license"),
+            "reacquisition": "install_enabled_plugin_through_codex_plugin_owner_then_verify_manifest_hash_or_version",
+        })
+    unresolved = [item["identity"] for item in entries if item.get("status") != "resolved"]
+    return json_bytes({
+        "schema": "codex_mirror.plugin_inventory.v1",
+        "generated_at": now_iso(),
+        "authority": "derived_from_codex_config_and_plugin_cache",
+        "cache_payload_included": False,
+        "enabled_count": len(entries),
+        "unresolved_count": len(unresolved),
+        "unresolved": unresolved,
+        "plugins": entries,
+    })
+
+
+def parse_manifest_sections(text: str) -> dict[str, list[str]]:
+    sections: dict[str, list[str]] = {}
+    current = ""
+    for line in text.splitlines():
+        if line.startswith("## "):
+            current = line[3:].strip().lower()
+            sections.setdefault(current, [])
+        elif current and line.startswith("- "):
+            sections[current].append(line[2:].strip())
+    return sections
+
+
+def export_current_checkpoints(manifest_path: Path, shared_root: Path) -> bytes:
+    manifest_text = read_text(manifest_path)
+    sections = parse_manifest_sections(manifest_text)
+    selected: list[dict[str, Any]] = []
+    references = sections.get("shared docs", []) + sections.get("recent checkpoints", [])
+    for reference in references:
+        path = shared_root / Path(reference.replace("/", os.sep))
+        if not path.is_file():
+            raise FileNotFoundError(f"current_checkpoint_reference_missing:{reference}")
+        content = scrub_known_tokens(read_text(path))
+        selected.append({
+            "path": relative_posix(path, shared_root),
+            "sha256": sha256_bytes(content.encode("utf-8")),
+            "bytes": len(content.encode("utf-8")),
+            "content": content,
+        })
+    return json_bytes({
+        "schema": "codex_mirror.current_checkpoints.v1",
+        "generated_at": now_iso(),
+        "authority": "derived_from_checkpoint_manifest",
+        "selection_rule": "manifest_shared_docs_and_recent_checkpoints_only",
+        "full_history_included": False,
+        "knowledge_contract_references": sections.get("contracts (knowledge table)", []),
+        "manifest_sha256": sha256_bytes(manifest_text.encode("utf-8")),
+        "manifest": scrub_known_tokens(manifest_text),
+        "selected_count": len(selected),
+        "selected": selected,
+    })
+
+
+def export_runtime_versions(variables: dict[str, str]) -> bytes:
     commands = {
         "python": [sys.executable, "--version"],
         "powershell": ["powershell", "-NoLogo", "-NoProfile", "-Command", "$PSVersionTable.PSVersion.ToString()"],
@@ -332,7 +554,54 @@ def export_runtime_versions() -> bytes:
             }
         except (OSError, subprocess.TimeoutExpired) as exc:
             results["commands"][name] = {"ok": False, "error": type(exc).__name__}
-    return (json.dumps(results, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    desktop_script = r"""
+$item=Get-AppxPackage -Name 'OpenAI.Codex' -ErrorAction SilentlyContinue | Select-Object -First 1
+$result=if($null -eq $item){[pscustomobject]@{ok=$false}}else{[pscustomobject]@{ok=$true;name=$item.Name;version=$item.Version.ToString();publisher_id=$item.PublisherId;architecture=$item.Architecture.ToString()}}
+$result | ConvertTo-Json -Compress
+"""
+    try:
+        completed = subprocess.run(
+            ["powershell", "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", desktop_script],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=30,
+        )
+        lines = [line for line in completed.stdout.splitlines() if line.strip()]
+        results["codex_desktop"] = json.loads(lines[-1]) if completed.returncode == 0 and lines else {"ok": False}
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError) as exc:
+        results["codex_desktop"] = {"ok": False, "error": type(exc).__name__}
+    host_path = Path(variables.get("CODEX_HOME", str(Path.home() / ".codex"))) / "chrome-native-hosts-v2.json"
+    compatibility: dict[str, Any] = {"present": host_path.is_file()}
+    if host_path.is_file():
+        try:
+            host = json.loads(read_text(host_path))
+            allowed = (
+                "schemaVersion",
+                "appServerProtocolVersion",
+                "appVersion",
+                "channel",
+                "cliVersion",
+                "extensionBuildChannels",
+                "nativeHostProtocolVersion",
+                "nativeHostVersion",
+            )
+            profiles = {
+                json.dumps({key: entry.get(key) for key in allowed if key in entry}, sort_keys=True)
+                for entry in host.get("entries", [])
+                if isinstance(entry, dict)
+            }
+            compatibility = {
+                "present": True,
+                "schema_version": host.get("schemaVersion"),
+                "profiles": [json.loads(item) for item in sorted(profiles)],
+                "excluded_runtime_fields": ["entryId", "installId", "paths", "presence", "proxyHost", "proxyPort", "updatedAt"],
+            }
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            compatibility = {"present": True, "ok": False, "error": type(exc).__name__}
+    results["native_host_compatibility"] = compatibility
+    return json_bytes(results)
 
 
 def governance_hashes() -> dict[str, str]:
@@ -589,6 +858,8 @@ def sanitize_inactive_references(snapshot_root: Path, assets: list[dict[str, Any
     }, key=len, reverse=True)
     changed = 0
     for asset in assets:
+        if asset.get("content_kind", "text") != "text":
+            continue
         target = snapshot_root / Path(str(asset["snapshot_path"]))
         try:
             text = read_text(target)
@@ -686,12 +957,31 @@ def collect_plan(config: dict[str, Any]) -> dict[str, Any]:
         total_files += int(row["files"])
         total_bytes += int(row["bytes"])
         rows.append(row)
+    generated_rows: list[dict[str, Any]] = []
+    for spec in config.get("generated_sources", []):
+        checked: dict[str, bool] = {}
+        for field in ("source", "config_source", "cache_root", "manifest_source", "shared_root"):
+            if field not in spec:
+                continue
+            path = Path(expand_tokens(str(spec[field]), variables))
+            checked[field] = path.exists()
+        exists = all(checked.values()) if checked else True
+        if spec.get("required") and not exists:
+            missing.append(str(spec["id"]))
+        generated_rows.append({
+            "id": spec["id"],
+            "kind": spec["kind"],
+            "required": bool(spec.get("required")),
+            "exists": exists,
+            "checked_sources": checked,
+        })
+    missing = sorted(set(missing))
     return {
         "schema": "codex_mirror.plan.v1",
         "ok": not missing and total_bytes <= int(policy["max_snapshot_bytes"]),
         "generated_at": now_iso(),
         "sources": rows,
-        "generated_sources": [{"id": item["id"], "kind": item["kind"], "required": bool(item.get("required"))} for item in config.get("generated_sources", [])],
+        "generated_sources": generated_rows,
         "summary": {
             "candidate_files": total_files,
             "candidate_source_bytes": total_bytes,
@@ -725,15 +1015,17 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
                     missing.append(spec["id"])
                 continue
             if spec["kind"] == "file":
-                data, effective_mode = source_payload(source, spec["mode"])
-                assets.append(add_asset(stage=stage, snapshot_path=spec["destination"], data=data, asset_id=spec["id"], owner=spec["owner"], classification=spec["classification"], source_path=str(source), restore_template=spec.get("restore_path", ""), mode=effective_mode))
+                content_kind = source_content_kind(source, spec)
+                data, effective_mode, content_kind = source_payload(source, spec["mode"], content_kind)
+                assets.append(add_asset(stage=stage, snapshot_path=spec["destination"], data=data, asset_id=spec["id"], owner=spec["owner"], classification=spec["classification"], source_path=str(source), restore_template=spec.get("restore_path", ""), mode=effective_mode, content_kind=content_kind))
                 continue
             for path in iter_source_files(source, spec, policy):
                 rel = relative_posix(path, source)
                 destination = str(Path(spec["destination"]) / Path(rel)).replace("\\", "/")
                 restore_template = str(Path(spec.get("restore_path", "")) / Path(rel)).replace("/", "\\")
-                data, effective_mode = source_payload(path, "copy")
-                assets.append(add_asset(stage=stage, snapshot_path=destination, data=data, asset_id=f"{spec['id']}:{rel}", owner=spec["owner"], classification=spec["classification"], source_path=str(path), restore_template=restore_template, mode=effective_mode))
+                content_kind = source_content_kind(path, spec)
+                data, effective_mode, content_kind = source_payload(path, "copy", content_kind)
+                assets.append(add_asset(stage=stage, snapshot_path=destination, data=data, asset_id=f"{spec['id']}:{rel}", owner=spec["owner"], classification=spec["classification"], source_path=str(path), restore_template=restore_template, mode=effective_mode, content_kind=content_kind))
 
         for spec in config.get("generated_sources", []):
             kind = spec["kind"]
@@ -744,10 +1036,22 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
             elif kind == "windows_shortcuts":
                 data = export_windows_shortcuts(spec.get("patterns", []))
             elif kind == "runtime_versions":
-                data = export_runtime_versions()
+                data = export_runtime_versions(variables)
+            elif kind == "cc_switch_semantic_export":
+                data = export_cc_switch_semantic(Path(expand_tokens(spec["source"], variables)))
+            elif kind == "plugin_inventory":
+                data = export_plugin_inventory(
+                    Path(expand_tokens(spec["config_source"], variables)),
+                    Path(expand_tokens(spec["cache_root"], variables)),
+                )
+            elif kind == "current_checkpoints":
+                data = export_current_checkpoints(
+                    Path(expand_tokens(spec["manifest_source"], variables)),
+                    Path(expand_tokens(spec["shared_root"], variables)),
+                )
             else:
                 raise ValueError(f"unsupported_generated_kind:{kind}")
-            assets.append(add_asset(stage=stage, snapshot_path=spec["destination"], data=data, asset_id=spec["id"], owner=spec["owner"], classification=spec["classification"], mode=kind))
+            assets.append(add_asset(stage=stage, snapshot_path=spec["destination"], data=data, asset_id=spec["id"], owner=spec["owner"], classification=spec["classification"], mode=kind, content_kind="text"))
 
         if missing:
             raise ValueError("required_sources_missing:" + ",".join(missing))
@@ -845,6 +1149,37 @@ def repository_secret_findings() -> list[dict[str, str]]:
     return findings
 
 
+def source_coverage_issues(manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    config = load_json(SOURCE_MANIFEST)
+    variables = expanded_variables(config)
+    policy = config["policy"]
+    actual = {str(item.get("asset_id")) for item in manifest.get("assets", [])}
+    issues: list[dict[str, Any]] = []
+    for spec in config.get("sources", []):
+        if not spec.get("coverage_required"):
+            continue
+        source = Path(expand_tokens(spec["source"], variables))
+        expected: set[str] = set()
+        if source.is_file():
+            expected.add(str(spec["id"]))
+        elif source.is_dir():
+            expected.update(
+                f"{spec['id']}:{relative_posix(path, source)}"
+                for path in iter_source_files(source, spec, policy)
+            )
+        missing = sorted(expected - actual)
+        stale = sorted(
+            item
+            for item in actual
+            if (item == spec["id"] or item.startswith(str(spec["id"]) + ":")) and item not in expected
+        )
+        if missing:
+            issues.append({"code": "source_assets_missing", "source_id": spec["id"], "count": len(missing), "sample": missing[:10]})
+        if stale:
+            issues.append({"code": "source_assets_stale", "source_id": spec["id"], "count": len(stale), "sample": stale[:10]})
+    return issues
+
+
 def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
     issues: list[dict[str, Any]] = []
     try:
@@ -870,6 +1205,12 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
         observed_hash = sha256_file(target)
         if observed_hash != asset.get("sha256"):
             issues.append({"code": "asset_hash_mismatch", "path": relative, "expected": asset.get("sha256"), "observed": observed_hash})
+        content_kind = str(asset.get("content_kind") or "text")
+        if content_kind not in {"text", "binary"}:
+            issues.append({"code": "asset_content_kind_invalid", "path": relative, "observed": content_kind})
+            continue
+        if content_kind == "binary":
+            continue
         try:
             text = read_text(target)
             issues.extend({"code": "secret_detected", **finding} for finding in secret_findings(text, path=relative, config_file=target.suffix.lower() in CONFIG_EXTENSIONS))
@@ -885,7 +1226,27 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
                 except (SyntaxError, json.JSONDecodeError, tomllib.TOMLDecodeError) as exc:
                     issues.append({"code": "sanitized_asset_parse_failed", "path": relative, "detail": str(exc)})
         except ValueError:
-            issues.append({"code": "non_text_asset_in_snapshot", "path": relative})
+            issues.append({"code": "text_asset_decode_failed", "path": relative})
+    issues.extend(source_coverage_issues(manifest))
+    asset_by_id = {str(item.get("asset_id")): item for item in manifest.get("assets", [])}
+    for asset_id, checks in {
+        "codex-plugin-inventory": (("unresolved_count", 0, "plugin_inventory_unresolved"),),
+        "runtime-versions": (("codex_desktop.ok", True, "codex_desktop_version_missing"),),
+    }.items():
+        asset = asset_by_id.get(asset_id)
+        if not asset:
+            issues.append({"code": "required_generated_asset_missing", "asset_id": asset_id})
+            continue
+        try:
+            payload = load_json(path / Path(str(asset["snapshot_path"])))
+            for selector, expected, code in checks:
+                value: Any = payload
+                for part in selector.split("."):
+                    value = value.get(part) if isinstance(value, dict) else None
+                if value != expected:
+                    issues.append({"code": code, "asset_id": asset_id, "observed": value, "expected": expected})
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            issues.append({"code": "generated_asset_validation_failed", "asset_id": asset_id, "detail": str(exc)})
     current_hashes = governance_hashes()
     for name, expected in manifest.get("governance_hashes", {}).items():
         if current_hashes.get(name) != expected:

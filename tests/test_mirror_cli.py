@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
@@ -23,8 +24,9 @@ class MirrorCliTests(unittest.TestCase):
             path = Path(temp_dir) / "source.ts"
             bearer = "Bearer " + ("A" * 32)
             path.write_text(f'const value = "{bearer}";', encoding="utf-8")
-            data, mode = mirror_cli.source_payload(path, "copy")
+            data, mode, content_kind = mirror_cli.source_payload(path, "copy")
             self.assertEqual(mode, "copy_with_token_redaction")
+            self.assertEqual(content_kind, "text")
             self.assertIn(b"<SECRET:BEARER_TOKEN>", data)
 
     def test_sensitive_json_keys_are_redacted(self) -> None:
@@ -32,12 +34,121 @@ class MirrorCliTests(unittest.TestCase):
         self.assertEqual(payload["token"], "<SECRET:TOKEN>")
         self.assertEqual(payload["nested"]["password"], "<SECRET:PASSWORD>")
 
+    def test_sensitive_url_components_are_redacted(self) -> None:
+        value = mirror_cli.redact_url_value("https://user:pass@example.com/path?token=abc&mode=fast")
+        self.assertNotIn("user:pass", value)
+        self.assertNotIn("token=abc", value)
+        self.assertIn("mode=fast", value)
+
     def test_secret_placeholder_is_not_a_finding(self) -> None:
         findings = mirror_cli.secret_findings('api_key = "<SECRET:API_KEY>"', path="config.toml", config_file=True)
         self.assertEqual(findings, [])
 
     def test_restore_graph_is_acyclic(self) -> None:
         self.assertEqual(mirror_cli.restore_graph_issues(), [])
+
+    def test_source_policy_includes_active_skill_dependencies_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "active").mkdir()
+            (root / "active" / "SKILL.md").write_text("active", encoding="utf-8")
+            (root / "active" / "font.ttf").write_bytes(b"font-data")
+            (root / "active" / "schema.xsd").write_text("<schema/>", encoding="utf-8")
+            (root / "active" / "LICENSE").write_text("license", encoding="utf-8")
+            (root / "active" / ".DS_Store").write_bytes(b"junk")
+            (root / ".disabled").mkdir()
+            (root / ".disabled" / "SKILL.md").write_text("disabled", encoding="utf-8")
+            (root / ".system").mkdir()
+            (root / ".system" / "SKILL.md").write_text("system", encoding="utf-8")
+            spec = {
+                "exclude_dirs": [".disabled", ".system"],
+                "exclude_files": [".DS_Store"],
+                "extra_allowed_extensions": [".xsd"],
+                "binary_extensions": [".ttf"],
+                "allow_extensionless": True,
+            }
+            policy = {
+                "allowed_extensions": [".md"],
+                "prohibited_extensions": [".ttf"],
+                "global_exclude_dirs": ["__pycache__"],
+                "global_exclude_files": [".DS_Store"],
+                "max_file_bytes": 1024,
+            }
+            files = {path.relative_to(root).as_posix() for path in mirror_cli.iter_source_files(root, spec, policy)}
+            self.assertEqual(files, {"active/LICENSE", "active/SKILL.md", "active/font.ttf", "active/schema.xsd"})
+
+    def test_binary_asset_is_hash_validated_without_text_decoding(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "font.ttf"
+            source.write_bytes(bytes(range(256)))
+            data, mode, content_kind = mirror_cli.source_payload(source, "copy", "binary")
+            asset = mirror_cli.add_asset(
+                stage=root / "stage",
+                snapshot_path="font.ttf",
+                data=data,
+                asset_id="font",
+                owner="skill",
+                classification="authority_export",
+                mode=mode,
+                content_kind=content_kind,
+            )
+            self.assertEqual(asset["content_kind"], "binary")
+            self.assertEqual(asset["sha256"], mirror_cli.sha256_bytes(bytes(range(256))))
+
+    def test_cc_switch_semantic_export_redacts_nested_secrets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            database = Path(temp_dir) / "cc-switch.db"
+            connection = sqlite3.connect(database)
+            for table in mirror_cli.CC_SWITCH_SEMANTIC_TABLES:
+                if table == "providers":
+                    connection.execute("CREATE TABLE providers (id TEXT, settings_config TEXT)")
+                elif table == "settings":
+                    connection.execute("CREATE TABLE settings (key TEXT, value TEXT)")
+                else:
+                    connection.execute(f'CREATE TABLE "{table}" (id TEXT)')
+            connection.execute(
+                "INSERT INTO providers VALUES (?, ?)",
+                ("provider-1", json.dumps({"api_key": "raw-secret", "headers": {"Authorization": "Bearer raw-secret"}, "base_url": "https://example.com?v=1"})),
+            )
+            connection.execute("INSERT INTO settings VALUES (?, ?)", ("access_token", "raw-token"))
+            connection.commit()
+            connection.close()
+            payload = json.loads(mirror_cli.export_cc_switch_semantic(database))
+            serialized = json.dumps(payload)
+            self.assertNotIn("raw-secret", serialized)
+            self.assertNotIn("raw-token", serialized)
+            self.assertIn("<SECRET:API_KEY>", serialized)
+            self.assertEqual(payload["tables"]["providers"]["row_count"], 1)
+
+    def test_plugin_inventory_records_enabled_manifest_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            config = root / "config.toml"
+            config.write_text('[plugins."demo@market"]\nenabled = true\n[plugins."off@market"]\nenabled = false\n', encoding="utf-8")
+            manifest = root / "cache" / "market" / "demo" / "rev1" / ".codex-plugin" / "plugin.json"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(json.dumps({"name": "demo", "version": "1.2.3", "repository": "https://example.com/demo"}), encoding="utf-8")
+            payload = json.loads(mirror_cli.export_plugin_inventory(config, root / "cache"))
+            self.assertEqual(payload["enabled_count"], 1)
+            self.assertEqual(payload["unresolved_count"], 0)
+            self.assertEqual(payload["plugins"][0]["manifest_version"], "1.2.3")
+            self.assertTrue(payload["plugins"][0]["manifest_sha256"])
+
+    def test_current_checkpoint_export_uses_manifest_selection_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            shared = Path(temp_dir)
+            (shared / "checkpoints" / "current").mkdir(parents=True)
+            (shared / "ARCHITECTURE.md").write_text("architecture", encoding="utf-8")
+            (shared / "checkpoints" / "current" / "now.md").write_text("checkpoint", encoding="utf-8")
+            manifest = shared / "checkpoints" / "MANIFEST.md"
+            manifest.write_text(
+                "# Manifest\n\n## Shared docs\n- ARCHITECTURE.md\n\n## Recent checkpoints\n- checkpoints/current/now.md\n",
+                encoding="utf-8",
+            )
+            payload = json.loads(mirror_cli.export_current_checkpoints(manifest, shared))
+            self.assertEqual(payload["selected_count"], 2)
+            self.assertEqual({item["path"] for item in payload["selected"]}, {"ARCHITECTURE.md", "checkpoints/current/now.md"})
 
     def test_stage_path_maps_logical_roots(self) -> None:
         self.assertEqual(

@@ -29,7 +29,7 @@
       "venvs", "wheelhouse", "wheels"
     ],
     "global_exclude_files": [
-      ".run-jitter-salt", "auth.json", "cap_sid", "copilot_auth.json"
+      ".DS_Store", ".run-jitter-salt", "auth.json", "cap_sid", "copilot_auth.json"
     ]
   },
   "sources": [
@@ -121,7 +121,15 @@
       "mode": "copy_tree",
       "classification": "authority_export",
       "owner": "skill_lifecycle_governance",
-      "exclude_dirs": ["_backups"],
+      "exclude_dirs": [".disabled", ".system", "_backups", "__pycache__"],
+      "exclude_files": [".DS_Store"],
+      "extra_allowed_extensions": [
+        ".cjs", ".js-yaml", ".lock", ".mcfunction", ".opml", ".sh",
+        ".svg", ".template", ".xsd"
+      ],
+      "binary_extensions": [".gz", ".pdf", ".png", ".skill", ".ttf"],
+      "allow_extensionless": true,
+      "coverage_required": true,
       "required": true
     },
     {
@@ -144,6 +152,19 @@
       "mode": "copy_tree",
       "classification": "bootstrap_source",
       "owner": "codex_cli",
+      "required": false
+    },
+    {
+      "id": "codex-tools",
+      "kind": "tree",
+      "source": "${CODEX_HOME}\\tools",
+      "destination": "exports/codex-home/tools",
+      "restore_path": "${CODEX_HOME}\\tools",
+      "mode": "copy_tree",
+      "classification": "bootstrap_source",
+      "owner": "codex_cli",
+      "exclude_dirs": ["__pycache__"],
+      "coverage_required": true,
       "required": false
     },
     {
@@ -262,6 +283,38 @@
       "classification": "configuration_template",
       "owner": "secret_vault",
       "required": false
+    },
+    {
+      "id": "cc-switch-semantic-export",
+      "kind": "cc_switch_semantic_export",
+      "source": "${CC_SWITCH_HOME}\\cc-switch.db",
+      "destination": "exports/derived/cc-switch-semantic.json",
+      "classification": "configuration_template",
+      "owner": "cc_switch",
+      "activation": "owner_import_only",
+      "required": true
+    },
+    {
+      "id": "codex-plugin-inventory",
+      "kind": "plugin_inventory",
+      "config_source": "${CODEX_HOME}\\config.toml",
+      "cache_root": "${CODEX_HOME}\\plugins\\cache",
+      "destination": "exports/derived/codex-plugin-inventory.json",
+      "classification": "bootstrap_source",
+      "owner": "codex_cli",
+      "activation": "owner_reacquire_only",
+      "required": true
+    },
+    {
+      "id": "current-checkpoint-snapshot",
+      "kind": "current_checkpoints",
+      "manifest_source": "${WORKSPACE_ROOT}\\_bridge\\shared\\checkpoints\\MANIFEST.md",
+      "shared_root": "${WORKSPACE_ROOT}\\_bridge\\shared",
+      "destination": "exports/derived/current-checkpoints.json",
+      "classification": "authority_export",
+      "owner": "memory_governance",
+      "activation": "owner_import_only",
+      "required": true
     },
     {
       "id": "windows-scheduled-tasks",

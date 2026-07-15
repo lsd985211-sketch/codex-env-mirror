@@ -6,7 +6,7 @@
       "id": "platform-preflight",
       "depends_on": [],
       "owner": "runtime",
-      "action": "verify OS, identity, disk, Python, PowerShell, Git, and repository integrity"
+      "action": "verify OS, identity, disk, Python, PowerShell, Git, Codex Desktop, native-host compatibility, and repository integrity"
     },
     {
       "id": "rules-stage",
@@ -21,6 +21,12 @@
       "action": "stage workflow, member, rule, maintenance, and owner source"
     },
     {
+      "id": "codex-tools-plan",
+      "depends_on": ["platform-preflight"],
+      "owner": "codex_cli",
+      "action": "stage user-owned Codex helper tools and validate their runtime prerequisites"
+    },
+    {
       "id": "config-plan",
       "depends_on": ["workflow-stage"],
       "owner": "codex_config_guard",
@@ -30,7 +36,13 @@
       "id": "provider-plan",
       "depends_on": ["config-plan"],
       "owner": "codex_model_provider",
-      "action": "reapply CC Switch provider catalog and model projection through current owner"
+      "action": "import the sanitized CC Switch semantic export through its owner, then reapply provider catalog and model projection"
+    },
+    {
+      "id": "plugin-plan",
+      "depends_on": ["config-plan", "codex-tools-plan"],
+      "owner": "codex_cli",
+      "action": "reacquire enabled plugin versions from inventory; platform, bundled, and plugin skills are not restored from user-skill files"
     },
     {
       "id": "mcp-plan",
@@ -42,13 +54,13 @@
       "id": "skills-plan",
       "depends_on": ["workflow-stage"],
       "owner": "skill_lifecycle_governance",
-      "action": "restore active global skills and run lifecycle validation"
+      "action": "restore active user-owned global skills with required text and binary dependencies, then run lifecycle validation"
     },
     {
       "id": "memory-plan",
       "depends_on": ["workflow-stage"],
       "owner": "memory_governance",
-      "action": "import semantic memory exports; raw databases only through compatible owner import"
+      "action": "import semantic memory exports and the manifest-selected current checkpoint snapshot; raw databases and full checkpoint history only through compatible owner import"
     },
     {
       "id": "windows-integration-plan",
@@ -65,7 +77,7 @@
     {
       "id": "acceptance",
       "depends_on": [
-        "provider-plan", "mcp-plan", "skills-plan", "memory-plan",
+        "provider-plan", "plugin-plan", "mcp-plan", "skills-plan", "memory-plan",
         "windows-integration-plan", "external-state-plan"
       ],
       "owner": "workflow_finalization",
