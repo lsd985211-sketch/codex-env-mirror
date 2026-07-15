@@ -77,6 +77,40 @@ class MirrorCliTests(unittest.TestCase):
             files = {path.relative_to(root).as_posix() for path in mirror_cli.iter_source_files(root, spec, policy)}
             self.assertEqual(files, {"active/LICENSE", "active/SKILL.md", "active/font.ttf", "active/schema.xsd"})
 
+    def test_source_freshness_detects_changed_content_but_allows_missing_live_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "source.md"
+            source.write_text("new", encoding="utf-8")
+            config = root / "sources.json"
+            config.write_text(json.dumps({
+                "variables": {},
+                "policy": {
+                    "allowed_extensions": [".md"],
+                    "prohibited_extensions": [],
+                    "global_exclude_dirs": [],
+                    "global_exclude_files": [],
+                    "max_file_bytes": 1024,
+                },
+                "sources": [{
+                    "id": "source",
+                    "kind": "file",
+                    "source": str(source),
+                    "mode": "copy",
+                    "coverage_required": True,
+                }],
+            }), encoding="utf-8")
+            old_manifest = mirror_cli.SOURCE_MANIFEST
+            mirror_cli.SOURCE_MANIFEST = config
+            try:
+                manifest = {"assets": [{"asset_id": "source", "sha256": mirror_cli.sha256_bytes(b"old"), "mode": "copy"}]}
+                findings = mirror_cli.source_coverage_issues(manifest)
+                self.assertEqual(findings[0]["code"], "source_assets_changed")
+                source.unlink()
+                self.assertEqual(mirror_cli.source_coverage_issues(manifest), [])
+            finally:
+                mirror_cli.SOURCE_MANIFEST = old_manifest
+
     def test_binary_asset_is_hash_validated_without_text_decoding(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -120,6 +154,14 @@ class MirrorCliTests(unittest.TestCase):
             self.assertNotIn("raw-token", serialized)
             self.assertIn("<SECRET:API_KEY>", serialized)
             self.assertEqual(payload["tables"]["providers"]["row_count"], 1)
+            connection = sqlite3.connect(database)
+            connection.execute("CREATE TABLE request_logs (id TEXT)")
+            connection.execute("INSERT INTO request_logs VALUES ('runtime-only')")
+            connection.commit()
+            connection.close()
+            updated = json.loads(mirror_cli.export_cc_switch_semantic(database))
+            self.assertNotEqual(payload["source_sha256"], updated["source_sha256"])
+            self.assertEqual(payload["semantic_sha256"], updated["semantic_sha256"])
 
     def test_plugin_inventory_records_enabled_manifest_only(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

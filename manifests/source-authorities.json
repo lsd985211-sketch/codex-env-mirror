@@ -125,6 +125,7 @@
       "classification": "configuration_template",
       "owner": "codex_state_repair",
       "activation": "owner_merge_only",
+      "coverage_required": false,
       "required": false
     },
     {

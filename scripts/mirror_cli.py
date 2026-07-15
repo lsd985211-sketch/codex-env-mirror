@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import hashlib
 import json
 import os
@@ -25,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_ROOT = ROOT / "manifests"
 SOURCE_MANIFEST = MANIFEST_ROOT / "source-authorities.json"
 EXTERNAL_ARCHIVES = MANIFEST_ROOT / "external-archives.json"
+ASSET_DISPOSITIONS = MANIFEST_ROOT / "asset-dispositions.json"
 RESTORE_ORDER = MANIFEST_ROOT / "restore-order.json"
 SNAPSHOT_ROOT = ROOT / "snapshots"
 RUNTIME_ROOT = ROOT / "runtime"
@@ -418,11 +420,13 @@ def export_cc_switch_semantic(source: Path) -> bytes:
                     row["value"] = "<SECRET:SETTING_VALUE>"
                 rows.append(row)
             tables[table] = {"row_count": len(rows), "rows": rows}
+        semantic_sha256 = sha256_bytes(json.dumps(tables, ensure_ascii=False, sort_keys=True).encode("utf-8"))
         payload = {
             "schema": "codex_mirror.cc_switch_semantic_export.v1",
             "generated_at": now_iso(),
             "authority": "derived_from_cc_switch_database",
             "source_sha256": sha256_file(source),
+            "semantic_sha256": semantic_sha256,
             "excluded_state": [
                 "request_logs",
                 "usage_logs",
@@ -608,7 +612,7 @@ def governance_hashes() -> dict[str, str]:
     results: dict[str, str] = {}
     for path in sorted(MANIFEST_ROOT.rglob("*.json")):
         results[relative_posix(path, ROOT)] = sha256_file(path)
-    for name in ("README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"):
+    for name in ("AGENTS.md", "README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"):
         path = ROOT / name
         results[name] = sha256_file(path)
     for directory in (ROOT / "scripts", ROOT / "tests"):
@@ -932,9 +936,112 @@ def apply_membership_guard(snapshot_root: Path, assets: list[dict[str, Any]]) ->
     return kept, guard
 
 
+def path_is_within(path: Path, parent: Path) -> bool:
+    try:
+        path.resolve().relative_to(parent.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def collect_asset_dispositions(
+    config: dict[str, Any],
+    variables: dict[str, str] | None = None,
+    *,
+    include_assets: bool = False,
+) -> dict[str, Any]:
+    variables = variables or expanded_variables(config)
+    policy = load_json(ASSET_DISPOSITIONS)
+    archives = load_json(EXTERNAL_ARCHIVES)
+    included_sources = [Path(expand_tokens(str(spec["source"]), variables)).resolve() for spec in config.get("sources", [])]
+    external_sources: list[tuple[Path, str, str]] = []
+    for item in archives.get("assets", []):
+        asset_id = str(item.get("asset_id") or "")
+        for value in [item.get("source"), *item.get("related_sources", [])]:
+            if value:
+                external_sources.append((Path(expand_tokens(str(value), variables)).resolve(), "external_archive", asset_id))
+    external_sources.extend(
+        (Path(expand_tokens(str(value), variables)).resolve(), disposition, "")
+        for field, disposition in (("reacquire_instead_of_archive", "reacquire"), ("regenerate_instead_of_archive", "regenerate"))
+        for value in archives.get(field, [])
+    )
+    rows: list[dict[str, Any]] = []
+    issues: list[dict[str, Any]] = []
+    counts: dict[str, int] = {}
+    for root_spec in policy.get("roots", []):
+        root = Path(expand_tokens(str(root_spec["root"]), variables)).resolve()
+        root_rows: list[dict[str, Any]] = []
+        if not root.is_dir():
+            if root_spec.get("required"):
+                issues.append({"code": "inventory_root_missing", "root_id": root_spec["id"], "root": str(root)})
+            rows.append({"id": root_spec["id"], "root": str(root), "exists": False, "asset_count": 0, "counts": {}})
+            continue
+        for child in sorted(root.iterdir(), key=lambda item: item.name.lower()):
+            disposition = ""
+            owner = ""
+            evidence = ""
+            child_resolved = child.resolve()
+            source_match = next((path for path in included_sources if child_resolved == path or path_is_within(path, child_resolved)), None)
+            if source_match:
+                disposition, evidence = "mirrored", str(source_match)
+            else:
+                external_match = next(
+                    ((path, kind, asset_id) for path, kind, asset_id in external_sources if child_resolved == path or path_is_within(path, child_resolved)),
+                    None,
+                )
+                if external_match:
+                    path, disposition, owner = external_match
+                    evidence = str(path)
+                else:
+                    for rule in root_spec.get("rules", []):
+                        if child.name in rule.get("names", []) or any(fnmatch.fnmatch(child.name, pattern) for pattern in rule.get("patterns", [])):
+                            disposition = str(rule["disposition"])
+                            owner = str(rule.get("owner") or "")
+                            evidence = str(rule.get("evidence") or "explicit_rule")
+                            break
+            row = {
+                "name": child.name,
+                "kind": "directory" if child.is_dir() else "file",
+                "disposition": disposition or "unclassified",
+                "owner": owner,
+                "evidence": evidence,
+            }
+            root_rows.append(row)
+            counts[row["disposition"]] = counts.get(row["disposition"], 0) + 1
+            if not disposition:
+                issues.append({
+                    "code": "source_asset_unclassified",
+                    "root_id": root_spec["id"],
+                    "path": str(child),
+                    "name": child.name,
+                })
+        root_counts: dict[str, int] = {}
+        for row in root_rows:
+            root_counts[row["disposition"]] = root_counts.get(row["disposition"], 0) + 1
+        root_row: dict[str, Any] = {
+            "id": root_spec["id"],
+            "root": str(root),
+            "exists": True,
+            "asset_count": len(root_rows),
+            "counts": dict(sorted(root_counts.items())),
+        }
+        if include_assets:
+            root_row["assets"] = root_rows
+        rows.append(root_row)
+    return {
+        "schema": "codex_mirror.asset_disposition_inventory.v1",
+        "ok": not issues,
+        "generated_at": now_iso(),
+        "roots": rows,
+        "counts": dict(sorted(counts.items())),
+        "issues": issues,
+    }
+
+
 def collect_plan(config: dict[str, Any]) -> dict[str, Any]:
     variables = expanded_variables(config)
     policy = config["policy"]
+    disposition_inventory = collect_asset_dispositions(config, variables)
     rows: list[dict[str, Any]] = []
     missing: list[str] = []
     total_bytes = 0
@@ -978,15 +1085,17 @@ def collect_plan(config: dict[str, Any]) -> dict[str, Any]:
     missing = sorted(set(missing))
     return {
         "schema": "codex_mirror.plan.v1",
-        "ok": not missing and total_bytes <= int(policy["max_snapshot_bytes"]),
+        "ok": not missing and not disposition_inventory["issues"] and total_bytes <= int(policy["max_snapshot_bytes"]),
         "generated_at": now_iso(),
         "sources": rows,
         "generated_sources": generated_rows,
+        "asset_dispositions": disposition_inventory,
         "summary": {
             "candidate_files": total_files,
             "candidate_source_bytes": total_bytes,
             "max_snapshot_bytes": int(policy["max_snapshot_bytes"]),
             "required_sources_missing": missing,
+            "unclassified_source_assets": len(disposition_inventory["issues"]),
         },
     }
 
@@ -1072,6 +1181,7 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
             "governance_hashes": governance_hashes(),
             "assets": assets,
             "membership_guard": membership_guard,
+            "asset_dispositions": plan["asset_dispositions"],
             "external_archives": load_json(EXTERNAL_ARCHIVES),
             "summary": {"asset_count": len(assets), "total_bytes": total_bytes, "required_sources_missing": []},
         }
@@ -1135,7 +1245,7 @@ def restore_graph_issues() -> list[dict[str, Any]]:
 def repository_secret_findings() -> list[dict[str, str]]:
     findings: list[dict[str, str]] = []
     roots = [ROOT / name for name in ("manifests", "scripts", "tests")]
-    roots.extend(ROOT / name for name in ("README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"))
+    roots.extend(ROOT / name for name in ("AGENTS.md", "README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"))
     for root in roots:
         paths = [root] if root.is_file() else list(root.rglob("*"))
         for path in paths:
@@ -1153,30 +1263,116 @@ def source_coverage_issues(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     config = load_json(SOURCE_MANIFEST)
     variables = expanded_variables(config)
     policy = config["policy"]
-    actual = {str(item.get("asset_id")) for item in manifest.get("assets", [])}
+    actual_by_id = {str(item.get("asset_id")): item for item in manifest.get("assets", [])}
+    actual = set(actual_by_id)
+    guard = manifest.get("membership_guard", {})
     issues: list[dict[str, Any]] = []
     for spec in config.get("sources", []):
-        if not spec.get("coverage_required"):
+        if spec.get("coverage_required", True) is False:
             continue
         source = Path(expand_tokens(spec["source"], variables))
-        expected: set[str] = set()
+        if not source.exists():
+            continue
+        expected_assets: dict[str, dict[str, str]] = {}
         if source.is_file():
-            expected.add(str(spec["id"]))
+            content_kind = source_content_kind(source, spec)
+            data, _, _ = source_payload(source, spec["mode"], content_kind)
+            expected_assets[str(spec["id"])] = {
+                "sha256": sha256_bytes(data),
+                "snapshot_path": str(spec.get("destination") or ""),
+                "restore_template": str(spec.get("restore_path") or ""),
+            }
         elif source.is_dir():
-            expected.update(
-                f"{spec['id']}:{relative_posix(path, source)}"
-                for path in iter_source_files(source, spec, policy)
-            )
+            for item in iter_source_files(source, spec, policy):
+                rel = relative_posix(item, source)
+                asset_id = f"{spec['id']}:{rel}"
+                content_kind = source_content_kind(item, spec)
+                data, _, _ = source_payload(item, "copy", content_kind)
+                expected_assets[asset_id] = {
+                    "sha256": sha256_bytes(data),
+                    "snapshot_path": str(Path(spec.get("destination", "")) / Path(rel)).replace("\\", "/"),
+                    "restore_template": str(Path(spec.get("restore_path", "")) / Path(rel)).replace("/", "\\"),
+                }
+        expected_assets = {
+            asset_id: candidate
+            for asset_id, candidate in expected_assets.items()
+            if not guarded_asset_conflicts([{"asset_id": asset_id, **candidate}], guard)
+        }
+        expected = set(expected_assets)
         missing = sorted(expected - actual)
         stale = sorted(
             item
             for item in actual
             if (item == spec["id"] or item.startswith(str(spec["id"]) + ":")) and item not in expected
         )
+        changed = sorted(
+            asset_id
+            for asset_id, expected_asset in expected_assets.items()
+            if asset_id in actual_by_id
+            and "inactive_member_sanitized" not in str(actual_by_id[asset_id].get("mode") or "")
+            and str(actual_by_id[asset_id].get("sha256") or "") != expected_asset["sha256"]
+        )
         if missing:
             issues.append({"code": "source_assets_missing", "source_id": spec["id"], "count": len(missing), "sample": missing[:10]})
         if stale:
             issues.append({"code": "source_assets_stale", "source_id": spec["id"], "count": len(stale), "sample": stale[:10]})
+        if changed:
+            issues.append({"code": "source_assets_changed", "source_id": spec["id"], "count": len(changed), "sample": changed[:10]})
+    return issues
+
+
+def strip_volatile_fields(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: strip_volatile_fields(item) for key, item in value.items() if key not in {"generated_at"}}
+    if isinstance(value, list):
+        return [strip_volatile_fields(item) for item in value]
+    return value
+
+
+def generated_source_issues(snapshot_root: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    config = load_json(SOURCE_MANIFEST)
+    variables = expanded_variables(config)
+    actual_by_id = {str(item.get("asset_id")): item for item in manifest.get("assets", [])}
+    issues: list[dict[str, Any]] = []
+    for spec in config.get("generated_sources", []):
+        asset_id = str(spec["id"])
+        asset = actual_by_id.get(asset_id)
+        if not asset:
+            if spec.get("required"):
+                issues.append({"code": "required_generated_asset_missing", "asset_id": asset_id})
+            continue
+        snapshot_payload_path = snapshot_root / Path(str(asset["snapshot_path"]))
+        kind = str(spec["kind"])
+        try:
+            snapshot_payload = load_json(snapshot_payload_path)
+            if kind == "cc_switch_semantic_export":
+                source = Path(expand_tokens(spec["source"], variables))
+                if source.is_file():
+                    current = json.loads(export_cc_switch_semantic(source))
+                    if snapshot_payload.get("semantic_sha256") != current.get("semantic_sha256"):
+                        issues.append({"code": "generated_source_changed", "asset_id": asset_id, "source": "cc_switch_semantic_tables"})
+            elif kind == "plugin_inventory":
+                config_source = Path(expand_tokens(spec["config_source"], variables))
+                cache_root = Path(expand_tokens(spec["cache_root"], variables))
+                if config_source.is_file() and cache_root.is_dir():
+                    current = json.loads(export_plugin_inventory(config_source, cache_root))
+                    if strip_volatile_fields(current) != strip_volatile_fields(snapshot_payload):
+                        issues.append({"code": "generated_source_changed", "asset_id": asset_id, "source": "plugin_inventory"})
+            elif kind == "current_checkpoints":
+                manifest_source = Path(expand_tokens(spec["manifest_source"], variables))
+                shared_root = Path(expand_tokens(spec["shared_root"], variables))
+                if manifest_source.is_file() and shared_root.is_dir():
+                    current = json.loads(export_current_checkpoints(manifest_source, shared_root))
+                    if strip_volatile_fields(current) != strip_volatile_fields(snapshot_payload):
+                        issues.append({"code": "generated_source_changed", "asset_id": asset_id, "source": "current_checkpoints"})
+            elif kind == "runtime_versions":
+                codex_home = Path(variables.get("CODEX_HOME", ""))
+                if codex_home.is_dir():
+                    current = json.loads(export_runtime_versions(variables))
+                    if strip_volatile_fields(current) != strip_volatile_fields(snapshot_payload):
+                        issues.append({"code": "generated_source_changed", "asset_id": asset_id, "source": "runtime_versions"})
+        except (OSError, ValueError, json.JSONDecodeError, sqlite3.Error) as exc:
+            issues.append({"code": "generated_source_freshness_failed", "asset_id": asset_id, "detail": str(exc)})
     return issues
 
 
@@ -1187,7 +1383,7 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
         manifest = load_json(path / "snapshot-manifest.json")
     except Exception as exc:
         return {"schema": "codex_mirror.validate.v1", "ok": False, "issues": [{"code": "snapshot_load_failed", "detail": str(exc)}]}
-    required_fields = {"schema", "snapshot_id", "created_at", "authority_mode", "assets", "membership_guard", "summary"}
+    required_fields = {"schema", "snapshot_id", "created_at", "authority_mode", "assets", "membership_guard", "asset_dispositions", "summary"}
     missing_fields = sorted(required_fields - set(manifest))
     if missing_fields:
         issues.append({"code": "manifest_fields_missing", "fields": missing_fields})
@@ -1228,6 +1424,8 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
         except ValueError:
             issues.append({"code": "text_asset_decode_failed", "path": relative})
     issues.extend(source_coverage_issues(manifest))
+    issues.extend(generated_source_issues(path, manifest))
+    issues.extend(collect_asset_dispositions(load_json(SOURCE_MANIFEST))["issues"])
     asset_by_id = {str(item.get("asset_id")): item for item in manifest.get("assets", [])}
     for asset_id, checks in {
         "codex-plugin-inventory": (("unresolved_count", 0, "plugin_inventory_unresolved"),),

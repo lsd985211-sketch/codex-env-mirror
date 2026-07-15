@@ -37,6 +37,40 @@
       "status": "archive_receipt_missing"
     },
     {
+      "asset_id": "codex-desktop-state",
+      "source": "C:\\Users\\45543\\.codex\\state_5.sqlite",
+      "owner": "codex_state_repair",
+      "classification": "private",
+      "required_for": "desktop_task_and_ui_state_continuity",
+      "restore_mode": "owner_import_only_when_target_schema_is_compatible",
+      "status": "optional_archive_receipt_missing"
+    },
+    {
+      "asset_id": "codex-owner-database-state",
+      "source": "C:\\Users\\45543\\.codex\\sqlite",
+      "owner": "database_owner",
+      "classification": "private",
+      "required_for": "owner_database_continuity_beyond_semantic_exports",
+      "restore_mode": "selective_owner_import_only; logs and transient sidecars are excluded",
+      "status": "optional_archive_receipt_missing"
+    },
+    {
+      "asset_id": "codex-conversation-and-artifact-history",
+      "source": "C:\\Users\\45543\\.codex\\archived_sessions",
+      "related_sources": [
+        "C:\\Users\\45543\\.codex\\attachments",
+        "C:\\Users\\45543\\.codex\\generated_images",
+        "C:\\Users\\45543\\.codex\\history.jsonl",
+        "C:\\Users\\45543\\.codex\\session_index.jsonl",
+        "C:\\Users\\45543\\.codex\\visualizations"
+      ],
+      "owner": "conversation_artifact_owner",
+      "classification": "private",
+      "required_for": "historical_conversation_and_generated_artifact_continuity",
+      "restore_mode": "separate encrypted archive; never default-activate into a new Codex version",
+      "status": "optional_archive_receipt_missing"
+    },
+    {
       "asset_id": "codex-resource-library",
       "source": "C:\\Users\\45543\\Desktop\\Codex资源库",
       "owner": "resource_library",
