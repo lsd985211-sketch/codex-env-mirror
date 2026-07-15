@@ -1,0 +1,20 @@
+{
+  "skill_id": "aac3e11ef64577b1",
+  "name": "hyperframes-cli",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\hyperframes\\c6ea566d\\skills\\hyperframes-cli",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "253ff75cd896b2290e5247c4ec63fc1341ac14d891fd5fb06ba04e59e49e4ab5",
+    "agents": "b5af096b2d61abeefd0e545f62666a3c11bfa99f910c4c51a2214a84151ae238",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
