@@ -239,6 +239,12 @@
         "email_scheduler_state", "resources", "runtime", "runtime_dependencies",
         "tmp", "unresolved-items", "venvs", "wheelhouse", "wheels"
       ],
+      "exclude_files": [
+        "backup-note-admin-superuser-permission-20260629-234500.txt",
+        "backup-note-ask-whitelist-20260629-233000.txt",
+        "backup-note-permission-policy-20260629-222015.txt",
+        "backup-note-permission-table-deny-unauthorized-20260629-224813.txt"
+      ],
       "required": true
     },
     {

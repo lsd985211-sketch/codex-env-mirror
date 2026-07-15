@@ -78,6 +78,20 @@ class MirrorCliTests(unittest.TestCase):
             files = {path.relative_to(root).as_posix() for path in mirror_cli.iter_source_files(root, spec, policy)}
             self.assertEqual(files, {"active/LICENSE", "active/SKILL.md", "active/font.ttf", "active/schema.xsd"})
 
+    def test_workspace_bridge_excludes_historical_backup_notes(self) -> None:
+        config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
+        workspace_bridge = next(item for item in config["sources"] if item["id"] == "workspace-bridge-source")
+        excluded = set(workspace_bridge.get("exclude_files", []))
+        self.assertEqual(
+            excluded,
+            {
+                "backup-note-admin-superuser-permission-20260629-234500.txt",
+                "backup-note-ask-whitelist-20260629-233000.txt",
+                "backup-note-permission-policy-20260629-222015.txt",
+                "backup-note-permission-table-deny-unauthorized-20260629-224813.txt",
+            },
+        )
+
     def test_source_freshness_detects_changed_content_but_allows_missing_live_root(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
