@@ -4,6 +4,7 @@
   "variables": {
     "USERPROFILE": "C:\\Users\\45543",
     "CODEX_HOME": "${USERPROFILE}\\.codex",
+    "AGENT_HOME": "${USERPROFILE}\\.agents",
     "WORKSPACE_ROOT": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
     "CC_SWITCH_HOME": "${USERPROFILE}\\.cc-switch",
     "RESOURCE_LIBRARY": "${USERPROFILE}\\Desktop\\Codex资源库"
@@ -67,6 +68,20 @@
       "required": false
     },
     {
+      "id": "codex-native-memory-files",
+      "kind": "tree",
+      "source": "${CODEX_HOME}\\memories",
+      "destination": "exports/codex-home/native-memory",
+      "restore_path": "${CODEX_HOME}\\memories",
+      "mode": "copy_tree",
+      "classification": "authority_export",
+      "owner": "memory_governance",
+      "activation": "owner_import_only",
+      "exclude_dirs": [".git", "archived", "backups"],
+      "coverage_required": true,
+      "required": true
+    },
+    {
       "id": "codex-version",
       "kind": "file",
       "source": "${CODEX_HOME}\\version.json",
@@ -118,6 +133,26 @@
       "source": "${CODEX_HOME}\\skills",
       "destination": "exports/codex-home/skills",
       "restore_path": "${CODEX_HOME}\\skills",
+      "mode": "copy_tree",
+      "classification": "authority_export",
+      "owner": "skill_lifecycle_governance",
+      "exclude_dirs": [".disabled", ".system", "_backups", "__pycache__"],
+      "exclude_files": [".DS_Store"],
+      "extra_allowed_extensions": [
+        ".cjs", ".js-yaml", ".lock", ".mcfunction", ".opml", ".sh",
+        ".svg", ".template", ".xsd"
+      ],
+      "binary_extensions": [".gz", ".pdf", ".png", ".skill", ".ttf"],
+      "allow_extensionless": true,
+      "coverage_required": true,
+      "required": true
+    },
+    {
+      "id": "agent-compatibility-skills",
+      "kind": "tree",
+      "source": "${AGENT_HOME}\\skills",
+      "destination": "exports/agent-home/skills",
+      "restore_path": "${AGENT_HOME}\\skills",
       "mode": "copy_tree",
       "classification": "authority_export",
       "owner": "skill_lifecycle_governance",

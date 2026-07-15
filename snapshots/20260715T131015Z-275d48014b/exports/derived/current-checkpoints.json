@@ -1,6 +1,6 @@
 {
   "schema": "codex_mirror.current_checkpoints.v1",
-  "generated_at": "2026-07-15T12:57:20.219308+00:00",
+  "generated_at": "2026-07-15T13:10:39.255621+00:00",
   "authority": "derived_from_checkpoint_manifest",
   "selection_rule": "manifest_shared_docs_and_recent_checkpoints_only",
   "full_history_included": false,

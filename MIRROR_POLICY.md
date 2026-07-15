@@ -41,12 +41,18 @@ they are never text-decoded, secret-scanned as text, or rewritten by membership
 sanitization. Coverage-required sources must contain every currently eligible
 asset and no stale asset.
 
-The active user-skill source excludes `.disabled`, `.system`, backups, caches,
-compiled files, and junk. Fonts, OOXML schemas, packaged skill resources,
-reference images, templates, shell scripts, licenses, and other declared skill
-dependencies remain recoverable. Platform, bundled, and plugin skills are
-reacquired from the recorded Codex/plugin inventory rather than copied from
-platform-managed directories.
+Active user-skill sources under `.codex` and the compatibility `.agents` root
+exclude `.disabled`, `.system`, backups, caches, compiled files, and junk.
+Fonts, OOXML schemas, packaged skill resources, reference images, templates,
+shell scripts, licenses, and other declared skill dependencies remain
+recoverable. Platform, bundled, and plugin skills are reacquired from the
+recorded Codex/plugin inventory rather than copied from platform-managed
+directories.
+
+The current native memory text repository is mirrored without its nested Git
+metadata, backups, or archived ad-hoc records. Its SQLite job state remains an
+encrypted external archive concern; restore is owner-imported rather than copied
+over a live memory repository.
 
 ## Prohibited Git Content
 

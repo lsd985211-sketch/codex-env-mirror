@@ -1,7 +1,7 @@
 {
   "schema": "local-pmb-memory.snapshot.v1",
   "ok": true,
-  "generated_at": "2026-07-15T12:57:19.801865+00:00",
+  "generated_at": "2026-07-15T13:10:38.860316+00:00",
   "root": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
   "pmb": {
     "home": "C:\\Users\\45543\\Desktop\\CODEX~1\\memory\\pmb\\data",
@@ -17,7 +17,7 @@
       "ok": true,
       "running": true,
       "warm": true,
-      "status_preview": "Daemon running · pid 28328 · port 8765 · uptime 22min\n  v1.2.2 · workspace mcsmanager · warm=True",
+      "status_preview": "Daemon running · pid 28328 · port 8765 · uptime 36min\n  v1.2.2 · workspace mcsmanager · warm=True",
       "raw": {
         "ok": true,
         "returncode": 0,
@@ -26,7 +26,7 @@
           "daemon",
           "status"
         ],
-        "stdout": "Daemon running · pid 28328 · port 8765 · uptime 22min\n  v1.2.2 · workspace mcsmanager · warm=True\n",
+        "stdout": "Daemon running · pid 28328 · port 8765 · uptime 36min\n  v1.2.2 · workspace mcsmanager · warm=True\n",
         "stderr": ""
       },
       "policy": {
@@ -49,7 +49,7 @@
           "name": "pythonw.exe",
           "command_line": "\"C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe\" -m pmb.cli daemon run --port 8765 --host 127.0.0.1",
           "start_time": "2026-07-15T20:34:49.9313550+08:00",
-          "working_set_mb": 30.3,
+          "working_set_mb": 15.9,
           "port": 8765
         }
       ],
@@ -74,7 +74,7 @@
             "name": "pythonw.exe",
             "command_line": "\"C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe\" -m pmb.cli daemon run --port 8765 --host 127.0.0.1",
             "start_time": "2026-07-15T20:34:49.9313550+08:00",
-            "working_set_mb": 30.3
+            "working_set_mb": 15.9
           }
         ],
         "stderr_preview": ""

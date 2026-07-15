@@ -15,7 +15,8 @@ working environment on this machine. It is not a live configuration authority.
 
 | Area | Active source | Recovery treatment |
 | --- | --- | --- |
-| Codex home | `C:\Users\45543\.codex` | active user skills with required dependencies, rules, scripts, tools, templates, and runtime compatibility evidence; platform/plugin caches and secrets excluded |
+| Codex home | `C:\Users\45543\.codex` | active user skills with required dependencies, current native memory text, rules, scripts, tools, templates, and runtime compatibility evidence; platform/plugin caches and secrets excluded |
+| Agent compatibility home | `C:\Users\45543\.agents` | active compatibility skills only; `.disabled` and caches excluded |
 | Workspace governance | `C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager` | `AGENTS.md` plus `_bridge` source, policies, docs, tests, scripts, and a manifest-selected current checkpoint export |
 | CC Switch | `C:\Users\45543\.cc-switch` | settings, skills, and a recursively redacted semantic database export; raw database remains an encrypted external archive |
 | Codex plugins | enabled entries in `config.toml` plus plugin cache manifests | identity, marketplace, version/revision, and manifest hash only; plugin payloads are reacquired |

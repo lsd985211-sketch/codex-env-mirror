@@ -1298,6 +1298,7 @@ def stage_relative_path(template: str, snapshot_path: str) -> Path:
     normalized = template.replace("/", "\\")
     mappings = {
         "${CODEX_HOME}": Path("codex-home"),
+        "${AGENT_HOME}": Path("agent-home"),
         "${WORKSPACE_ROOT}": Path("workspace"),
         "${CC_SWITCH_HOME}": Path("cc-switch"),
         "${RESOURCE_LIBRARY}": Path("resource-library"),

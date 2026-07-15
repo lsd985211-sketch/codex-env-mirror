@@ -54,13 +54,13 @@
       "id": "skills-plan",
       "depends_on": ["workflow-stage"],
       "owner": "skill_lifecycle_governance",
-      "action": "restore active user-owned global skills with required text and binary dependencies, then run lifecycle validation"
+      "action": "restore active user-owned .codex and compatibility .agents skills with required text and binary dependencies, then run lifecycle validation"
     },
     {
       "id": "memory-plan",
       "depends_on": ["workflow-stage"],
       "owner": "memory_governance",
-      "action": "import semantic memory exports and the manifest-selected current checkpoint snapshot; raw databases and full checkpoint history only through compatible owner import"
+      "action": "import current native memory text, semantic memory exports, and the manifest-selected current checkpoint snapshot; raw databases and full checkpoint history only through compatible owner import"
     },
     {
       "id": "windows-integration-plan",

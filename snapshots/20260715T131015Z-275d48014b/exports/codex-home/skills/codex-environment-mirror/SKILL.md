@@ -56,10 +56,13 @@ root. Staging is not activation.
 - Keep secrets, cookies, sessions, runtime databases, logs, caches, external
   archives, and unapproved binaries outside Git. Approved skill dependencies
   may be binary when the source policy names them; they remain hash-only assets.
-- Mirror only active recoverable capability. Active user skills include their
-  declared fonts, schemas, templates, reference media, scripts, licenses, and
-  packaged dependencies. `.disabled`, `.system`, plugin caches, inactive member
-  records, tombstones, and historical backup/checkpoint trees must not enter snapshots.
+- Mirror only active recoverable capability. Active `.codex` and compatibility
+  `.agents` user skills include declared fonts, schemas, templates, reference
+  media, scripts, licenses, and packaged dependencies. `.disabled`, `.system`,
+  plugin caches, inactive member records, tombstones, and historical
+  backup/checkpoint trees must not enter snapshots.
+- Mirror current native memory text through the memory owner while excluding its
+  nested Git metadata, backups, archived ad-hoc records, and runtime SQLite state.
 - Preserve CC Switch through a sanitized semantic export plus an explicit raw
   database archive gap. Preserve plugins through enabled identity/version/hash
   inventory and reacquire them through the plugin owner.

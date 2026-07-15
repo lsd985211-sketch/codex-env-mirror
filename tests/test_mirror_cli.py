@@ -155,6 +155,10 @@ class MirrorCliTests(unittest.TestCase):
             mirror_cli.stage_relative_path("${CODEX_HOME}\\skills\\demo\\SKILL.md", "unused").as_posix(),
             "codex-home/skills/demo/SKILL.md",
         )
+        self.assertEqual(
+            mirror_cli.stage_relative_path("${AGENT_HOME}\\skills\\demo\\SKILL.md", "unused").as_posix(),
+            "agent-home/skills/demo/SKILL.md",
+        )
 
     def test_manifest_files_parse(self) -> None:
         for path in (ROOT / "manifests").rglob("*.json"):

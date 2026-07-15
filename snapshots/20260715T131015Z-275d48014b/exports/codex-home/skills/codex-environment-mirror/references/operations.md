@@ -17,7 +17,7 @@ Run commands from:
 ## Result Fields
 
 - `mirror_valid`: manifest, text/binary hashes, text secret scan, coverage-required sources, generated semantic exports, active-members-only guard, and references pass.
-- `capability_restore_ready`: rules, workflow owners, configuration templates, active user skills and dependencies, Codex helper tools, plugin inventory, current checkpoints, and bootstrap capability can be staged.
+- `capability_restore_ready`: rules, workflow owners, configuration templates, active `.codex` and compatibility `.agents` skills and dependencies, current native memory text, Codex helper tools, plugin inventory, current checkpoints, and bootstrap capability can be staged.
 - `full_state_restore_ready`: required encrypted state archives and an off-machine Git remote are available.
 - `issues`: actionable failures that block the requested operation.
 - `advisories.required_archive_gaps`: explicit state that remains outside the Git mirror.

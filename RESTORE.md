@@ -29,8 +29,8 @@ Validate in dependency order:
 5. user-owned Codex helper tools and runtime prerequisites;
 6. Codex configuration template and sanitized CC Switch semantic state;
 7. enabled plugin inventory and owner-driven plugin reacquisition;
-8. active user skills with text and binary dependencies, then automations;
-9. memory semantic exports and the manifest-selected current checkpoints;
+8. active `.codex` and compatibility `.agents` user skills with text and binary dependencies, then automations;
+9. current native memory text, memory semantic exports, and the manifest-selected current checkpoints;
 10. Windows scheduled-task and shortcut specifications;
 11. external encrypted archives and secret requirements.
 
