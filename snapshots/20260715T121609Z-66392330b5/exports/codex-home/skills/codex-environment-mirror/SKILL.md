@@ -43,9 +43,9 @@ result. Do not manually combine those steps unless repairing the adapter.
 ## Recovery Workflow
 
 1. Run `mirror doctor` before recovery work.
-2. Run `mirror restore-plan --target-root <isolated-empty-path>` and review all mappings.
+2. Run `mirror restore-plan --target-root <isolated-empty-path>` and inspect the bounded summary. Open `full_plan_artifact` when every mapping must be reviewed.
 3. Run `mirror stage --target-root <path> --confirm STAGE-RESTORE` only with authorization.
-4. Require hash verification and `activation_performed=false`.
+4. Require hash verification and `activation_performed=false`; use `full_receipt_artifact` for the complete per-asset evidence.
 5. Hand activation to the target environment's owners after backup and domain validation.
 
 Never stage into an active Codex, workspace, CC Switch, or resource-library
@@ -69,7 +69,8 @@ A successful operation requires the requested owner result to be consumed:
 - inspection: structured status returned;
 - refresh: verified snapshot ID plus Git receipt;
 - validation: no actionable issues;
-- stage: all hashes verified and activation not performed.
+- restore plan: bounded summary returned and the complete action list persisted by reference;
+- stage: all hashes verified, activation not performed, and the complete receipt persisted by reference.
 
 Persist durable mirror changes through workflow closeout. Do not create a
 second mirror skill, command registry, or recovery state store.

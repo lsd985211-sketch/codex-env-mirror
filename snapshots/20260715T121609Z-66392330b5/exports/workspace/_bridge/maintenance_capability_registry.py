@@ -73,7 +73,7 @@ def infer_system(module_path: str, text: str) -> str:
         ("memory", ("memory_", "/memory", "pmb_")),
         ("skills", ("skill_", "/skill", "code_maintainability", "module_asset")),
         ("records", ("record_store", "codex_reporter", "migration_")),
-        ("backup", ("backup_", "/backup")),
+        ("backup", ("backup_", "/backup", "codex_environment_mirror", "recovery_mirror")),
         ("office", ("office", "document", "pdf_")),
         ("workflow", ("workflow_", "/workflow", "closeout", "slash_")),
     )

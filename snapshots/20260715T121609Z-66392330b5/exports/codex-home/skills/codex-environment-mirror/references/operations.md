@@ -22,6 +22,11 @@ Run commands from:
 - `issues`: actionable failures that block the requested operation.
 - `advisories.required_archive_gaps`: explicit state that remains outside the Git mirror.
 - `activation_performed`: must remain `false` for every `stage` receipt.
+- `action_sample` / `asset_sample`: bounded representative rows for terminal review.
+- `full_plan_artifact`: complete restore mapping written under `_bridge/runtime/codex_environment_mirror`.
+- `full_receipt_artifact`: complete staged-asset hash receipt written under the same runtime owner directory.
+
+The unified facade keeps routine output bounded. Artifact references preserve full functionality and are the authority for per-asset review; they are runtime evidence and are not mirrored as recoverable configuration.
 
 ## Bootstrap Fallback
 

@@ -589,6 +589,19 @@ CONTRACTS: dict[str, dict[str, Any]] = {
             "do not create a second Office queue or document state database",
         ],
     },
+    "backup": generic_contract(
+        "backup",
+        ["backup_router", "recovery_mirror", "restore_stage", "archive_policy"],
+        [
+            health_command("backup_hygiene", ["_bridge/backup_hygiene_doctor.py", "validate"], timeout=90),
+            health_command("environment_mirror", ["_bridge/codex_environment_mirror.py", "validate"], timeout=300),
+        ],
+        [
+            "do not mirror secrets, sessions, runtime databases, logs, caches, or retired members",
+            "do not treat an isolated restore stage as activation",
+            "do not create a second live configuration authority",
+        ],
+    ),
     "network": generic_contract(
         "network",
         ["gateway", "route_policy", "target_profile"],
@@ -680,6 +693,18 @@ IMPACT_RULES: list[dict[str, Any]] = [
         "systems": ["workflow"],
         "surfaces": ["maintenance_regression", "maintenance_surface"],
         "reason": "Shared maintenance output or owner-failure regression coverage changed.",
+    },
+    {
+        "prefix": "_bridge/maintenance_capability_registry.py",
+        "systems": ["workflow"],
+        "surfaces": ["execution_contract", "result_contract", "maintenance_surface", "maintenance_regression", "closeout_reconciliation"],
+        "reason": "Maintenance capability classification, bounded discovery, or owner resolution changed.",
+    },
+    {
+        "prefix": "_bridge/codex_environment_mirror",
+        "systems": ["backup", "workflow"],
+        "surfaces": ["execution_contract", "result_contract", "maintenance_surface", "maintenance_regression", "closeout_reconciliation"],
+        "reason": "Environment mirror capture, validation, bounded recovery planning, isolated staging, or unified facade behavior changed.",
     },
     {
         "prefix": "_bridge/bounded_output.py",

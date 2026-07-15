@@ -1,7 +1,7 @@
 {
   "schema": "codex_mirror.snapshot_manifest.v1",
-  "snapshot_id": "20260715T115156Z-100e670789",
-  "created_at": "2026-07-15T11:52:28.785209+00:00",
+  "snapshot_id": "20260715T121609Z-66392330b5",
+  "created_at": "2026-07-15T12:16:35.964392+00:00",
   "authority_mode": "derived_snapshot",
   "source_manifest": "manifests/source-authorities.json",
   "governance_hashes": {
@@ -5240,8 +5240,8 @@
       "source_path": "C:\\Users\\45543\\.codex\\skills\\codex-environment-mirror\\SKILL.md",
       "snapshot_path": "exports/codex-home/skills/codex-environment-mirror/SKILL.md",
       "restore_template": "${CODEX_HOME}\\skills\\codex-environment-mirror\\SKILL.md",
-      "sha256": "67ce13a104f1ebb0a364bdc9b611048e0669bf8aac1f1bb588d963c9844885ef",
-      "bytes": 3379,
+      "sha256": "e22f835e8f7ca3064bb4afd73571cd82addedbadd9173ea3cadffa4e88918798",
+      "bytes": 3655,
       "owner": "skill_lifecycle_governance",
       "classification": "authority_export",
       "mode": "copy"
@@ -5262,8 +5262,8 @@
       "source_path": "C:\\Users\\45543\\.codex\\skills\\codex-environment-mirror\\references\\operations.md",
       "snapshot_path": "exports/codex-home/skills/codex-environment-mirror/references/operations.md",
       "restore_template": "${CODEX_HOME}\\skills\\codex-environment-mirror\\references\\operations.md",
-      "sha256": "6cf6a4b9b6518020beda8291fee67b5f6deafb6dc86c193a27f26c3d43f5da12",
-      "bytes": 2117,
+      "sha256": "f8a4898af3ff8650528235e1d6abc2513f36cfd174391587a394fba81f56836b",
+      "bytes": 2638,
       "owner": "skill_lifecycle_governance",
       "classification": "authority_export",
       "mode": "copy"
@@ -10036,8 +10036,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_environment_mirror.py",
       "snapshot_path": "exports/workspace/_bridge/codex_environment_mirror.py",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\codex_environment_mirror.py",
-      "sha256": "95641d2842d06fe9650e7a6388bf027fe148d539e15d43b2e270a413332ef744",
-      "bytes": 11322,
+      "sha256": "66051898ab0aea84d493652b004ca364f9e622a45d60c3b1e1ee367f9037405d",
+      "bytes": 17781,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -10047,8 +10047,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_environment_mirror_tests.py",
       "snapshot_path": "exports/workspace/_bridge/codex_environment_mirror_tests.py",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\codex_environment_mirror_tests.py",
-      "sha256": "5d367e8b9f87cb0613c6f6617fa546381a96ab40548a72037ecac98b6c558134",
-      "bytes": 1811,
+      "sha256": "f6cb0413aff863fcac2810e4983bc275d8226af48a32d2c4f1e4079715d195bc",
+      "bytes": 6788,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -10729,8 +10729,19 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\maintenance_capability_registry.py",
       "snapshot_path": "exports/workspace/_bridge/maintenance_capability_registry.py",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\maintenance_capability_registry.py",
-      "sha256": "9ac44fffa6cf05b755095755e4ea962587c53280a70c18245ad29d6dee17fb64",
-      "bytes": 15228,
+      "sha256": "eac4d8220542cce224b1498ffa06a76eaa84c1352c487cfb4e8392457bb31290",
+      "bytes": 15275,
+      "owner": "system_membership",
+      "classification": "authority_export",
+      "mode": "copy"
+    },
+    {
+      "asset_id": "workspace-bridge-source:maintenance_capability_registry_tests.py",
+      "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\maintenance_capability_registry_tests.py",
+      "snapshot_path": "exports/workspace/_bridge/maintenance_capability_registry_tests.py",
+      "restore_template": "${WORKSPACE_ROOT}\\_bridge\\maintenance_capability_registry_tests.py",
+      "sha256": "fcfac895f2eeb440900fbc66f5f305ac1bdf8a3bdad653244327e081836fbc5a",
+      "bytes": 407,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -12082,8 +12093,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\system_membership.py",
       "snapshot_path": "exports/workspace/_bridge/system_membership.py",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\system_membership.py",
-      "sha256": "27c768629ffeae077a5de0b348b35d1d78272444543f2192a1a1c7c9bdc41b71",
-      "bytes": 89629,
+      "sha256": "4b3b522307d73356048e3282691cc1577443b7d9e2392534bffdf657bd9d8cb6",
+      "bytes": 91016,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -12093,8 +12104,8 @@
       "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\system_membership_tests.py",
       "snapshot_path": "exports/workspace/_bridge/system_membership_tests.py",
       "restore_template": "${WORKSPACE_ROOT}\\_bridge\\system_membership_tests.py",
-      "sha256": "ce4b5cb1c9d48aecf303f3e2d286a34cbed2417b7acc42624b64f37089b68e0c",
-      "bytes": 14954,
+      "sha256": "c321d87753326e7e886173ab49fd184f136dd52b3a2cdf7927196ccccc400619",
+      "bytes": 15645,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "copy"
@@ -19958,8 +19969,8 @@
       "source_path": "",
       "snapshot_path": "exports/derived/system-membership.json",
       "restore_template": "",
-      "sha256": "1bff8c9b12ee63d84c8396296fd819bb9abe8c9295d76ca8182de44b0e37b66a",
-      "bytes": 204542,
+      "sha256": "9c4753ab61e416cfc08ac51ed39ca257858525c18001471bd396f465e5ee9324",
+      "bytes": 220789,
       "owner": "system_membership",
       "classification": "authority_export",
       "mode": "command_json"
@@ -19969,7 +19980,7 @@
       "source_path": "",
       "snapshot_path": "exports/derived/rule-governance.json",
       "restore_template": "",
-      "sha256": "94e5dd1e913da28157e19b51ab9aa38eb74dbdace1e041400d65f2696f209f31",
+      "sha256": "680053bcbc34d0fe44ca04bc9c0f58cea7638607228694a6900165b6a3feab01",
       "bytes": 25867,
       "owner": "rule_governance",
       "classification": "authority_export",
@@ -19980,8 +19991,8 @@
       "source_path": "",
       "snapshot_path": "exports/derived/maintenance-capabilities.json",
       "restore_template": "",
-      "sha256": "142748109bca91e41d7529d4d57a03fba839f0bf8f1973b09578a6d8ac287f6c",
-      "bytes": 673,
+      "sha256": "7fccec70148d5f91ec2e80057ff44a646d487fc98b33ccee538132d51c2310c0",
+      "bytes": 672,
       "owner": "maintenance_capability_registry",
       "classification": "authority_export",
       "mode": "command_json"
@@ -20002,8 +20013,8 @@
       "source_path": "",
       "snapshot_path": "exports/derived/memory-snapshot.json",
       "restore_template": "",
-      "sha256": "c4897f6171d91dcd2417a9f5f978b2d43e718e14a0b6c02c79f1288e475a04f1",
-      "bytes": 26573,
+      "sha256": "64f39d3cbaf60170630fed13dcc60c4885af6ec5c404fb255d9c98e007c58b19",
+      "bytes": 26577,
       "owner": "memory_governance",
       "classification": "authority_export",
       "mode": "command_json+inactive_member_sanitized"
@@ -20013,7 +20024,7 @@
       "source_path": "",
       "snapshot_path": "exports/derived/secret-vault-metadata.json",
       "restore_template": "",
-      "sha256": "e6296e747767e9ff532c8a24256b0d5f1a5c178e1d82d2927cc8c8890133662e",
+      "sha256": "05baf392f61c73d4f9e43b1dc6ffd68b322cbbcd37b01cd60b5bd0157a788002",
       "bytes": 1805,
       "owner": "secret_vault",
       "classification": "configuration_template",
@@ -20046,7 +20057,7 @@
       "source_path": "",
       "snapshot_path": "exports/runtime/runtime-versions.json",
       "restore_template": "",
-      "sha256": "9a0bcf3c7b0ea59292721d40dc1be690dc12889908411a99f7582da507510d67",
+      "sha256": "5c3f7b78d937c3dd4a4e83ee081023135fb7731f19ecf07dd6397520454d05d0",
       "bytes": 647,
       "owner": "runtime",
       "classification": "bootstrap_source",
@@ -20205,8 +20216,8 @@
     ]
   },
   "summary": {
-    "asset_count": 1821,
-    "total_bytes": 15852012,
+    "asset_count": 1822,
+    "total_bytes": 15883027,
     "required_sources_missing": []
   }
 }

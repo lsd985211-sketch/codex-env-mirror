@@ -9,6 +9,7 @@ commit behavior for the workspace workflow facade.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -21,6 +22,8 @@ from typing import Any
 
 REFRESH_CONFIRMATION = "REFRESH-CODEX-MIRROR"
 STAGE_CONFIRMATION = "STAGE-RESTORE"
+INLINE_SAMPLE_LIMIT = 5
+INLINE_FAILURE_BYTES = 12 * 1024
 
 
 def now_iso() -> str:
@@ -36,8 +39,159 @@ def mirror_cli() -> Path:
     return mirror_root() / "scripts" / "mirror_cli.py"
 
 
+def runtime_root() -> Path:
+    configured = os.environ.get("CODEX_ENV_MIRROR_RUNTIME_ROOT", "").strip()
+    if configured:
+        return Path(configured).expanduser().resolve()
+    return Path(__file__).resolve().parent / "runtime" / "codex_environment_mirror"
+
+
 def print_json(value: Any) -> None:
     print(json.dumps(value, ensure_ascii=False, indent=2))
+
+
+def write_artifact(kind: str, payload: dict[str, Any], *, identity: str = "") -> str:
+    root = runtime_root()
+    root.mkdir(parents=True, exist_ok=True)
+    digest_input = identity or json.dumps(payload, ensure_ascii=False, sort_keys=True)
+    digest = hashlib.sha256(digest_input.encode("utf-8")).hexdigest()[:12]
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    target = root / f"{kind}-{timestamp}-{digest}.json"
+    temporary = target.with_suffix(".json.tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(target)
+    return str(target)
+
+
+def failure_receipt(schema: str, owner: dict[str, Any], *, action: str) -> dict[str, Any]:
+    encoded = json.dumps(owner, ensure_ascii=False).encode("utf-8")
+    receipt: dict[str, Any] = {
+        "schema": schema,
+        "ok": False,
+        "generated_at": now_iso(),
+        "action": action,
+        "owner_schema": owner.get("schema", ""),
+        "reason": owner.get("reason", "owner_action_failed"),
+    }
+    if len(encoded) <= INLINE_FAILURE_BYTES:
+        receipt["owner_result"] = owner
+    else:
+        receipt["owner_result_artifact"] = write_artifact(f"{action}-failure", owner)
+        receipt["issues"] = list(owner.get("issues", []))[:INLINE_SAMPLE_LIMIT]
+    return receipt
+
+
+def plan_receipt(owner: dict[str, Any]) -> dict[str, Any]:
+    if not owner.get("ok"):
+        return failure_receipt("codex_environment_mirror.plan.v1", owner, action="plan")
+    return {
+        "schema": "codex_environment_mirror.plan.v1",
+        "ok": True,
+        "generated_at": now_iso(),
+        "mirror_root": str(mirror_root()),
+        "owner_schema": owner.get("schema", ""),
+        "source_count": len(owner.get("sources", [])),
+        "sources": owner.get("sources", []),
+        "generated_sources": owner.get("generated_sources", []),
+        "summary": owner.get("summary", {}),
+    }
+
+
+def validation_receipt(owner: dict[str, Any]) -> dict[str, Any]:
+    if not owner.get("ok"):
+        return failure_receipt("codex_environment_mirror.validate.v1", owner, action="validate")
+    return {
+        "schema": "codex_environment_mirror.validate.v1",
+        "ok": True,
+        "generated_at": now_iso(),
+        "mirror_root": str(mirror_root()),
+        "owner_schema": owner.get("schema", ""),
+        "snapshot_id": owner.get("snapshot_id", ""),
+        "readiness": {
+            "mirror_valid": owner.get("mirror_valid", False),
+            "capability_restore_ready": owner.get("capability_restore_ready", False),
+            "full_state_restore_ready": owner.get("full_state_restore_ready", False),
+        },
+        "issues": owner.get("issues", []),
+        "advisories": owner.get("advisories", {}),
+        "summary": owner.get("summary", {}),
+    }
+
+
+def restore_plan_receipt(owner: dict[str, Any]) -> dict[str, Any]:
+    if not owner.get("ok"):
+        return failure_receipt("codex_environment_mirror.restore_plan.v1", owner, action="restore-plan")
+    artifact = write_artifact(
+        "restore-plan",
+        owner,
+        identity=f"{owner.get('snapshot_id', '')}|{owner.get('target_root', '')}",
+    )
+    actions = list(owner.get("actions", []))
+    return {
+        "schema": "codex_environment_mirror.restore_plan.v1",
+        "ok": True,
+        "generated_at": now_iso(),
+        "owner_schema": owner.get("schema", ""),
+        "snapshot_id": owner.get("snapshot_id", ""),
+        "target_root": owner.get("target_root", ""),
+        "action_count": int(owner.get("action_count", len(actions))),
+        "action_sample": actions[:INLINE_SAMPLE_LIMIT],
+        "external_archive_gaps": owner.get("external_archive_gaps", []),
+        "full_plan_artifact": artifact,
+        "rule": owner.get("rule", ""),
+    }
+
+
+def stage_receipt(owner: dict[str, Any]) -> dict[str, Any]:
+    if not owner.get("ok"):
+        return failure_receipt("codex_environment_mirror.stage.v1", owner, action="stage")
+    receipt = owner
+    receipt_path = str(owner.get("receipt") or "")
+    if receipt_path:
+        try:
+            receipt = json.loads(Path(receipt_path).read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError) as exc:
+            return failure_receipt(
+                "codex_environment_mirror.stage.v1",
+                {
+                    **owner,
+                    "ok": False,
+                    "reason": "stage_receipt_unreadable",
+                    "receipt_error": f"{type(exc).__name__}:{exc}",
+                },
+                action="stage",
+            )
+    if not receipt.get("ok"):
+        return failure_receipt("codex_environment_mirror.stage.v1", receipt, action="stage")
+    artifact = write_artifact(
+        "stage-receipt",
+        receipt,
+        identity=f"{receipt.get('snapshot_id', '')}|{receipt.get('target_root', '')}",
+    )
+    assets = list(receipt.get("assets", []))
+    membership_guard = dict(receipt.get("membership_guard", {}))
+    return {
+        "schema": "codex_environment_mirror.stage.v1",
+        "ok": True,
+        "generated_at": now_iso(),
+        "owner_schema": owner.get("schema", ""),
+        "receipt_schema": receipt.get("schema", ""),
+        "snapshot_id": receipt.get("snapshot_id", ""),
+        "target_root": receipt.get("target_root", ""),
+        "asset_count": int(receipt.get("asset_count", len(assets))),
+        "asset_sample": assets[:INLINE_SAMPLE_LIMIT],
+        "hashes_verified": receipt.get("hashes_verified", False),
+        "external_archive_gaps": receipt.get("external_archive_gaps", []),
+        "membership_guard": {
+            "source_owner_verified": membership_guard.get("source_owner_verified", False),
+            "membership_export_sanitized": membership_guard.get("membership_export_sanitized", False),
+            "excluded_asset_count": membership_guard.get("excluded_asset_count", 0),
+            "sanitized_asset_count": membership_guard.get("sanitized_asset_count", 0),
+            "registration_conflict_count": membership_guard.get("registration_conflict_count", 0),
+        },
+        "activation_performed": receipt.get("activation_performed", False),
+        "full_receipt_artifact": artifact,
+    }
 
 
 def run_json(command: list[str], *, timeout: int = 300) -> dict[str, Any]:
@@ -225,21 +379,23 @@ def execute(action: str, *, target_root: str = "", confirm: str = "") -> dict[st
     if action == "doctor":
         return doctor()
     if action == "plan":
-        return {"schema": "codex_environment_mirror.plan.v1", **run_mirror(["plan"], timeout=180)}
+        return plan_receipt(run_mirror(["plan"], timeout=180))
     if action == "validate":
-        return {"schema": "codex_environment_mirror.validate.v1", **run_mirror(["validate"], timeout=300)}
+        return validation_receipt(run_mirror(["validate"], timeout=300))
     if action == "refresh":
         return refresh(confirm)
     if action == "restore-plan":
         if not target_root:
             return {"schema": "codex_environment_mirror.restore_plan.v1", "ok": False, "reason": "target_root_required"}
-        return {"schema": "codex_environment_mirror.restore_plan.v1", **run_mirror(["restore-plan", "--target-root", target_root], timeout=300)}
+        owner = run_mirror(["restore-plan", "--target-root", target_root], timeout=300)
+        return restore_plan_receipt(owner)
     if action == "stage":
         if not target_root:
             return {"schema": "codex_environment_mirror.stage.v1", "ok": False, "reason": "target_root_required"}
         if confirm != STAGE_CONFIRMATION:
             return {"schema": "codex_environment_mirror.stage.v1", "ok": False, "reason": "confirmation_required", "required_confirmation": STAGE_CONFIRMATION}
-        return {"schema": "codex_environment_mirror.stage.v1", **run_mirror(["stage", "--target-root", target_root, "--confirm", STAGE_CONFIRMATION], timeout=600)}
+        owner = run_mirror(["stage", "--target-root", target_root, "--confirm", STAGE_CONFIRMATION], timeout=600)
+        return stage_receipt(owner)
     return {"schema": "codex_environment_mirror.command.v1", "ok": False, "reason": "unknown_action", "action": action}
 
 

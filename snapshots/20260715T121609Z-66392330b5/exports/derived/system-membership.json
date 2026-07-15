@@ -1,9 +1,10 @@
 {
   "schema": "system_membership.v2.snapshot",
   "ok": true,
-  "generated_at": "2026-07-15T11:52:16.284806+00:00",
+  "generated_at": "2026-07-15T12:16:25.770463+00:00",
   "read_only": true,
   "systems": [
+    "backup",
     "bridge",
     "drafts",
     "mail",
@@ -17,8 +18,310 @@
     "startup",
     "workflow"
   ],
-  "impact_rule_count": 61,
+  "impact_rule_count": 63,
   "contracts": {
+    "backup": {
+      "system": "backup",
+      "member_kinds": [
+        "backup_router",
+        "recovery_mirror",
+        "restore_stage",
+        "archive_policy"
+      ],
+      "default_member_kind": "backup_router",
+      "required_surfaces": [
+        {
+          "key": "contract_template",
+          "owner": "_bridge/system_membership.py",
+          "purpose": "new system or member kind has an explicit surface contract before implementation spreads",
+          "evidence": "python _bridge\\system_membership.py validate",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "impact_mapping",
+          "owner": "_bridge/system_membership.py",
+          "purpose": "changed architecture files map to affected systems, surfaces, and required next commands",
+          "evidence": "python _bridge\\system_membership.py impact --changed <file>",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "maintenance_surface",
+          "owner": "_bridge/docs/maintenance_surface_map.md",
+          "purpose": "new contract owner and validation commands are discoverable from the workspace maintenance map",
+          "evidence": "targeted readback plus python _bridge\\global_coherence_doctor.py validate",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "member_identity",
+          "owner": "system membership owner plus member owner",
+          "purpose": "stable system/member/kind identity, lifecycle owner, authoritative state source, and replacement boundary are explicit",
+          "evidence": "python _bridge\\system_membership.py plan --system <system> --member <member> --kind <kind>",
+          "required": true,
+          "update_when": "adding, renaming, splitting, merging, replacing, or changing ownership of a member"
+        },
+        {
+          "key": "activation_contract",
+          "owner": "member owner plus registration/routing/runtime owners",
+          "purpose": "registration, generation, routing, runtime activation, required-vs-optional startup behavior, reload/restart boundary, and fallback behavior converge before activation",
+          "evidence": "targeted registration, route, runtime, and restart/reload validation",
+          "required": true,
+          "update_when": "changing how the member becomes visible, callable, blocking, reloadable, or persistent"
+        },
+        {
+          "key": "dependency_contract",
+          "owner": "member owner plus resource/package owner",
+          "purpose": "runtime dependencies and external assets use the owning acquisition path with explicit version, source, permission, install-script, artifact, and verification boundaries",
+          "evidence": "resource/package receipt plus owner validation",
+          "required": true,
+          "update_when": "adding or changing packages, binaries, browser assets, models, plugins, or other external dependencies"
+        },
+        {
+          "key": "execution_contract",
+          "owner": "member owner plus calling facade",
+          "purpose": "versioned structured fields are authoritative; natural language is supplemental; multi-item work preserves item identity, requiredness, acceptance, status, and retry scope",
+          "evidence": "schema validation plus focused multi-item regression",
+          "required": true,
+          "update_when": "changing request schemas, batching, routing inputs, retries, permissions, or execution semantics"
+        },
+        {
+          "key": "result_contract",
+          "owner": "member owner plus calling facade",
+          "purpose": "progress, status, errors, reasons, result references, acceptance evidence, and consumption acknowledgement are machine-readable; owner success alone cannot satisfy an unmet caller need",
+          "evidence": "owner receipt readback plus acceptance and consumption regression",
+          "required": true,
+          "update_when": "changing output, completion, acceptance, progress, error, receipt, or consumer lifecycle semantics"
+        },
+        {
+          "key": "maintenance_regression",
+          "owner": "member owner plus maintenance owner",
+          "purpose": "doctor, validate, metrics, process ownership, impact mapping, and focused regressions cover the member; tests use isolated state and tolerate legitimate concurrent production activity without hiding test leakage",
+          "evidence": "owner validator plus system membership validate and focused isolated regression",
+          "required": true,
+          "update_when": "changing state, persistence, process, concurrency, observability, maintenance, or test behavior"
+        },
+        {
+          "key": "closeout_reconciliation",
+          "owner": "_bridge/workflow_finalization.py plus _bridge/codex_workflow_entry.py",
+          "purpose": "changed architecture files automatically run membership impact at closeout; successful completion requires current membership validation and a system_membership=ok receipt",
+          "evidence": "python _bridge\\workflow_finalization_tests.py plus python _bridge\\system_membership.py validate",
+          "required": true,
+          "update_when": "changing architecture impact mapping, closeout semantics, member activation, or validation receipt behavior"
+        },
+        {
+          "key": "exit_strategy",
+          "owner": "system membership owner plus member owner",
+          "purpose": "new members declare their retirement owner, replacement/no-replacement policy, data disposition, activation surfaces, and tombstone location before integration is complete",
+          "evidence": "python _bridge\\system_membership.py retirement-plan --system <system> --member <member> --replacement <member|none> --reason <reason>",
+          "required": true,
+          "update_when": "adding a member or changing how it is registered, generated, routed, persisted, maintained, or replaced"
+        }
+      ],
+      "architecture_surfaces": [
+        {
+          "key": "contract_template",
+          "owner": "_bridge/system_membership.py",
+          "purpose": "new system or member kind has an explicit surface contract before implementation spreads",
+          "evidence": "python _bridge\\system_membership.py validate",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "impact_mapping",
+          "owner": "_bridge/system_membership.py",
+          "purpose": "changed architecture files map to affected systems, surfaces, and required next commands",
+          "evidence": "python _bridge\\system_membership.py impact --changed <file>",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "maintenance_surface",
+          "owner": "_bridge/docs/maintenance_surface_map.md",
+          "purpose": "new contract owner and validation commands are discoverable from the workspace maintenance map",
+          "evidence": "targeted readback plus python _bridge\\global_coherence_doctor.py validate",
+          "required": true,
+          "update_when": ""
+        }
+      ],
+      "health_commands": [
+        {
+          "name": "backup_hygiene",
+          "args": [
+            "_bridge/backup_hygiene_doctor.py",
+            "validate"
+          ],
+          "severity": "risk",
+          "timeout": 90
+        },
+        {
+          "name": "environment_mirror",
+          "args": [
+            "_bridge/codex_environment_mirror.py",
+            "validate"
+          ],
+          "severity": "risk",
+          "timeout": 300
+        }
+      ],
+      "non_goals": [
+        "do not mirror secrets, sessions, runtime databases, logs, caches, or retired members",
+        "do not treat an isolated restore stage as activation",
+        "do not create a second live configuration authority"
+      ],
+      "integration_policy": {
+        "admission_rule": "before activation, the workflow must consume a membership plan that identifies the member, owner, lifecycle, authoritative state, required surfaces, dependency path, and reload/restart boundary",
+        "structured_input_rule": "explicit structured fields are authoritative; natural language only fills absent non-safety fields",
+        "batch_identity_rule": "each independent item keeps a stable item_id, required flag, acceptance predicate, status, error, and retry scope through every layer",
+        "success_rule": "transport or owner ok is not completion unless the caller's acceptance predicate is satisfied",
+        "consumption_rule": "result-producing work is end-to-end terminal only after the caller reads or explicitly waives the owned result and records consumption",
+        "dependency_rule": "external packages and binaries are acquired through the owning resource/package path; wrapper packages and large runtime assets remain separately authorized and verified",
+        "activation_rule": "registration, generated config, route catalogs, runtime launch guards, maintenance baselines, and user-visible discovery must converge before activation is complete",
+        "optional_member_rule": "optional or session-bound members remain nonblocking unless explicitly promoted to required startup capability",
+        "reload_rule": "the contract must state whether a live reload, owner restart, Codex restart, or machine restart is required and must not claim immediate activation otherwise",
+        "concurrency_rule": "regressions isolate test-owned state and identify test leakage by ownership; they must not require legitimate production state to remain globally static",
+        "change_propagation_rule": "architecture changes update the contract, impact mapping, maintenance surface, validators, and closeout evidence in the same change",
+        "reconciliation_rule": "after changed files are known, impact mapping reconciles desired contract state with actual registration, routing, runtime, maintenance, documentation, and retirement surfaces before completion is claimed",
+        "closeout_enforcement_rule": "workflow finalization derives membership obligations from changed files and blocks a successful closeout until the membership owner validates and its receipt is present"
+      },
+      "lifecycle_policy": {
+        "states": [
+          "active",
+          "deprecated",
+          "decommissioning",
+          "decommissioned",
+          "historical_only"
+        ],
+        "transitions": {
+          "active": [
+            "deprecated",
+            "decommissioning"
+          ],
+          "deprecated": [
+            "active",
+            "decommissioning"
+          ],
+          "decommissioning": [
+            "active",
+            "decommissioned"
+          ],
+          "decommissioned": [
+            "historical_only"
+          ],
+          "historical_only": []
+        },
+        "completion_rule": "decommissioned requires every retirement surface to be satisfied or explicitly marked not_applicable with owner evidence",
+        "history_rule": "historical references may remain only in backups, checkpoints, migration sources, and archives; they must not activate, generate, route, recommend, or validate the member as current",
+        "ownership_rule": "system membership judges convergence; each surface owner applies and validates its own changes"
+      },
+      "retirement_surfaces": [
+        {
+          "key": "lifecycle_identity",
+          "owner": "system membership owner",
+          "purpose": "stable system/member/kind identity, lifecycle state, owner, reason, and effective time are explicit",
+          "evidence": "python _bridge\\system_membership.py retirement-plan --system <system> --member <member>",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "replacement_readiness",
+          "owner": "member owner",
+          "purpose": "replacement or explicit no-replacement decision is validated before active ownership is released",
+          "evidence": "targeted owner validation plus retirement receipt",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "implementation_exit",
+          "owner": "member implementation owner",
+          "purpose": "active executable entrypoints, launcher aliases, service wrappers, and discoverable implementation modules are removed or moved into an excluded historical archive",
+          "evidence": "targeted active-tree scan plus owner validator",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "registration_exit",
+          "owner": "registration/config owner",
+          "purpose": "live registration, service declarations, plugin manifests, and startup requirements no longer activate the member",
+          "evidence": "owner config readback and validator",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "generation_exit",
+          "owner": "generator/template owner",
+          "purpose": "defaults, bootstrap, fallback, repair, and code generation cannot recreate the retired member",
+          "evidence": "owner repair-plan/validate plus regression probe",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "routing_exit",
+          "owner": "routing/capability owner",
+          "purpose": "workflow, capability, facade, recommendation, and fallback routes no longer select the retired member",
+          "evidence": "route snapshot and targeted validator",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "runtime_exit",
+          "owner": "runtime/process owner",
+          "purpose": "services, scheduled tasks, ports, leases, and orphan processes are stopped or explicitly classified as historical evidence",
+          "evidence": "owner runtime doctor or process inventory",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "maintenance_exit",
+          "owner": "maintenance owner",
+          "purpose": "current baselines, doctors, repairs, snapshots, metrics, and health checks no longer require or recommend the retired member",
+          "evidence": "owner doctor/repair-plan/validate",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "guidance_exit",
+          "owner": "documentation/skill owner",
+          "purpose": "current documentation, skills, prompts, and new-session guidance do not present the retired member as active",
+          "evidence": "python _bridge\\system_membership.py doctor",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "data_disposition",
+          "owner": "data owner",
+          "purpose": "authoritative data, migration inputs, backups, and historical evidence have an explicit keep/migrate/archive/delete classification",
+          "evidence": "owner migration ledger or retention receipt",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "dependency_release",
+          "owner": "member owner",
+          "purpose": "upstream dependencies and downstream consumers are migrated, released, or explicitly blocked",
+          "evidence": "dependency inventory and replacement validation",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "prevention_guard",
+          "owner": "owning repair/validation surface",
+          "purpose": "a tombstone or equivalent negative contract prevents registration, generation, routing, or recommendation from returning",
+          "evidence": "owner regression test plus system membership validate",
+          "required": true,
+          "update_when": ""
+        },
+        {
+          "key": "retirement_receipt",
+          "owner": "_bridge/codex_workflow_entry.py",
+          "purpose": "completion records the affected surfaces, evidence, retained history, replacement, and rollback boundary",
+          "evidence": "python _bridge\\codex_workflow_entry.py closeout --task-kind system_membership ...",
+          "required": true,
+          "update_when": ""
+        }
+      ]
+    },
     "bridge": {
       "system": "bridge",
       "member_kinds": [

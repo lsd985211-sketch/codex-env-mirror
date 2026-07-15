@@ -1,7 +1,7 @@
 {
   "schema": "rule_governance.snapshot.v1",
   "ok": true,
-  "generated_at": "2026-07-15T11:52:22.565777+00:00",
+  "generated_at": "2026-07-15T12:16:30.705186+00:00",
   "registry": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\policies\\rule_authority_registry.json",
   "surface_count": 24,
   "registered_path_count": 34,
@@ -596,7 +596,7 @@
     },
     {
       "path": "_bridge/system_membership.py",
-      "bytes": 89629,
+      "bytes": 91016,
       "foreign_scoped": false,
       "coverage": "registered",
       "rule_ids": [

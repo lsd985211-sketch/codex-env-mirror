@@ -51,6 +51,20 @@ class SystemMembershipTests(unittest.TestCase):
             any(item.get("code") == "system_change_partially_unmapped" for item in result["blockers"])
         )
 
+    def test_environment_mirror_and_maintenance_registry_are_fully_mapped(self) -> None:
+        result = membership.impact(
+            [
+                "_bridge/codex_environment_mirror.py",
+                "_bridge/codex_environment_mirror_tests.py",
+                "_bridge/maintenance_capability_registry.py",
+            ]
+        )
+        self.assertTrue(result["ok"], result["blockers"])
+        self.assertTrue(result["coverage_complete"])
+        self.assertEqual(result["unmapped_system_changed"], [])
+        self.assertTrue({"backup", "workflow"}.issubset(result["affected_systems"]))
+        self.assertIn("recovery_mirror", membership.CONTRACTS["backup"]["member_kinds"])
+
     def test_windows_memory_governance_impact_is_fully_mapped(self) -> None:
         result = membership.impact(
             [
