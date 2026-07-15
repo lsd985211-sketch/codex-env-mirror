@@ -1,0 +1,1 @@
+Backups for ask whitelist permission hardening. Scope: make ask whitelist-only; deny local read/export/write/delete/system side effects and secrets unless explicit non-ask actions are granted; add execution-layer rejection at enqueue and worker dispatch; expose ask whitelist policy in maintenance metrics. Tag: ask-whitelist-20260629-233000

@@ -1,0 +1,20 @@
+{
+  "skill_id": "923db978cb1ee257",
+  "name": "mermaid-generator",
+  "path": "C:\\Users\\45543\\.codex\\skills\\mermaid-generator",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "100651d2bf24e611e5afd5ee455c482f77a4c1b5af92dbff70587f994f00e5c7",
+    "agents": null,
+    "scripts": null,
+    "references": "2f0d421dee0af36f0ef9005a92aacd11abe615587d096ebe230c1eeda6452e62",
+    "assets": null
+  }
+}
