@@ -1,1 +1,0 @@
-Backups for admin superuser permission model. Scope: admin owns all defined and currently unspecified permissions; normal users remain strict whitelist; ask obvious denial guard applies only to non-admin; Codex prompt must use permission table as reasoning source. Tag: admin-superuser-permission-20260629-234500

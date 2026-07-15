@@ -1,1 +1,0 @@
-Backups for Weixin bridge permission policy update. Scope: add unified permission helper, attach permission context to Codex delegation prompts, gate dashboard direct/enqueue/retry/cancel and legacy stop-log entry, expose permission snapshot in maintenance outputs. Tag: permission-policy-20260629-222015
