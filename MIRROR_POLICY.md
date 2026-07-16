@@ -36,6 +36,20 @@ must not redefine active owners, rules, routes, or permissions.
 - `regenerated`: runtime data that must be rebuilt instead of restored.
 - `reacquire`: authentication or session state that must be obtained again.
 
+## Scope Authority
+
+Active member membership is the upstream scope authority. The membership
+projection selects which source IDs and generated source IDs must be owned by
+the mirror. `source-authorities.json` remains the execution manifest because
+it carries capture mode, source-specific exclusions, redaction, restore paths,
+and generated commands. These are projections of one scope, not independent
+business inventories.
+
+Refresh blocks when a manifest source or generated source has no active
+membership owner, or when an active member projects an unknown source. This
+keeps future module additions explicit without allowing the membership table to
+silently capture secrets, databases, caches, or retired assets.
+
 ## Source-Specific Asset Policy
 
 Global extensions are only a conservative default. A source may explicitly add

@@ -1,6 +1,6 @@
 # Codex Environment Recovery Kit
 
-This private repository is a derived recovery product for the active Codex
+This public repository is a derived recovery product for the active Codex
 working environment on this machine. It is not a live configuration authority.
 Agents entering this repository automatically receive the recovery boundary and
 entry sequence from `AGENTS.md`; detailed capability and lifecycle facts remain
@@ -32,6 +32,23 @@ Switch homes must also have an explicit disposition in
 valuable capability cannot be silently omitted. Private or version-sensitive
 state remains an explicit external-archive gap instead of being copied into the
 capability snapshot.
+
+## Membership-Driven Scope
+
+`_bridge/system_membership.py` is the upstream authority for active capability
+membership. Its `mirror-source-projection` output identifies active members,
+their mirror source IDs, generated source IDs, and change roots. The mirror
+manifest remains the capture authority: it defines redaction, exclusions,
+binary handling, restore mappings, generated commands, and external-archive
+dispositions. A source or generated source present in the manifest but absent
+from the active membership projection blocks the next refresh, preventing a
+new module from becoming silently unowned.
+
+When adding a working-environment member, update its membership contract and
+mirror source projection first. Then add the corresponding source definition
+or generated source to `manifests/source-authorities.json`, run the membership
+validator, and refresh through the transactional facade. Retired members are
+never projected into the active mirror.
 
 ## Commands
 

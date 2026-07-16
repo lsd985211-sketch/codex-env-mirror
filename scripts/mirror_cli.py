@@ -321,6 +321,39 @@ def run_json_command(command: list[str], variables: dict[str, str]) -> bytes:
     return (json.dumps(redact_json_value(payload), ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
+def membership_projection_issues(
+    config: dict[str, Any],
+    variables: dict[str, str] | None = None,
+    projection: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    variables = variables or expanded_variables(config)
+    if projection is None:
+        spec = next((item for item in config.get("generated_sources", []) if item.get("id") == MEMBERSHIP_ASSET_ID), None)
+        if not spec:
+            return [{"code": "membership_projection_source_missing", "source_id": MEMBERSHIP_ASSET_ID}]
+        try:
+            projection_payload = json.loads(run_json_command(spec["command"], variables).decode("utf-8"))
+        except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as exc:
+            return [{"code": "membership_projection_unavailable", "detail": f"{type(exc).__name__}:{exc}"}]
+        projection = projection_payload.get("mirror_source_projection", {})
+    if not isinstance(projection, dict):
+        return [{"code": "membership_projection_invalid", "detail": "projection is not an object"}]
+    issues = list(projection.get("issues", [])) if isinstance(projection.get("issues"), list) else []
+    configured_sources = {str(item.get("id") or "") for item in config.get("sources", []) if str(item.get("id") or "")}
+    configured_generated = {str(item.get("id") or "") for item in config.get("generated_sources", []) if str(item.get("id") or "")}
+    projected_sources = {str(item) for item in projection.get("source_ids", []) if str(item)}
+    projected_generated = {str(item) for item in projection.get("generated_source_ids", []) if str(item)}
+    for source_id in sorted(projected_sources - configured_sources):
+        issues.append({"code": "membership_projection_source_unknown", "source_id": source_id})
+    for source_id in sorted(configured_sources - projected_sources):
+        issues.append({"code": "source_missing_membership_owner", "source_id": source_id})
+    for source_id in sorted(projected_generated - configured_generated):
+        issues.append({"code": "membership_projection_generated_source_unknown", "source_id": source_id})
+    for source_id in sorted(configured_generated - projected_generated):
+        issues.append({"code": "generated_source_missing_membership_owner", "source_id": source_id})
+    return issues
+
+
 def powershell_json(script: str) -> bytes:
     completed = subprocess.run(
         ["powershell", "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", script],
@@ -1048,6 +1081,7 @@ def collect_plan(config: dict[str, Any]) -> dict[str, Any]:
     variables = expanded_variables(config)
     policy = config["policy"]
     disposition_inventory = collect_asset_dispositions(config, variables)
+    membership_issues = membership_projection_issues(config, variables)
     rows: list[dict[str, Any]] = []
     missing: list[str] = []
     total_bytes = 0
@@ -1091,17 +1125,23 @@ def collect_plan(config: dict[str, Any]) -> dict[str, Any]:
     missing = sorted(set(missing))
     return {
         "schema": "codex_mirror.plan.v1",
-        "ok": not missing and not disposition_inventory["issues"] and total_bytes <= int(policy["max_snapshot_bytes"]),
+        "ok": not missing and not disposition_inventory["issues"] and not membership_issues and total_bytes <= int(policy["max_snapshot_bytes"]),
         "generated_at": now_iso(),
         "sources": rows,
         "generated_sources": generated_rows,
         "asset_dispositions": disposition_inventory,
+        "membership_projection": {
+            "ok": not membership_issues,
+            "issues": membership_issues,
+            "rule": "Every mirror source and generated source must have an active membership owner.",
+        },
         "summary": {
             "candidate_files": total_files,
             "candidate_source_bytes": total_bytes,
             "max_snapshot_bytes": int(policy["max_snapshot_bytes"]),
             "required_sources_missing": missing,
             "unclassified_source_assets": len(disposition_inventory["issues"]),
+            "membership_projection_issues": len(membership_issues),
         },
     }
 
@@ -1453,6 +1493,7 @@ def validate_snapshot(snapshot: str = "latest", *, live_sources: bool = False) -
         except ValueError:
             issues.append({"code": "text_asset_decode_failed", "path": relative})
     if live_sources:
+        source_issues.extend(membership_projection_issues(load_json(SOURCE_MANIFEST)))
         source_issues.extend(source_coverage_issues(manifest))
         source_issues.extend(generated_source_issues(path, manifest))
         source_issues.extend(collect_asset_dispositions(load_json(SOURCE_MANIFEST))["issues"])

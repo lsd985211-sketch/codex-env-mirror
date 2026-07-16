@@ -158,6 +158,19 @@ class MirrorCliTests(unittest.TestCase):
         self.assertFalse(payload["source_freshness_ok"])
         self.assertIn(source_issue, payload["issues"])
 
+    def test_membership_projection_blocks_unowned_sources(self) -> None:
+        config = {
+            "sources": [{"id": "owned-source"}, {"id": "new-source"}],
+            "generated_sources": [{"id": "owned-generated"}],
+        }
+        projection = {
+            "issues": [],
+            "source_ids": ["owned-source"],
+            "generated_source_ids": ["owned-generated"],
+        }
+        issues = mirror_cli.membership_projection_issues(config, {}, projection)
+        self.assertEqual(issues, [{"code": "source_missing_membership_owner", "source_id": "new-source"}])
+
     def test_gitignore_only_excludes_repository_runtime_root(self) -> None:
         rules = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertIn("/runtime/", rules)
