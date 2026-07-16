@@ -1146,10 +1146,244 @@ def collect_plan(config: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
+def source_specs(config: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    sources = {str(item.get("id") or ""): item for item in config.get("sources", []) if str(item.get("id") or "")}
+    generated = {str(item.get("id") or ""): item for item in config.get("generated_sources", []) if str(item.get("id") or "")}
+    return sources, generated
+
+
+def source_dependency_graph(config: dict[str, Any]) -> dict[str, Any]:
+    raw_ids = [str(item.get("id") or "") for item in [*config.get("sources", []), *config.get("generated_sources", [])]]
+    sources, generated = source_specs(config)
+    nodes = set(sources) | set(generated)
+    issues: list[dict[str, Any]] = []
+    duplicates = sorted({item for item in raw_ids if item and raw_ids.count(item) > 1})
+    if duplicates:
+        issues.append({"code": "source_id_duplicate", "source_ids": duplicates})
+    graph: dict[str, list[str]] = {}
+    for source_id, spec in [*sources.items(), *generated.items()]:
+        dependencies = [str(item) for item in spec.get("depends_on", []) if str(item)]
+        graph[source_id] = dependencies
+        missing = sorted(set(dependencies) - nodes)
+        if missing:
+            issues.append({"code": "source_dependency_missing", "source_id": source_id, "missing": missing})
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(node: str, chain: list[str]) -> None:
+        if node in visiting:
+            issues.append({"code": "source_dependency_cycle", "chain": chain + [node]})
+            return
+        if node in visited:
+            return
+        visiting.add(node)
+        for dependency in graph.get(node, []):
+            if dependency in nodes:
+                visit(dependency, chain + [node])
+        visiting.remove(node)
+        visited.add(node)
+
+    for node in sorted(nodes):
+        visit(node, [])
+    reverse: dict[str, list[str]] = {node: [] for node in nodes}
+    for node, dependencies in graph.items():
+        for dependency in dependencies:
+            if dependency in reverse:
+                reverse[dependency].append(node)
+    return {
+        "ok": not issues,
+        "issues": issues,
+        "nodes": sorted(nodes),
+        "graph": {key: sorted(value) for key, value in sorted(graph.items())},
+        "reverse": {key: sorted(value) for key, value in sorted(reverse.items())},
+    }
+
+
+def path_matches_source(path: Path, source: Path, kind: str) -> bool:
+    try:
+        candidate = path.resolve()
+        target = source.resolve()
+    except OSError:
+        candidate, target = path.absolute(), source.absolute()
+    if kind == "file":
+        return candidate == target
+    return candidate == target or path_is_within(candidate, target)
+
+
+def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> dict[str, Any]:
+    variables = expanded_variables(config)
+    sources, generated = source_specs(config)
+    dependency = source_dependency_graph(config)
+    normalized_changes = [str(Path(item).expanduser()) for item in changed_paths if str(item).strip()]
+    direct_sources: set[str] = set()
+    direct_generated: set[str] = set()
+    unmatched: list[str] = []
+    reasons: list[str] = []
+    membership_ids = {MEMBERSHIP_ASSET_ID, "workspace-bridge-source"}
+    for raw in normalized_changes:
+        candidate = Path(raw)
+        matched = False
+        for source_id, spec in sources.items():
+            source = Path(expand_tokens(str(spec.get("source") or ""), variables))
+            if source and path_matches_source(candidate, source, str(spec.get("kind") or "file")):
+                direct_sources.add(source_id)
+                matched = True
+        for source_id, spec in generated.items():
+            destination = normalized_path(str(spec.get("destination") or ""))
+            if destination and normalized_path(raw) == destination:
+                direct_generated.add(source_id)
+                matched = True
+        if not matched:
+            unmatched.append(raw)
+    if unmatched:
+        reasons.append("changed_path_unmapped")
+    if not dependency["ok"]:
+        reasons.append("dependency_graph_invalid")
+    affected = set(direct_sources) | set(direct_generated)
+    queue = list(affected)
+    while queue:
+        current = queue.pop(0)
+        for dependent in dependency["reverse"].get(current, []):
+            if dependent not in affected:
+                affected.add(dependent)
+                queue.append(dependent)
+    if affected & membership_ids or direct_generated & {MEMBERSHIP_ASSET_ID}:
+        reasons.append("membership_scope_changed")
+    if not normalized_changes:
+        reasons.append("changed_paths_required_for_incremental")
+    full_rebuild = bool(reasons)
+    affected_sources = sorted(item for item in affected if item in sources)
+    affected_generated = sorted(item for item in affected if item in generated)
+    reused_sources = sorted(set(sources) - set(affected_sources)) if not full_rebuild else []
+    reused_generated = sorted(set(generated) - set(affected_generated)) if not full_rebuild else []
+    return {
+        "schema": "codex_mirror.affected_source_plan.v1",
+        "ok": dependency["ok"] and not unmatched and bool(normalized_changes),
+        "changed_files": normalized_changes,
+        "direct_source_ids": sorted(direct_sources),
+        "direct_generated_source_ids": sorted(direct_generated),
+        "dependent_generated_source_ids": affected_generated,
+        "affected_source_ids": affected_sources,
+        "reused_source_ids": reused_sources,
+        "reused_generated_source_ids": reused_generated,
+        "full_rebuild_required": full_rebuild,
+        "reasons": sorted(set(reasons)),
+        "unmatched_paths": unmatched,
+        "dependency_graph": {"ok": dependency["ok"], "issues": dependency["issues"]},
+    }
+
+
+def source_id_for_asset(asset_id: str) -> str:
+    return str(asset_id).split(":", 1)[0]
+
+
+def strip_volatile_value(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: strip_volatile_value(item) for key, item in value.items() if key not in {"generated_at", "created_at", "updated_at"}}
+    if isinstance(value, list):
+        return [strip_volatile_value(item) for item in value]
+    return value
+
+
+def normalized_snapshot_manifest(snapshot: str) -> dict[str, Any]:
+    root = resolve_snapshot(snapshot)
+    manifest = load_json(root / "snapshot-manifest.json")
+    normalized = strip_volatile_value(manifest)
+    normalized.pop("snapshot_id", None)
+    normalized.pop("incremental", None)
+    summary = normalized.get("summary")
+    if isinstance(summary, dict):
+        summary.pop("capture_mode", None)
+    for asset in normalized.get("assets", []):
+        if isinstance(asset, dict):
+            asset.pop("reuse", None)
+            content_kind = str(asset.get("content_kind") or "text")
+            target = root / Path(str(asset.get("snapshot_path") or ""))
+            if content_kind == "text" and target.suffix.lower() == ".json" and target.is_file():
+                try:
+                    payload = strip_volatile_value(load_json(target))
+                    asset["normalized_content_sha256"] = sha256_bytes(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+                except (OSError, ValueError, json.JSONDecodeError):
+                    pass
+    return normalized
+
+
+def compare_snapshots(left: str, right: str) -> dict[str, Any]:
+    try:
+        first = normalized_snapshot_manifest(left)
+        second = normalized_snapshot_manifest(right)
+    except Exception as exc:
+        return {"schema": "codex_mirror.snapshot_compare.v1", "ok": False, "reason": str(exc)}
+    if first == second:
+        return {"schema": "codex_mirror.snapshot_compare.v1", "ok": True, "equivalent": True, "left": left, "right": right, "differences": []}
+    differences: list[dict[str, Any]] = []
+    if first.get("dependency_graph") != second.get("dependency_graph"):
+        differences.append({"field": "dependency_graph", "left": first.get("dependency_graph"), "right": second.get("dependency_graph")})
+    left_assets = {str(item.get("asset_id")): item for item in first.get("assets", [])}
+    right_assets = {str(item.get("asset_id")): item for item in second.get("assets", [])}
+    for asset_id in sorted(set(left_assets) | set(right_assets)):
+        if left_assets.get(asset_id) != right_assets.get(asset_id):
+            differences.append({"asset_id": asset_id, "left": left_assets.get(asset_id), "right": right_assets.get(asset_id)})
+    return {"schema": "codex_mirror.snapshot_compare.v1", "ok": True, "equivalent": False, "left": left, "right": right, "difference_count": len(differences), "differences": differences[:50]}
+
+
+def copy_previous_asset(stage: Path, previous_root: Path, asset: dict[str, Any]) -> dict[str, Any]:
+    source = previous_root / Path(str(asset["snapshot_path"]))
+    if not source.is_file():
+        raise FileNotFoundError(f"previous_asset_missing:{asset.get('asset_id')}")
+    copied = add_asset(
+        stage=stage,
+        snapshot_path=str(asset["snapshot_path"]),
+        data=source.read_bytes(),
+        asset_id=str(asset["asset_id"]),
+        owner=str(asset.get("owner") or ""),
+        classification=str(asset.get("classification") or ""),
+        source_path=str(asset.get("source_path") or ""),
+        restore_template=str(asset.get("restore_template") or ""),
+        mode=str(asset.get("mode") or "copy"),
+        content_kind=str(asset.get("content_kind") or "text"),
+    )
+    copied["reuse"] = {
+        "mode": "previous_snapshot",
+        "snapshot_id": previous_root.name,
+        "source_asset_id": str(asset.get("asset_id") or ""),
+    }
+    return copied
+
+
+def previous_snapshot_for_incremental() -> tuple[Path | None, dict[str, Any] | None, str]:
+    try:
+        path = resolve_snapshot("latest")
+        manifest = load_json(path / "snapshot-manifest.json")
+        validation = validate_snapshot(str(manifest.get("snapshot_id") or "latest"))
+        if not validation.get("ok"):
+            return None, None, "previous_snapshot_invalid"
+        return path, manifest, "previous_snapshot_valid"
+    except Exception as exc:
+        return None, None, f"previous_snapshot_unavailable:{type(exc).__name__}"
+
+
+def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None = None) -> dict[str, Any]:
     plan = collect_plan(config)
     if not plan["ok"]:
         return {"schema": "codex_mirror.snapshot.v1", "ok": False, "reason": "plan_blocked", "plan": plan}
+    incremental_plan = None
+    previous_root: Path | None = None
+    previous_manifest: dict[str, Any] | None = None
+    capture_mode = "full"
+    fallback_reason = ""
+    if changed_paths is not None:
+        incremental_plan = affected_source_plan(config, changed_paths)
+        if not incremental_plan["full_rebuild_required"] and incremental_plan["ok"]:
+            previous_root, previous_manifest, previous_status = previous_snapshot_for_incremental()
+            if previous_root is None or previous_manifest is None:
+                incremental_plan["full_rebuild_required"] = True
+                incremental_plan["reasons"] = sorted(set(incremental_plan["reasons"]) | {previous_status})
+                fallback_reason = previous_status
+            else:
+                capture_mode = "incremental"
+        else:
+            fallback_reason = ",".join(incremental_plan["reasons"]) or "incremental_plan_not_safe"
     variables = expanded_variables(config)
     policy = config["policy"]
     seed = json.dumps({"time": now_iso(), "governance": governance_hashes()}, sort_keys=True).encode("utf-8")
@@ -1163,7 +1397,15 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     missing: list[str] = []
     try:
+        affected_ids = set(incremental_plan.get("affected_source_ids", [])) if capture_mode == "incremental" else set()
+        affected_generated_ids = set(incremental_plan.get("dependent_generated_source_ids", [])) if capture_mode == "incremental" else set()
+        if capture_mode == "incremental" and previous_manifest is not None and previous_root is not None:
+            for asset in previous_manifest.get("assets", []):
+                if source_id_for_asset(str(asset.get("asset_id") or "")) not in affected_ids and str(asset.get("asset_id") or "") not in affected_generated_ids:
+                    assets.append(copy_previous_asset(stage, previous_root, asset))
         for spec in config.get("sources", []):
+            if capture_mode == "incremental" and str(spec.get("id")) not in affected_ids:
+                continue
             source = Path(expand_tokens(spec["source"], variables))
             if not source.exists():
                 if spec.get("required"):
@@ -1183,6 +1425,8 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
                 assets.append(add_asset(stage=stage, snapshot_path=destination, data=data, asset_id=f"{spec['id']}:{rel}", owner=spec["owner"], classification=spec["classification"], source_path=str(path), restore_template=restore_template, mode=effective_mode, content_kind=content_kind))
 
         for spec in config.get("generated_sources", []):
+            if capture_mode == "incremental" and str(spec.get("id")) not in affected_generated_ids:
+                continue
             kind = spec["kind"]
             if kind == "command_json":
                 data = run_json_command(spec["command"], variables)
@@ -1230,7 +1474,9 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
             "membership_guard": membership_guard,
             "asset_dispositions": plan["asset_dispositions"],
             "external_archives": load_json(EXTERNAL_ARCHIVES),
-            "summary": {"asset_count": len(assets), "total_bytes": total_bytes, "required_sources_missing": []},
+            "summary": {"asset_count": len(assets), "total_bytes": total_bytes, "required_sources_missing": [], "capture_mode": capture_mode},
+            "incremental": incremental_plan or {"capture_mode": "full"},
+            "dependency_graph": source_dependency_graph(config),
         }
         write_json_atomic(stage / "snapshot-manifest.json", manifest)
         target = SNAPSHOT_ROOT / snapshot_id
@@ -1238,7 +1484,7 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
             raise FileExistsError(target)
         stage.replace(target)
         write_json_atomic(LATEST_PATH, {"schema": "codex_mirror.latest.v1", "snapshot_id": snapshot_id, "updated_at": now_iso()})
-        return {"schema": "codex_mirror.snapshot.v1", "ok": True, "snapshot_id": snapshot_id, "path": str(target), "summary": manifest["summary"]}
+        return {"schema": "codex_mirror.snapshot.v1", "ok": True, "snapshot_id": snapshot_id, "path": str(target), "summary": manifest["summary"], "capture_mode": capture_mode, "fallback_reason": fallback_reason}
     except Exception as exc:
         shutil.rmtree(stage, ignore_errors=True)
         return {"schema": "codex_mirror.snapshot.v1", "ok": False, "reason": str(exc), "snapshot_id": snapshot_id}
@@ -1450,7 +1696,7 @@ def validate_snapshot(snapshot: str = "latest", *, live_sources: bool = False) -
         manifest = load_json(path / "snapshot-manifest.json")
     except Exception as exc:
         return {"schema": "codex_mirror.validate.v1", "ok": False, "issues": [{"code": "snapshot_load_failed", "detail": str(exc)}]}
-    required_fields = {"schema", "snapshot_id", "created_at", "authority_mode", "governance_hash_mode", "assets", "membership_guard", "asset_dispositions", "summary"}
+    required_fields = {"schema", "snapshot_id", "created_at", "authority_mode", "governance_hash_mode", "assets", "membership_guard", "asset_dispositions", "summary", "dependency_graph"}
     missing_fields = sorted(required_fields - set(manifest))
     if missing_fields:
         issues.append({"code": "manifest_fields_missing", "fields": missing_fields})
@@ -1458,6 +1704,17 @@ def validate_snapshot(snapshot: str = "latest", *, live_sources: bool = False) -
         issues.append({"code": "authority_mode_invalid", "observed": manifest.get("authority_mode")})
     if manifest.get("governance_hash_mode") != GOVERNANCE_HASH_MODE:
         issues.append({"code": "governance_hash_mode_invalid", "observed": manifest.get("governance_hash_mode"), "expected": GOVERNANCE_HASH_MODE})
+    dependency = source_dependency_graph(load_json(SOURCE_MANIFEST))
+    issues.extend(dependency.get("issues", []))
+    asset_ids = [str(item.get("asset_id") or "") for item in manifest.get("assets", [])]
+    duplicate_asset_ids = sorted({item for item in asset_ids if item and asset_ids.count(item) > 1})
+    if duplicate_asset_ids:
+        issues.append({"code": "snapshot_asset_id_duplicate", "asset_ids": duplicate_asset_ids[:20]})
+    snapshot_dependency = manifest.get("dependency_graph")
+    if not isinstance(snapshot_dependency, dict) or snapshot_dependency.get("ok") is not True:
+        issues.append({"code": "snapshot_dependency_graph_missing_or_invalid"})
+    elif snapshot_dependency.get("graph") != dependency.get("graph"):
+        issues.append({"code": "snapshot_dependency_graph_drift"})
     guard = manifest.get("membership_guard", {})
     for asset in manifest.get("assets", []):
         relative = str(asset.get("snapshot_path") or "")
@@ -1673,8 +1930,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Codex environment mirror and isolated recovery staging")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("plan")
+    affected_parser = sub.add_parser("affected-source-plan")
+    affected_parser.add_argument("--changed", action="append", default=[])
+    compare_parser = sub.add_parser("compare-snapshots")
+    compare_parser.add_argument("--left", required=True)
+    compare_parser.add_argument("--right", required=True)
     snapshot_parser = sub.add_parser("snapshot")
     snapshot_parser.add_argument("--apply", action="store_true")
+    snapshot_parser.add_argument("--changed", action="append", default=None)
     validate_parser = sub.add_parser("validate")
     validate_parser.add_argument("--snapshot", default="latest")
     validate_parser.add_argument("--live-sources", action="store_true")
@@ -1689,8 +1952,12 @@ def main(argv: list[str] | None = None) -> int:
     config = load_json(SOURCE_MANIFEST)
     if args.command == "plan":
         payload = collect_plan(config)
+    elif args.command == "affected-source-plan":
+        payload = affected_source_plan(config, args.changed)
+    elif args.command == "compare-snapshots":
+        payload = compare_snapshots(args.left, args.right)
     elif args.command == "snapshot":
-        payload = create_snapshot(config) if args.apply else {"schema": "codex_mirror.snapshot.v1", "ok": True, "dry_run": True, "plan": collect_plan(config), "next_action": "rerun with --apply"}
+        payload = create_snapshot(config, changed_paths=args.changed) if args.apply else {"schema": "codex_mirror.snapshot.v1", "ok": True, "dry_run": True, "plan": collect_plan(config), "next_action": "rerun with --apply"}
     elif args.command == "validate":
         payload = validate_snapshot(args.snapshot, live_sources=args.live_sources)
     elif args.command == "restore-plan":

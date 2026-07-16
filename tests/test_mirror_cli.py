@@ -171,6 +171,47 @@ class MirrorCliTests(unittest.TestCase):
         issues = mirror_cli.membership_projection_issues(config, {}, projection)
         self.assertEqual(issues, [{"code": "source_missing_membership_owner", "source_id": "new-source"}])
 
+    def test_source_dependency_graph_reports_missing_and_cycles(self) -> None:
+        graph = mirror_cli.source_dependency_graph({
+            "sources": [{"id": "a", "depends_on": ["b"]}, {"id": "b", "depends_on": ["a", "missing"]}],
+            "generated_sources": [],
+        })
+        codes = {item["code"] for item in graph["issues"]}
+        self.assertFalse(graph["ok"])
+        self.assertIn("source_dependency_missing", codes)
+        self.assertIn("source_dependency_cycle", codes)
+
+    def test_affected_source_plan_closes_generated_dependents(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "config.toml"
+            source.write_text("value = true\n", encoding="utf-8")
+            config = {
+                "variables": {},
+                "sources": [{"id": "config", "kind": "file", "source": str(source)}],
+                "generated_sources": [{"id": "derived", "kind": "command_json", "command": ["python", "-c", "print('{}')"], "depends_on": ["config"]}],
+            }
+            plan = mirror_cli.affected_source_plan(config, [str(source)])
+            self.assertTrue(plan["ok"])
+            self.assertEqual(plan["direct_source_ids"], ["config"])
+            self.assertEqual(plan["dependent_generated_source_ids"], ["derived"])
+            self.assertFalse(plan["full_rebuild_required"])
+
+    def test_affected_source_plan_unknown_change_requires_full_rebuild(self) -> None:
+        config = {"variables": {}, "sources": [{"id": "config", "kind": "file", "source": "C:/known.toml"}], "generated_sources": []}
+        plan = mirror_cli.affected_source_plan(config, ["C:/outside.txt"])
+        self.assertFalse(plan["ok"])
+        self.assertTrue(plan["full_rebuild_required"])
+        self.assertIn("changed_path_unmapped", plan["reasons"])
+
+    def test_source_dependency_graph_is_embedded_in_snapshot_manifest_contract(self) -> None:
+        graph = mirror_cli.source_dependency_graph({
+            "sources": [{"id": "source"}],
+            "generated_sources": [{"id": "derived", "depends_on": ["source"]}],
+        })
+        self.assertTrue(graph["ok"])
+        self.assertEqual(graph["graph"]["derived"], ["source"])
+
     def test_gitignore_only_excludes_repository_runtime_root(self) -> None:
         rules = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertIn("/runtime/", rules)
