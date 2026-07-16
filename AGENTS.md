@@ -15,7 +15,8 @@ explicit asset disposition, isolated staging, and recovery evidence.
 1. Read `README.md`, then `manifests/source-authorities.json`,
    `manifests/asset-dispositions.json`, and `manifests/restore-order.json`.
 2. Run `python scripts/mirror_cli.py validate` before relying on the latest
-   snapshot.
+   snapshot. This default is portable snapshot validation; only a capture-source
+   owner uses `--live-sources` to compare the snapshot with active machine state.
 3. Use `snapshot-manifest.json` for the exact asset, owner, classification,
    hash, restore template, membership guard, and external-state gaps.
 4. Use `restore-plan` and `stage` only with an empty isolated target. Staging
@@ -44,4 +45,3 @@ explicit asset disposition, isolated staging, and recovery evidence.
   navigation surfaces; machine-readable manifests remain the detailed source.
 - A refresh is complete only after capture validation, Git commit, retention
   commit, clean status, and an isolated stage hash check.
-

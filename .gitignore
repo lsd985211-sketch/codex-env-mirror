@@ -1,4 +1,4 @@
-runtime/
+/runtime/
 *.tmp
 *.log
 *.sqlite
@@ -13,5 +13,4 @@ __pycache__/
 .ruff_cache/
 
 # External encrypted archives are referenced by receipts, never committed.
-archives/
-
+/archives/

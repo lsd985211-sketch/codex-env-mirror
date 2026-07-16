@@ -59,22 +59,29 @@ workspace facade has not yet been restored:
 python scripts\mirror_cli.py plan
 python scripts\mirror_cli.py snapshot --apply
 python scripts\mirror_cli.py validate
+python scripts\mirror_cli.py validate --live-sources
 python scripts\mirror_cli.py restore-plan --target-root C:\CodexRestoreStage
 python scripts\mirror_cli.py stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE
 ```
 
-`snapshot` is dry-run unless `--apply` is provided. `stage` writes only to an
+The default `validate` checks the committed repository and fixed snapshot, so a
+fresh clone does not require the publisher's machine paths. `--live-sources`
+adds active-source coverage, generated-source freshness, and top-level asset
+disposition checks; it is used by the publisher-side workspace facade and
+refresh transaction. `snapshot` is dry-run unless `--apply` is provided. `stage` writes only to an
 isolated target and refuses known active source roots. Activation is deliberately
 not automated by this bootstrap repository; it must be performed by the target
 environment's owners after backup and validation.
 
 ## Readiness States
 
-- `mirror_valid`: manifests, text/binary hashes, text secret scans,
-  source-coverage checks, generated semantic exports, references, and snapshot
-  content are internally valid.
+- `mirror_valid`: manifests, text/binary hashes, text secret scans, generated
+  snapshot assets, references, membership guards, and repository governance are
+  internally valid.
 - `capability_restore_ready`: rules, owner source, configuration templates,
   skills, and bootstrap evidence can be staged and validated.
+- `source_freshness_checked` / `source_freshness_ok`: whether the optional live
+  source comparison ran and whether the active source still matches the snapshot.
 - `full_state_restore_ready`: all required encrypted external archives and
   secret re-acquisition requirements have verified receipts.
 

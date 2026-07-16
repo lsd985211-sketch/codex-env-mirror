@@ -126,6 +126,45 @@ class MirrorCliTests(unittest.TestCase):
             finally:
                 mirror_cli.SOURCE_MANIFEST = old_manifest
 
+    def test_governance_text_hash_is_stable_across_line_endings(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "script.ps1"
+            path.write_bytes(b"line-1\nline-2\n")
+            lf_hash = mirror_cli.sha256_text_file(path)
+            path.write_bytes(b"line-1\r\nline-2\r\n")
+            self.assertEqual(mirror_cli.sha256_text_file(path), lf_hash)
+
+    def test_snapshot_validation_skips_live_sources_by_default(self) -> None:
+        with patch.object(mirror_cli, "source_coverage_issues") as coverage, \
+                patch.object(mirror_cli, "generated_source_issues") as generated, \
+                patch.object(mirror_cli, "collect_asset_dispositions") as dispositions:
+            payload = mirror_cli.validate_snapshot()
+        coverage.assert_not_called()
+        generated.assert_not_called()
+        dispositions.assert_not_called()
+        self.assertEqual(payload["validation_scope"], "snapshot")
+        self.assertFalse(payload["source_freshness_checked"])
+        self.assertIsNone(payload["source_freshness_ok"])
+
+    def test_live_validation_reports_source_drift_separately(self) -> None:
+        source_issue = {"code": "source_assets_changed", "source_id": "demo"}
+        with patch.object(mirror_cli, "source_coverage_issues", return_value=[source_issue]), \
+                patch.object(mirror_cli, "generated_source_issues", return_value=[]), \
+                patch.object(mirror_cli, "collect_asset_dispositions", return_value={"issues": []}):
+            payload = mirror_cli.validate_snapshot(live_sources=True)
+        self.assertFalse(payload["ok"])
+        self.assertEqual(payload["validation_scope"], "snapshot_and_live_sources")
+        self.assertTrue(payload["source_freshness_checked"])
+        self.assertFalse(payload["source_freshness_ok"])
+        self.assertIn(source_issue, payload["issues"])
+
+    def test_gitignore_only_excludes_repository_runtime_root(self) -> None:
+        rules = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+        self.assertIn("/runtime/", rules)
+        self.assertIn("/archives/", rules)
+        self.assertNotIn("runtime/", rules)
+        self.assertNotIn("archives/", rules)
+
     def test_asset_disposition_inventory_blocks_unknown_top_level_asset(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

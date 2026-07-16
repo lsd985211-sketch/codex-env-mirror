@@ -1,0 +1,127 @@
+{
+  "openclaw": {
+    "log_path": "C:\\Users\\45543\\AppData\\Local\\Temp\\openclaw\\openclaw-2026-06-19.log",
+    "account_id": "primary",
+    "reply_pending_context_retry_seconds": 10
+  },
+  "queue": {
+    "db_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\mobile_openclaw_bridge.db"
+  },
+  "security": {
+    "allowed_users": [
+      "o9cq80_7_t7OGRYescsBdqz_4YrI@im.wechat",
+      "o9cq80zlpZyPTPzAoyXRWUllMrC0@im.wechat",
+      "o9cq80zzF6lsc39LqQOYnQdpj-eM@im.wechat",
+      "o9cq803g9lpCU06wtW0gnC7e_7P4@im.wechat",
+      "o9cq80w7HeS1jM6Wpow9ozaLZywI@im.wechat"
+    ],
+    "confirmation_secret_hash": "793a84a351bd364d2f0323b67b39407711e54bc4748c439fb32734538ef8dd15",
+    "confirmation_ttl_seconds": 180,
+    "max_confirmation_failures": 3,
+    "confirmation_secret_env": "MOBILE_BRIDGE_CONFIRM_SECRET"
+  },
+  "safety": {
+    "shadow_mode": false,
+    "paused": false,
+    "max_input_chars": 2000,
+    "risk_rules_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\risk_rules.json"
+  },
+  "trigger": {
+    "delivery_mode": "codex-app-server",
+    "auto_reply": true,
+    "codex_cdp_port": 9231,
+    "codex_app_server_host": "127.0.0.1",
+    "codex_app_server_port": 18791,
+    "codex_app_server_script": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_tools\\codex-app-server-tools\\codex_app_server_client.js",
+    "delivery_timeout_seconds": 20,
+    "result_timeout_seconds": 300,
+    "result_settle_ms": 5000,
+    "result_poll_interval_seconds": 1,
+    "waiting_ack_after_seconds": 60,
+    "cooldown_seconds": 1,
+    "continuation_window_seconds": 60,
+    "codex_thread_id": "019eca51-3ce9-76e2-9795-83f3af451f3a",
+    "codex_cdp_host": "localhost"
+  },
+  "threads": {
+    "default_id": "mobile-openclaw-bridge",
+    "selection_ttl_seconds": 180,
+    "items": [
+      {
+        "id": "mobile-openclaw-bridge",
+        "name": "微信桥接项目",
+        "description": "微信 OpenClaw 桥接、手机端触发与回发",
+        "aliases": [
+          "mobile",
+          "微信桥接",
+          "手机桥接",
+          "mobile-openclaw-bridge"
+        ],
+        "thread_id": "019eca51-3ce9-76e2-9795-83f3af451f3a"
+      },
+      {
+        "id": "weixin-user-o9cq80zlp",
+        "name": "微信用户 o9cq80zlp",
+        "description": "微信用户 o9cq80zlpZyPTPzAoyXRWUllMrC0 的独立对话线程",
+        "aliases": [
+          "o9cq80zlp",
+          "微信用户o9cq80zlp"
+        ],
+        "thread_id": "019ee348-662d-7fa0-99c8-3138aa86db2f"
+      },
+      {
+        "id": "weixin-user-o9cq80zzf6-303ed1",
+        "name": "微信用户 o9cq80zzF6 独立对话",
+        "description": "微信用户 o9cq80zzF6lsc39LqQOYnQdpj-eM@im.wechat 的独立对话线程",
+        "aliases": [
+          "o9cq80zzF6lsc39L",
+          "weixin-user-o9cq80zzf6-303ed1"
+        ],
+        "thread_id": "019ee3f5-27e9-7d20-9cf5-802aaef0e1af"
+      },
+      {
+        "id": "weixin-user-o9cq803g9l-c14497",
+        "name": "微信用户 o9cq803g9l 独立对话",
+        "description": "微信用户 o9cq803g9lpCU06wtW0gnC7e_7P4@im.wechat 的独立对话线程",
+        "aliases": [
+          "o9cq803g9lpCU06w",
+          "weixin-user-o9cq803g9l-c14497"
+        ],
+        "thread_id": "019eeafc-1677-7723-992f-b31590c0fe66"
+      },
+      {
+        "id": "weixin-user-o9cq80w7he-1a64b2",
+        "name": "微信用户 o9cq80w7He 独立对话",
+        "description": "微信用户 o9cq80w7HeS1jM6Wpow9ozaLZywI@im.wechat 的独立对话线程",
+        "aliases": [
+          "o9cq80w7HeS1jM6W",
+          "weixin-user-o9cq80w7he-1a64b2"
+        ],
+        "thread_id": "019f04c1-524a-7c62-bd3d-cfc67a24c551"
+      },
+      {
+        "id": "weixin-user-o9cq80zlpz-173ff2",
+        "name": "微信用户 o9cq80zlpZ 独立对话",
+        "description": "微信用户 o9cq80zlpZyPTPzAoyXRWUllMrC0@im.wechat 的独立对话线程",
+        "aliases": [
+          "o9cq80zlpZyPTPzA",
+          "weixin-user-o9cq80zlpz-173ff2"
+        ],
+        "thread_id": "019f3ac1-a702-7aa2-9dc7-25f244d08815"
+      },
+      {
+        "id": "weixin-user-o9cq80_7_t-e1a045",
+        "name": "微信用户 o9cq80_7_t 独立对话",
+        "description": "微信用户 o9cq80_7_t7OGRYescsBdqz_4YrI@im.wechat 的独立对话线程",
+        "aliases": [
+          "o9cq80_7_t7OGRYe",
+          "weixin-user-o9cq80_7_t-e1a045"
+        ],
+        "thread_id": "019f3b9c-93e7-7b43-9ed4-c37595e78bbe"
+      }
+    ]
+  },
+  "control": {
+    "scheduled_task_name": "MobileOpenClawBridgeWorker"
+  }
+}

@@ -2,12 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "codex_mirror.snapshot_manifest.v1",
   "type": "object",
-  "required": ["schema", "snapshot_id", "created_at", "authority_mode", "assets", "membership_guard", "summary"],
+  "required": ["schema", "snapshot_id", "created_at", "authority_mode", "governance_hash_mode", "assets", "membership_guard", "summary"],
   "properties": {
     "schema": {"const": "codex_mirror.snapshot_manifest.v1"},
     "snapshot_id": {"type": "string", "minLength": 8},
     "created_at": {"type": "string"},
     "authority_mode": {"const": "derived_snapshot"},
+    "governance_hash_mode": {"const": "canonical_utf8_lf_v1"},
     "assets": {
       "type": "array",
       "items": {

@@ -5,6 +5,9 @@
 - Confirm OS, user identity, target paths, Python/PowerShell versions, Codex
   Desktop version, native-host compatibility, free disk space, and repository
   integrity.
+- Run the default `validate` against the committed snapshot. Missing publisher
+  paths are not a restore failure; `--live-sources` is reserved for the capture
+  source after its paths and owners exist.
 - Confirm the snapshot compatibility range and inspect all unresolved external
   archives and secret requirements.
 - Confirm the membership export is active-members-only and the membership guard

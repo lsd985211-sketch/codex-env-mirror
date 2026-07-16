@@ -80,3 +80,19 @@ remain external; only sanitized semantic or version evidence enters Git.
 The bootstrap tools may plan and stage. Live activation requires owner-specific
 validation, a target backup, explicit authorization, and a final closeout
 receipt. Lower-level copy operations cannot bypass that boundary.
+
+## Validation Scopes
+
+Portable snapshot validation is the default. It verifies committed assets,
+hashes, generated snapshot payloads, governance files, membership guards,
+restore references, and secret boundaries without reading the publisher's live
+paths. `restore-plan` and `stage` depend only on this scope.
+
+Capture-source validation adds source coverage, generated-source freshness, and
+top-level asset dispositions through `validate --live-sources`. The workspace
+owner uses that scope for status, doctor, refresh retries, and candidate commit
+decisions. Source drift can make the live validation command fail while the last
+verified snapshot remains internally valid and stageable.
+
+Governance text hashes normalize CRLF and CR to LF before hashing. Snapshot
+asset hashes remain byte-for-byte and are never normalized.

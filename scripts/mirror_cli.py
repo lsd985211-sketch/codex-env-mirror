@@ -31,6 +31,7 @@ RESTORE_ORDER = MANIFEST_ROOT / "restore-order.json"
 SNAPSHOT_ROOT = ROOT / "snapshots"
 RUNTIME_ROOT = ROOT / "runtime"
 LATEST_PATH = SNAPSHOT_ROOT / "latest.json"
+GOVERNANCE_HASH_MODE = "canonical_utf8_lf_v1"
 
 HIGH_CONFIDENCE_SECRET_PATTERNS = (
     ("openai_key", re.compile(r"\bsk-[A-Za-z0-9_-]{12,}\b")),
@@ -94,6 +95,11 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def sha256_text_file(path: Path) -> str:
+    normalized = read_text(path).replace("\r\n", "\n").replace("\r", "\n")
+    return sha256_bytes(normalized.encode("utf-8"))
 
 
 def expand_tokens(value: str, variables: dict[str, str]) -> str:
@@ -611,14 +617,14 @@ $result | ConvertTo-Json -Compress
 def governance_hashes() -> dict[str, str]:
     results: dict[str, str] = {}
     for path in sorted(MANIFEST_ROOT.rglob("*.json")):
-        results[relative_posix(path, ROOT)] = sha256_file(path)
+        results[relative_posix(path, ROOT)] = sha256_text_file(path)
     for name in ("AGENTS.md", "README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"):
         path = ROOT / name
-        results[name] = sha256_file(path)
+        results[name] = sha256_text_file(path)
     for directory in (ROOT / "scripts", ROOT / "tests"):
         for path in sorted(directory.rglob("*")):
             if path.is_file() and "__pycache__" not in path.parts and path.suffix.lower() in {".py", ".ps1"}:
-                results[relative_posix(path, ROOT)] = sha256_file(path)
+                results[relative_posix(path, ROOT)] = sha256_text_file(path)
     return results
 
 
@@ -1178,6 +1184,7 @@ def create_snapshot(config: dict[str, Any]) -> dict[str, Any]:
             "created_at": now_iso(),
             "authority_mode": "derived_snapshot",
             "source_manifest": "manifests/source-authorities.json",
+            "governance_hash_mode": GOVERNANCE_HASH_MODE,
             "governance_hashes": governance_hashes(),
             "assets": assets,
             "membership_guard": membership_guard,
@@ -1395,19 +1402,22 @@ def generated_source_issues(snapshot_root: Path, manifest: dict[str, Any]) -> li
     return issues
 
 
-def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
+def validate_snapshot(snapshot: str = "latest", *, live_sources: bool = False) -> dict[str, Any]:
     issues: list[dict[str, Any]] = []
+    source_issues: list[dict[str, Any]] = []
     try:
         path = resolve_snapshot(snapshot)
         manifest = load_json(path / "snapshot-manifest.json")
     except Exception as exc:
         return {"schema": "codex_mirror.validate.v1", "ok": False, "issues": [{"code": "snapshot_load_failed", "detail": str(exc)}]}
-    required_fields = {"schema", "snapshot_id", "created_at", "authority_mode", "assets", "membership_guard", "asset_dispositions", "summary"}
+    required_fields = {"schema", "snapshot_id", "created_at", "authority_mode", "governance_hash_mode", "assets", "membership_guard", "asset_dispositions", "summary"}
     missing_fields = sorted(required_fields - set(manifest))
     if missing_fields:
         issues.append({"code": "manifest_fields_missing", "fields": missing_fields})
     if manifest.get("authority_mode") != "derived_snapshot":
         issues.append({"code": "authority_mode_invalid", "observed": manifest.get("authority_mode")})
+    if manifest.get("governance_hash_mode") != GOVERNANCE_HASH_MODE:
+        issues.append({"code": "governance_hash_mode_invalid", "observed": manifest.get("governance_hash_mode"), "expected": GOVERNANCE_HASH_MODE})
     guard = manifest.get("membership_guard", {})
     for asset in manifest.get("assets", []):
         relative = str(asset.get("snapshot_path") or "")
@@ -1442,9 +1452,10 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
                     issues.append({"code": "sanitized_asset_parse_failed", "path": relative, "detail": str(exc)})
         except ValueError:
             issues.append({"code": "text_asset_decode_failed", "path": relative})
-    issues.extend(source_coverage_issues(manifest))
-    issues.extend(generated_source_issues(path, manifest))
-    issues.extend(collect_asset_dispositions(load_json(SOURCE_MANIFEST))["issues"])
+    if live_sources:
+        source_issues.extend(source_coverage_issues(manifest))
+        source_issues.extend(generated_source_issues(path, manifest))
+        source_issues.extend(collect_asset_dispositions(load_json(SOURCE_MANIFEST))["issues"])
     asset_by_id = {str(item.get("asset_id")): item for item in manifest.get("assets", [])}
     for asset_id, checks in {
         "codex-plugin-inventory": (("unresolved_count", 0, "plugin_inventory_unresolved"),),
@@ -1494,14 +1505,20 @@ def validate_snapshot(snapshot: str = "latest") -> dict[str, Any]:
         completed = subprocess.run(["git", "-C", str(ROOT), "remote"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15)
         if completed.returncode == 0:
             remotes = [line for line in completed.stdout.splitlines() if line.strip()]
+    all_issues = [*issues, *source_issues]
+    mirror_valid = not issues
+    source_freshness_ok = not source_issues if live_sources else None
     return {
         "schema": "codex_mirror.validate.v1",
-        "ok": not issues,
+        "ok": not all_issues,
         "snapshot_id": manifest.get("snapshot_id"),
-        "mirror_valid": not issues,
-        "capability_restore_ready": not issues,
-        "full_state_restore_ready": not issues and not required_archive_gaps and bool(remotes),
-        "issues": issues,
+        "validation_scope": "snapshot_and_live_sources" if live_sources else "snapshot",
+        "mirror_valid": mirror_valid,
+        "capability_restore_ready": mirror_valid,
+        "source_freshness_checked": live_sources,
+        "source_freshness_ok": source_freshness_ok,
+        "full_state_restore_ready": mirror_valid and not required_archive_gaps and bool(remotes),
+        "issues": all_issues,
         "advisories": {
             "required_archive_gaps": required_archive_gaps,
             "git_initialized": git_dir.exists(),
@@ -1619,6 +1636,7 @@ def main(argv: list[str] | None = None) -> int:
     snapshot_parser.add_argument("--apply", action="store_true")
     validate_parser = sub.add_parser("validate")
     validate_parser.add_argument("--snapshot", default="latest")
+    validate_parser.add_argument("--live-sources", action="store_true")
     restore_parser = sub.add_parser("restore-plan")
     restore_parser.add_argument("--snapshot", default="latest")
     restore_parser.add_argument("--target-root", required=True)
@@ -1633,7 +1651,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "snapshot":
         payload = create_snapshot(config) if args.apply else {"schema": "codex_mirror.snapshot.v1", "ok": True, "dry_run": True, "plan": collect_plan(config), "next_action": "rerun with --apply"}
     elif args.command == "validate":
-        payload = validate_snapshot(args.snapshot)
+        payload = validate_snapshot(args.snapshot, live_sources=args.live_sources)
     elif args.command == "restore-plan":
         payload = restore_plan(args.snapshot, Path(args.target_root))
     else:
