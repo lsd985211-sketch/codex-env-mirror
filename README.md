@@ -58,6 +58,7 @@ Use the workspace workflow facade as the normal entrypoint:
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror status
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror plan
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror refresh --confirm REFRESH-CODEX-MIRROR
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror publish --confirm PUBLISH-CODEX-MIRROR
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror doctor
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror restore-plan --target-root C:\CodexRestoreStage
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE
@@ -68,6 +69,19 @@ uncommitted candidate, plan, create, validate, retry bounded source drift,
 commit the verified candidate, then retire superseded snapshots in a separate
 commit. A failed candidate is removed and `latest.json` is restored atomically.
 `stage` remains isolated and never activates recovered state.
+
+`publish` is the completed remote recovery-seed path. It runs the refresh or
+reuse transaction, validates the exact snapshot against live sources, commits
+any remaining mirror repository metadata, pushes `HEAD` to the configured
+remote branch, and verifies that the remote branch resolves to the local
+`HEAD`. A local-only refresh is useful for inspection, but it is not considered
+published for off-machine recovery.
+
+After a successful production-environment finalization, the workspace closeout
+hook uses this same publish path when the changed files belong to active mirror
+source roots. The hook keeps the historical `post_closeout_mirror` receipt name
+for compatibility, but its completed ordering is
+`finalization_then_mirror_publish`.
 
 The underlying owner commands remain available for bootstrap recovery when the
 workspace facade has not yet been restored:
@@ -101,6 +115,8 @@ environment's owners after backup and validation.
   source comparison ran and whether the active source still matches the snapshot.
 - `full_state_restore_ready`: all required encrypted external archives and
   secret re-acquisition requirements have verified receipts.
+- `push.remote_verification.ok`: for `publish`, the remote branch was read back
+  and matched the pushed local `HEAD`.
 
 The repository may be mirror-valid before full-state readiness is achieved. A
 missing archive must be reported explicitly and can never be represented as a

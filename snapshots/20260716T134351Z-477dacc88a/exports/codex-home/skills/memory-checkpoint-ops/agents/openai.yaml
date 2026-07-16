@@ -1,0 +1,4 @@
+interface:
+  display_name: "Memory Checkpoint Ops"
+  short_description: "Maintain project memory and checkpoints"
+  default_prompt: "Use $memory-checkpoint-ops to decide what project facts, checkpoints, vector memories, and graph observations to update."

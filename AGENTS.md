@@ -21,6 +21,13 @@ explicit asset disposition, isolated staging, and recovery evidence.
    hash, restore template, membership guard, and external-state gaps.
 4. Use `restore-plan` and `stage` only with an empty isolated target. Staging
    never activates recovered state.
+5. In the live source environment, treat `mirror publish` as the completed
+   release path: refresh or reuse the verified snapshot, commit local mirror
+   repository state, push the configured remote branch, and verify the remote
+   head. A local-only refresh is not a remote recovery seed.
+6. After successful production-environment finalization, the workspace closeout
+   hook should publish automatically when changed files match active mirror
+   source roots. Do not silently downgrade that hook to local-only refresh.
 
 ## Hard Boundaries
 
@@ -45,3 +52,6 @@ explicit asset disposition, isolated staging, and recovery evidence.
   navigation surfaces; machine-readable manifests remain the detailed source.
 - A refresh is complete only after capture validation, Git commit, retention
   commit, clean status, and an isolated stage hash check.
+- A publish is complete only after the refresh acceptance predicates pass, the
+  local repository is clean before push, the push succeeds, and remote-head
+  verification confirms the remote branch equals the local `HEAD`.
