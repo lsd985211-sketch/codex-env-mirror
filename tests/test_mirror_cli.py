@@ -222,6 +222,18 @@ class MirrorCliTests(unittest.TestCase):
         self.assertTrue(graph["ok"])
         self.assertEqual(graph["graph"]["derived"], ["source"])
 
+    def test_snapshot_lock_rejects_concurrent_writer(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            runtime = Path(temp_dir)
+            lock = runtime / "locks" / "snapshot.lock"
+            lock.parent.mkdir(parents=True)
+            lock.write_text(json.dumps({"pid": __import__("os").getpid(), "operation": "snapshot", "token": "active"}), encoding="utf-8")
+            with patch.object(mirror_cli, "RUNTIME_ROOT", runtime), patch.object(mirror_cli, "create_snapshot") as create:
+                payload = mirror_cli.snapshot_with_lock({})
+            self.assertFalse(payload["ok"])
+            self.assertEqual(payload["reason"], "mirror_operation_busy")
+            create.assert_not_called()
+
     def test_gitignore_only_excludes_repository_runtime_root(self) -> None:
         rules = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertIn("/runtime/", rules)

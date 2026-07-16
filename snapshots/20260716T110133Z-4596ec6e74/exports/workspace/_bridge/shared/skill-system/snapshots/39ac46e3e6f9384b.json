@@ -1,0 +1,20 @@
+{
+  "skill_id": "39ac46e3e6f9384b",
+  "name": "web-artifacts-builder",
+  "path": "C:\\Users\\45543\\.codex\\skills\\web-artifacts-builder",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "8073d92bc7ae29e2147b5928388775357a72a817a6637f3ffb02819f7080b572",
+    "agents": null,
+    "scripts": "11b056538188efaa3d101d98a70926b8a6dbda16d88506b3ecf03143a62f9702",
+    "references": null,
+    "assets": null
+  }
+}

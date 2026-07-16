@@ -17,6 +17,7 @@ import tempfile
 import time
 import tomllib
 import urllib.parse
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -62,6 +63,71 @@ CC_SWITCH_SEMANTIC_TABLES = (
     "skill_repos",
     "model_pricing",
 )
+
+
+class MirrorOperationBusy(RuntimeError):
+    def __init__(self, lock_path: Path, owner: dict[str, Any]) -> None:
+        super().__init__("mirror_operation_busy")
+        self.lock_path = lock_path
+        self.owner = owner
+
+
+def process_is_alive(pid: int) -> bool:
+    if pid <= 0:
+        return False
+    if os.name == "nt":
+        import ctypes
+
+        process_query_limited_information = 0x1000
+        handle = ctypes.windll.kernel32.OpenProcess(process_query_limited_information, False, pid)
+        if not handle:
+            return False
+        ctypes.windll.kernel32.CloseHandle(handle)
+        return True
+    try:
+        os.kill(pid, 0)
+        return True
+    except PermissionError:
+        return True
+    except OSError:
+        return False
+
+
+def read_lock_owner(path: Path) -> dict[str, Any]:
+    try:
+        payload = load_json(path)
+        return payload if isinstance(payload, dict) else {}
+    except (OSError, ValueError, json.JSONDecodeError):
+        return {}
+
+
+@contextmanager
+def exclusive_operation_lock(path: Path, operation: str) -> Iterable[dict[str, Any]]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    token = f"{os.getpid()}-{time.time_ns()}"
+    owner = {"pid": os.getpid(), "operation": operation, "started_at": now_iso(), "token": token}
+    for _ in range(2):
+        try:
+            descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except FileExistsError:
+            existing = read_lock_owner(path)
+            if not process_is_alive(int(existing.get("pid") or 0)):
+                path.unlink(missing_ok=True)
+                continue
+            raise MirrorOperationBusy(path, existing)
+        else:
+            with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+                json.dump(owner, handle, ensure_ascii=False)
+                handle.write("\n")
+            break
+    else:
+        raise MirrorOperationBusy(path, read_lock_owner(path))
+    try:
+        yield owner
+    finally:
+        current = read_lock_owner(path)
+        if current.get("token") == token:
+            path.unlink(missing_ok=True)
 
 
 def now_iso() -> str:
@@ -1507,6 +1573,22 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
         return {"schema": "codex_mirror.snapshot.v1", "ok": False, "reason": str(exc), "snapshot_id": snapshot_id}
 
 
+def snapshot_with_lock(config: dict[str, Any], *, changed_paths: list[str] | None = None) -> dict[str, Any]:
+    lock_path = RUNTIME_ROOT / "locks" / "snapshot.lock"
+    try:
+        with exclusive_operation_lock(lock_path, "snapshot"):
+            return create_snapshot(config, changed_paths=changed_paths)
+    except MirrorOperationBusy as exc:
+        return {
+            "schema": "codex_mirror.snapshot.v1",
+            "ok": False,
+            "reason": "mirror_operation_busy",
+            "operation": "snapshot",
+            "lock_path": str(exc.lock_path),
+            "lock_owner": exc.owner,
+        }
+
+
 def resolve_snapshot(snapshot: str) -> Path:
     if snapshot and snapshot != "latest":
         path = SNAPSHOT_ROOT / snapshot
@@ -1974,7 +2056,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "compare-snapshots":
         payload = compare_snapshots(args.left, args.right)
     elif args.command == "snapshot":
-        payload = create_snapshot(config, changed_paths=args.changed) if args.apply else {"schema": "codex_mirror.snapshot.v1", "ok": True, "dry_run": True, "plan": collect_plan(config), "next_action": "rerun with --apply"}
+        payload = snapshot_with_lock(config, changed_paths=args.changed) if args.apply else {"schema": "codex_mirror.snapshot.v1", "ok": True, "dry_run": True, "plan": collect_plan(config), "next_action": "rerun with --apply"}
     elif args.command == "validate":
         payload = validate_snapshot(args.snapshot, live_sources=args.live_sources)
     elif args.command == "restore-plan":

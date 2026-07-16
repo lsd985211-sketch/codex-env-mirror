@@ -1,0 +1,20 @@
+{
+  "skill_id": "53eda686e9c45a86",
+  "name": "feishu-wiki",
+  "path": "C:\\Users\\45543\\.codex\\skills\\feishu-wiki",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "5ea1f46901145e8a57fe1281cc8164f67d64051dc0d675d890e574a8fc382769",
+    "agents": null,
+    "scripts": "e4ddbc30f4733f76295a63f610106e3c8c7ad757c1b80184c8060792c3e8745d",
+    "references": null,
+    "assets": null
+  }
+}
