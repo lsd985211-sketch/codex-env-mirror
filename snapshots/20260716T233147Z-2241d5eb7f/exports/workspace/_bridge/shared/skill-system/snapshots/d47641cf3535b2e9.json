@@ -1,0 +1,20 @@
+{
+  "skill_id": "d47641cf3535b2e9",
+  "name": "skill-creator",
+  "path": "C:\\Users\\45543\\.codex\\skills\\.system\\skill-creator",
+  "source": "system-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": "2026-06-26T00:54:09+08:00",
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "2940e08d49e5197453e58a4387d14cb07101b97911c992ef75c8289e0a1734c0",
+    "agents": "b750627cdd588fdbb5b46e854d3384d1a504fad3b8ed73ca5d7ead3804df78b6",
+    "scripts": "b200006df9fbd1f5bd7ca89b718e0bc1fe2b8d1f4f5055b592ec11dccc8f18fa",
+    "references": "576da302ee238cc74d8e28355e8cbcbd8b3e8e16c027bd4c26c0eeaf43af4aed",
+    "assets": "31806f08473d26916db47b247f3fa5bb00bed811b2a381345bb524bb06e6b840"
+  }
+}

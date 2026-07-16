@@ -1,0 +1,20 @@
+{
+  "skill_id": "7db9105cc16c036f",
+  "name": "attack-path-analysis",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\codex-security\\c6ea566d\\skills\\attack-path-analysis",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "e11a98febd0dc8850ea2f409292aa4ee100660f7b414909ab8621df3ab2ce21d",
+    "agents": "d9355cbcf0bc81098c9e837d9d4e8644e598410d052a862ab11cf91ef9ccb633",
+    "scripts": null,
+    "references": "19d4dec70e3878045a14d5ce813821a324fc8d2bcac2f263cf877a5691d3609d",
+    "assets": null
+  }
+}
