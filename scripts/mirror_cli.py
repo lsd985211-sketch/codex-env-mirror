@@ -1210,17 +1210,34 @@ def path_matches_source(path: Path, source: Path, kind: str) -> bool:
     return candidate == target or path_is_within(candidate, target)
 
 
+def expand_changed_path(raw: str, variables: dict[str, str]) -> Path:
+    value = str(raw or "").strip()
+    logical_prefixes = {
+        "codex_home:": "CODEX_HOME",
+        "agent_home:": "AGENT_HOME",
+        "cc_switch:": "CC_SWITCH_HOME",
+        "workspace:": "WORKSPACE_ROOT",
+    }
+    lowered = value.lower()
+    for prefix, variable in logical_prefixes.items():
+        if lowered.startswith(prefix):
+            suffix = value[len(prefix):].lstrip("/\\")
+            return Path(variables[variable]) / Path(suffix)
+    return Path(value).expanduser()
+
+
 def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> dict[str, Any]:
     variables = expanded_variables(config)
     sources, generated = source_specs(config)
     dependency = source_dependency_graph(config)
-    normalized_changes = [str(Path(item).expanduser()) for item in changed_paths if str(item).strip()]
+    original_changes = [str(item).strip() for item in changed_paths if str(item).strip()]
+    normalized_changes = [str(expand_changed_path(item, variables)) for item in original_changes]
     direct_sources: set[str] = set()
     direct_generated: set[str] = set()
     unmatched: list[str] = []
     reasons: list[str] = []
     membership_ids = {MEMBERSHIP_ASSET_ID, "workspace-bridge-source"}
-    for raw in normalized_changes:
+    for original, raw in zip(original_changes, normalized_changes):
         candidate = Path(raw)
         matched = False
         for source_id, spec in sources.items():
@@ -1230,7 +1247,7 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
                 matched = True
         for source_id, spec in generated.items():
             destination = normalized_path(str(spec.get("destination") or ""))
-            if destination and normalized_path(raw) == destination:
+            if destination and normalized_path(original) == destination:
                 direct_generated.add(source_id)
                 matched = True
         if not matched:
@@ -1302,7 +1319,7 @@ def normalized_snapshot_manifest(snapshot: str) -> dict[str, Any]:
             if content_kind == "text" and target.suffix.lower() == ".json" and target.is_file():
                 try:
                     payload = strip_volatile_value(load_json(target))
-                    asset["normalized_content_sha256"] = sha256_bytes(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+                    asset["sha256"] = sha256_bytes(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8"))
                 except (OSError, ValueError, json.JSONDecodeError):
                     pass
     return normalized

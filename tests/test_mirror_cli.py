@@ -204,6 +204,16 @@ class MirrorCliTests(unittest.TestCase):
         self.assertTrue(plan["full_rebuild_required"])
         self.assertIn("changed_path_unmapped", plan["reasons"])
 
+    def test_affected_source_plan_accepts_membership_logical_roots(self) -> None:
+        config = {
+            "variables": {"CODEX_HOME": str(Path.home() / "codex")},
+            "sources": [{"id": "memory", "kind": "tree", "source": "${CODEX_HOME}\\memories"}],
+            "generated_sources": [],
+        }
+        plan = mirror_cli.affected_source_plan(config, ["codex_home:memories/example.md"])
+        self.assertEqual(plan["direct_source_ids"], ["memory"])
+        self.assertFalse(plan["full_rebuild_required"])
+
     def test_source_dependency_graph_is_embedded_in_snapshot_manifest_contract(self) -> None:
         graph = mirror_cli.source_dependency_graph({
             "sources": [{"id": "source"}],

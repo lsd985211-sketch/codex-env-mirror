@@ -1,0 +1,20 @@
+{
+  "skill_id": "d2b68dd004860288",
+  "name": "validation",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\codex-security\\c6ea566d\\skills\\validation",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "1defe029fdec20610dcbb9d898963f903ea3ebf10a287628c9ddc9ca7789f335",
+    "agents": "7516bcd4748b55566694284d7d953a7db0c94d5a2123895fabb36d7d9d7d74e4",
+    "scripts": null,
+    "references": "1f087904a3a96f7a453a9a5cc9d6357cc93212135ca3529d76fe97c1d7d6bc0a",
+    "assets": null
+  }
+}
