@@ -1,0 +1,5 @@
+click
+Pillow
+pyautogui
+pyperclip
+pywinauto
