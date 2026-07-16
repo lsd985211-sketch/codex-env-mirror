@@ -1,0 +1,2 @@
+[console_scripts]
+cli-anything-weixin = cli_anything.weixin.weixin_cli:cli
