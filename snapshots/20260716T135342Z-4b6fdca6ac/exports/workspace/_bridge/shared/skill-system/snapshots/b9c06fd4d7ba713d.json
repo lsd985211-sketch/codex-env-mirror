@@ -1,0 +1,20 @@
+{
+  "skill_id": "b9c06fd4d7ba713d",
+  "name": "pptx",
+  "path": "C:\\Users\\45543\\.codex\\skills\\pptx",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "76697190a75cf3feaaef59e07651c8ee90b462e61f9564c859d026fdaceb8d42",
+    "agents": null,
+    "scripts": "44d0e1579faeaf3fe6beb1362834f6f9bb58af9512034a889e9b00c578da2a4f",
+    "references": null,
+    "assets": null
+  }
+}
