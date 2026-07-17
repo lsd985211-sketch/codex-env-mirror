@@ -136,3 +136,6 @@ semantic decision and may mark each required file `updated` or `compatible`
 after reading the real changes and validating the result. The resulting
 `contract-review-state.json` is generated milestone evidence, not a policy
 authority. Its control-plane fingerprint must be current before release.
+The receipt also records the Codex-reviewed semantic version impact so a
+documentation filename or schema location cannot by itself force an incorrect
+major release.

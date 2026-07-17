@@ -99,7 +99,9 @@ documents that require semantic review. Codex reads the actual diff, updates a
 document when meaning changed, records `compatible` when it did not, runs the
 relevant validators, and writes `contract-review-state.json` through the
 explicit review command. A milestone is blocked when that receipt does not
-cover the current static-file fingerprint.
+cover the current static-file fingerprint. The same Codex review records the
+semantic release impact (`patch`, `minor`, or `major`); filenames alone do not
+decide compatibility impact.
 
 After a successful production-environment finalization, the workspace closeout
 hook uses this same publish path when the changed files belong to active mirror

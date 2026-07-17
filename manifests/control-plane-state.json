@@ -1,12 +1,12 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-17T01:41:16.217634+00:00",
+  "generated_at": "2026-07-17T01:45:49.111610+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260717T014025Z-21101e96c9",
-    "created_at": "2026-07-17T01:40:48.445876+00:00",
+    "snapshot_id": "20260717T014503Z-d79ad3a1f4",
+    "created_at": "2026-07-17T01:45:23.770016+00:00",
     "asset_count": 1982,
-    "total_bytes": 24070555,
+    "total_bytes": 24070722,
     "capture_mode": "full"
   },
   "readiness": {
@@ -51,12 +51,12 @@
     {
       "path": "MIRROR_POLICY.md",
       "role": "static_contract",
-      "sha256": "14c83a6d0d92e03f39865558372d0e6dee882ee91c0a15d0160a4ce5b499b403"
+      "sha256": "972c479727122a202a2a5a0537e57da4c42aa6cce6df52e1779f4cbfbb28c9a7"
     },
     {
       "path": "README.md",
       "role": "static_contract",
-      "sha256": "de554b3cf94897f2169e98aecdc9c1d4927b54caf56f0a2cebcc94a3387d8dbb"
+      "sha256": "45c22ace5cd2229daef30dcbf53d094999b5fcb1b0d8dd7be2ead4094c01b036"
     },
     {
       "path": "RESTORE.md",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "9e3f691585cff614b9991d22893fbbdc0e436c1e043a6be029b016b99ae4c6a1"
+  "current_md_sha256": "579906f703b87373b388460ea155cec1c9b1bd969b5e5e35fe6d9e20cef5b9da"
 }

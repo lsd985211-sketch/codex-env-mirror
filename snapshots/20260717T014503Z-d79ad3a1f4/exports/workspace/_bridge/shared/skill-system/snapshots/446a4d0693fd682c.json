@@ -1,0 +1,20 @@
+{
+  "skill_id": "446a4d0693fd682c",
+  "name": "mcsmanager-fabric-mc",
+  "path": "C:\\Users\\45543\\.codex\\skills\\mcsmanager-fabric-mc",
+  "source": "user-managed",
+  "state": "approved",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": "2026-07-12T10:48:52+08:00",
+  "last_approved_at": "2026-07-12T10:49:12+08:00",
+  "last_change_level": "none",
+  "last_report_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\skill-system\\reports\\446a4d0693fd682c-2026-07-12T104852_0800.json",
+  "fingerprints": {
+    "skill_md": "5c9c4b54c131cc268dd76dfe691f4bbac42dc0248ec5b55b03e0592d0f42882a",
+    "agents": null,
+    "scripts": "c8a069b8dd401789b5bdd12627a4e4c0c9d9eeaa582284f655f76d6cd870edc6",
+    "references": "75678abf71cdf4cfab9abe9f8b3026a19f38337eeb12e7f548338e26fc6cd6d3",
+    "assets": null
+  }
+}

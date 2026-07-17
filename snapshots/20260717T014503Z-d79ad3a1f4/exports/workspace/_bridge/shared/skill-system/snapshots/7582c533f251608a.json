@@ -1,0 +1,20 @@
+{
+  "skill_id": "7582c533f251608a",
+  "name": "imagemagick-conversion",
+  "path": "C:\\Users\\45543\\.codex\\skills\\imagemagick-conversion",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3689a6bc0cb86964dfd62d2acd1e02afc5c3edc99fb885eab87ed9ae3b8ccdf0",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
