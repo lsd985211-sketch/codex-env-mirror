@@ -1,0 +1,48 @@
+{
+  "schema": "codex_mirror.contract_review_state.v1",
+  "reviewed_at": "2026-07-17T01:42:34.609820+00:00",
+  "reviewed_by": "codex",
+  "control_plane_fingerprint": "5f91d013017a73b7813a82a2c3801fe018572d75159fc9de4d37b7882e5a43f3",
+  "baseline_tag": "seed-v2.1.2",
+  "proposed_tag": "seed-v3.0.0",
+  "changed_control_plane_files": [
+    "AGENTS.md",
+    "BOOTSTRAP.md",
+    "MIRROR_POLICY.md",
+    "README.md",
+    "SECURITY.md",
+    "manifests/control-plane-contract.json",
+    "manifests/source-authorities.json",
+    "manifests/verification-matrix.json",
+    "scripts/mirror_cli.py",
+    "tests/test_mirror_cli.py"
+  ],
+  "decisions": [
+    {
+      "path": "AGENTS.md",
+      "disposition": "updated"
+    },
+    {
+      "path": "README.md",
+      "disposition": "updated"
+    },
+    {
+      "path": "MIRROR_POLICY.md",
+      "disposition": "updated"
+    },
+    {
+      "path": "BOOTSTRAP.md",
+      "disposition": "updated"
+    },
+    {
+      "path": "RESTORE.md",
+      "disposition": "compatible"
+    },
+    {
+      "path": "SECURITY.md",
+      "disposition": "updated"
+    }
+  ],
+  "summary": "Reviewed all stable contracts against transactional control-plane freshness, semantic milestone release, public repository policy, and Codex-owned semantic maintenance. Corrected stale private-repository and bootstrap path statements; restore stages remain compatible.",
+  "validation": "all required stable contracts read against current control-plane changes"
+}
