@@ -1,7 +1,8 @@
 # Security Model
 
-This repository must remain private, but privacy is not treated as a substitute
-for secret removal.
+This recovery seed is intentionally public. Public visibility is a hard design
+constraint, so repository privacy must never be relied on for secret removal or
+access control.
 
 - Secret values never enter Git, snapshot manifests, test fixtures, or command
   output committed to the repository.

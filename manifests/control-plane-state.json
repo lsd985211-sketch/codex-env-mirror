@@ -1,12 +1,12 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-17T01:37:48.881123+00:00",
+  "generated_at": "2026-07-17T01:41:16.217634+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260717T013653Z-142a0d0248",
-    "created_at": "2026-07-17T01:37:18.907708+00:00",
+    "snapshot_id": "20260717T014025Z-21101e96c9",
+    "created_at": "2026-07-17T01:40:48.445876+00:00",
     "asset_count": 1982,
-    "total_bytes": 24070527,
+    "total_bytes": 24070555,
     "capture_mode": "full"
   },
   "readiness": {
@@ -46,7 +46,7 @@
     {
       "path": "BOOTSTRAP.md",
       "role": "static_contract",
-      "sha256": "416227064d511882bb4a16cd96d424bd7c10fafd495b7ead56c6dceabf59b35f"
+      "sha256": "2e2cb81b3a28acb0024a3d107a97074d43753f7ed6f9f369a68f2b47650ec30a"
     },
     {
       "path": "MIRROR_POLICY.md",
@@ -66,7 +66,7 @@
     {
       "path": "SECURITY.md",
       "role": "static_contract",
-      "sha256": "a10b9db0f5520c283f9aa53607c656cc46ea2f105daab58262d522b9aa00c5bc"
+      "sha256": "4607c43040656f58f91d387e3f6d0133ede1042db62b85710e97b4bf530bfb32"
     },
     {
       "path": "manifests/asset-dispositions.json",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "79b88f03ddf8d441deaec0b16bccecdf876f71a9e5d019e808b813bec18108a3"
+  "current_md_sha256": "9e3f691585cff614b9991d22893fbbdc0e436c1e043a6be029b016b99ae4c6a1"
 }
