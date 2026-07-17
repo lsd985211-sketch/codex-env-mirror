@@ -1,8 +1,8 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-17T01:47:32.468628+00:00",
+  "reviewed_at": "2026-07-17T01:51:50.464207+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "d6dfef371c8e07213311362b85d52e7abf05078662783b9ca1629587ea11253d",
+  "control_plane_fingerprint": "60b37556bef50bbb3b0721579856269c62f25c010d8f4fb1b9fe465535f1a146",
   "baseline_tag": "seed-v2.1.2",
   "proposed_tag": "seed-v2.2.0",
   "changed_control_plane_files": [
@@ -44,6 +44,6 @@
     }
   ],
   "release_impact": "minor",
-  "summary": "Reviewed all stable contracts against transactional control-plane freshness, Codex-owned semantic maintenance, public repository policy, and semantic milestone releases. Corrected stale private-repository and bootstrap path statements; restore stages remain compatible. The change adds backward-compatible capabilities and therefore has minor impact.",
+  "summary": "Reviewed all stable contracts against transactional control-plane freshness, Codex-owned semantic maintenance, public repository policy, semantic milestone releases, and generated-evidence hash exclusion. Corrected stale private-repository and bootstrap path statements; restore stages remain compatible. Changes are backward-compatible capability additions with minor impact.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
