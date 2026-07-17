@@ -1,0 +1,211 @@
+model_provider = "custom"
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+disable_response_storage = true
+notify = ["C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\03b1cdac8af3a530\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe", "turn-ended"]
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
+
+model_catalog_json = "cc-switch-model-catalog.json"
+[model_providers.custom]
+name = "My Codex"
+base_url = "http://127.0.0.1:15721/v1"
+wire_api = "responses"
+requires_openai_auth = true
+experimental_bearer_token = "<SECRET:REQUIRED>"
+[marketplaces.openai-bundled]
+last_updated = "2026-06-15T07:38:58Z"
+source_type = "local"
+source = "\\\\?\\C:\\Users\\45543\\.codex\\.tmp\\bundled-marketplaces\\openai-bundled"
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[features]
+js_repl = false
+
+memories = true
+[mcp_servers.node_repl]
+args = []
+command = "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\03b1cdac8af3a530\\bin\\node_repl.exe"
+startup_timeout_sec = 120
+
+required = true
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\03b1cdac8af3a530\\bin\\node_modules"
+NODE_REPL_NODE_PATH = "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\03b1cdac8af3a530\\bin\\node.exe"
+NODE_REPL_TRUSTED_CODE_PATHS = "C:\\Users\\45543\\.codex"
+CODEX_HOME = "C:\\Users\\45543\\.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "566be6ef352eb3de899adc56a9cd7b5e46c8f65b00e56b5630dd7a580e10cbea,85aecd42bf7542da8fd962aa9551d7ccfca3e4e8b41d6fa095d7d4e96d44c22f"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.623.41415"
+SKY_CUA_NATIVE_PIPE = "1"
+SKY_CUA_NATIVE_PIPE_DIRECTORY = "\\\\.\\pipe\\codex-computer-use-38bcf05e-76f9-4277-a62e-4c2b1d459bcc"
+CODEX_CLI_PATH = "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\bin\\494ae9d46ab9b3eb\\codex.exe"
+
+[desktop]
+conversationDetailMode = "STEPS_PROSE"
+sansFontSize = 14
+codeFontSize = 13
+ambient-suggestions-enabled = true
+
+show-ultra-in-model-picker-slider = true
+followUpQueueMode = "queue"
+show-context-window-usage = true
+[windows]
+sandbox = "elevated"
+
+[mcp_servers.agent-bridge]
+args = ["C:\\Users\\45543\\Downloads\\HMCL-3.9.1\\.minecraft\\versions\\3c3u\\.reasonix\\agent-bridge-mcp\\bridge_server_v2.py"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+startup_timeout_sec = 60
+required = false
+
+[mcp_servers.agent-bridge.env]
+PYTHONIOENCODING = "utf-8"
+PYTHONUTF8 = "1"
+
+[mcp_servers.agent-bridge.tools.agent_heartbeat]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.agent_bridge_get]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.agent_bridge_complete]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.agent_bridge_send]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.knowledge_get]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.knowledge_set]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.agent_status]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.agent_bridge_list]
+approval_mode = "approve"
+
+[mcp_servers.agent-bridge.tools.agent_bridge_receive]
+approval_mode = "approve"
+
+[mcp_servers.gui-automation]
+args = ["C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py", "gui"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+startup_timeout_sec = 60.0
+required = false
+
+[mcp_servers.gui-automation.env]
+GUI_OCR_DEVICE = "gpu"
+GUI_OCR_FALLBACK_PYTHON = "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\venvs\\ocr-py312\\Scripts\\python.exe"
+GUI_OCR_PYTHON = "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\venvs\\ocr-gpu-py312\\Scripts\\python.exe"
+PYTHONIOENCODING = "utf-8"
+PYTHONUTF8 = "1"
+
+[mcp_servers.mobile-openclaw-bridge]
+args = ["C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\mobile_bridge_mcp_server.py"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+startup_timeout_sec = 60
+required = false
+
+[mcp_servers.mobile-openclaw-bridge.env]
+MOBILE_OPENCLAW_BRIDGE_CONFIG = "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\config.local.json"
+PYTHONIOENCODING = "utf-8"
+PYTHONUTF8 = "1"
+
+[mcp_servers.chrome-devtools]
+args = ["C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py", "cdev"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+required = false
+
+[mcp_servers.playwright]
+args = ["C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py", "pw"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+required = false
+
+[mcp_servers.desktop-weixin]
+args = ["C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py", "weixin"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+startup_timeout_sec = 60.0
+required = false
+
+[mcp_servers.desktop-weixin.env]
+PYTHONIOENCODING = "utf-8"
+PYTHONUTF8 = "1"
+
+[mcp_servers.local-mcp-hub]
+url = "http://127.0.0.1:18881/mcp"
+required = false
+
+[mcp_servers.next-ai-drawio]
+args = ["C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py", "drawio"]
+command = "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+startup_timeout_sec = 45.0
+required = false
+
+[plugins."build-web-apps@openai-api-curated"]
+enabled = true
+
+[plugins."build-web-data-visualization@openai-api-curated"]
+enabled = true
+
+[plugins."canva@openai-curated"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."game-studio@openai-curated"]
+enabled = true
+
+[plugins."hyperframes@openai-api-curated"]
+enabled = true
+
+[plugins."mixpanel-headless@openai-api-curated"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."remotion@openai-api-curated"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[marketplaces.openai-curated]
+source_type = "local"
+source = "\\\\?\\C:\\Users\\45543\\.codex\\.tmp\\plugins"
+
+[marketplaces.openai-api-curated]
+source_type = "local"
+source = "\\\\?\\C:\\Users\\45543\\.codex\\.tmp\\plugins"
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[projects."c:\\users\\45543\\downloads\\mcsmanager_windows_release\\mcsmanager"]
+trust_level = "trusted"

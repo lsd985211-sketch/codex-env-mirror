@@ -175,6 +175,9 @@ class MirrorCliTests(unittest.TestCase):
         roles = {item["path"]: item["role"] for item in contract["files"]}
         self.assertEqual(roles["CURRENT.md"], "generated_current_state")
         self.assertEqual(roles["manifests/control-plane-state.json"], "generated_current_state")
+        self.assertEqual(roles["manifests/contract-review-state.json"], "generated_milestone_evidence")
+        self.assertNotIn("manifests/control-plane-state.json", mirror_cli.governance_hashes())
+        self.assertNotIn("manifests/contract-review-state.json", mirror_cli.governance_hashes())
 
     def test_snapshot_validation_skips_live_sources_by_default(self) -> None:
         with patch.object(mirror_cli, "source_coverage_issues") as coverage, \

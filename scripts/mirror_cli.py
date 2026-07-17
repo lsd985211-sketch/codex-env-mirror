@@ -30,6 +30,7 @@ EXTERNAL_ARCHIVES = MANIFEST_ROOT / "external-archives.json"
 ASSET_DISPOSITIONS = MANIFEST_ROOT / "asset-dispositions.json"
 CONTROL_PLANE_CONTRACT = MANIFEST_ROOT / "control-plane-contract.json"
 CONTROL_PLANE_STATE = MANIFEST_ROOT / "control-plane-state.json"
+CONTRACT_REVIEW_STATE = MANIFEST_ROOT / "contract-review-state.json"
 RESTORE_ORDER = MANIFEST_ROOT / "restore-order.json"
 SNAPSHOT_ROOT = ROOT / "snapshots"
 RUNTIME_ROOT = ROOT / "runtime"
@@ -719,7 +720,7 @@ $result | ConvertTo-Json -Compress
 def governance_hashes() -> dict[str, str]:
     results: dict[str, str] = {}
     for path in sorted(MANIFEST_ROOT.rglob("*.json")):
-        if path == CONTROL_PLANE_STATE:
+        if path in {CONTROL_PLANE_STATE, CONTRACT_REVIEW_STATE}:
             continue
         results[relative_posix(path, ROOT)] = sha256_text_file(path)
     for name in ("AGENTS.md", "README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"):
