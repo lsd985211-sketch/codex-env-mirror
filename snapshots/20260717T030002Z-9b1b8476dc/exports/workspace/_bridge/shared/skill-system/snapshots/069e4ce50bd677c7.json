@@ -1,0 +1,20 @@
+{
+  "skill_id": "069e4ce50bd677c7",
+  "name": "game-ui-frontend",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\game-studio\\bd2122cb\\skills\\game-ui-frontend",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "9847c0dead3981ffdd6fee4e50eabacb537da93228044bcc58523b2c6c67b9b6",
+    "agents": "eceb81ebeccbd4a8eb317849ea0eb37e9015951e9e672b639454635d038d826e",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
