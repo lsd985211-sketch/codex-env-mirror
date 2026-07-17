@@ -1414,6 +1414,13 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
     if not normalized_changes:
         reasons.append("changed_paths_required_for_incremental")
     full_rebuild = bool(reasons)
+    guard_authority_refreshed = False
+    if not full_rebuild and MEMBERSHIP_ASSET_ID in generated:
+        # Snapshot exports intentionally remove retirement tombstones. Reusing
+        # that sanitized export would erase the negative guard during the next
+        # incremental build, so always reacquire the membership authority.
+        affected.add(MEMBERSHIP_ASSET_ID)
+        guard_authority_refreshed = True
     affected_sources = sorted(item for item in affected if item in sources)
     affected_generated = sorted(item for item in affected if item in generated)
     reused_sources = sorted(set(sources) - set(affected_sources)) if not full_rebuild else []
@@ -1429,6 +1436,7 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
         "reused_source_ids": reused_sources,
         "reused_generated_source_ids": reused_generated,
         "full_rebuild_required": full_rebuild,
+        "guard_authority_refreshed": guard_authority_refreshed,
         "reasons": sorted(set(reasons)),
         "unmatched_paths": unmatched,
         "dependency_graph": {"ok": dependency["ok"], "issues": dependency["issues"]},

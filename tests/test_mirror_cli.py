@@ -242,6 +242,28 @@ class MirrorCliTests(unittest.TestCase):
             self.assertEqual(plan["dependent_generated_source_ids"], ["derived"])
             self.assertFalse(plan["full_rebuild_required"])
 
+    def test_incremental_plan_reacquires_membership_guard_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            skill = root / "skills" / "context-compression" / "SKILL.md"
+            skill.parent.mkdir(parents=True)
+            skill.write_text("active", encoding="utf-8")
+            config = {
+                "variables": {},
+                "sources": [{"id": "codex-skills", "kind": "tree", "source": str(root / "skills")}],
+                "generated_sources": [{
+                    "id": mirror_cli.MEMBERSHIP_ASSET_ID,
+                    "kind": "command_json",
+                    "command": ["python", "-c", "print('{}')"],
+                }],
+            }
+            plan = mirror_cli.affected_source_plan(config, [str(skill)])
+            self.assertTrue(plan["ok"])
+            self.assertFalse(plan["full_rebuild_required"])
+            self.assertTrue(plan["guard_authority_refreshed"])
+            self.assertIn(mirror_cli.MEMBERSHIP_ASSET_ID, plan["dependent_generated_source_ids"])
+            self.assertNotIn(mirror_cli.MEMBERSHIP_ASSET_ID, plan["reused_generated_source_ids"])
+
     def test_affected_source_plan_unknown_change_requires_full_rebuild(self) -> None:
         config = {"variables": {}, "sources": [{"id": "config", "kind": "file", "source": "C:/known.toml"}], "generated_sources": []}
         plan = mirror_cli.affected_source_plan(config, ["C:/outside.txt"])
