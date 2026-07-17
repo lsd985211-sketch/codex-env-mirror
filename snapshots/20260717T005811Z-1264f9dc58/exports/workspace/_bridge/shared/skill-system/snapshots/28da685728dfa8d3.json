@@ -1,0 +1,20 @@
+{
+  "skill_id": "28da685728dfa8d3",
+  "name": "ai-productivity-column",
+  "path": "C:\\Users\\45543\\.codex\\skills\\ai-productivity-column",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "38a5593c005e1990059bdc7f78efa04b85319f2399e6d1fe459645f7f4969ab3",
+    "agents": null,
+    "scripts": null,
+    "references": "da509355ce1fcafde0bc08c5d29f27fa28725e9d4f01cbdbde9efa3360053807",
+    "assets": null
+  }
+}
