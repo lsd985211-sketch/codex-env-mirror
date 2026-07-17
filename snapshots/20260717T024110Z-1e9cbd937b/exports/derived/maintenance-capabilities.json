@@ -1,0 +1,25 @@
+{
+  "schema": "maintenance_capability_registry.metrics.v1",
+  "ok": true,
+  "capability_count": 114,
+  "system_count": 13,
+  "systems": {
+    "backup": 2,
+    "bridge": 21,
+    "hardware": 3,
+    "mail": 1,
+    "mcp": 10,
+    "memory": 7,
+    "network": 7,
+    "records": 4,
+    "resource": 18,
+    "scheduler": 6,
+    "skills": 7,
+    "startup": 6,
+    "workflow": 22
+  },
+  "index_exists": true,
+  "index_fresh": true,
+  "source_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\docs\\maintenance_surface_map.md",
+  "index_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\runtime\\maintenance_capabilities.sqlite"
+}
