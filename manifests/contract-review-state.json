@@ -1,38 +1,32 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-17T01:51:50.464207+00:00",
+  "reviewed_at": "2026-07-17T22:59:24.834468+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "60b37556bef50bbb3b0721579856269c62f25c010d8f4fb1b9fe465535f1a146",
-  "baseline_tag": "seed-v2.1.2",
-  "proposed_tag": "seed-v2.2.0",
+  "control_plane_fingerprint": "8ade40361474ae3fe073845585f9ce5f8b7773ef94dcaa42c2a34d7f698f868b",
+  "baseline_tag": "seed-v2.2.0",
+  "proposed_tag": "seed-v2.3.0",
   "changed_control_plane_files": [
-    "AGENTS.md",
-    "BOOTSTRAP.md",
-    "MIRROR_POLICY.md",
-    "README.md",
-    "SECURITY.md",
-    "manifests/control-plane-contract.json",
+    "manifests/asset-dispositions.json",
     "manifests/source-authorities.json",
-    "manifests/verification-matrix.json",
     "scripts/mirror_cli.py",
     "tests/test_mirror_cli.py"
   ],
   "decisions": [
     {
       "path": "AGENTS.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "README.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "MIRROR_POLICY.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "BOOTSTRAP.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "RESTORE.md",
@@ -40,10 +34,10 @@
     },
     {
       "path": "SECURITY.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     }
   ],
   "release_impact": "minor",
-  "summary": "Reviewed all stable contracts against transactional control-plane freshness, Codex-owned semantic maintenance, public repository policy, semantic milestone releases, and generated-evidence hash exclusion. Corrected stale private-repository and bootstrap path statements; restore stages remain compatible. Changes are backward-compatible capability additions with minor impact.",
+  "summary": "Reviewed seed-v2.2.0..HEAD: added redacted hooks template with owner-merge activation, classified diagnostics/crash logs as regenerated, and added affected-source guard authority evidence. Existing authority, restore, activation, security, and command contracts remain accurate; no stable prose change required.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
