@@ -13,7 +13,8 @@ explicit asset disposition, isolated staging, and recovery evidence.
 ## Agent Entry
 
 1. Read `README.md`, then `manifests/source-authorities.json`,
-   `manifests/asset-dispositions.json`, and `manifests/restore-order.json`.
+   `manifests/asset-dispositions.json`, `manifests/control-plane-state.json`,
+   and `manifests/restore-order.json`. Use `CURRENT.md` for a human summary.
 2. Run `python scripts/mirror_cli.py validate` before relying on the latest
    snapshot. This default is portable snapshot validation; only a capture-source
    owner uses `--live-sources` to compare the snapshot with active machine state.
@@ -55,3 +56,7 @@ explicit asset disposition, isolated staging, and recovery evidence.
 - A publish is complete only after the refresh acceptance predicates pass, the
   local repository is clean before push, the push succeeds, and remote-head
   verification confirms the remote branch equals the local `HEAD`.
+- Do not rewrite static contracts merely to make timestamps recent. The control
+  plane contract and generated state determine freshness. Do not tag routine
+  snapshots; milestone releases require the explicit release owner command and
+  remote tag/Release readback.

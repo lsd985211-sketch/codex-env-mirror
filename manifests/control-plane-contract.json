@@ -1,0 +1,28 @@
+{
+  "schema": "codex_mirror.control_plane_contract.v1",
+  "control_plane_version": "2.2.0",
+  "rule": "Static contracts change only when their semantics change. Generated current-state surfaces must match snapshots/latest.json and every declared static file hash.",
+  "files": [
+    {"path": ".gitattributes", "role": "static_contract"},
+    {"path": ".gitignore", "role": "static_contract"},
+    {"path": "AGENTS.md", "role": "static_contract"},
+    {"path": "BOOTSTRAP.md", "role": "static_contract"},
+    {"path": "MIRROR_POLICY.md", "role": "static_contract"},
+    {"path": "README.md", "role": "static_contract"},
+    {"path": "RESTORE.md", "role": "static_contract"},
+    {"path": "SECURITY.md", "role": "static_contract"},
+    {"path": "manifests/asset-dispositions.json", "role": "static_contract"},
+    {"path": "manifests/control-plane-contract.json", "role": "static_contract"},
+    {"path": "manifests/external-archives.json", "role": "static_contract"},
+    {"path": "manifests/restore-order.json", "role": "static_contract"},
+    {"path": "manifests/schemas/snapshot-manifest.schema.json", "role": "static_contract"},
+    {"path": "manifests/secret-requirements.json", "role": "static_contract"},
+    {"path": "manifests/source-authorities.json", "role": "static_contract"},
+    {"path": "manifests/verification-matrix.json", "role": "static_contract"},
+    {"path": "scripts/mirror_cli.py", "role": "static_contract"},
+    {"path": "scripts/refresh-mirror.ps1", "role": "static_contract"},
+    {"path": "tests/test_mirror_cli.py", "role": "static_contract"},
+    {"path": "CURRENT.md", "role": "generated_current_state"},
+    {"path": "manifests/control-plane-state.json", "role": "generated_current_state"}
+  ]
+}

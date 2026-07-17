@@ -21,6 +21,10 @@ must not redefine active owners, rules, routes, or permissions.
   when every issue is source-consistency drift.
 - Remove superseded snapshots only after the new candidate is validated and
   committed. Retention failure restores quarantined snapshots.
+- After core snapshot and live-source validation, generate `CURRENT.md` and
+  `manifests/control-plane-state.json`, then run full validation before commit.
+  Generated state is excluded from snapshot governance hashes to avoid a
+  self-referential update loop.
 - Consult the live membership owner during snapshot creation, exclude inactive
   implementations and registrations, then remove inactive lifecycle records
   from the exported membership snapshot. The mirror retains only irreversible
@@ -110,3 +114,19 @@ verified snapshot remains internally valid and stageable.
 
 Governance text hashes normalize CRLF and CR to LF before hashing. Snapshot
 asset hashes remain byte-for-byte and are never normalized.
+
+## Control Plane And Releases
+
+`manifests/control-plane-contract.json` classifies stable contracts and
+generated current-state surfaces. Stable files change only for semantic
+revisions; their age alone is not drift. Generated state must reference the
+current `latest.json`, record readiness and source freshness, and match every
+declared static file hash.
+
+Routine refresh and publish operations never create tags. Milestones use
+`seed-vMAJOR.MINOR.PATCH`: snapshot-only changes do not require a release,
+documentation/test-only changes are patch candidates, capability/control-plane
+changes are minor candidates, and breaking restore schema or security-boundary
+changes are major candidates. Release requires explicit confirmation, a valid
+source-fresh snapshot, a clean Git tree, an annotated tag, remote tag readback,
+a published GitHub Release, and an attached snapshot manifest.

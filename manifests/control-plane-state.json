@@ -1,0 +1,132 @@
+{
+  "schema": "codex_mirror.control_plane_state.v1",
+  "generated_at": "2026-07-17T01:25:27.973924+00:00",
+  "control_plane_version": "2.2.0",
+  "snapshot": {
+    "snapshot_id": "20260717T012436Z-7dd2cc2145",
+    "created_at": "2026-07-17T01:24:58.044672+00:00",
+    "asset_count": 1982,
+    "total_bytes": 24051645,
+    "capture_mode": "full"
+  },
+  "readiness": {
+    "mirror_valid": true,
+    "capability_restore_ready": true,
+    "full_state_restore_ready": false
+  },
+  "source_freshness": {
+    "checked": true,
+    "ok": true
+  },
+  "milestone": {
+    "latest_tag": "seed-v2.1.2"
+  },
+  "required_archive_gaps": [
+    "cc-switch-database",
+    "codex-native-memory-state",
+    "codex-goal-state",
+    "mail-and-scheduler-state"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "role": "static_contract",
+      "sha256": "16bfa4e93280e54768ede36b47c74092062001e1f00dc2dbca89128520f1c3a9"
+    },
+    {
+      "path": ".gitignore",
+      "role": "static_contract",
+      "sha256": "417f3dc8ef830c77d3ac4bc2106b5d9dde2c40b9ace9e88969467a445029dded"
+    },
+    {
+      "path": "AGENTS.md",
+      "role": "static_contract",
+      "sha256": "92ccac80456f97b2c3212cba41443b04c185c786f8463ae7d67cf6ab76882cfd"
+    },
+    {
+      "path": "BOOTSTRAP.md",
+      "role": "static_contract",
+      "sha256": "416227064d511882bb4a16cd96d424bd7c10fafd495b7ead56c6dceabf59b35f"
+    },
+    {
+      "path": "MIRROR_POLICY.md",
+      "role": "static_contract",
+      "sha256": "6bc56954dbdc7ec8a13eaed9bfc26f0344254edcfefa4d1a7c17b1f92f5f7da0"
+    },
+    {
+      "path": "README.md",
+      "role": "static_contract",
+      "sha256": "f61002a92cd26e05f35dbcd425640c607c4f85d8607e34bc1aafa501a5882fa0"
+    },
+    {
+      "path": "RESTORE.md",
+      "role": "static_contract",
+      "sha256": "cac2acebb81da31f4ef6d04a858217f3d7740958c161ef180dbe842031595d84"
+    },
+    {
+      "path": "SECURITY.md",
+      "role": "static_contract",
+      "sha256": "a10b9db0f5520c283f9aa53607c656cc46ea2f105daab58262d522b9aa00c5bc"
+    },
+    {
+      "path": "manifests/asset-dispositions.json",
+      "role": "static_contract",
+      "sha256": "1d6bddaf1936273b8f97a8b2dc78b17e7ec7b4fef25d5fb4c10753d0da53427a"
+    },
+    {
+      "path": "manifests/control-plane-contract.json",
+      "role": "static_contract",
+      "sha256": "d904a35a42efa5d87726acbdf053b04ffeb179cc490f2166cb7ac2461a1300c0"
+    },
+    {
+      "path": "manifests/external-archives.json",
+      "role": "static_contract",
+      "sha256": "df08dffe3ae6264357a28b01af1f86023fdacb0e2fe6391cbf831c0a7729d351"
+    },
+    {
+      "path": "manifests/restore-order.json",
+      "role": "static_contract",
+      "sha256": "49eb9300080c41e8f6b0176122d7b6b1e8f6f119e973fa44b96a7a50dcd9eb90"
+    },
+    {
+      "path": "manifests/schemas/snapshot-manifest.schema.json",
+      "role": "static_contract",
+      "sha256": "ab84f193262ce30778dfa0ca19fdc43b9f6cf96834474716638d867b36f204de"
+    },
+    {
+      "path": "manifests/secret-requirements.json",
+      "role": "static_contract",
+      "sha256": "0f7ce47fc6005d584dad46b1982ef65fad40e665f4661096658a91e983fb0d8f"
+    },
+    {
+      "path": "manifests/source-authorities.json",
+      "role": "static_contract",
+      "sha256": "c705b85624af8047cbdd32b8317a9977ec2f0acc0af04465381c4ff5d20646e7"
+    },
+    {
+      "path": "manifests/verification-matrix.json",
+      "role": "static_contract",
+      "sha256": "6b7b6f79838d1e887c58daf5c7fe24556148bc71759bf492ac49003ae2efa6a6"
+    },
+    {
+      "path": "scripts/mirror_cli.py",
+      "role": "static_contract",
+      "sha256": "c821a9e94312cee4667e1b91bd90695995c16b6e9881120e5bb5307afa5607bd"
+    },
+    {
+      "path": "scripts/refresh-mirror.ps1",
+      "role": "static_contract",
+      "sha256": "1815fc51c3187857698346b0fdf62f999c37f8c791ab4e5710564ff0c82e0f0e"
+    },
+    {
+      "path": "tests/test_mirror_cli.py",
+      "role": "static_contract",
+      "sha256": "f7940c2047de934805226aac9fc2380d457260626fba8012fb899d61cad70636"
+    }
+  ],
+  "roles": {
+    "static_contract": "changes only when semantics change",
+    "generated_current_state": "regenerated transactionally for the current snapshot"
+  },
+  "current_md_sha256": "aad5eb9f3a3483f4b8ccfdbd0238278add96ee8daa749e81bd9fd35da66ec445"
+}

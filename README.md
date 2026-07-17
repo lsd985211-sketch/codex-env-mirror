@@ -6,6 +6,12 @@ Agents entering this repository automatically receive the recovery boundary and
 entry sequence from `AGENTS.md`; detailed capability and lifecycle facts remain
 in machine-readable manifests rather than being duplicated in prose.
 
+`CURRENT.md` is the human-readable current-state surface. Its machine authority
+is `manifests/control-plane-state.json`, which binds the current snapshot,
+readiness, source freshness, latest milestone, and hashes of every declared
+static control-plane file. Older modification dates on static contracts are not
+staleness when their hashes remain compatible with the current snapshot.
+
 ## Authority Boundary
 
 - Active rules, members, routes, configuration, skills, and owner state remain
@@ -59,6 +65,8 @@ python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\co
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror plan
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror refresh --confirm REFRESH-CODEX-MIRROR
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror publish --confirm PUBLISH-CODEX-MIRROR
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror release-plan
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror release --tag seed-v2.2.0 --confirm RELEASE-CODEX-MIRROR
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror doctor
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror restore-plan --target-root C:\CodexRestoreStage
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror stage --target-root C:\CodexRestoreStage --confirm STAGE-RESTORE
@@ -76,6 +84,13 @@ any remaining mirror repository metadata, pushes `HEAD` to the configured
 remote branch, and verifies that the remote branch resolves to the local
 `HEAD`. A local-only refresh is useful for inspection, but it is not considered
 published for off-machine recovery.
+
+Every successful refresh or publish also refreshes the generated current-state
+surfaces before the final full validation and commit. Routine snapshot
+publication remains tag-free. `release-plan` classifies changes since the last
+milestone, while explicit `release` creates and verifies an annotated semantic
+tag, a public GitHub Release, and a `snapshot-manifest.json` attachment. A
+retry continues from already verified branch, tag, or Release state.
 
 After a successful production-environment finalization, the workspace closeout
 hook uses this same publish path when the changed files belong to active mirror
@@ -117,6 +132,8 @@ environment's owners after backup and validation.
   secret re-acquisition requirements have verified receipts.
 - `push.remote_verification.ok`: for `publish`, the remote branch was read back
   and matched the pushed local `HEAD`.
+- `control_plane`: generated root state references `latest.json` and all static
+  control-plane hashes match their declared files.
 
 The repository may be mirror-valid before full-state readiness is achieved. A
 missing archive must be reported explicitly and can never be represented as a

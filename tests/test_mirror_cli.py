@@ -134,6 +134,48 @@ class MirrorCliTests(unittest.TestCase):
             path.write_bytes(b"line-1\r\nline-2\r\n")
             self.assertEqual(mirror_cli.sha256_text_file(path), lf_hash)
 
+    def test_control_plane_state_detects_static_drift_and_snapshot_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            manifests = root / "manifests"
+            manifests.mkdir()
+            static = root / "README.md"
+            static.write_text("current\n", encoding="utf-8")
+            current = root / "CURRENT.md"
+            current.write_text("# Current\n", encoding="utf-8")
+            contract = manifests / "control-plane-contract.json"
+            contract.write_text(json.dumps({
+                "schema": "codex_mirror.control_plane_contract.v1",
+                "control_plane_version": "2.2.0",
+                "files": [
+                    {"path": "README.md", "role": "static_contract"},
+                    {"path": "CURRENT.md", "role": "generated_current_state"},
+                    {"path": "manifests/control-plane-state.json", "role": "generated_current_state"},
+                ],
+            }), encoding="utf-8")
+            state = manifests / "control-plane-state.json"
+            state.write_text(json.dumps({
+                "schema": "codex_mirror.control_plane_state.v1",
+                "control_plane_version": "2.2.0",
+                "snapshot": {"snapshot_id": "old"},
+                "files": [{"path": "README.md", "role": "static_contract", "sha256": "wrong"}],
+                "current_md_sha256": mirror_cli.sha256_file(current),
+            }), encoding="utf-8")
+            with patch.object(mirror_cli, "ROOT", root), \
+                    patch.object(mirror_cli, "CONTROL_PLANE_CONTRACT", contract), \
+                    patch.object(mirror_cli, "CONTROL_PLANE_STATE", state), \
+                    patch.object(mirror_cli, "CURRENT_STATE_PATH", current):
+                issues = mirror_cli.control_plane_issues("latest")
+            codes = {item["code"] for item in issues}
+            self.assertIn("control_plane_snapshot_mismatch", codes)
+            self.assertIn("control_plane_static_file_drift", codes)
+
+    def test_control_plane_contract_declares_current_surfaces(self) -> None:
+        contract = json.loads(mirror_cli.CONTROL_PLANE_CONTRACT.read_text(encoding="utf-8"))
+        roles = {item["path"]: item["role"] for item in contract["files"]}
+        self.assertEqual(roles["CURRENT.md"], "generated_current_state")
+        self.assertEqual(roles["manifests/control-plane-state.json"], "generated_current_state")
+
     def test_snapshot_validation_skips_live_sources_by_default(self) -> None:
         with patch.object(mirror_cli, "source_coverage_issues") as coverage, \
                 patch.object(mirror_cli, "generated_source_issues") as generated, \

@@ -28,11 +28,14 @@ MANIFEST_ROOT = ROOT / "manifests"
 SOURCE_MANIFEST = MANIFEST_ROOT / "source-authorities.json"
 EXTERNAL_ARCHIVES = MANIFEST_ROOT / "external-archives.json"
 ASSET_DISPOSITIONS = MANIFEST_ROOT / "asset-dispositions.json"
+CONTROL_PLANE_CONTRACT = MANIFEST_ROOT / "control-plane-contract.json"
+CONTROL_PLANE_STATE = MANIFEST_ROOT / "control-plane-state.json"
 RESTORE_ORDER = MANIFEST_ROOT / "restore-order.json"
 SNAPSHOT_ROOT = ROOT / "snapshots"
 RUNTIME_ROOT = ROOT / "runtime"
 LATEST_PATH = SNAPSHOT_ROOT / "latest.json"
 GOVERNANCE_HASH_MODE = "canonical_utf8_lf_v1"
+CURRENT_STATE_PATH = ROOT / "CURRENT.md"
 
 HIGH_CONFIDENCE_SECRET_PATTERNS = (
     ("openai_key", re.compile(r"\bsk-[A-Za-z0-9_-]{12,}\b")),
@@ -716,6 +719,8 @@ $result | ConvertTo-Json -Compress
 def governance_hashes() -> dict[str, str]:
     results: dict[str, str] = {}
     for path in sorted(MANIFEST_ROOT.rglob("*.json")):
+        if path == CONTROL_PLANE_STATE:
+            continue
         results[relative_posix(path, ROOT)] = sha256_text_file(path)
     for name in ("AGENTS.md", "README.md", "BOOTSTRAP.md", "MIRROR_POLICY.md", "RESTORE.md", "SECURITY.md"):
         path = ROOT / name
@@ -725,6 +730,78 @@ def governance_hashes() -> dict[str, str]:
             if path.is_file() and "__pycache__" not in path.parts and path.suffix.lower() in {".py", ".ps1"}:
                 results[relative_posix(path, ROOT)] = sha256_text_file(path)
     return results
+
+
+def control_plane_issues(snapshot_id: str) -> list[dict[str, Any]]:
+    issues: list[dict[str, Any]] = []
+    try:
+        contract = load_json(CONTROL_PLANE_CONTRACT)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        return [{"code": "control_plane_contract_unreadable", "detail": str(exc)}]
+    if contract.get("schema") != "codex_mirror.control_plane_contract.v1":
+        issues.append({"code": "control_plane_contract_schema_invalid", "observed": contract.get("schema")})
+    entries = contract.get("files") if isinstance(contract.get("files"), list) else []
+    declared = {
+        str(item.get("path") or "").replace("\\", "/"): str(item.get("role") or "")
+        for item in entries
+        if isinstance(item, dict) and item.get("path")
+    }
+    for required in ("CURRENT.md", "manifests/control-plane-state.json"):
+        if declared.get(required) != "generated_current_state":
+            issues.append({"code": "control_plane_generated_surface_undeclared", "path": required})
+    try:
+        state = load_json(CONTROL_PLANE_STATE)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        return [*issues, {"code": "control_plane_state_unreadable", "detail": str(exc)}]
+    if state.get("schema") != "codex_mirror.control_plane_state.v1":
+        issues.append({"code": "control_plane_state_schema_invalid", "observed": state.get("schema")})
+    if state.get("control_plane_version") != contract.get("control_plane_version"):
+        issues.append({
+            "code": "control_plane_version_mismatch",
+            "state": state.get("control_plane_version"),
+            "contract": contract.get("control_plane_version"),
+        })
+    state_snapshot = state.get("snapshot") if isinstance(state.get("snapshot"), dict) else {}
+    if str(state_snapshot.get("snapshot_id") or "") != str(snapshot_id or ""):
+        issues.append({
+            "code": "control_plane_snapshot_mismatch",
+            "state_snapshot_id": state_snapshot.get("snapshot_id"),
+            "latest_snapshot_id": snapshot_id,
+        })
+    state_files = state.get("files") if isinstance(state.get("files"), list) else []
+    state_by_path = {
+        str(item.get("path") or "").replace("\\", "/"): item
+        for item in state_files
+        if isinstance(item, dict) and item.get("path")
+    }
+    for relative, role in declared.items():
+        target = ROOT / Path(relative)
+        if not target.is_file():
+            issues.append({"code": "control_plane_file_missing", "path": relative, "role": role})
+            continue
+        if role != "static_contract":
+            continue
+        row = state_by_path.get(relative)
+        if not row:
+            issues.append({"code": "control_plane_static_file_untracked", "path": relative})
+            continue
+        observed = sha256_file(target)
+        if row.get("sha256") != observed:
+            issues.append({
+                "code": "control_plane_static_file_drift",
+                "path": relative,
+                "expected": row.get("sha256"),
+                "observed": observed,
+            })
+    if CURRENT_STATE_PATH.is_file():
+        observed_current = sha256_file(CURRENT_STATE_PATH)
+        if state.get("current_md_sha256") != observed_current:
+            issues.append({
+                "code": "control_plane_current_md_drift",
+                "expected": state.get("current_md_sha256"),
+                "observed": observed_current,
+            })
+    return issues
 
 
 def normalized_path(value: str) -> str:
@@ -1787,7 +1864,12 @@ def generated_source_issues(snapshot_root: Path, manifest: dict[str, Any]) -> li
     return issues
 
 
-def validate_snapshot(snapshot: str = "latest", *, live_sources: bool = False) -> dict[str, Any]:
+def validate_snapshot(
+    snapshot: str = "latest",
+    *,
+    live_sources: bool = False,
+    control_plane: bool = True,
+) -> dict[str, Any]:
     issues: list[dict[str, Any]] = []
     source_issues: list[dict[str, Any]] = []
     try:
@@ -1876,6 +1958,8 @@ def validate_snapshot(snapshot: str = "latest", *, live_sources: bool = False) -
     for name, expected in manifest.get("governance_hashes", {}).items():
         if current_hashes.get(name) != expected:
             issues.append({"code": "governance_drift", "path": name, "snapshot_hash": expected, "current_hash": current_hashes.get(name, "missing")})
+    if control_plane:
+        issues.extend(control_plane_issues(str(manifest.get("snapshot_id") or "")))
     issues.extend(restore_graph_issues())
     issues.extend(agent_bootstrap_issues())
     issues.extend({"code": "repository_secret_detected", **finding} for finding in repository_secret_findings())
@@ -2040,6 +2124,7 @@ def main(argv: list[str] | None = None) -> int:
     validate_parser = sub.add_parser("validate")
     validate_parser.add_argument("--snapshot", default="latest")
     validate_parser.add_argument("--live-sources", action="store_true")
+    validate_parser.add_argument("--skip-control-plane", action="store_true", help=argparse.SUPPRESS)
     restore_parser = sub.add_parser("restore-plan")
     restore_parser.add_argument("--snapshot", default="latest")
     restore_parser.add_argument("--target-root", required=True)
@@ -2058,7 +2143,11 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "snapshot":
         payload = snapshot_with_lock(config, changed_paths=args.changed) if args.apply else {"schema": "codex_mirror.snapshot.v1", "ok": True, "dry_run": True, "plan": collect_plan(config), "next_action": "rerun with --apply"}
     elif args.command == "validate":
-        payload = validate_snapshot(args.snapshot, live_sources=args.live_sources)
+        payload = validate_snapshot(
+            args.snapshot,
+            live_sources=args.live_sources,
+            control_plane=not args.skip_control_plane,
+        )
     elif args.command == "restore-plan":
         payload = restore_plan(args.snapshot, Path(args.target_root))
     else:
