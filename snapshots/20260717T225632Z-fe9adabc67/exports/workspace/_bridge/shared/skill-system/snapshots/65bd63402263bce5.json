@@ -1,0 +1,20 @@
+{
+  "skill_id": "65bd63402263bce5",
+  "name": "mcp-builder",
+  "path": "C:\\Users\\45543\\.codex\\skills\\mcp-builder",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "aa1ff03e3949c900eba8e1f421267c67dca24caf9de899e9a450cfa3454cc3ad",
+    "agents": null,
+    "scripts": "c13dc443356ae425d5ef643e1e18f9cd370522871fdd832d435c9827eec8c0ec",
+    "references": null,
+    "assets": null
+  }
+}

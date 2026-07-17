@@ -1,0 +1,20 @@
+{
+  "skill_id": "0f569b6b19d7624a",
+  "name": "gui-skill-evolution",
+  "path": "C:\\Users\\45543\\.codex\\skills\\gui-skill-evolution",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "e64758d31f7d70e08e835c13f70a5a8fbf5c439ba8b52216d405e28ace83ec5e",
+    "agents": "c67f9272847f3593ccd744173ad1e2518bcfe393b9e99ac9084594b2805fe1df",
+    "scripts": "808e29b280ed4189971b522d02d978f1e8e7a1bc9ee21f29f94d126922e97add",
+    "references": "b4abae1798b827822b881b37a63f76bfa10b85017fc6dedf558fa16cc369e6b9",
+    "assets": null
+  }
+}
