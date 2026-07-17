@@ -1,0 +1,20 @@
+{
+  "skill_id": "6136af42aa6f7a73",
+  "name": "control-in-app-browser",
+  "path": "C:\\Users\\45543\\.codex\\.tmp\\bundled-marketplaces\\openai-bundled\\plugins\\browser\\skills\\control-in-app-browser",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "56ba971303d06b65f3d42e6e99ee493eb7769338d311c013d687cdbe39e917b1",
+    "agents": "5a5f414710e0e6b71e4f15855b8cce18cd21b927bd783c564cf78a18fe321432",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
