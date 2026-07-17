@@ -1,0 +1,20 @@
+{
+  "skill_id": "7d9c10bc629966f6",
+  "name": "global-framework",
+  "path": "C:\\Users\\45543\\.codex\\skills\\global-framework",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": "routing",
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "4146de940cd1326cd1d214e63b1376201a25fb37508e08d73adf271ba87ba90b",
+    "agents": null,
+    "scripts": "654bbbb29d6af234c6ecee5523b48d71ae3cbcf7118583ccbc59525beb6fea0d",
+    "references": "fb8ef041423572538f7fb9c4fa19adc7a96a37ebaa14e96e78c67f7004fdf579",
+    "assets": null
+  }
+}

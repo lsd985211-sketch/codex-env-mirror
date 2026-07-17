@@ -1,0 +1,20 @@
+{
+  "skill_id": "59eab75d94cf2045",
+  "name": "docx",
+  "path": "C:\\Users\\45543\\.codex\\skills\\docx",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "0b5065be079ea90a701eb45193d151909e67df7e195e314eff0dfa74784b7b7d",
+    "agents": null,
+    "scripts": "d0d39f3169deb3bcbc48fe3ebee2f5b701ea17d2903d7c823b5a1a1959dbd979",
+    "references": null,
+    "assets": null
+  }
+}

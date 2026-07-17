@@ -116,6 +116,19 @@
       "required": true
     },
     {
+      "id": "codex-hooks",
+      "kind": "file",
+      "source": "${CODEX_HOME}\\hooks.json",
+      "destination": "exports/codex-home/hooks.template.json",
+      "restore_path": "${CODEX_HOME}\\hooks.json",
+      "mode": "redact_json",
+      "classification": "configuration_template",
+      "owner": "codex_rule_observer",
+      "activation": "owner_merge_only",
+      "coverage_required": false,
+      "required": false
+    },
+    {
       "id": "codex-global-state-template",
       "kind": "file",
       "source": "${CODEX_HOME}\\.codex-global-state.json",

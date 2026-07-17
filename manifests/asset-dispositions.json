@@ -37,7 +37,7 @@
         {
           "names": [
             ".sandbox", ".sandbox-bin", ".tmp", "ambient-suggestions", "backups_state",
-            "cache", "computer-use", "disabled-startup-shortcuts", "logs",
+            "cache", "computer-use", "diagnostics", "disabled-startup-shortcuts", "logs",
             "mcp-oauth-locks", "node_repl", "pets", "plugins", "process_manager",
             "state", "tmp", "vendor_imports"
           ],
@@ -96,7 +96,7 @@
           "evidence": "superseded provider or skill state"
         },
         {
-          "names": ["logs"],
+          "names": ["crash.log", "logs"],
           "disposition": "regenerate",
           "owner": "cc_switch",
           "evidence": "derived operational logs"

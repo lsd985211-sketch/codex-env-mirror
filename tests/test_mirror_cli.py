@@ -15,6 +15,67 @@ SPEC.loader.exec_module(mirror_cli)
 
 
 class MirrorCliTests(unittest.TestCase):
+    def test_codex_hooks_source_contract_is_optional_restore_template(self) -> None:
+        config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
+        source = next(item for item in config["sources"] if item["id"] == "codex-hooks")
+        self.assertEqual(source["kind"], "file")
+        self.assertEqual(source["source"], "${CODEX_HOME}\\hooks.json")
+        self.assertEqual(source["destination"], "exports/codex-home/hooks.template.json")
+        self.assertEqual(source["restore_path"], "${CODEX_HOME}\\hooks.json")
+        self.assertEqual(source["mode"], "redact_json")
+        self.assertEqual(source["classification"], "configuration_template")
+        self.assertEqual(source["owner"], "codex_rule_observer")
+        self.assertEqual(source["activation"], "owner_merge_only")
+        self.assertFalse(source["coverage_required"])
+        self.assertFalse(source["required"])
+
+    def test_optional_codex_hooks_source_can_be_absent_from_plan(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = {
+                "variables": {"CODEX_HOME": temp_dir},
+                "policy": {"max_snapshot_bytes": 1024},
+                "sources": [{
+                    "id": "codex-hooks",
+                    "kind": "file",
+                    "source": "${CODEX_HOME}\\hooks.json",
+                    "required": False,
+                }],
+                "generated_sources": [],
+            }
+            with patch.object(mirror_cli, "collect_asset_dispositions", return_value={"issues": []}), \
+                    patch.object(mirror_cli, "membership_projection_issues", return_value=[]):
+                plan = mirror_cli.collect_plan(config)
+            self.assertTrue(plan["ok"])
+            self.assertEqual(plan["summary"]["required_sources_missing"], [])
+            self.assertFalse(plan["sources"][0]["exists"])
+
+    def test_hooks_payload_redacts_secrets_without_enforcing_hook_policy(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "hooks.json"
+            path.write_text(json.dumps({
+                "api_token": "not-for-snapshot",
+                "hooks": {"PreToolUse": [{"hooks": []}]},
+            }), encoding="utf-8")
+            data, mode, content_kind = mirror_cli.source_payload(path, "redact_json")
+            payload = json.loads(data.decode("utf-8"))
+            self.assertEqual(mode, "redact_json")
+            self.assertEqual(content_kind, "text")
+            self.assertEqual(payload["api_token"], "<SECRET:API_TOKEN>")
+            self.assertIn("PreToolUse", payload["hooks"])
+
+    def test_transient_diagnostics_have_explicit_regenerate_dispositions(self) -> None:
+        policy = json.loads(mirror_cli.ASSET_DISPOSITIONS.read_text(encoding="utf-8"))
+        roots = {item["id"]: item for item in policy["roots"]}
+
+        def disposition_for(root_id: str, name: str) -> str:
+            for rule in roots[root_id]["rules"]:
+                if name in rule.get("names", []):
+                    return str(rule["disposition"])
+            return ""
+
+        self.assertEqual(disposition_for("codex-home", "diagnostics"), "regenerate")
+        self.assertEqual(disposition_for("cc-switch-home", "crash.log"), "regenerate")
+
     def test_known_token_is_redacted(self) -> None:
         token = "sk-" + "abcdefghijklmnopqrstuvwxyz"
         value = "key=" + token
@@ -456,13 +517,6 @@ class MirrorCliTests(unittest.TestCase):
             self.assertNotIn("tombstone_ids", guard)
 
     def test_retired_asset_reintroduction_is_detected(self) -> None:
-        tombstones = [{
-            "id": "scheduled_task:OldScheduler",
-            "system": "scheduled_task",
-            "member": "OldScheduler",
-            "lifecycle": "decommissioned",
-            "active_trace_paths": [{"path": "_bridge/shared/run-email-scheduler.ps1"}],
-        }]
         assets = [{
             "asset_id": "legacy-runner",
             "snapshot_path": "exports/workspace/_bridge/shared/run-email-scheduler.ps1",

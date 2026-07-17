@@ -1,0 +1,20 @@
+{
+  "skill_id": "68a224d8477633d9",
+  "name": "blog-post-writer",
+  "path": "C:\\Users\\45543\\.codex\\skills\\blog-post-writer",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3a929600ad83e6dd6e087bd771a8feeb6c90dfc543a0b61e56bde4f5d29da674",
+    "agents": null,
+    "scripts": "d8ed56c8ab540f8f0b75982f2afebbec8ec73f5a6a48ac63fae312d98d51843b",
+    "references": null,
+    "assets": null
+  }
+}
