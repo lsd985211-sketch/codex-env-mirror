@@ -60,3 +60,6 @@ explicit asset disposition, isolated staging, and recovery evidence.
   plane contract and generated state determine freshness. Do not tag routine
   snapshots; milestone releases require the explicit release owner command and
   remote tag/Release readback.
+- Before a milestone, consume `contract-review-plan`; read every required stable
+  contract against the actual diff, edit only semantic changes, record unchanged
+  files as `compatible`, validate, then write the governed review receipt.

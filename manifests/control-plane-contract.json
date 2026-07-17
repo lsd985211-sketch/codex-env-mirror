@@ -23,6 +23,7 @@
     {"path": "scripts/refresh-mirror.ps1", "role": "static_contract"},
     {"path": "tests/test_mirror_cli.py", "role": "static_contract"},
     {"path": "CURRENT.md", "role": "generated_current_state"},
-    {"path": "manifests/control-plane-state.json", "role": "generated_current_state"}
+    {"path": "manifests/control-plane-state.json", "role": "generated_current_state"},
+    {"path": "manifests/contract-review-state.json", "role": "generated_milestone_evidence"}
   ]
 }

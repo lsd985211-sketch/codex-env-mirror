@@ -130,3 +130,9 @@ changes are minor candidates, and breaking restore schema or security-boundary
 changes are major candidates. Release requires explicit confirmation, a valid
 source-fresh snapshot, a clean Git tree, an annotated tag, remote tag readback,
 a published GitHub Release, and an attached snapshot manifest.
+
+Machine detection may only nominate stable contracts for review. Codex owns the
+semantic decision and may mark each required file `updated` or `compatible`
+after reading the real changes and validating the result. The resulting
+`contract-review-state.json` is generated milestone evidence, not a policy
+authority. Its control-plane fingerprint must be current before release.

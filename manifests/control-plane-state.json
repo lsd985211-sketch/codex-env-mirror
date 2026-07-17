@@ -1,12 +1,12 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-17T01:30:37.208424+00:00",
+  "generated_at": "2026-07-17T01:37:48.881123+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260717T012948Z-2c201c0051",
-    "created_at": "2026-07-17T01:30:10.351109+00:00",
+    "snapshot_id": "20260717T013653Z-142a0d0248",
+    "created_at": "2026-07-17T01:37:18.907708+00:00",
     "asset_count": 1982,
-    "total_bytes": 24059119,
+    "total_bytes": 24070527,
     "capture_mode": "full"
   },
   "readiness": {
@@ -41,7 +41,7 @@
     {
       "path": "AGENTS.md",
       "role": "static_contract",
-      "sha256": "92ccac80456f97b2c3212cba41443b04c185c786f8463ae7d67cf6ab76882cfd"
+      "sha256": "f240d8f579719e851a2c5b8cc9c975936ee36e99e9a126007e984a927cacee8d"
     },
     {
       "path": "BOOTSTRAP.md",
@@ -51,12 +51,12 @@
     {
       "path": "MIRROR_POLICY.md",
       "role": "static_contract",
-      "sha256": "6bc56954dbdc7ec8a13eaed9bfc26f0344254edcfefa4d1a7c17b1f92f5f7da0"
+      "sha256": "14c83a6d0d92e03f39865558372d0e6dee882ee91c0a15d0160a4ce5b499b403"
     },
     {
       "path": "README.md",
       "role": "static_contract",
-      "sha256": "f61002a92cd26e05f35dbcd425640c607c4f85d8607e34bc1aafa501a5882fa0"
+      "sha256": "de554b3cf94897f2169e98aecdc9c1d4927b54caf56f0a2cebcc94a3387d8dbb"
     },
     {
       "path": "RESTORE.md",
@@ -76,7 +76,7 @@
     {
       "path": "manifests/control-plane-contract.json",
       "role": "static_contract",
-      "sha256": "d904a35a42efa5d87726acbdf053b04ffeb179cc490f2166cb7ac2461a1300c0"
+      "sha256": "a8e666c5935a8cb2c84ebcf4cb98e26ebbd80c41e423fd583cc8208c259b98aa"
     },
     {
       "path": "manifests/external-archives.json",
@@ -111,7 +111,7 @@
     {
       "path": "scripts/mirror_cli.py",
       "role": "static_contract",
-      "sha256": "c821a9e94312cee4667e1b91bd90695995c16b6e9881120e5bb5307afa5607bd"
+      "sha256": "26f5cafedcd09595bb7ef40df43d63c289410cd182b65ac6b2e101e0a57829b4"
     },
     {
       "path": "scripts/refresh-mirror.ps1",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "43601fd70256e344b75f99865195404d102d6f7701a7aab72f31d58dba0bcf74"
+  "current_md_sha256": "79b88f03ddf8d441deaec0b16bccecdf876f71a9e5d019e808b813bec18108a3"
 }

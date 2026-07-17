@@ -777,7 +777,8 @@ def control_plane_issues(snapshot_id: str) -> list[dict[str, Any]]:
     for relative, role in declared.items():
         target = ROOT / Path(relative)
         if not target.is_file():
-            issues.append({"code": "control_plane_file_missing", "path": relative, "role": role})
+            if role in {"static_contract", "generated_current_state"}:
+                issues.append({"code": "control_plane_file_missing", "path": relative, "role": role})
             continue
         if role != "static_contract":
             continue

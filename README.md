@@ -66,6 +66,7 @@ python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\co
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror refresh --confirm REFRESH-CODEX-MIRROR
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror publish --confirm PUBLISH-CODEX-MIRROR
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror release-plan
+python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror contract-review-plan
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror release --tag seed-v2.2.0 --confirm RELEASE-CODEX-MIRROR
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror doctor
 python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror restore-plan --target-root C:\CodexRestoreStage
@@ -91,6 +92,14 @@ publication remains tag-free. `release-plan` classifies changes since the last
 milestone, while explicit `release` creates and verifies an annotated semantic
 tag, a public GitHub Release, and a `snapshot-manifest.json` attachment. A
 retry continues from already verified branch, tag, or Release state.
+
+Stable contracts are maintained by Codex, not rewritten by the snapshot
+generator. `contract-review-plan` maps material control-plane changes to the
+documents that require semantic review. Codex reads the actual diff, updates a
+document when meaning changed, records `compatible` when it did not, runs the
+relevant validators, and writes `contract-review-state.json` through the
+explicit review command. A milestone is blocked when that receipt does not
+cover the current static-file fingerprint.
 
 After a successful production-environment finalization, the workspace closeout
 hook uses this same publish path when the changed files belong to active mirror
