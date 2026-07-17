@@ -1,0 +1,20 @@
+{
+  "skill_id": "1bb1d4ad38bce719",
+  "name": "minecraft-commands-scripting",
+  "path": "C:\\Users\\45543\\.codex\\skills\\minecraft-commands-scripting",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c5bc20d2adfd6026c3053b992df05f5b4bec0caeffc594d36ed48b60dd972623",
+    "agents": null,
+    "scripts": "9ae036e82a92d0035d754396a25c68084e8c34c8b4e825393a07fd6f4984e9a9",
+    "references": "05b2887217b68e9a86b98c6c4be00d232f190196c98315694d921b807867ec03",
+    "assets": null
+  }
+}

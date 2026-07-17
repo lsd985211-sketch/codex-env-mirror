@@ -1,0 +1,20 @@
+{
+  "skill_id": "637cc9dd29dabe11",
+  "name": "daily-review",
+  "path": "C:\\Users\\45543\\.codex\\skills\\daily-review",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "26adb7cd41ea446e0c981de969daf34868af3e9442a31d73d47987bc3f2ab068",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
