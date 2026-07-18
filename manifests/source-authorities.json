@@ -1,11 +1,21 @@
 {
   "schema": "codex_mirror.source_authorities.v1",
   "authority_mode": "derived_snapshot",
+  "workspace_authority": {
+    "mode": "work_git_primary",
+    "work_git_root": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+    "windows_bare_repo": "C:\\WSL\\Codex-Wsl-Lab\\git\\codex-workspace.git",
+    "wsl_user": "codexlab",
+    "native_workspace_role": "transition_source_only",
+    "mirror_reverse_overwrite": false
+  },
   "variables": {
     "USERPROFILE": "C:\\Users\\45543",
     "CODEX_HOME": "${USERPROFILE}\\.codex",
     "AGENT_HOME": "${USERPROFILE}\\.agents",
-    "WORKSPACE_ROOT": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+    "WORK_GIT_ROOT": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+    "WORKSPACE_ROOT": "${WORK_GIT_ROOT}\\workspace",
+    "NATIVE_WORKSPACE_ROOT": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
     "CC_SWITCH_HOME": "${USERPROFILE}\\.cc-switch",
     "RESOURCE_LIBRARY": "${USERPROFILE}\\Desktop\\Codex资源库"
   },
@@ -429,6 +439,25 @@
       "owner": "wsl_workspace",
       "activation": "owner_export_only",
       "depends_on": ["workspace-bridge-source"],
+      "required": true
+    },
+    {
+      "id": "wsl-work-git-release-receipt",
+      "kind": "command_json",
+      "command": [
+        "python",
+        "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "work-git-release"
+      ],
+      "destination": "exports/derived/wsl-work-git-release-receipt.json",
+      "classification": "authority_export",
+      "owner": "wsl_workspace",
+      "activation": "owner_export_only",
+      "depends_on": [
+        "workspace-bridge-source"
+      ],
       "required": true
     }
   ]

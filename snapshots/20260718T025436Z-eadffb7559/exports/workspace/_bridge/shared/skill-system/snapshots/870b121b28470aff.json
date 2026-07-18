@@ -1,0 +1,20 @@
+{
+  "skill_id": "870b121b28470aff",
+  "name": "minecraft-server-admin",
+  "path": "C:\\Users\\45543\\.codex\\skills\\minecraft-server-admin",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3ffa51177234e264e961b09eb42be05acc529ff48f4c2292ee57b3c0fdfc0dc9",
+    "agents": null,
+    "scripts": null,
+    "references": "6eec7af6e21d258b659491823054a8421cd9d919e2f4a71a9dc515090188c1a0",
+    "assets": null
+  }
+}
