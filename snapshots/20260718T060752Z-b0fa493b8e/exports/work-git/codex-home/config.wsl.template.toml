@@ -1,0 +1,52 @@
+model_provider = "custom"
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+disable_response_storage = true
+
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[model_providers.custom]
+name = "My Codex"
+base_url = "http://127.0.0.1:15721/v1"
+wire_api = "responses"
+requires_openai_auth = false
+
+[mcp_servers.node_repl]
+command = "__WSL_NODE_REPL_WRAPPER__"
+args = []
+startup_timeout_sec = 120
+required = true
+
+[mcp_servers.custom-slash-commands]
+command = "python3"
+args = ["__WSL_WORKSPACE_ROOT__/workspace/_bridge/custom_slash_commands_mcp.py", "--registry", "__WSL_WORKSPACE_ROOT__/workspace/_bridge/slash_commands/commands.json"]
+startup_timeout_sec = 30
+required = true
+
+[mcp_servers.sqlite-scratch]
+command = "python3"
+args = ["__WSL_WORKSPACE_ROOT__/workspace/_bridge/sqlite_mcp_server.py", "--db", "__WSL_CODEX_HOME__/sqlite/codex_scratch.sqlite", "--permissions", "list,read,create,update,delete,ddl,transaction,utility"]
+startup_timeout_sec = 60
+required = true
+
+[mcp_servers.sqlite-bridge-ro]
+command = "python3"
+args = ["__WSL_WORKSPACE_ROOT__/workspace/_bridge/sqlite_mcp_server.py", "--db", "/mnt/c/Users/45543/Downloads/mcsmanager_windows_release/mcsmanager/_bridge/mobile_openclaw_bridge/mobile_openclaw_bridge.db", "--permissions", "list,read", "--readonly"]
+startup_timeout_sec = 60
+required = false
+
+[mcp_servers.local-mcp-hub]
+url = "http://127.0.0.1:18881/mcp"
+required = false
+
+[features]
+js_repl = false
+memories = true
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[projects."__WSL_WORKSPACE_ROOT__"]
+trust_level = "trusted"

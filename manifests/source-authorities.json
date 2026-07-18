@@ -126,6 +126,19 @@
       "required": true
     },
     {
+      "id": "wsl-codex-config-template",
+      "kind": "file",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\config.wsl.template.toml",
+      "destination": "exports/work-git/codex-home/config.wsl.template.toml",
+      "restore_path": "${WORK_GIT_ROOT}\\codex-home\\config.wsl.template.toml",
+      "mode": "copy",
+      "classification": "configuration_template",
+      "owner": "wsl_workspace",
+      "activation": "owner_merge_only",
+      "coverage_required": true,
+      "required": true
+    },
+    {
       "id": "codex-hooks",
       "kind": "file",
       "source": "${CODEX_HOME}\\hooks.json",
