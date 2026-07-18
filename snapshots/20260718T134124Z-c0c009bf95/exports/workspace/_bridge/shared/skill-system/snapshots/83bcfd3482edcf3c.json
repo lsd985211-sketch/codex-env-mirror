@@ -1,0 +1,20 @@
+{
+  "skill_id": "83bcfd3482edcf3c",
+  "name": "reports-pdfs-and-slide-automation",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\build-web-data-visualization\\3c06cb2e\\skills\\reports-pdfs-and-slide-automation",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "5ff8af2886df8ecec3fbaada93e5cd066237ac083fc533ac293608addef74eac",
+    "agents": "267f855fb767679813764f4656fdc27ce535dd6adb96c65fcdd0f68164f6e81f",
+    "scripts": null,
+    "references": "cab637898cf7954b1614c96c347d32129fb666756be6f4df05266ea8be75b524",
+    "assets": null
+  }
+}
