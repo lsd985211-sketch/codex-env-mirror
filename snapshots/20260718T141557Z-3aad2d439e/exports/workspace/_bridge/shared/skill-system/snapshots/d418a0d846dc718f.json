@@ -1,0 +1,20 @@
+{
+  "skill_id": "d418a0d846dc718f",
+  "name": "web-game-foundations",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\game-studio\\bd2122cb\\skills\\web-game-foundations",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "132445594ae48e2a4205e960da7d53c5ef7df3814dfc931f166c7dd3a779b1e3",
+    "agents": "126111fce0c840b8399e9f1742dec1c698613bd1e28c2eb262f1eeb9b7649a81",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
