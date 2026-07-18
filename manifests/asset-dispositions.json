@@ -37,13 +37,13 @@
         {
           "names": [
             ".sandbox", ".sandbox-bin", ".tmp", "ambient-suggestions", "backups_state",
-            "cache", "computer-use", "diagnostics", "disabled-startup-shortcuts", "logs",
+            "bin", "cache", "computer-use", "diagnostics", "disabled-startup-shortcuts", "logs",
             "mcp-oauth-locks", "node_repl", "pets", "plugins", "process_manager",
             "state", "tmp", "vendor_imports"
           ],
           "disposition": "regenerate",
           "owner": "codex_cli",
-          "evidence": "runtime, cache, derived import, or process-local state"
+          "evidence": "runtime, WSL CLI binary cache, derived import, or process-local state"
         },
         {
           "names": [".sandbox-secrets"],
