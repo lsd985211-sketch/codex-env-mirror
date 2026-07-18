@@ -1,0 +1,20 @@
+{
+  "skill_id": "7dabddb59930d00a",
+  "name": "karpathy-guidelines",
+  "path": "C:\\Users\\45543\\.codex\\skills\\karpathy-guidelines",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "6c84a1d47b522733367cdb38897aafa22f6feb9d9b08a5b6413bc4a671a155ef",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

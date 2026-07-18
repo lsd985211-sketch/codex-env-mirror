@@ -1,0 +1,20 @@
+{
+  "skill_id": "177011373102983f",
+  "name": "x-blogger-analyzer",
+  "path": "C:\\Users\\45543\\.codex\\skills\\x-blogger-analyzer",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "417931d0806f0a62988d8fe614e384eba8718b542b8510193de8792060859924",
+    "agents": null,
+    "scripts": "0b9c60ad5d02b4d036d57c86022b2854e5105d4d3d7d2a520484130743c33481",
+    "references": "09861f82e13765ce7bc6991c056171eee95bdd4070cb2b9aaa8efc59257098f3",
+    "assets": null
+  }
+}

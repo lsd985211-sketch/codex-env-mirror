@@ -1,0 +1,21 @@
+{
+  "schema": "wsl_workspace_owner.v1.mirror_export.handoff.v1",
+  "ok": true,
+  "status": "completed",
+  "generated_at": "2026-07-18T01:06:24.120390+00:00",
+  "owner": "wsl_workspace",
+  "operation": "handoff",
+  "target_distribution": "Codex-Wsl-Lab",
+  "worktree": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+  "source_snapshot": {
+    "mirror_root": "C:\\Users\\45543\\codex-env-mirror"
+  },
+  "activation_performed": false,
+  "host_runtime_imported": false,
+  "validation_rows": [],
+  "rollback_reference": "owner-native cleanup-plan; no activation to roll back",
+  "next_action": "closeout",
+  "workspace_role": "long_lived_production_workspace",
+  "export_kind": "handoff",
+  "mirror_reverse_overwrite": false
+}

@@ -408,6 +408,28 @@
       "owner": "runtime",
       "depends_on": ["codex-version"],
       "required": true
+    },
+    {
+      "id": "wsl-workspace-bootstrap-receipt",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py", "mirror-export", "--kind", "bootstrap"],
+      "destination": "exports/derived/wsl-workspace-bootstrap-receipt.json",
+      "classification": "authority_export",
+      "owner": "wsl_workspace",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "required": true
+    },
+    {
+      "id": "wsl-workspace-handoff-receipt",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py", "mirror-export", "--kind", "handoff"],
+      "destination": "exports/derived/wsl-workspace-handoff-receipt.json",
+      "classification": "authority_export",
+      "owner": "wsl_workspace",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "required": true
     }
   ]
 }
