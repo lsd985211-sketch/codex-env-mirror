@@ -62,6 +62,12 @@
           "disposition": "historical",
           "owner": "backup_router",
           "evidence": "backup history remains outside the capability mirror"
+        },
+        {
+          "names": ["shell_snapshots"],
+          "disposition": "historical",
+          "owner": "codex_cli",
+          "evidence": "captured shell environments are historical diagnostics, not live restore inputs"
         }
       ]
     },
