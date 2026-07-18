@@ -1,0 +1,20 @@
+{
+  "skill_id": "2248349962e53ce3",
+  "name": "sprite-pipeline",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\game-studio\\7fd3161c\\skills\\sprite-pipeline",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "61078a68d944f72dd0bb671b37df2c7aa5dd1e9b256039d00edab46b62f3625c",
+    "agents": "75c05edd820b379506881b147f63f87e03a3856417af6e05f0877fd9f1b4f594",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

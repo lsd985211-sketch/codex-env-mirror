@@ -1,0 +1,131 @@
+{
+  "schema": "wsl_workspace_owner.v1.mirror_export.bootstrap.v1",
+  "ok": true,
+  "status": "completed",
+  "generated_at": "2026-07-18T13:09:48.439855+00:00",
+  "owner": "wsl_workspace",
+  "lifecycle": "active",
+  "workspace_role": "long_lived_production_workspace",
+  "authority": "local declarative work Git repository",
+  "export_kind": "bootstrap_validation",
+  "validation": {
+    "schema": "wsl_workspace_owner.v1.validate",
+    "ok": true,
+    "status": "ok",
+    "generated_at": "2026-07-18T13:09:48.439838+00:00",
+    "issues": [],
+    "snapshot": {
+      "schema": "wsl_workspace_owner.v1.snapshot",
+      "ok": true,
+      "generated_at": "2026-07-18T13:09:47.215229+00:00",
+      "owner": "wsl_workspace",
+      "lifecycle": "active",
+      "authority": "local declarative work Git repository",
+      "source_mirror": "C:\\Users\\45543\\codex-env-mirror",
+      "paths": {
+        "distribution": "Codex-Wsl-Lab",
+        "user": "codexlab",
+        "worktree": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+        "bare_repo": "C:\\WSL\\Codex-Wsl-Lab\\git\\codex-workspace.git",
+        "mirror_root": "C:\\Users\\45543\\codex-env-mirror"
+      },
+      "platform": "Windows",
+      "wsl": {
+        "available": true,
+        "distribution": "Codex-Wsl-Lab",
+        "present": true,
+        "running": false,
+        "known_distributions": [
+          "Codex-Wsl-Lab",
+          "",
+          "docker-desktop",
+          "",
+          "Ubuntu",
+          "",
+          ""
+        ],
+        "error": "",
+        "default_switch_allowed": false,
+        "interop": {
+          "present": true,
+          "enabled": true,
+          "interpreter": "/init",
+          "probe_ok": true,
+          "error": ""
+        }
+      },
+      "git": {
+        "available": true,
+        "path": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+        "branch": "## main...origin/main",
+        "changes": [],
+        "change_count": 0,
+        "clean": true,
+        "error": ""
+      },
+      "work_git": {
+        "schema": "wsl_workspace_owner.v1.work_git_state",
+        "authority": "wsl_worktree_and_windows_bare_git",
+        "worktree": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+        "bare_repo": "C:\\WSL\\Codex-Wsl-Lab\\git\\codex-workspace.git",
+        "worktree_linux_path": "/home/codexlab/work/codex-workspace",
+        "bare_repo_linux_path": "/mnt/c/WSL/Codex-Wsl-Lab/git/codex-workspace.git",
+        "wsl_user": "codexlab",
+        "available": true,
+        "release_ready": true,
+        "issues": [],
+        "branch": "main",
+        "worktree_head": "ce4fcfd76c2b10b56f51d0cdad49497c88032b20",
+        "bare_head": "ce4fcfd76c2b10b56f51d0cdad49497c88032b20",
+        "clean": true,
+        "change_count": 0,
+        "status": {
+          "available": true,
+          "path": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+          "branch": "## main...origin/main",
+          "changes": [],
+          "change_count": 0,
+          "clean": true,
+          "error": ""
+        },
+        "direction": "wsl_worktree_to_bare_repo_to_validated_mirror",
+        "reverse_overwrite_blocked": true
+      },
+      "activation_performed": false,
+      "host_runtime_imported": false,
+      "default_distribution_change": false,
+      "scope": {
+        "long_lived_member": true,
+        "long_lived_production_workspace": true,
+        "primary_execution_target": true,
+        "isolated_wsl_is_execution_target_only": true,
+        "mirror_is_recovery_and_release_product": true,
+        "work_git_is_daily_authority": true,
+        "bare_repo_is_work_git_storage": true,
+        "mirror_is_derived_release_product": true,
+        "mirror_accepts_only_validated_work_git": true,
+        "native_workspace_is_transition_source_only": true
+      }
+    },
+    "acceptance": {
+      "long_lived_member": true,
+      "work_git_authority": true,
+      "mirror_is_recovery_and_release_product": true,
+      "bare_repo_is_work_git_storage": true,
+      "mirror_is_derived_release_product": true,
+      "mirror_publish_requires_release_ready_work_git": true,
+      "no_default_distribution_switch": true,
+      "no_host_runtime_import": true
+    },
+    "release_gate": {
+      "release_ready": true,
+      "blocked_by": [],
+      "direction": "wsl_worktree -> windows_bare_git -> codex_env_mirror",
+      "reverse_overwrite_blocked": true
+    }
+  },
+  "activation_performed": false,
+  "host_runtime_imported": false,
+  "default_distribution_change": false,
+  "mirror_reverse_overwrite": false
+}
