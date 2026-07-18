@@ -1,0 +1,4 @@
+interface:
+  display_name: "GUI Skill Evolution"
+  short_description: "Turn GUI experience into reusable skills"
+  default_prompt: "Use $gui-skill-evolution to classify GUI automation lessons and update reusable skills."
