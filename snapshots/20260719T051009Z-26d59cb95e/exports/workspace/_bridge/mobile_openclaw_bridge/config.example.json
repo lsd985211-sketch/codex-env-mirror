@@ -1,0 +1,35 @@
+{
+  "openclaw": {
+    "log_path": "C:\\Users\\45543\\AppData\\Local\\Temp\\openclaw\\openclaw-2026-06-19.log",
+    "account_id": "087feb936bb1-im-bot"
+  },
+  "queue": {
+    "db_path": "mobile_openclaw_bridge.db"
+  },
+  "security": {
+    "allowed_users": [],
+    "confirmation_secret_hash": "",
+    "confirmation_ttl_seconds": 180,
+    "max_confirmation_failures": 3,
+    "confirmation_secret_env": "MOBILE_BRIDGE_CONFIRM_SECRET",
+    "permission_table": "permission_table.json"
+  },
+  "safety": {
+    "shadow_mode": true,
+    "paused": false,
+    "max_input_chars": 2000,
+    "risk_rules_path": "risk_rules.json"
+  },
+  "trigger": {
+    "cooldown_seconds": 10,
+    "codex_thread_id": ""
+  },
+  "threads": {
+    "default_id": "",
+    "selection_ttl_seconds": 180,
+    "items": []
+  },
+  "control": {
+    "scheduled_task_name": "MobileOpenClawBridgeWorker"
+  }
+}
