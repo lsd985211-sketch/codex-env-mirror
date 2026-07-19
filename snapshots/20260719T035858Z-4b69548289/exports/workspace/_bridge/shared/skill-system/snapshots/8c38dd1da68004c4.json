@@ -1,0 +1,20 @@
+{
+  "skill_id": "8c38dd1da68004c4",
+  "name": "uml-and-software-architecture-visualization",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\build-web-data-visualization\\3c06cb2e\\skills\\uml-and-software-architecture-visualization",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3c5f2101ab938525fd8c44729f3165cdb8bf6dbb6f9e73f84735b52c5aad5d26",
+    "agents": "9e477f2daebe7c68718d6a4b8e9e40190180643882f190eb72001cba9594d3e0",
+    "scripts": null,
+    "references": "2ee3fee0db921eed1f58a28b4ad8589b2e0bc8e942739c2c69bbcf954d99f90a",
+    "assets": null
+  }
+}

@@ -1,12 +1,12 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-19T03:31:49.144634+00:00",
+  "generated_at": "2026-07-19T04:00:03.854386+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260719T033026Z-040ad147a1",
-    "created_at": "2026-07-19T03:31:13.230868+00:00",
+    "snapshot_id": "20260719T035858Z-4b69548289",
+    "created_at": "2026-07-19T03:59:35.697943+00:00",
     "asset_count": 2016,
-    "total_bytes": 24698092,
+    "total_bytes": 24710949,
     "capture_mode": "full"
   },
   "readiness": {
@@ -36,7 +36,7 @@
     {
       "path": ".gitignore",
       "role": "static_contract",
-      "sha256": "417f3dc8ef830c77d3ac4bc2106b5d9dde2c40b9ace9e88969467a445029dded"
+      "sha256": "b899356c06f69147e6805c106f18015300602928cfad85b45741a7e42f050d14"
     },
     {
       "path": "AGENTS.md",
@@ -111,7 +111,7 @@
     {
       "path": "scripts/mirror_cli.py",
       "role": "static_contract",
-      "sha256": "16cc193d4a200ec79b8c5945063a2501d2d42efc68b504e34e5f2aa59b527ed5"
+      "sha256": "7fb7e17b6e1465290d028ae78e06956e695176ef057f764bbffa46fbfe381179"
     },
     {
       "path": "scripts/refresh-mirror.ps1",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "562e7e2854530803132d1934bc523628c4d77e6c823cf18cb92e6a61c743916e"
+  "current_md_sha256": "f2a64448f385be95ebfbbf290c5c5d6f4c2fc8f0f720024d4655c5614e1247f5"
 }

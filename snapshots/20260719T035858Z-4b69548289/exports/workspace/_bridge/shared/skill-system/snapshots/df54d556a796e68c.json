@@ -1,0 +1,20 @@
+{
+  "skill_id": "df54d556a796e68c",
+  "name": "skill-logger",
+  "path": "C:\\Users\\45543\\.codex\\skills\\skill-logger",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "1444323e554e7e56cc4dc53a0b44892ecc7770aa55b191235f42a62ced2d347c",
+    "agents": null,
+    "scripts": "357119a8cffc8328a7acd720720596fd075b58dcf1ea5488d118ffd852c04e4c",
+    "references": null,
+    "assets": null
+  }
+}
