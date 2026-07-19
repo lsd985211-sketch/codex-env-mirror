@@ -24,6 +24,9 @@ from typing import Any, Iterable
 
 
 ROOT = Path(__file__).resolve().parents[1]
+_configured_git = os.environ.get("CODEX_MIRROR_GIT_EXE", "").strip()
+_windows_git = Path(r"C:\Program Files\Git\cmd\git.exe")
+GIT_EXE = _configured_git or (str(_windows_git) if _windows_git.is_file() else "git")
 MANIFEST_ROOT = ROOT / "manifests"
 SOURCE_MANIFEST = MANIFEST_ROOT / "source-authorities.json"
 EXTERNAL_ARCHIVES = MANIFEST_ROOT / "external-archives.json"
@@ -652,7 +655,7 @@ def export_runtime_versions(variables: dict[str, str]) -> bytes:
     commands = {
         "python": [sys.executable, "--version"],
         "powershell": ["powershell", "-NoLogo", "-NoProfile", "-Command", "$PSVersionTable.PSVersion.ToString()"],
-        "git": ["git", "--version"],
+        "git": [GIT_EXE, "--version"],
         "node": ["node", "--version"],
         "npm": ["npm", "--version"],
         "codex": ["codex", "--version"],
@@ -1993,7 +1996,7 @@ def validate_snapshot(
     git_dir = ROOT / ".git"
     remotes: list[str] = []
     if git_dir.exists():
-        completed = subprocess.run(["git", "-C", str(ROOT), "remote"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15)
+        completed = subprocess.run([GIT_EXE, "-C", str(ROOT), "remote"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15)
         if completed.returncode == 0:
             remotes = [line for line in completed.stdout.splitlines() if line.strip()]
     all_issues = [*issues, *source_issues]
