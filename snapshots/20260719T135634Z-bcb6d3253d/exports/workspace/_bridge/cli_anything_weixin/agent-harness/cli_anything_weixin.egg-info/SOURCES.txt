@@ -1,0 +1,13 @@
+setup.py
+cli_anything/weixin/__init__.py
+cli_anything/weixin/weixin_cli.py
+cli_anything/weixin/core/__init__.py
+cli_anything/weixin/core/windows.py
+cli_anything/weixin/skills/SKILL.md
+cli_anything/weixin/tests/test_core.py
+cli_anything_weixin.egg-info/PKG-INFO
+cli_anything_weixin.egg-info/SOURCES.txt
+cli_anything_weixin.egg-info/dependency_links.txt
+cli_anything_weixin.egg-info/entry_points.txt
+cli_anything_weixin.egg-info/requires.txt
+cli_anything_weixin.egg-info/top_level.txt

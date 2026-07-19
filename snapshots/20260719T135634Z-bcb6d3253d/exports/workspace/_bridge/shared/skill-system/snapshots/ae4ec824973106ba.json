@@ -1,0 +1,20 @@
+{
+  "skill_id": "ae4ec824973106ba",
+  "name": "baoyu-url-to-markdown",
+  "path": "C:\\Users\\45543\\.codex\\skills\\baoyu-url-to-markdown",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "0fa671b59664ea049cbda1bde8f215a31b3cdae23673b6415cce0ad53e34f999",
+    "agents": null,
+    "scripts": "065a3a20d597fd886f49a6ac5d4fa642db5e7ea53593adc509b68b62cfba83e9",
+    "references": null,
+    "assets": null
+  }
+}
