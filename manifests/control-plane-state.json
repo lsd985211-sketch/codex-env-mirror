@@ -1,12 +1,12 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-19T13:58:00.858262+00:00",
+  "generated_at": "2026-07-19T14:11:00.141658+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260719T135634Z-bcb6d3253d",
-    "created_at": "2026-07-19T13:57:17.970221+00:00",
+    "snapshot_id": "20260719T140934Z-9adebd7b58",
+    "created_at": "2026-07-19T14:10:18.581533+00:00",
     "asset_count": 2023,
-    "total_bytes": 24973972,
+    "total_bytes": 24977582,
     "capture_mode": "full"
   },
   "readiness": {
@@ -41,7 +41,7 @@
     {
       "path": "AGENTS.md",
       "role": "static_contract",
-      "sha256": "f240d8f579719e851a2c5b8cc9c975936ee36e99e9a126007e984a927cacee8d"
+      "sha256": "67e350adf22d17f909dbec3bb5dad35d152dff196669f696200fbe2000a4be5a"
     },
     {
       "path": "BOOTSTRAP.md",
@@ -56,7 +56,7 @@
     {
       "path": "README.md",
       "role": "static_contract",
-      "sha256": "45c22ace5cd2229daef30dcbf53d094999b5fcb1b0d8dd7be2ead4094c01b036"
+      "sha256": "467d650ecf1469b667fd3fc0d5bc3afb96cf0d1ca4aa0daed60a996e04511603"
     },
     {
       "path": "RESTORE.md",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "193c705073c2c68d691e297996d3d27824eab029db8edc9b3be09bbb8bbda6ba"
+  "current_md_sha256": "df351f3d3ee5fec7727637fc05a553f064ee02173f99a1503a42505157842e1e"
 }
