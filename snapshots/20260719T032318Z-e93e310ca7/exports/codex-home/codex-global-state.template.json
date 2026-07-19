@@ -1,0 +1,2239 @@
+{
+  "remote-project-connection-backfill-completed": true,
+  "electron-local-remote-control-installation-id": "34277c7f-b901-4e20-9c0e-e00582ce170e",
+  "primary-runtime-update-jitter-ms": 1720864,
+  "electron-persisted-atom-state": {
+    "electron:onboarding-projectless-completed": true,
+    "last_completed_onboarding": 1781509149,
+    "electron:onboarding-primary-runtime-install-ready": true,
+    "electron:onboarding-primary-runtime-install-requested": true,
+    "electron:onboarding-welcome-pending": true,
+    "composer-auto-context-enabled": false,
+    "agent-mode-by-host-id": {
+      "local": "full-access"
+    },
+    "skip-full-access-confirm": true,
+    "composer-prompt-drafts-v1": {
+      "new-conversation": "我们一起来设置一个已安排任务吧。首先，说明已安排任务在 ChatGPT 中的工作方式。然后询问我需要安排什么，以及应该在什么时候运行。"
+    },
+    "prompt-history": {
+      "global": [
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好",
+        "你好"
+      ],
+      "client-new-thread:bdd6db65-ad53-4ce1-b958-246599bf8a2e": [
+        "niao "
+      ],
+      "019f1c72-03c3-7032-aa56-dff625d7c720": [
+        "切换后重启还是无法访问旧会话error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: No such file or directory (os error 2)",
+        "注意不要引入新漏洞",
+        "你好",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: No such file or directory (os error 2) 还是报错，联网搜索相关知识，结合全局分析，找到根本原因，彻底解决它\n",
+        "你好",
+        "切换后重启还是报错error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: No such file or directory (os error 2) 旧会话还是没有显示",
+        "还是恢复不了啊，一个下午都解决不了这个问题",
+        "你好",
+        "hi ",
+        "hi ",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)",
+        "测试信息",
+        "目前需要开始逐步淘汰原生工作区，将wsl作为主环境了",
+        "批准下一步",
+        "继续"
+      ],
+      "019f4b02-4562-7f83-a1c9-e0154223a2f8": [
+        "这个音频处理要落实为一个技能，后续还会复用",
+        "这个音频处理要落实为一个owner，后续还会复用",
+        "还要注意和现有硬件系统的配合",
+        "完善硬件系统和音乐系统及相关技能和规范，注意对现有工具的利用，系统要简洁稳定",
+        "完善硬件系统和音乐系统及相关技能和规范，注意对现有工具的利用，系统要简洁稳定，然后对u盘里的音频文件按照计划整理，优化策略，还有全局规范里应该强调让codex工作中要注重系统之间的配合，优先复用已有能力，这次就暴露了没有充分调用硬件系统还有忽视了已有的音频处理相关工具，总结经验进行改进",
+        "不需要保留",
+        "不需要保留，如果没有实际危害的话",
+        "批准吸收",
+        "目前显卡模式是混合，但是发热依旧严重，找到根本原因",
+        "继续",
+        "继续",
+        "不要破坏cc swtich的功能，影响codex正常工作",
+        "不要走ui路线",
+        "目前codex在工作中忽略了很多规范，比如联网优先走资源层等等，分析现象，找到根本原因，并形成治理计划，让规则层真正完全发挥作用",
+        "取消工具拦截",
+        "好，你来执行",
+        "目前是不是只有里程碑更新，你才会去同步更新镜像库里除快照的内容",
+        "当前镜像状态聚合器存在“失败但丢失原因”的问题，找到原因，做出修复计划",
+        "批准执行",
+        "更新里程碑"
+      ],
+      "client-new-thread:069470b8-7348-449a-9fda-c9e2d30f4667": [
+        "<codex_delegation>\n  <source>mobile-openclaw-bridge</source>\n  <input>\nprompt_schema=mobile-openclaw-final-reply/v2\nMobile bridge received 1 new message(s). Process them in order:\nmobile_batch_id=mobile-openclaw-20260710T101338213199-72add3e3425d\nrules={\"ack_first\":true,\"ack_means_received_only\":true,\"ack_must_continue\":true,\"ack_only_is_protocol_failure\":true,\"result_after_work_only\":true,\"result_markers_only\":true,\"mobile_equals_desktop_quality\":true,\"permission_table\":\"_bridge\\\\mobile_openclaw_bridge\\\\permission_table.json\",\"ordinary_user_deny_beyond_profile\":true,\"admin_superuser_audit_risk_controls\":true}\nprotocol task_id=e67c932d9126 ack=[[mobile_ack:e67c932d9126:baff8191032e]] result_begin=[[mobile_result_begin:e67c932d9126:3e2d85f0be60]] result_end=[[mobile_result_end:e67c932d9126:3e2d85f0be60]]\noutput_contract task_id=e67c932d9126 first=ack_then_continue final=exact_begin+weixin_text+exact_end forbid=outside|placeholder|explain|missing\nlegacy_required_result_markers=[[mobile_task_id:e67c932d9126]]\nrequired_result_markers=[[mobile_task_id:e67c932d9126]]\nsupplement_contract={\"consume\":\"incorporate_all_applicable_items_then_ack_each\",\"fail_closed\":true,\"fallback\":\"supplement-fallback-v1\",\"fallback_on\":[\"transport_closed\",\"tool_unbound\",\"unsupported_call\",\"unknown_tool\",\"dispatch_failure\"],\"required\":true,\"result_scope\":\"active_task_markers_only\",\"thread_id\":\"019eca51-3ce9-76e2-9795-83f3af451f3a\",\"tools\":[\"bridge.get_pending_batch\",\"bridge.ack_message\"],\"when\":[\"after_ack_before_work\",\"before_final_result\"]}\n1. task_id=e67c932d9126 risk=L1 from=o9cq80_7_t7OGRYescsBdqz_4YrI@im.wechat command=/ask text=目前工作状况\n   permission={\"account_id\": \"primary\", \"admin_superuser\": true, \"allowed_for_ask\": true, \"auth\": \"verified\", \"generated_artifact_dir\": \"\", \"ordinary_user_must_refuse_missing_action\": false, \"permission_profile\": \"admin\", \"permission_table_ref\": \"mobile-weixin-bridge/permission_table:v1\", \"requires_confirmation_for_l3\": false, \"risk_level\": \"L1\", \"schema\": \"mobile-permission-context-compact/v1\", \"temporary_capabilities\": [], \"unknown_action_policy\": \"allow_audit\"}\n  </input>\n</codex_delegation>"
+      ],
+      "client-new-thread:025a1eed-d957-4aa4-b178-f36d45151544": [
+        "你好",
+        "你好"
+      ],
+      "019f2bb7-2d6d-7963-a33a-a14dfbf1f238": [
+        "这个本地已经有了",
+        "为什么要专门为这四个项目做总说明，这四个都是要分别嵌入现有体系的，成员契约，能力图谱，维护面等等",
+        "目前技能虽然很多，但是内容大多无效或者重复，我需要你分析每个技能，并联网查询相关知识，给出一个修复完善计划",
+        "继续",
+        "继续",
+        "批准执行修复优化",
+        "继续",
+        "继续",
+        "继续",
+        "目前会话治理生效了吗",
+        "不是有启动前自动治理会话吗，为什么会话文件还是这么大",
+        "会不会造成什么负面影响",
+        "我只需要会话治理自动压缩超过阈值安全的会话",
+        "目前cpu怎么占比这么高，找到原因",
+        "我已暂停桥接worker，找到问题原因",
+        "好",
+        "找到它为什么触发这个问题的原因",
+        "找到它为什么会异常高频读盘，确定不合理的地方",
+        "好，你来执行优化，但是注意不要引入新的漏洞",
+        "继续"
+      ],
+      "019f0f23-37a4-78b3-ab69-500913b42310": [
+        "查找分析git worktree这个GitHub项目",
+        "目前本机codex工作环境相较于成熟的ai操作系统缺少了什么",
+        "继续",
+        "继续",
+        "继续",
+        "继续",
+        "继续",
+        "？",
+        " (code=3221225786, signal=null).\r\nMost recent error: {\"timestamp\":\"2026-07-16T10:19:57.746624Z\",\"level\":\"ERROR\",\"fields\":{\"message\":\"Custom tool call output is missing for call id: call_ydlBX1RhXBawo3HnhqVJme49\"},\"target\":\"codex_core::util\"} 找到问题的根源",
+        "目前资源层在处理复杂任务并且涉及特定源时表现不行，应该加以优化，并且让它的输出精简，联网搜索相关知识，完善计划",
+        "目前cc-swtich总是自动退出，找到根本原因",
+        "继续",
+        "我怀疑是禁用webview导致的",
+        "你先验证你的猜想并且解决漏洞",
+        "先不要修改，只做计划",
+        "批准",
+        "批准中等方案"
+      ],
+      "019ee3f5-27e9-7d20-9cf5-802aaef0e1af": [
+        "好，结合遗漏点，给出新的一版镜像计划",
+        "联网搜索相关成熟做法，优先用联网mcp",
+        "继续",
+        "进行优化，然后将镜像总体计划做成一个md文件，不需要涉及本机具体细节，主要是方法论",
+        "还需要考虑的是如何检验它是否继承了codex的所有资产",
+        "除了这个还需要检验镜像内容本身兼容无矛盾，能够顺利被吸收",
+        "对这个md文件进行优化排版，内容去重，逻辑优化",
+        "目前cpu负载主要来源于什么，有没有异常占用问题，深入分析一下",
+        "继续",
+        "继续",
+        "好",
+        "批准",
+        "批准排除它",
+        "再次发布镜像",
+        "完善镜像技能和规范，应该一步到位，获取快照，更新本地git仓库，再推送远端仓库",
+        "目前本机已有生产环境更新后更新镜像，需要再在后续加上自动发布镜像到目标仓库‘",
+        "为什么要重复？这样很低效",
+        "这需要治理，命令输出只展示有价值部分",
+        "这需要治理，命令输出只展示有价值部分，这应该是全局要求，和之前对命令输出的要求合并优化，并让它真正发挥作用",
+        "那样两者就没有区别了"
+      ],
+      "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": [
+        "019f1c72-03c3-7032-aa56-dff625d7c720  查询这个会话，将其中有价值的内容吸收进这个会话",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: No such file or directory (os error 2)  还是报错",
+        "我访问其它会话就会出现这个问题",
+        "019f1c72-03c3-7032-aa56-dff625d7c720  查询这个会话，将其中有价值的内容吸收进这个会话",
+        "帮我修复旧会话无法恢复的问题"
+      ],
+      "019f7406-9545-7433-b4ec-d82c320c1358": [
+        "failed to read thread: thread-store internal error: failed to read session metadata /mnt/c/Users/45543/.codex/sessions/2026/07/01/rollout-2026-07-01T14-51-06-019f1c72-03c3-7032-aa56-dff625d7c720.jsonl: rollout at /mnt/c/Users/45543/.codex/sessions/2026/07/01/rollout-2026-07-01T14-51-06-019f1c72-03c3-7032-aa56-dff625d7c720.jsonl is empty 恢复对话出现这个报错",
+        "你再找一下被清空的原因",
+        "会话在刚刚还能使用，是在重启后报错的",
+        "你恢复最新备份吧",
+        "我打开这个会话显示报错error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: 目录名称无效。 (os error 267)",
+        "确认，注意不要破坏现有机制"
+      ],
+      "019f743d-069f-7a32-bd75-8e1ab7020b7b": [
+        "重启后问题还是没修复，依旧会要求沙盒设置且无法设置。旧会话也没有恢复",
+        "我这一次是切换原生环境然后重启的",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)，恢复会话还是显示这个",
+        "联网搜索相关知识，彻底解决这个问题",
+        "除置顶会话和本会话，还是没有显示其它会话，置顶会话也是报错如上",
+        "回退",
+        "启动后问题还是不变啊",
+        "这次修复有没有真正解决设置wsl环境后，重启桌面依旧显示windows环境，且需要沙盒授权，无法完成windows设置的问题",
+        "我在你这次修复后还没有重启codex",
+        "我需要你找到之前为什么桌面设置wsl环境，重启后桌面又显示windows环境，还弹窗沙盒授权，且无法设置windows的原因，不找到问题原因，试错是无效的",
+        "从根本上彻底解决这些问题，注意系统的稳定性",
+        "重启后沙盒设置不再弹出，旧会话也恢复部分，但是会话并没有按照项目分类，而是只在任务栏里，除置顶会话外",
+        "修复这个问题，还有我发现插件丢失了",
+        "插件只恢复两个，没有完全恢复",
+        "你的工作目录是什么",
+        "wsl上已经有了给你准备好的项目文件，那个带lab的，我怎么让你用上它",
+        "这个项目是git仓库吗",
+        "你把这个会话切换到那个合适的工作仓库吧",
+        "当前电脑经常弹出黑色弹窗，短暂存留一段时间又消失，找到原因",
+        "继续"
+      ]
+    },
+    "electron:onboarding-hide-first-new-thread-promos": false,
+    "thread-client-id-v1:local%3A019f4b02-4562-7f83-a1c9-e0154223a2f8": "client-new-thread:bdd6db65-ad53-4ce1-b958-246599bf8a2e",
+    "heartbeat-thread-permissions-by-id": {
+      "019f4b02-4562-7f83-a1c9-e0154223a2f8": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f1c72-03c3-7032-aa56-dff625d7c720": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f4b84-c4d6-7a23-96d5-49f820a9d5d9": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f112d-bb98-7140-8c2d-1b1cbde0444d": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "on-request",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "workspaceWrite",
+          "writableRoots": [],
+          "networkAccess": false,
+          "excludeTmpdirEnvVar": false,
+          "excludeSlashTmp": false
+        }
+      },
+      "019eca40-a8ff-72e2-a7da-43b8f9befc65": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f2bb7-2d6d-7963-a33a-a14dfbf1f238": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f0f23-37a4-78b3-ab69-500913b42310": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019ee3f5-27e9-7d20-9cf5-802aaef0e1af": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f7406-9545-7433-b4ec-d82c320c1358": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f743d-069f-7a32-bd75-8e1ab7020b7b": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f04c1-524a-7c62-bd3d-cfc67a24c551": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019ed5ce-de73-7c63-9b71-8a266262729b": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      }
+    },
+    "sidebar-collapsed-sections-v1": {
+      "chats": false,
+      "cloud": false,
+      "pinned": false,
+      "threads": false
+    },
+    "unread-thread-ids-by-host-v1": {
+      "local": []
+    },
+    "preferred-non-full-access-agent-mode-by-host-id": {
+      "local": null
+    },
+    "codexCloudAccess": "disabled",
+    "thread-summary-panel-section-expanded-tool-sources": false,
+    "app-shell-bottom-panel-launcher-visible": true,
+    "browser-sidebar-comment-mode-coachmark-dismissed": true,
+    "flat-project-sidebar-preferences-v1": {
+      "chatSortMode": "priority",
+      "initialized": true,
+      "mode": "project",
+      "projectSortMode": "priority"
+    },
+    "chatgpt-migration-announcement-completed-v1": true,
+    "composer-model-picker-menu-view-v1": "advanced",
+    "thread-summary-panel-section-expanded-background-subagents": false,
+    "first-awake-pet-notification-avatar-ids": [
+      "codex"
+    ],
+    "thread-browser-tabs-v1:019f1c72-03c3-7032-aa56-dff625d7c720": null,
+    "thread-summary-panel-section-expanded-artifacts": true,
+    "codex-writing-block-deleted-thread-v1:019f112d-bb98-7140-8c2d-1b1cbde0444d": true,
+    "seen-model-upgrade-list": [
+      "gpt-5.6-sol"
+    ],
+    "sidebar-project-expanded-v1-codex:C:\\Users\\45543\\Documents\\mc": true,
+    "sidebar-project-expanded-v1-codex:C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager": true,
+    "sidebar-width": 264.375,
+    "thread-summary-panel-section-expanded-background-tasks": true,
+    "sidebar-project-expanded-v1-codex:local-85b87743035d60b16db3b5da324ab209": true,
+    "has-used-legacy-wsl-agent-environment": true,
+    "codex-writing-block-deleted-thread-v1:019f7367-efa3-7fb1-8181-3d322d4ba772": true,
+    "sidebar-project-expanded-v1-codex:a58b0ff0-2d51-43b5-878b-7105810770ec": true,
+    "home-composer-mode-v1": "work",
+    "codex-writing-block-deleted-thread-v1:019f7384-d677-79a1-8721-882af5f914c0": true,
+    "thread-client-id-v1:local%3A019f7395-ff2b-7cc3-99dc-4ca80576a2c5": "client-new-thread:b77096c4-7413-45e9-8bd8-5e0be6e77fa7",
+    "thread-descriptions-v1": {
+      "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": "简短问候语请求",
+      "019f7406-9545-7433-b4ec-d82c320c1358": "Respond to a Chinese greeting",
+      "019f743d-069f-7a32-bd75-8e1ab7020b7b": "中文问候与日常对话"
+    },
+    "sidebar-project-expanded-v1-codex:local-db4683ddcff83eaa70418025f1333a0e": true,
+    "thread-client-id-v1:local%3A019f7406-9545-7433-b4ec-d82c320c1358": "client-new-thread:11f9f5b9-9d4b-4661-9b46-94fe8a6e2e43",
+    "codex-writing-block-deleted-thread-v1:019f7405-46ba-7563-ab87-170a94926cca": true,
+    "thread-client-id-v1:local%3A019f743d-069f-7a32-bd75-8e1ab7020b7b": "client-new-thread:0b562551-4a40-4eb6-81fd-26a0750df4ef",
+    "codex-writing-block-deleted-thread-v1:019f7582-1056-7ac0-9d94-c26a8915b74f": true,
+    "codex-writing-block-deleted-thread-v1:019f77ab-c897-7143-8498-d0fd5de6ee6e": true,
+    "thread-browser-tabs-v1:019f743d-069f-7a32-bd75-8e1ab7020b7b": null,
+    "has-seen-browser-profile-import-nux-v1": true,
+    "codex-writing-block-deleted-thread-v1:019f7804-7ab4-7063-bd98-6af2befac100": true,
+    "codex-writing-block-deleted-thread-v1:019f7843-c5db-77e3-8c23-a4ea141a70b5": true
+  },
+  "electron-main-window-bounds": {
+    "x": 0,
+    "y": 0,
+    "width": 1214,
+    "height": 689,
+    "isMaximized": false
+  },
+  "electron-saved-workspace-roots": [
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+    "C:\\Users\\45543\\Documents\\mc"
+  ],
+  "project-order": [
+    "local-85b87743035d60b16db3b5da324ab209",
+    "local-db4683ddcff83eaa70418025f1333a0e"
+  ],
+  "active-workspace-roots": [
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager"
+  ],
+  "queued-follow-ups": {},
+  "use-copilot-auth-if-available": false,
+  "pinned-thread-ids": [
+    "019f1c72-03c3-7032-aa56-dff625d7c720"
+  ],
+  "electron-avatar-overlay-open": false,
+  "electron-avatar-overlay-bounds": {
+    "x": 845,
+    "y": 135,
+    "width": 356,
+    "height": 320,
+    "anchor": {
+      "x": 1088,
+      "y": 197,
+      "width": 113,
+      "height": 123
+    },
+    "displayBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1201,
+      "height": 676
+    },
+    "displayId": 4102448580,
+    "mascot": {
+      "left": 243,
+      "top": 62,
+      "width": 113,
+      "height": 123
+    },
+    "placement": "bottom-end",
+    "tray": {
+      "left": 11,
+      "top": 189,
+      "width": 345,
+      "height": 131
+    },
+    "byDisplayId": {
+      "4102448580": {
+        "x": 845,
+        "y": 135,
+        "width": 356,
+        "height": 320,
+        "anchor": {
+          "x": 1088,
+          "y": 197,
+          "width": 113,
+          "height": 123
+        },
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 4102448580,
+        "mascot": {
+          "left": 243,
+          "top": 62,
+          "width": 113,
+          "height": 123
+        },
+        "placement": "bottom-end",
+        "tray": {
+          "left": 11,
+          "top": 189,
+          "width": 345,
+          "height": 131
+        }
+      },
+      "4153175014": {
+        "x": 845,
+        "y": 135,
+        "width": 356,
+        "height": 320,
+        "anchor": {
+          "x": 1088,
+          "y": 197,
+          "width": 113,
+          "height": 123
+        },
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 4153175014,
+        "mascot": {
+          "left": 243,
+          "top": 62,
+          "width": 113,
+          "height": 123
+        },
+        "placement": "bottom-end",
+        "tray": {
+          "left": 80,
+          "top": 189,
+          "width": 276,
+          "height": 131
+        }
+      }
+    },
+    "byResolution": {
+      "1201x676": {
+        "x": 845,
+        "y": 135,
+        "width": 356,
+        "height": 320,
+        "anchor": {
+          "x": 1088,
+          "y": 197,
+          "width": 113,
+          "height": 123
+        },
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 4102448580,
+        "mascot": {
+          "left": 243,
+          "top": 62,
+          "width": 113,
+          "height": 123
+        },
+        "placement": "bottom-end",
+        "tray": {
+          "left": 11,
+          "top": 189,
+          "width": 345,
+          "height": 131
+        }
+      }
+    }
+  },
+  "electron-internal-update-cdn-enabled": false,
+  "computer-use-bundled-plugin-auto-install-disabled": false,
+  "electron-openai-mcp-form-elicitations-enabled": false,
+  "projectless-thread-ids": [
+    "019f112d-bb98-7140-8c2d-1b1cbde0444d",
+    "019f112d-ccf4-73a0-bf98-42c56c67f0ce",
+    "019f112d-cfde-7fb2-9a72-91672326eb88",
+    "019f112d-cfe0-7cf0-9c6d-aba4b1bd9971",
+    "019f112d-cfde-7fb2-9a72-91712d3f299e",
+    "019f112d-cfe4-7d33-9ce4-7e6a01903d65",
+    "019f112e-ee0c-70d3-bfba-483e7fb4cbde",
+    "019f112f-1725-79d0-83e7-1ebf30131ae3",
+    "019f7406-9545-7433-b4ec-d82c320c1358",
+    "019f743d-069f-7a32-bd75-8e1ab7020b7b",
+    "019f569d-b7d9-7802-afc9-781df6cc234d",
+    "019f569c-7bcb-75c0-9f41-b9be309fc336",
+    "019f54f9-9852-78d3-9988-044f1b90f87f",
+    "019f54e4-c722-7b00-a5a8-2418c4a22254",
+    "019ed5ce-de73-7c63-9b71-8a266262729b"
+  ],
+  "thread-workspace-root-hints": {
+    "019f112d-bb98-7140-8c2d-1b1cbde0444d": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-ccf4-73a0-bf98-42c56c67f0ce": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfde-7fb2-9a72-91672326eb88": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfe0-7cf0-9c6d-aba4b1bd9971": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfde-7fb2-9a72-91712d3f299e": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfe4-7d33-9ce4-7e6a01903d65": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112e-ee0c-70d3-bfba-483e7fb4cbde": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112f-1725-79d0-83e7-1ebf30131ae3": "C:\\Users\\45543\\Documents\\Codex",
+    "019f7406-9545-7433-b4ec-d82c320c1358": "C:\\Users\\45543\\Documents\\Codex",
+    "019f743d-069f-7a32-bd75-8e1ab7020b7b": "/mnt/c/Users/45543/Documents/Codex"
+  },
+  "thread-projectless-output-directories": {
+    "019f112d-bb98-7140-8c2d-1b1cbde0444d": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\c\\outputs",
+    "019f112d-ccf4-73a0-bf98-42c56c67f0ce": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\new-chat\\outputs",
+    "019f112d-cfde-7fb2-9a72-91672326eb88": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread-4\\outputs",
+    "019f112d-cfe0-7cf0-9c6d-aba4b1bd9971": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread-5\\outputs",
+    "019f112d-cfde-7fb2-9a72-91712d3f299e": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread-2\\outputs",
+    "019f112d-cfe4-7d33-9ce4-7e6a01903d65": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread\\outputs",
+    "019f112e-ee0c-70d3-bfba-483e7fb4cbde": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\new-chat-2\\outputs",
+    "019f112f-1725-79d0-83e7-1ebf30131ae3": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\new-chat-3\\outputs",
+    "019f7406-9545-7433-b4ec-d82c320c1358": "C:\\Users\\45543\\Documents\\Codex\\2026-07-18\\new-chat-3\\outputs",
+    "019f743d-069f-7a32-bd75-8e1ab7020b7b": "/mnt/c/Users/45543/Documents/Codex/2026-07-18/ni/outputs"
+  },
+  "electron-chrome-extension-sync-managed-plugin-ids": [
+    "chrome@openai-bundled"
+  ],
+  "electron-local-data-migration-id": 3,
+  "electron-workspace-root-labels": {
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager": "主项目"
+  },
+  "electron-completed-local-data-migration-ids": [
+    "2026-07-13-string-based-remote-projects",
+    "2026-07-13-automation-project-targets",
+    "2026-07-13-local-projects",
+    "2026-07-13-remap-legacy-automation-project-targets",
+    "2026-07-13-clear-legacy-browser-download-history",
+    "2026-07-14-repair-metadata-local-projects"
+  ],
+  "local-projects": {
+    "local-db4683ddcff83eaa70418025f1333a0e": {
+      "id": "local-db4683ddcff83eaa70418025f1333a0e",
+      "name": "主项目",
+      "rootPaths": [
+        "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager"
+      ],
+      "createdAt": 1784346563321,
+      "updatedAt": 1784346563321
+    },
+    "local-85b87743035d60b16db3b5da324ab209": {
+      "id": "local-85b87743035d60b16db3b5da324ab209",
+      "name": "mc",
+      "rootPaths": [
+        "C:\\Users\\45543\\Documents\\mc"
+      ],
+      "createdAt": 1784346563320,
+      "updatedAt": 1784346563320
+    }
+  },
+  "selected-project": {
+    "type": "local",
+    "projectId": "local-db4683ddcff83eaa70418025f1333a0e"
+  },
+  "electron-remote-control-config-migration-completed": true,
+  "thread-project-assignments": {
+    "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": {
+      "projectKind": "local",
+      "projectId": "a58b0ff0-2d51-43b5-878b-7105810770ec",
+      "cwd": "W:\\",
+      "pendingCoreUpdate": false
+    },
+    "019f1c72-03c3-7032-aa56-dff625d7c720": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f4b02-4562-7f83-a1c9-e0154223a2f8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0f23-37a4-78b3-ab69-500913b42310": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019ee3f5-27e9-7d20-9cf5-802aaef0e1af": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2bb7-2d6d-7963-a33a-a14dfbf1f238": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f555b-fa5d-7af1-9fa9-32ca83a379b1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge",
+      "pendingCoreUpdate": false
+    },
+    "019ee348-662d-7fa0-99c8-3138aa86db2f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019eca40-a8ff-72e2-a7da-43b8f9befc65": {
+      "projectKind": "local",
+      "projectId": "local-85b87743035d60b16db3b5da324ab209",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Documents\\mc",
+      "pendingCoreUpdate": false
+    },
+    "019f3b9c-93e7-7b43-9ed4-c37595e78bbe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3ac7-41da-7101-9588-c38f27e37df0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3ac1-a702-7aa2-9dc7-25f244d08815": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34ee-7f1d-7e21-8901-bf5c073555a1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34ec-967c-76f0-852a-0e4a686e7508": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34ea-ce4e-7ac3-b92d-f8d13df79b01": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34dd-671c-7d73-9d18-16ccbeebce25": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30c0-29f7-7c31-82a8-bb0d1d566886": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30bf-8229-7e62-8633-de6a66734822": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30bd-c3a4-7483-8d01-77df759364bd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b9-4d0e-70b3-9866-a0b05c3ce5a1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b8-f466-72b3-8dce-d94c83bf51d3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b7-4eae-7160-984b-575c6210a7e0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b5-628d-7130-b2a8-8a3940fa164d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b4-ead5-7ef0-82da-9ed48004db8e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30a1-a26f-71d0-884b-7d001cb8a1ce": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30a0-6b28-7741-9d48-1cf19bbbdaee": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309f-7117-72d3-8b55-9f5a1999dbdf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-9b21-77f0-8f3c-1bf75e99fa14": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-6dff-7572-913b-894c5b4a39c0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-45a5-7262-833f-db448afbc2bb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-1be5-7c60-9346-17c600bd33d1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3092-ae6c-7391-b20e-6a9f065cd24d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3092-769a-7251-920a-82495505d139": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3091-7e7e-74e3-9810-7ac62f454125": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3091-52c0-70a2-a4e1-f51feaa1fa53": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3091-2951-7a93-b754-35ad643b39b8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3090-f852-7b50-8a82-ac1d03398977": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f308d-6c7f-78d2-8ef6-67b0db09d7cd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3082-b7ad-7813-85e1-6d52a038bd94": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3082-b7ac-7601-9035-cffb433146b8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3081-8db4-7d30-97bc-6e9d2058e7cb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3081-8db3-78f2-b357-7914695834e5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f307f-2bc5-7ed2-b475-b583f5e42184": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f307f-2ae4-7333-8295-fee9d5d2e876": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f307c-9291-7372-b2fa-8784bc0d8caa": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3078-fb3b-7173-ba54-d1c5f4d293c9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-cdbb-7a42-af78-3880f61c9668": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-a440-7fd3-9e26-2c2e9c87c5be": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-79e0-7053-aa01-cc1d7a55b9c0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-5110-75c3-8b9b-876150d9e90e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-1b4f-7e00-ba83-3edfacf75b5d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-10d8-7971-9b6f-d49e8063f86c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3070-a09a-7ec2-9ac3-1b8fd9ecdd03": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303d-ced9-7d00-8d5e-43b5ce3218bd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303d-93f4-7093-92e0-0d9ae8ed5156": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303d-615d-7c31-85b8-103ee744ec7c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-e0f9-7993-bf54-e159673ce46a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-e09c-79d3-91b5-a0ba4167aead": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-931d-76a0-9a5d-a0f7c83ddb43": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-9279-7d22-b85c-80e303404b0d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-471f-7393-9d47-9592f8092749": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-463c-7a70-8a8a-ee294e28cd20": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-0516-7641-8508-2eadf5553a55": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-04cf-7952-b2a5-fb57a4015430": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303a-c74d-75e3-9d2e-24a4ab783928": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303a-c74c-7db2-94dc-66740d1b5f82": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3039-fb35-77a1-80b3-5dcd1f1e2ea3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3039-fb2b-7ae0-858f-0c6a41faa5e6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3036-84ed-74f3-b9c0-c859113a94c2": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3036-4151-7e72-8e22-1f8b8bb54e95": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3036-4150-7a10-9844-508f35ce8691": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-f6ca-7ee0-9b6a-4a28c27e2e4d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-f10e-74d1-907b-46f6d21e55d9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-ac9c-7211-9844-85f2619445f5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-ac90-7072-a666-cf735ee74eec": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-6d01-7363-a900-de966fa26c6e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-583a-7891-acaa-0fe73cd13581": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3001-7d93-7661-bc46-84b1de9cd31f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-bf29-7c82-b2c6-2ef3c972d843": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-8eaf-7840-9271-9413d77360a8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-4e56-7503-a026-477450932523": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-1b61-76b1-9a13-f233a0bf377e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-efed-7a22-ad4b-098e865e5438": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-5f1c-79d3-bb6b-913ff3b9f6ff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-346d-7381-a188-c0092882f984": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-0b39-7f73-afc7-3be1f8e3cbd2": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffe-e109-70c2-9d95-ee7aaf578e90": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffc-de0f-7c53-b30c-9e7f449af51c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffc-b9c6-7762-a2fb-2fb907ca2e2a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffc-8c4a-7171-87ee-5ddbc5632b2f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ff7-fd82-7e82-8b62-ca2e7801d542": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ff7-cd5b-78e1-80ca-39b741306716": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ff7-46ae-7681-9525-e2b9711f5432": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27db-4ecc-7253-8de8-342218ce250c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d8-3038-7650-81cc-ffd0bbfcb22f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d5-ff1e-7930-84b0-28c932142514": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d5-0d50-73c3-a4aa-ac6d00fe9bb9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d4-3065-7573-8e81-c0cf7d259bb1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d3-6799-78f1-b419-1414de2bb72a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d1-e22e-7e83-a1cc-0e36f6df1888": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d0-dc28-7bb2-a879-09ca4f722bd4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27cd-9825-7032-b5fe-63218effa591": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2308-6c03-7e92-833b-1814737d498a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213e-e670-75c1-b553-3a8a5be1002f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213d-05fd-7291-8f76-e6b45b01b1b0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-e933-7723-bf4d-c8f5bf78dd80": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-cc92-75e1-8175-59cd93001653": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-b3bc-7011-bbd3-ac4cd71777e4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-9c2e-7442-bf2a-267e9957c437": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-bf44-7f52-bb89-eea78da5a958": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-a2cd-7373-828e-17039656de30": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-83ff-7352-9afd-c6dfd77c514a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-69fa-7771-b34f-a5949ee00fef": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-5400-7773-8fd1-ea2938ca5c77": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2134-47fb-7ef1-bd35-deeb89ebabe7": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2134-292f-7e60-a690-3ae022b97cdd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2134-0cc8-78c1-a6d7-bee1f1f773fc": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2133-f63b-7f63-a0d3-3300b37d7c1f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2133-ddae-7781-b461-95c783ba5309": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212b-2684-78b3-9056-183daa2b5c05": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212b-0af5-7b40-b71b-43f691fe25fe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212a-f27f-7110-96f5-206472e7c994": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212a-d8b8-79b2-abaf-a9983c79c74f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212a-c0d2-76d1-a4f8-0b16a82789ef": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-670a-7cc3-a25c-df48e29ce89d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-49e4-7821-9b6b-5bb23d4e6ab7": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-3182-7961-a5b6-be7d4019fa2c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-1bd8-7d31-8787-bcbfb686362b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-0476-7c00-a5f9-8168a8150ada": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc8-043a-7560-9c36-602958fc3bed": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc6-c750-7742-84f5-571c1a7743f9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc5-74bf-7120-a5d4-aac49766a851": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc3-3950-75f1-8f4e-3f881b81d306": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bbf-bf58-7273-bd57-ea960a507c7b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f16e1-7474-7cc3-9825-7edb186b1640": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1446-6598-7a11-93d8-ed532237ba63": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f140a-05d9-78a0-a909-a6414d9940ce": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1409-c4c9-7273-bdc9-85997f1c258d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1409-7e68-7650-bda5-6af5a2414a1a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1409-3e99-7dc2-b563-7061e0d1f9be": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1408-fa90-78f0-8f00-e2362a71b788": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1406-adf4-7732-abf4-1f32b01a4cd0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1406-70e2-7281-b47b-aad020d2f359": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1406-258d-7433-98c4-9233c24687d3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1405-d6e0-7c31-afdf-13616d69ce9a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1405-9b2a-7830-bcf8-ee9a779d1d7e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-f2f0-7663-b12a-7e33c0b324bf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-b2cf-7761-a518-cb8fdc62bf9e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-739d-7782-a326-85a76a7095bb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-2e15-7741-9a02-4ef01dc70e93": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fc-e924-74a1-b7a0-a419b0a03df0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fc-e913-78f2-a395-03f64cb983f8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e6-34b0-74b2-b10a-356049e8805f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e5-5b2a-72e0-9758-17390c1949c9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e4-7a08-7133-824c-d47fc21e49c6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e3-a1e7-71f0-8e72-d81723bc838a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e2-c65b-7ec3-bda8-0d9195aba60d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11cb-7761-7f42-8a4f-ccfeaf8d4040": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11ca-d99d-7ad3-815e-a49c34435d92": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11ca-81a9-7cc2-9897-0dadde61345f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c9-f592-7262-b85f-49de8ec6d070": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c9-9e8a-7b73-9cd6-52ef52933a07": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c8-fe7b-73b3-85fe-eee88d97b085": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c8-b610-76a3-898c-66fe70bd878e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c7-f83b-7f33-8c61-0151788a7eeb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c7-d3d0-70c2-9b53-1cd9f1a93772": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e30-f291-75c0-857d-429d60dba319": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e30-5e69-7f23-8ebd-b49b89f9b974": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e30-17da-7742-9ccd-9cd327096661": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2f-5286-71d3-b199-33d0927b1b9d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2f-3aa3-75b1-ba44-202e4e6e17a3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-71f4-7872-a751-fd64927a4aad": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-6b6d-7e61-9443-b4046543fdfb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-5e50-7f03-ab13-c54bea74cf16": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-3738-7a72-9ac7-478b5d1ebaa5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-fa63-77b0-a814-8138a1c1af60": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-bd50-71d1-b475-52f56f0c0e62": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-856c-74a1-b059-0e8da10b484c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-76f2-7c43-a64f-6408660e1748": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-76d5-78d1-b757-99a0ed21c2f1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2c-b078-75a2-8f09-e60eca38b23b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-cc73-7cb3-999b-79a32dfbe3e5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-9b95-7ff2-8513-15bc145045e0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-62c7-7c73-90c8-2d63eabd31ff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-25e6-7753-a585-565da9fb563e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1b-f0f4-74a1-a2f8-b0a7d302abf8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e10-097f-78a0-9d4a-c8b30b0c0908": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-d8b9-7dc3-b9e9-3f576fa9f3b2": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-a740-7b21-8018-c8d8b20eeac6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-70fc-7cb2-a1f4-9222a29317bf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-3c81-7350-b65b-02f47a6d4ef1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-7d3c-79d0-8672-2092a703bfca": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-778a-7393-9a45-7d681cb9f06d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-71da-79a0-aeeb-3ea84748bb1c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-6c3f-72c3-891c-7b1899b6ecde": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-6636-78d1-b9e0-75878eb20e35": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-fceb-7050-9c1e-ff0349ff36bc": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-f799-7f93-b6c0-cf7e636151d3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-f1fb-7342-adcd-7cf4a38196d0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-ec59-7c62-8406-4caeb3f6998d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-e6ea-79e1-bb47-2632d8c343e1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-49e3-7571-aa7d-7794c167ed7a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-4431-7e92-8af7-431b9db676a8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-3e2c-7502-a86f-08c0ddfc7fab": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-3825-7cc3-8190-00a80f6a63b7": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-29f8-7c10-a58b-68c5837e74cd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04c1-524a-7c62-bd3d-cfc67a24c551": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ba59-7c72-9a1a-8475251b0ba0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ba32-7462-81e2-bba185aece75": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-b3db-7362-9c04-f966ba8159d6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-b3b8-7302-aabb-5f1349339a89": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ac52-7852-96e4-7b61fe3206a3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ac3f-7d22-8329-de9c39e8bf76": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-a0a0-7f10-a58f-81d55395b095": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-a09f-7280-8245-6ea8a19eebb4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08af-22a0-7d31-b72c-d8f0cf76596d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08af-2228-7431-8116-244a3015d16e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ae-34fa-7bf1-9d61-95cf045b9328": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ae-2edf-7320-b778-0bf59e13e92c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ad-78b4-7d22-88af-66844d08df7f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-e847-71e1-85bd-1f8377fad4fb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-d144-7190-920b-58a545a1b2a0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-3a13-7fa0-86e6-6af9bd292051": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-293c-7822-8cfd-65c349903eef": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ab-9630-7c83-90af-63a165d47d56": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ab-8116-75f2-be59-969b7ef9897d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08aa-e63f-75f1-a7b4-d10e0c5d9c56": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08aa-ddd0-7042-847b-0baf24668a7d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08aa-38e6-7382-a1b1-c496054c8819": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-b296-78f2-928e-5eab665d7be4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-acfa-7820-a1e7-007ff6d3487f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-a741-7fb3-8f4a-913933fdc084": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-a1b3-7521-9c55-4a9af492f255": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-9bf1-7aa2-9485-1a6d2e3e4b57": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-79eb-78e2-bab7-894ae3e0230a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-74a4-7b31-b5c3-6ad85c0a16cf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-6f80-7f61-81ff-1326498a010d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-6a57-7d41-8868-1a01150d2d5d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-6033-7dd1-a11b-3d908e92ee26": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-d4a5-7f91-ade7-d42ba73c9c9e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-cf63-7a62-bfa8-2fc78735c695": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-ca16-7910-ad34-75de78b55eff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-c490-72e0-a750-f992565fedcd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-bada-77f1-882e-d3e938a02800": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-a69a-7961-85bf-1de9ff8b256f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-a140-7ff2-b761-410ff401ff64": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-9b8f-73e0-8e9d-d5ef32eb268f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-95fc-7261-b31c-b67efa47f594": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-8b0b-7d01-b444-609286072eed": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088e-444e-7e43-b056-73d3428c3874": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-a21f-7ef3-aefb-ab08aff9f0a3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-3421-70d3-98f5-1db791526187": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-2e96-7ff1-9afa-3fab2589c823": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-2937-7a51-9e20-cf9190417466": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-23d6-7cc2-bc83-4591eb98b135": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-1e5f-73d2-8808-c92cae660e52": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088c-ffdd-7f21-a674-7d43b47e19fe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088c-5d3e-7b81-a062-c973633e430b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088b-b45a-7cf2-8e5c-fd6aa57ccefe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0507-b55d-7060-9569-50882b8804ff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0506-968c-7102-b543-f065e3f6140d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0505-13f7-7b70-bfde-95326a60245f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0503-6645-73d3-9ad5-f7c315c6b600": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f9-e2c0-7cc0-adc4-e8c9615ee192": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f9-d280-7750-9efd-f56ada42a6bb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f9-beb1-72d0-9de0-290d8111ab45": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f3-ddf0-78c3-987f-b88b531a26b5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f3-d4e3-7ba3-aae7-c7dce0b5fa71": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019eeafc-1677-7723-992f-b31590c0fe66": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019ee3d8-9514-7971-899b-bac452c1c697": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019ee3d7-5a0d-7121-8a8c-87f75cbd91be": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    }
+  }
+}
