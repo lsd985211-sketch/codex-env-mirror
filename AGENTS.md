@@ -45,8 +45,10 @@ explicit asset disposition, isolated staging, and recovery evidence.
 
 ## Editing And Validation
 
-- Use the workspace facade for normal operations:
-  `python C:\Users\45543\Downloads\mcsmanager_windows_release\mcsmanager\_bridge\codex_workflow_entry.py mirror <action>`.
+- Use the WSL Work Git facade for normal operations:
+  `python3 /home/codexlab/work/codex-workspace/workspace/_bridge/codex_workflow_entry.py mirror <action>`.
+  The Windows native workspace is a generated compatibility projection for
+  Windows-only execution, not a publication or editing authority.
 - Use `scripts/mirror_cli.py` directly only for bootstrap recovery or repository
   development.
 - Update manifests and tests with behavior changes. Keep documents as concise
