@@ -1,0 +1,20 @@
+{
+  "skill_id": "26beadfabd1dfec6",
+  "name": "hyperframes",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\hyperframes\\bd2122cb\\skills\\hyperframes",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "b9125909126432cadf6ebe2bf57be78f26439aa5dac5b14e0dfaf7c3d8015da2",
+    "agents": "bdad4c3cf2fa3f2987684d1851f12bc167019b077145d6e6c5a844d668886646",
+    "scripts": "03c0f7cafc15cf2d1683ec19bdd1dd343a8f178056d9cc11a33803f316bb7232",
+    "references": "513e005e7268e9d0553747246b7824611695258b019216c3d59576202876c522",
+    "assets": null
+  }
+}

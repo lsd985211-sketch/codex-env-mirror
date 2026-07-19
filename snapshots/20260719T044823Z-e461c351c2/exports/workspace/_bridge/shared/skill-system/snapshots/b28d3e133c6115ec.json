@@ -1,0 +1,20 @@
+{
+  "skill_id": "b28d3e133c6115ec",
+  "name": "firecrawl-cli",
+  "path": "C:\\Users\\45543\\.codex\\skills\\firecrawl-cli",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d98c2fa9c7e27f8474ab7fae9ee3939612f10ea1c974db8b3f327ae662ac1488",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
