@@ -1,12 +1,12 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-19T04:49:21.095438+00:00",
+  "generated_at": "2026-07-19T05:01:20.603720+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260719T044823Z-e461c351c2",
-    "created_at": "2026-07-19T04:48:56.756133+00:00",
+    "snapshot_id": "20260719T045956Z-7d5603a8b9",
+    "created_at": "2026-07-19T05:00:40.070339+00:00",
     "asset_count": 2016,
-    "total_bytes": 24739553,
+    "total_bytes": 24731490,
     "capture_mode": "full"
   },
   "readiness": {
@@ -71,7 +71,7 @@
     {
       "path": "manifests/asset-dispositions.json",
       "role": "static_contract",
-      "sha256": "78f6cc2f7d43a615d239d6614d3ce3ea262dd5f66a898863863405105fd7b2d8"
+      "sha256": "30a7f1a3d8fb5d768b3986b94a9811a418fcbc6a2a915ab754a76bbbd7f98dae"
     },
     {
       "path": "manifests/control-plane-contract.json",
@@ -101,7 +101,7 @@
     {
       "path": "manifests/source-authorities.json",
       "role": "static_contract",
-      "sha256": "59ac2f0e3e4ab822eaf175c0de95ae93c7626d1b072d6eb9496e41eb5632b1bf"
+      "sha256": "a28832da9b46aca6abeb6483a92834c8480c51383a8bd3d9de8f3f6fdc79d5f2"
     },
     {
       "path": "manifests/verification-matrix.json",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "e752313c7ec9ebee2d27031834b8d7c10745032bee7fcc4b3efeb23a7868a59d"
+  "current_md_sha256": "6a1a5ff0176a9b809049da52f66a868b5427a4ee823165db0dd31b4ad21e4812"
 }

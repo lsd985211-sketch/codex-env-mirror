@@ -47,7 +47,7 @@
     {
       "id": "codex-global-agents",
       "kind": "file",
-      "source": "${CODEX_HOME}\\AGENTS.md",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\AGENTS.md",
       "destination": "exports/codex-home/AGENTS.md",
       "restore_path": "${CODEX_HOME}\\AGENTS.md",
       "mode": "copy",
@@ -58,7 +58,7 @@
     {
       "id": "codex-user-preferences",
       "kind": "file",
-      "source": "${CODEX_HOME}\\USER_WORKING_PREFERENCES.md",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\USER_WORKING_PREFERENCES.md",
       "destination": "exports/codex-home/USER_WORKING_PREFERENCES.md",
       "restore_path": "${CODEX_HOME}\\USER_WORKING_PREFERENCES.md",
       "mode": "copy",
@@ -69,7 +69,7 @@
     {
       "id": "codex-memory-index",
       "kind": "file",
-      "source": "${CODEX_HOME}\\MEMORY.md",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\MEMORY.md",
       "destination": "exports/codex-home/MEMORY.md",
       "restore_path": "${CODEX_HOME}\\MEMORY.md",
       "mode": "copy",
@@ -167,7 +167,7 @@
     {
       "id": "codex-skills",
       "kind": "tree",
-      "source": "${CODEX_HOME}\\skills",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\skills",
       "destination": "exports/codex-home/skills",
       "restore_path": "${CODEX_HOME}\\skills",
       "mode": "copy_tree",
@@ -218,7 +218,7 @@
     {
       "id": "codex-scripts",
       "kind": "tree",
-      "source": "${CODEX_HOME}\\scripts",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\scripts",
       "destination": "exports/codex-home/scripts",
       "restore_path": "${CODEX_HOME}\\scripts",
       "mode": "copy_tree",
@@ -229,7 +229,7 @@
     {
       "id": "codex-tools",
       "kind": "tree",
-      "source": "${CODEX_HOME}\\tools",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\tools",
       "destination": "exports/codex-home/tools",
       "restore_path": "${CODEX_HOME}\\tools",
       "mode": "copy_tree",
@@ -242,7 +242,7 @@
     {
       "id": "codex-automations",
       "kind": "tree",
-      "source": "${CODEX_HOME}\\automations",
+      "source": "${WORK_GIT_ROOT}\\codex-home\\automations",
       "destination": "exports/codex-home/automations",
       "restore_path": "${CODEX_HOME}\\automations",
       "mode": "copy_tree",

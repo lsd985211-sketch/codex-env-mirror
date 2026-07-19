@@ -20,6 +20,12 @@
           "evidence": "database sidecar is restored only with an owner-consistent database archive"
         },
         {
+          "patterns": ["*.db-journal"],
+          "disposition": "runtime_companion",
+          "owner": "database_owner",
+          "evidence": "SQLite rollback journal is a runtime companion restored only with an owner-consistent database archive"
+        },
+        {
           "names": [
             ".app-server-state-reconciled-v1", ".personality_migration", "cap_sid",
             "installation_id"
@@ -33,6 +39,15 @@
           "disposition": "generated_representation",
           "owner": "runtime",
           "evidence": "runtime-versions native_host_compatibility export"
+        },
+        {
+          "names": [
+            "AGENTS.md", "MEMORY.md", "USER_WORKING_PREFERENCES.md",
+            "automations", "scripts", "skills", "tools"
+          ],
+          "disposition": "historical",
+          "owner": "wsl_workspace",
+          "evidence": "WSL Work Git codex-home is the active authority; Windows Codex home copies are transition shadows and must not override the mirror source"
         },
         {
           "names": [
@@ -106,6 +121,12 @@
           "disposition": "regenerate",
           "owner": "cc_switch",
           "evidence": "derived operational logs"
+        },
+        {
+          "patterns": ["*.db-journal"],
+          "disposition": "runtime_companion",
+          "owner": "database_owner",
+          "evidence": "SQLite rollback journal is a runtime companion restored only with an owner-consistent database archive"
         }
       ]
     }
