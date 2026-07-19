@@ -455,6 +455,23 @@
       "required": true
     },
     {
+      "id": "wsl-desktop-project-registration-receipt",
+      "kind": "command_json",
+      "command": [
+        "python",
+        "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "desktop-project-registration"
+      ],
+      "destination": "exports/derived/wsl-desktop-project-registration-receipt.json",
+      "classification": "authority_export",
+      "owner": "wsl_workspace",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "required": true
+    },
+    {
       "id": "wsl-work-git-release-receipt",
       "kind": "command_json",
       "command": [
