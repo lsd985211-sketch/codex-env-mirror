@@ -1,4 +1,5 @@
 /runtime/
+/_backup/
 *.tmp
 *.log
 *.sqlite

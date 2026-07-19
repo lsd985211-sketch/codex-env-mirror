@@ -70,6 +70,10 @@ CC_SWITCH_SEMANTIC_TABLES = (
     "skill_repos",
     "model_pricing",
 )
+MIRROR_SOURCE_READ_ONLY_ENV = {
+    "CODEX_MIRROR_SOURCE_READ_ONLY": "1",
+    "CODEX_MIRROR_REVERSE_OVERWRITE_BLOCKED": "1",
+}
 
 
 class MirrorOperationBusy(RuntimeError):
@@ -387,7 +391,17 @@ def add_asset(
 
 def run_json_command(command: list[str], variables: dict[str, str]) -> bytes:
     expanded = [expand_tokens(item, variables) for item in command]
-    completed = subprocess.run(expanded, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=90)
+    environment = os.environ.copy()
+    environment.update(MIRROR_SOURCE_READ_ONLY_ENV)
+    completed = subprocess.run(
+        expanded,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=90,
+        env=environment,
+    )
     if completed.returncode != 0:
         raise RuntimeError(f"command_failed:{expanded}:{completed.stderr[-2000:]}")
     payload = json.loads(completed.stdout.lstrip("\ufeff"))
