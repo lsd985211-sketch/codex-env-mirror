@@ -1,0 +1,20 @@
+{
+  "skill_id": "76ce0b6e849c9682",
+  "name": "posthog",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\posthog\\c6ea566d\\skills\\posthog",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "a0b17693e926fd8ff090e87c2483e28016546863b1e2aa54e46a345f2719b29a",
+    "agents": "56ccc4527811f48fb186be0bd4ff36f972cc6f4472403d5dc9334dbeaffa03e8",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
