@@ -1,0 +1,109 @@
+{
+  "schema": "developer_toolchain.lock.v1",
+  "install_root": "~/.local/share/codex-toolchain",
+  "bin_dir": "~/.local/bin",
+  "resource_runtime_root": "~/.codex-app/runtime/resource-layer",
+  "components": [
+    {
+      "id": "rg",
+      "provider": "codex_runtime",
+      "required": true,
+      "source": "Codex bundled runtime",
+      "executables": [
+        {
+          "name": "rg",
+          "relative_path": "",
+          "version_prefix": "ripgrep ",
+          "use": "broad_text_search_with_exclusions"
+        }
+      ]
+    },
+    {
+      "id": "uv",
+      "provider": "python_package",
+      "required": true,
+      "version": "0.11.29",
+      "package_spec": "uv==0.11.29",
+      "target_subdir": "uv/0.11.29",
+      "source": "https://pypi.org/project/uv/",
+      "executables": [
+        {
+          "name": "uv",
+          "relative_path": "bin/uv",
+          "version_prefix": "uv 0.11.29",
+          "use": "stable_python_tool_and_environment_execution"
+        },
+        {
+          "name": "uvx",
+          "relative_path": "bin/uvx",
+          "version_prefix": "uvx 0.11.29",
+          "use": "one_shot_python_cli_tool_execution"
+        }
+      ]
+    },
+    {
+      "id": "ruff",
+      "provider": "python_package",
+      "required": true,
+      "version": "0.15.22",
+      "package_spec": "ruff==0.15.22",
+      "target_subdir": "ruff/0.15.22",
+      "source": "https://pypi.org/project/ruff/",
+      "executables": [
+        {
+          "name": "ruff",
+          "relative_path": "bin/ruff",
+          "version_prefix": "ruff 0.15.22",
+          "use": "targeted_python_lint_feedback_without_broad_format_churn"
+        }
+      ]
+    },
+    {
+      "id": "fd",
+      "provider": "github_release_tarball",
+      "required": true,
+      "version": "10.4.2",
+      "target_subdir": "fd/10.4.2",
+      "source": "https://github.com/sharkdp/fd/releases/tag/v10.4.2",
+      "artifact_url": "https://github.com/sharkdp/fd/releases/download/v10.4.2/fd-v10.4.2-x86_64-unknown-linux-gnu.tar.gz",
+      "artifact_name": "fd-v10.4.2-x86_64-unknown-linux-gnu.tar.gz",
+      "artifact_sha256": "def59805cd14b5651b68990855f426ad087f3b96881296d963910431ba3143c8",
+      "max_bytes": "5MB",
+      "executables": [
+        {
+          "name": "fd",
+          "relative_path": "fd-v10.4.2-x86_64-unknown-linux-gnu/fd",
+          "version_prefix": "fd 10.4.2",
+          "use": "fast_file_discovery_when_clearer_than_rg_files"
+        }
+      ]
+    },
+    {
+      "id": "gh",
+      "provider": "github_release_tarball",
+      "required": true,
+      "version": "2.95.0",
+      "target_subdir": "gh/2.95.0",
+      "source": "https://github.com/cli/cli/releases/tag/v2.95.0",
+      "artifact_url": "https://github.com/cli/cli/releases/download/v2.95.0/gh_2.95.0_linux_amd64.tar.gz",
+      "artifact_name": "gh_2.95.0_linux_amd64.tar.gz",
+      "artifact_sha256": "25d1e4729e8808c9ed3d613e96ebd3f3e44446f2d368c89d878a71a36ddb3d8c",
+      "max_bytes": "20MB",
+      "executables": [
+        {
+          "name": "gh",
+          "relative_path": "bin/gh",
+          "source_relative_path": "gh_2.95.0_linux_amd64/bin/gh",
+          "version_prefix": "gh version 2.95.0",
+          "use": "GitHub API and repository operations from WSL with native path semantics",
+          "credential_bridge": {
+            "type": "windows_gh_token",
+            "host_command": "gh.exe",
+            "host_override_env": "CODEX_WINDOWS_GH_PATH",
+            "persistence": "none"
+          }
+        }
+      ]
+    }
+  ]
+}
