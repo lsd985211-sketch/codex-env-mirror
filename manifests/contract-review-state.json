@@ -1,11 +1,12 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-20T04:22:10.694676+00:00",
+  "reviewed_at": "2026-07-20T10:09:51.856327+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "6fcbff1da7e638240d8394e5d98e2c498425e6b2c98197969cb376b40ed8d293",
-  "baseline_tag": "seed-v2.4.0",
-  "proposed_tag": "seed-v2.5.0",
+  "control_plane_fingerprint": "16956582214213710bc103e946ecc574e743461be38e8234518a4a2bfe3b3484",
+  "baseline_tag": "seed-v2.5.0",
+  "proposed_tag": "seed-v2.6.0",
   "changed_control_plane_files": [
+    "manifests/source-authorities.json",
     "scripts/mirror_cli.py",
     "tests/test_mirror_cli.py"
   ],
@@ -36,6 +37,6 @@
     }
   ],
   "release_impact": "minor",
-  "summary": "File-level incremental recovery capture preserves complete immutable snapshots, membership authority refresh, validation, and restore boundaries.",
+  "summary": "Reviewed required mirror contracts against Work Git source dependency paths and snapshot transaction recovery changes; existing one-way authority, validation, staging, and secret boundaries remain compatible.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
