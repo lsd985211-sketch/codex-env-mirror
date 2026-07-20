@@ -507,20 +507,20 @@ class MirrorCliTests(unittest.TestCase):
             self.assertEqual(json.loads(latest.read_text(encoding="utf-8"))["snapshot_id"], "previous")
             self.assertEqual(recovery["actions"][0]["code"], "invalid_latest_candidate_reverted")
 
-    def test_incremental_reuse_checks_snapshot_integrity_without_current_governance(self) -> None:
+    def test_incremental_reuse_defers_full_integrity_to_candidate_validation(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             snapshot = root / "snapshot"
             snapshot.mkdir()
-            (snapshot / "snapshot-manifest.json").write_text(json.dumps({"snapshot_id": "snapshot"}), encoding="utf-8")
+            (snapshot / "snapshot-manifest.json").write_text(json.dumps({"snapshot_id": "snapshot", "assets": []}), encoding="utf-8")
             with patch.object(mirror_cli, "resolve_snapshot", return_value=snapshot), \
-                    patch.object(mirror_cli, "validate_snapshot", return_value={"ok": True}) as validate:
+                    patch.object(mirror_cli, "validate_snapshot") as validate:
                 path, manifest, status = mirror_cli.previous_snapshot_for_incremental()
 
             self.assertEqual(path, snapshot)
-            self.assertEqual(manifest, {"snapshot_id": "snapshot"})
+            self.assertEqual(manifest, {"snapshot_id": "snapshot", "assets": []})
             self.assertEqual(status, "previous_snapshot_valid")
-            validate.assert_called_once_with("snapshot", control_plane=False, governance=False)
+            validate.assert_not_called()
 
     def test_incremental_reuse_keeps_unmodified_tree_asset(self) -> None:
         asset = {"asset_id": "workspace-bridge-source:unchanged.py"}

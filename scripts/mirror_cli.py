@@ -1816,15 +1816,11 @@ def previous_snapshot_for_incremental() -> tuple[Path | None, dict[str, Any] | N
     try:
         path = resolve_snapshot("latest")
         manifest = load_json(path / "snapshot-manifest.json")
-        # Reuse needs immutable snapshot-integrity evidence. Current owner
-        # governance is deliberately checked again on the candidate, so an
-        # implementation upgrade must not force a full source recapture.
-        validation = validate_snapshot(
-            str(manifest.get("snapshot_id") or "latest"),
-            control_plane=False,
-            governance=False,
-        )
-        if not validation.get("ok"):
+        # Every reused file is checked for existence while linking/copying, and
+        # the completed candidate receives the full hash and secret-scan
+        # validation before promotion. Re-hashing the previous 2k-file
+        # snapshot here duplicates that mandatory candidate check.
+        if str(manifest.get("snapshot_id") or "") != path.name or not isinstance(manifest.get("assets"), list):
             return None, None, "previous_snapshot_invalid"
         return path, manifest, "previous_snapshot_valid"
     except Exception as exc:
