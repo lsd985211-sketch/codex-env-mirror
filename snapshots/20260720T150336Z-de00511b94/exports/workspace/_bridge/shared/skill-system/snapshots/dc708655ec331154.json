@@ -1,0 +1,20 @@
+{
+  "skill_id": "dc708655ec331154",
+  "name": "dashboard-expert",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\mixpanel-headless\\3c06cb2e\\skills\\dashboard-expert",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "14fd87eebbbc01e6b1a280e9934fa9ae285b1e1a077987c06122e089977de9cf",
+    "agents": null,
+    "scripts": null,
+    "references": "bcee2530f63a19368d7ca048dc40e73d6ae87e7fc17efb2676dc1c7ee9deac59",
+    "assets": null
+  }
+}
