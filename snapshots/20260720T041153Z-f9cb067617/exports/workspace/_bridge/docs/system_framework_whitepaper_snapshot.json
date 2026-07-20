@@ -1,0 +1,145 @@
+{
+  "schema": "codex_work_environment_whitepaper_snapshot.v1",
+  "generated_at": "2026-07-13T00:00:00+08:00",
+  "scope": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+  "canonical_document": "_bridge/docs/system_framework_overview.md",
+  "resource_research": {
+    "request_id": "res_5a203f41e7549e2a",
+    "status": "completed",
+    "consume_contract_satisfied": true,
+    "owner_result": "_bridge/resources/_requests/res_5a203f41e7549e2a/owner-result.txt"
+  },
+  "systems": {
+    "count": 12,
+    "architecture_impact_rules": 31,
+    "names": [
+      "bridge",
+      "drafts",
+      "mail",
+      "mcp",
+      "memory",
+      "network",
+      "office",
+      "records",
+      "resource",
+      "skills",
+      "startup",
+      "workflow"
+    ]
+  },
+  "modules": {
+    "assets": 548,
+    "stable_maintenance_surfaces": 87,
+    "refactor_candidates": 42,
+    "regression_assets": 26,
+    "major_categories": {
+      "general_bridge": 298,
+      "mobile_bridge": 57,
+      "resource_layer": 51,
+      "network_layer": 29,
+      "workflow_orchestration": 26,
+      "other": 87
+    }
+  },
+  "skills": {
+    "active_local": 148,
+    "system": 5,
+    "plugin": 85,
+    "effective_total": 238,
+    "invalid_contracts": 0,
+    "stale_candidates": 0,
+    "unresolved_collisions": 0
+  },
+  "mcp": {
+    "profiles": 22,
+    "configured_and_process_present": 9,
+    "fallback_available": 15,
+    "callability_note": "Current-turn callability remains unverified until an actual call completes."
+  },
+  "hub": {
+    "process_requests": 1378,
+    "tool_calls": 282
+  },
+  "memory": {
+    "pmb_active_facts_and_events": 523,
+    "daemon": "running",
+    "roots": 1
+  },
+  "records": {
+    "records": 36635,
+    "resource_requests": 1134,
+    "resource_events": 8078,
+    "incident_families": 31,
+    "incident_occurrences": 2155
+  },
+  "mail": {
+    "smtp_receipts": 21,
+    "inbox_messages": 55,
+    "completed_inbox_jobs": 6,
+    "scheduler_interval_seconds": 60,
+    "retry_max": 3,
+    "retry_base_seconds": 300
+  },
+  "backups": {
+    "backup_files": 21,
+    "total_megabytes": 10.3,
+    "manifests": 897,
+    "scattered_backup_count": 3,
+    "canonical_resource_library_root": "C:\\Users\\45543\\Desktop\\Codex资源库\\_backup"
+  },
+  "drafts": {
+    "artifacts": 2,
+    "valid": true,
+    "indexed": true
+  },
+  "network": {
+    "route_decisions": 20,
+    "observations": 1,
+    "active_leases": 0,
+    "proxy_listener": "127.0.0.1:7897",
+    "mihomo_tcp_controller": "degraded: tcp_external_controller_disabled_pipe_only"
+  },
+  "model_provider": {
+    "catalog_models": 8,
+    "model_bridge": "healthy",
+    "reasoning_bridge": "healthy",
+    "reload_recovery": "watcher",
+    "safety_constraints": [
+      "do not patch Desktop ASAR",
+      "do not disable Statsig globally",
+      "refresh model catalog and reasoning catalog together"
+    ]
+  },
+  "limitations": [
+    "Metrics are a point-in-time snapshot and do not replace owner queries.",
+    "MCP configuration or process presence does not prove current-turn callability.",
+    "The Mihomo TCP controller is degraded because the current environment is pipe-only.",
+    "The resource layer still needs broader no-URL source executor coverage."
+  ],
+  "external_methods": [
+    {
+      "name": "C4 Model",
+      "url": "https://c4model.com/diagrams"
+    },
+    {
+      "name": "arc42",
+      "url": "https://arc42.org/overview"
+    },
+    {
+      "name": "Google SRE Error Budget Policy",
+      "url": "https://sre.google/workbook/error-budget-policy/"
+    },
+    {
+      "name": "Backstage Software Catalog",
+      "url": "https://backstage.io/docs/features/software-catalog/"
+    },
+    {
+      "name": "Backstage TechDocs",
+      "url": "https://backstage.io/docs/features/techdocs/"
+    },
+    {
+      "name": "OpenTelemetry Semantic Conventions",
+      "url": "https://opentelemetry.io/docs/concepts/semantic-conventions/"
+    }
+  ]
+}

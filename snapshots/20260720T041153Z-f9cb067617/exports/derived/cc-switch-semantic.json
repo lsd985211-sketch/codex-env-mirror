@@ -1,0 +1,3592 @@
+{
+  "schema": "codex_mirror.cc_switch_semantic_export.v1",
+  "generated_at": "2026-07-20T04:12:37.187726+00:00",
+  "authority": "derived_from_cc_switch_database",
+  "source_sha256": "f910ca78c622cffd14062b585d70bf6747a4793a4cf4bd7bd13b3ce5dab4d3d4",
+  "semantic_sha256": "45a6443cef6af6733076e851b3fb8b7460f2969669bdda613422c756a5dea33f",
+  "excluded_state": [
+    "request_logs",
+    "usage_logs",
+    "stream_logs",
+    "health_state",
+    "transient_backups",
+    "raw_credentials"
+  ],
+  "tables": {
+    "providers": {
+      "row_count": 21,
+      "rows": [
+        {
+          "id": "default",
+          "app_type": "claude",
+          "name": "default",
+          "settings_config": {
+            "env": {
+              "ANTHROPIC_AUTH_TOKEN": "<SECRET:ANTHROPIC_AUTH_TOKEN>",
+              "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+              "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
+              "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro",
+              "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro",
+              "ANTHROPIC_MODEL": "deepseek-v4-pro"
+            }
+          },
+          "website_url": null,
+          "category": "custom",
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "commonConfigEnabled": true
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "default",
+          "app_type": "codex",
+          "name": "default",
+          "settings_config": {
+            "auth": {
+              "auth_mode": "apikey",
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "\nbase_url = \"https://jojocode.com/v1\"\nwire_api = \"responses\"\n"
+          },
+          "website_url": null,
+          "category": "custom",
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "({\n  request: {\n    url: \"{{baseUrl}}/user/balance\",\n    method: \"GET\",\n    headers: {\n      \"Authorization\": \"Bearer {{apiKey}}\",\n      \"User-Agent\": \"cc-switch/1.0\"\n    }\n  },\n  extractor: function(response) {\n    return {\n      isValid: response.is_active || true,\n      remaining: response.balance,\n      unit: \"USD\"\n    };\n  }\n})",
+              "timeout": 10,
+              "templateType": "general",
+              "autoQueryInterval": 5
+            },
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "claude-official",
+          "app_type": "claude",
+          "name": "Claude Official",
+          "settings_config": {
+            "env": {}
+          },
+          "website_url": "https://www.anthropic.com/claude-code",
+          "category": "official",
+          "created_at": 1781509181701,
+          "sort_index": 0,
+          "notes": null,
+          "icon": "anthropic",
+          "icon_color": "#D4915D",
+          "meta": {},
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "claude-desktop-official",
+          "app_type": "claude-desktop",
+          "name": "Claude Desktop Official",
+          "settings_config": {
+            "env": {}
+          },
+          "website_url": "https://claude.ai/download",
+          "category": "official",
+          "created_at": 1781509181701,
+          "sort_index": 0,
+          "notes": null,
+          "icon": "anthropic",
+          "icon_color": "#D4915D",
+          "meta": {},
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "codex-official",
+          "app_type": "codex",
+          "name": "OpenAI Official",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "[mcp_servers.node_repl]\ntype = \"stdio\"\ncommand = 'C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\789504f803e82e2b\\bin\\node_repl.exe'\nstartup_timeout_sec = 120\n\n[mcp_servers.node_repl.env]\nBROWSER_USE_AVAILABLE_BACKENDS = \"chrome,iab\"\nBROWSER_USE_CODEX_APP_BUILD_FLAVOR = \"prod\"\nBROWSER_USE_CODEX_APP_VERSION = \"26.609.41114\"\nCODEX_CLI_PATH = 'C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\bin\\f1c7ee7a13db5fed\\codex.exe'\nCODEX_HOME = 'C:\\Users\\45543\\.codex'\nNODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = \"Control the in-app browser in conjunction with the Browser Plugin.\"\nNODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = \"Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative.\"\nNODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = \"1000\"\nNODE_REPL_NODE_MODULE_DIRS = 'C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\789504f803e82e2b\\bin\\node_modules'\nNODE_REPL_NODE_PATH = 'C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\789504f803e82e2b\\bin\\node.exe'\nNODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = \"27dca86fd6b571c49414a4b78e46b57bcf683a46cd1319799c11fbb6cfae3110,bdc61752e0f9d9b1e73e3cba25ca71d3d9fe54d335ed8196378106081474d7c1\"\nNODE_REPL_TRUSTED_CODE_PATHS = 'C:\\Users\\45543\\.codex'\nSKY_CUA_NATIVE_PIPE = \"1\"\nSKY_CUA_NATIVE_PIPE_DIRECTORY = '\\\\.\\pipe\\codex-computer-use-e2efb0e8-e50a-4dcf-9b83-27bcd1e8bde7'\n"
+          },
+          "website_url": "https://chatgpt.com/codex",
+          "category": "official",
+          "created_at": 1781509181701,
+          "sort_index": 0,
+          "notes": null,
+          "icon": "openai",
+          "icon_color": "#00A67E",
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "",
+              "timeout": 10,
+              "templateType": "official_subscription",
+              "autoQueryInterval": 5
+            },
+            "endpointAutoSelect": true
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "gemini-official",
+          "app_type": "gemini",
+          "name": "Google Official",
+          "settings_config": {
+            "env": {},
+            "config": {}
+          },
+          "website_url": "https://ai.google.dev/",
+          "category": "official",
+          "created_at": 1781509181701,
+          "sort_index": 0,
+          "notes": null,
+          "icon": "gemini",
+          "icon_color": "#4285F4",
+          "meta": {},
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "067cb9eb-55b1-44aa-a7e6-3790b40bc3b3",
+          "app_type": "codex",
+          "name": "DeepSeek",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"deepseek-v4-pro\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\nmodel_catalog_json = \"cc-switch-model-catalog.json\"\n\n[model_providers]\n[model_providers.custom]\nname = \"deepseek\"\nbase_url = \"https://api.deepseek.com\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n",
+            "modelCatalog": {
+              "models": [
+                {
+                  "model": "deepseek-v4-pro",
+                  "displayName": "DeepSeek V4 Pro",
+                  "contextWindow": 1000000
+                },
+                {
+                  "model": "deepseek-v4-falsh",
+                  "displayName": "DeepSeek V4 Flash",
+                  "contextWindow": 1000000
+                }
+              ]
+            }
+          },
+          "website_url": "https://platform.deepseek.com",
+          "category": "cn_official",
+          "created_at": 1781509254469,
+          "sort_index": null,
+          "notes": null,
+          "icon": "deepseek",
+          "icon_color": "#1E88E5",
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "",
+              "timeout": 10,
+              "templateType": "balance",
+              "autoQueryInterval": 5
+            },
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_chat",
+            "codexChatReasoning": {
+              "supportsThinking": true,
+              "supportsEffort": true,
+              "thinkingParam": "thinking",
+              "effortParam": "reasoning_effort",
+              "effortValueMode": "deepseek",
+              "outputFormat": "reasoning_content"
+            }
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "universal-claude-fe2c806b-cb4f-4ee7-864a-931817a1d28d",
+          "app_type": "claude",
+          "name": "NewAPI",
+          "settings_config": {
+            "env": {
+              "ANTHROPIC_BASE_URL": "https://jojocode.com/v1",
+              "ANTHROPIC_AUTH_TOKEN": "<SECRET:ANTHROPIC_AUTH_TOKEN>",
+              "ANTHROPIC_MODEL": "claude-sonnet-4-6",
+              "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5-20251001",
+              "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+              "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-8"
+            }
+          },
+          "website_url": "https://www.newapi.pro",
+          "category": "aggregator",
+          "created_at": 1781621178062,
+          "sort_index": null,
+          "notes": null,
+          "icon": "newapi",
+          "icon_color": "#00A67E",
+          "meta": {},
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "universal-gemini-fe2c806b-cb4f-4ee7-864a-931817a1d28d",
+          "app_type": "gemini",
+          "name": "NewAPI",
+          "settings_config": {
+            "env": {
+              "GOOGLE_GEMINI_BASE_URL": "https://jojocode.com/v1",
+              "GEMINI_API_KEY": "<SECRET:GEMINI_API_KEY>",
+              "GEMINI_MODEL": "gemini-3.5-flash"
+            }
+          },
+          "website_url": "https://www.newapi.pro",
+          "category": "aggregator",
+          "created_at": 1781621178062,
+          "sort_index": null,
+          "notes": null,
+          "icon": "newapi",
+          "icon_color": "#00A67E",
+          "meta": {},
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "jojocode包月站-1781858793254",
+          "app_type": "codex",
+          "name": "JOJO Code包月站",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.4\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"JOJO Code包月站\"\nbase_url = \"https://max.jojocode.com\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n"
+          },
+          "website_url": "https://max.jojocode.com",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "({\n    request: {\n      url: \"{{baseUrl}}/v1/usage\",\n      method: \"GET\",\n      headers: { \"Authorization\": \"Bearer {{apiKey}}\" }\n    },\n    extractor: function(response) {\n      const remaining = response?.remaining ?? response?.quota?.remaining ?? response?.balance;\n      const unit = response?.unit ?? response?.quota?.unit ?? \"USD\";\n      return {\n        isValid: response?.is_active ?? response?.isValid ?? true,\n        remaining,\n        unit\n      };\n    }\n  })",
+              "timeout": 10,
+              "apiKey": "<SECRET:APIKEY>",
+              "baseUrl": "https://max.jojocode.com",
+              "autoQueryInterval": 30
+            }
+          },
+          "is_current": 0,
+          "in_failover_queue": 1,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "universal-codex-fe2c806b-cb4f-4ee7-864a-931817a1d28d",
+          "app_type": "codex",
+          "name": "NewAPI",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.5\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"NewAPI\"\nbase_url = \"https://jojocode.com/v1\"\nwire_api = \"responses\"\nrequires_openai_auth = true"
+          },
+          "website_url": "https://liliapi.siphot.com",
+          "category": "aggregator",
+          "created_at": 1781621178062,
+          "sort_index": null,
+          "notes": null,
+          "icon": "newapi",
+          "icon_color": "#00A67E",
+          "meta": {
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "mycodex-1782221507379",
+          "app_type": "codex",
+          "name": "My Codex plus",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.6-luna\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"My Codex\"\nbase_url = \"https://jojocode.com/v1\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n",
+            "modelCatalog": {
+              "models": [
+                {
+                  "model": "gpt-5.6-luna",
+                  "displayName": "gpt-5.6-luna"
+                },
+                {
+                  "model": "gpt-5.6-sol",
+                  "displayName": "gpt-5.6-sol"
+                },
+                {
+                  "model": "gpt-5.6-terra",
+                  "displayName": "gpt-5.6-terra"
+                }
+              ]
+            }
+          },
+          "website_url": "https://jojocode.com",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "mycodex-1782225879111",
+          "app_type": "codex",
+          "name": "My Codex",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.6-luna\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"My Codex\"\nbase_url = \"https://jojocode.com/v1\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n",
+            "modelCatalog": {
+              "models": [
+                {
+                  "model": "gpt-5.6-luna",
+                  "displayName": "gpt-5.6-luna"
+                },
+                {
+                  "model": "gpt-5.6-sol",
+                  "displayName": "gpt-5.6-sol"
+                },
+                {
+                  "model": "gpt-5.6-terra",
+                  "displayName": "gpt-5.6-terra"
+                }
+              ]
+            }
+          },
+          "website_url": "https://jojocode.com",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "maxjojocode-1782888785403",
+          "app_type": "codex",
+          "name": "Max JOJO Code",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.6-sol\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"Max JOJO Code\"\nbase_url = \"https://max.jojocode.com\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n",
+            "modelCatalog": {
+              "models": [
+                {
+                  "model": "gpt-5.6-sol",
+                  "displayName": "gpt-5.6-sol",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gpt-5.6-terra",
+                  "displayName": "gpt-5.6-terra",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gpt-5.6-luna",
+                  "displayName": "gpt-5.6-luna",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gpt-5.3",
+                  "displayName": "gpt-5.3",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gpt-5.4-mini",
+                  "displayName": "gpt-5.4-mini",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gpt-5.5",
+                  "displayName": "gpt-5.5",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gpt-5.4",
+                  "displayName": "gpt-5.4",
+                  "contextWindow": 200000
+                },
+                {
+                  "model": "gemini-3-pro-image",
+                  "displayName": "gemini-3-pro-image",
+                  "contextWindow": 200000
+                }
+              ]
+            }
+          },
+          "website_url": "https://max.jojocode.com",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "({\n    request: {\n      url: \"{{baseUrl}}/v1/usage\",\n      method: \"GET\",\n      headers: { \"Authorization\": \"Bearer {{apiKey}}\" }\n    },\n    extractor: function(response) {\n      const remaining = response?.remaining ?? response?.quota?.remaining ?? response?.balance;\n      const unit = response?.unit ?? response?.quota?.unit ?? \"USD\";\n      return {\n        isValid: response?.is_active ?? response?.isValid ?? true,\n        remaining,\n        unit\n      };\n    }\n  })",
+              "timeout": 10,
+              "templateType": "general",
+              "autoQueryInterval": 30
+            },
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "16ad09fd-7e80-482a-a216-12de8756efb2",
+          "app_type": "codex",
+          "name": "Zhipu GLM en",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"glm-5.2\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers]\n[model_providers.custom]\nname = \"zhipu_glm_en\"\nbase_url = \"https://api.z.ai/api/coding/paas/v4\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n",
+            "modelCatalog": {
+              "models": [
+                {
+                  "model": "glm-5.2",
+                  "displayName": "GLM-5.2",
+                  "contextWindow": 200000
+                }
+              ]
+            }
+          },
+          "website_url": "https://z.ai",
+          "category": "cn_official",
+          "created_at": 1783605272686,
+          "sort_index": null,
+          "notes": null,
+          "icon": "zhipu",
+          "icon_color": "#0F62FE",
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "",
+              "timeout": 10,
+              "templateType": "token_plan",
+              "autoQueryInterval": 5,
+              "codingPlanProvider": "zhipu"
+            },
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_chat",
+            "codexChatReasoning": {
+              "supportsThinking": true,
+              "supportsEffort": false,
+              "thinkingParam": "thinking",
+              "effortParam": "none",
+              "outputFormat": "reasoning_content"
+            }
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "mycodex-1783607487352",
+          "app_type": "codex",
+          "name": "My Codex",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.4\"\nmodel_reasoning_effort = \"high\"\nmodel_context_window = 400000\nmodel_auto_compact_token_limit = 240000\ndisable_response_storage = true\nmodel_catalog_json = \"cc-switch-model-catalog.json\"\n\n[model_providers.custom]\nname = \"My Codex\"\nbase_url = \"https://6i2.pw/v1\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n",
+            "modelCatalog": {
+              "models": [
+                {
+                  "model": "gpt-5.4",
+                  "displayName": "gpt-5.4",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.4-mini",
+                  "displayName": "gpt-5.4-mini",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.5",
+                  "displayName": "gpt-5.5",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.6-luna",
+                  "displayName": "gpt-5.6-luna",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.6-sol",
+                  "displayName": "gpt-5.6-sol",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.6-terra",
+                  "displayName": "gpt-5.6-terra",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.3-codex",
+                  "displayName": "gpt-5.3-codex",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                },
+                {
+                  "model": "gpt-5.2",
+                  "displayName": "gpt-5.2",
+                  "contextWindow": 400000,
+                  "supportsParallelToolCalls": false,
+                  "inputModalities": [
+                    "text"
+                  ],
+                  "baseInstructions": "You are Codex, a coding agent. You and the user share the same workspace and collaborate to achieve the user's goals."
+                }
+              ]
+            }
+          },
+          "website_url": "https://6i2.pw",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "usage_script": {
+              "enabled": true,
+              "language": "javascript",
+              "code": "({\n  request: {\n    url: \"{{baseUrl}}/user/balance\",\n    method: \"GET\",\n    headers: {\n      \"Authorization\": \"Bearer {{apiKey}}\",\n      \"User-Agent\": \"cc-switch/1.0\"\n    }\n  },\n  extractor: function(response) {\n    return {\n      isValid: response.is_active || true,\n      remaining: response.balance,\n      unit: \"USD\"\n    };\n  }\n})",
+              "timeout": 10,
+              "templateType": "general",
+              "autoQueryInterval": 5
+            },
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "opopen",
+          "app_type": "opencode",
+          "name": "opencode",
+          "settings_config": {
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+              "baseURL": "https://6i2.pw/v1",
+              "apiKey": "<SECRET:APIKEY>",
+              "setCacheKey": true
+            },
+            "models": {
+              "gpt-5.5": {
+                "name": "gpt-5.5"
+              },
+              "gpt-5.6-luna": {
+                "name": "gpt-5.6-luna"
+              },
+              "gpt-5.6-sol": {
+                "name": "gpt-5.6-sol"
+              },
+              "gpt-5.6-terra": {
+                "name": "gpt-5.6-terra"
+              }
+            }
+          },
+          "website_url": "https://6i2.pw",
+          "category": null,
+          "created_at": 1783831061338,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "endpointAutoSelect": true,
+            "liveConfigManaged": true
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "mycodex-1783924019412",
+          "app_type": "codex",
+          "name": "My Codex 平级版",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.6-terra\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"My Codex\"\nbase_url = \"https://6i2.pw/v1\"\nwire_api = \"responses\"\nrequires_openai_auth = true\n"
+          },
+          "website_url": "https://6i2.pw",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "myclaude-1783925251887",
+          "app_type": "claude",
+          "name": "My Claude",
+          "settings_config": {
+            "env": {
+              "ANTHROPIC_AUTH_TOKEN": "<SECRET:ANTHROPIC_AUTH_TOKEN>",
+              "ANTHROPIC_BASE_URL": "https://6i2.pw",
+              "ANTHROPIC_MODEL": "claude-opus-4-6",
+              "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gpt-5.6-luna",
+              "ANTHROPIC_DEFAULT_SONNET_MODEL": "gpt-5.6-terra",
+              "ANTHROPIC_DEFAULT_OPUS_MODEL": "gpt-5.6-sol"
+            }
+          },
+          "website_url": "https://6i2.pw",
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {},
+          "is_current": 1,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "6i2",
+          "app_type": "opencode",
+          "name": "6i2",
+          "settings_config": {
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+              "baseURL": "https://6i2.pw/v1",
+              "setCacheKey": true
+            },
+            "models": {
+              "gpt-5.6-terra": {
+                "name": "gpt-5.6-terra"
+              }
+            }
+          },
+          "website_url": null,
+          "category": null,
+          "created_at": null,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "liveConfigManaged": true
+          },
+          "is_current": 0,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        },
+        {
+          "id": "7259fa3c-7d7f-482e-9c79-b9c1a4a45e33",
+          "app_type": "codex",
+          "name": "小店",
+          "settings_config": {
+            "auth": {
+              "OPENAI_API_KEY": "<SECRET:OPENAI_API_KEY>"
+            },
+            "config": "model_provider = \"custom\"\nmodel = \"gpt-5.6-sol\"\nmodel_reasoning_effort = \"high\"\ndisable_response_storage = true\n\n[model_providers.custom]\nname = \"custom\"\nwire_api = \"responses\"\nrequires_openai_auth = true\nbase_url = \"https://liliapi.siphot.com/v1\""
+          },
+          "website_url": "https://liliapi.siphot.com",
+          "category": null,
+          "created_at": 1784517258428,
+          "sort_index": null,
+          "notes": null,
+          "icon": null,
+          "icon_color": null,
+          "meta": {
+            "endpointAutoSelect": true,
+            "apiFormat": "openai_responses"
+          },
+          "is_current": 1,
+          "in_failover_queue": 0,
+          "cost_multiplier": "1.0",
+          "limit_daily_usd": null,
+          "limit_monthly_usd": null,
+          "provider_type": null
+        }
+      ]
+    },
+    "provider_endpoints": {
+      "row_count": 4,
+      "rows": [
+        {
+          "id": 1,
+          "provider_id": "067cb9eb-55b1-44aa-a7e6-3790b40bc3b3",
+          "app_type": "codex",
+          "url": "https://api.deepseek.com",
+          "added_at": 1781509254465
+        },
+        {
+          "id": 4,
+          "provider_id": "16ad09fd-7e80-482a-a216-12de8756efb2",
+          "app_type": "codex",
+          "url": "https://api.z.ai/api/coding/paas/v4",
+          "added_at": 1783605272659
+        },
+        {
+          "id": 5,
+          "provider_id": "opopen",
+          "app_type": "opencode",
+          "url": "https://6i2.pw/v1",
+          "added_at": 1783831061334
+        },
+        {
+          "id": 6,
+          "provider_id": "7259fa3c-7d7f-482e-9c79-b9c1a4a45e33",
+          "app_type": "codex",
+          "url": "https://liliapi.siphot.com/v1",
+          "added_at": 1784517258422
+        }
+      ]
+    },
+    "mcp_servers": {
+      "row_count": 21,
+      "rows": [
+        {
+          "id": "memory-graph",
+          "name": "memory-graph",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\memory_graph_mcp.py"
+            ],
+            "env": {
+              "MEMORY_GRAPH_AGENT": "codex",
+              "MEMORY_GRAPH_BRIDGE_DIR": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge",
+              "MEMORY_GRAPH_DB": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\memory_graph\\codex\\memory-graph.sqlite",
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "startup_timeout_sec": 60
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "memory-graph-reasonix-ro",
+          "name": "memory-graph-reasonix-ro",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\memory_graph_mcp.py"
+            ],
+            "env": {
+              "MEMORY_GRAPH_AGENT": "reasonix",
+              "MEMORY_GRAPH_BRIDGE_DIR": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge",
+              "MEMORY_GRAPH_DB": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\memory_graph\\reasonix\\memory-graph.sqlite",
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "startup_timeout_sec": 60
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "project-kb",
+          "name": "project-kb",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\project_kb_mcp.py"
+            ],
+            "env": {
+              "PROJECT_KB_ROOT": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared",
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "startup_timeout_sec": 60
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "microsoftdocs",
+          "name": "microsoftdocs",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "msdocs"
+            ],
+            "required": false,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "sqlite-bridge-ro",
+          "name": "sqlite-bridge-ro",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_launch_guard.py",
+              "--profile",
+              "sqlite-bridge-ro",
+              "--min-age-minutes",
+              "15",
+              "--",
+              "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\sqlite_mcp_server.py",
+              "--db",
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\mobile_openclaw_bridge.db",
+              "--permissions",
+              "list,read",
+              "--readonly"
+            ],
+            "required": true,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "sqlite-scratch",
+          "name": "sqlite-scratch",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_launch_guard.py",
+              "--profile",
+              "sqlite-scratch",
+              "--min-age-minutes",
+              "15",
+              "--",
+              "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\sqlite_mcp_server.py",
+              "--db",
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\data\\sqlite\\codex_scratch.sqlite",
+              "--permissions",
+              "list,read,create,update,delete,ddl,transaction,utility"
+            ],
+            "required": true,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "filesystem",
+          "name": "filesystem",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "fs"
+            ],
+            "required": true,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "local-pmb-memory",
+          "name": "local-pmb-memory",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "pmb"
+            ],
+            "env": {
+              "PMB_HOME": "C:\\Users\\45543\\Desktop\\CODEX~1\\memory\\pmb\\data",
+              "PMB_WORKSPACE": "mcsmanager",
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "required": false,
+            "startup_timeout_sec": 120.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "markitdown",
+          "name": "markitdown",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "mid"
+            ],
+            "required": true
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "myskills",
+          "name": "myskills",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "skills"
+            ],
+            "env": {
+              "MYSKILLS_DATA_DIR": "C:\\Users\\45543\\AppData\\Roaming\\com.kanbenzhi.myskills"
+            },
+            "required": true,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "codegraph",
+          "name": "codegraph",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "cg"
+            ],
+            "env": {
+              "CODEGRAPH_NO_DAEMON": "1",
+              "CODEGRAPH_WATCH_DEBOUNCE_MS": "2000"
+            },
+            "required": false,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "context7",
+          "name": "context7",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "ctx7"
+            ],
+            "required": false,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "custom-slash-commands",
+          "name": "custom-slash-commands",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_launch_guard.py",
+              "--profile",
+              "slash",
+              "--min-age-minutes",
+              "15",
+              "--",
+              "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\custom_slash_commands_mcp.py",
+              "--registry",
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\slash_commands\\commands.json"
+            ],
+            "required": true,
+            "startup_timeout_sec": 30.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "mobile-openclaw-bridge",
+          "name": "mobile-openclaw-bridge",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\mobile_bridge_mcp_server.py"
+            ],
+            "env": {
+              "MOBILE_OPENCLAW_BRIDGE_CONFIG": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\config.local.json",
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "startup_timeout_sec": 60
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "playwright",
+          "name": "playwright",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "pw"
+            ],
+            "required": false
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "chrome-devtools",
+          "name": "chrome-devtools",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "cdev"
+            ],
+            "required": false
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "desktop-weixin",
+          "name": "desktop-weixin",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "weixin"
+            ],
+            "env": {
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "required": false,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "agent-bridge",
+          "name": "agent-bridge",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\HMCL-3.9.1\\.minecraft\\versions\\3c3u\\.reasonix\\agent-bridge-mcp\\bridge_server_v2.py"
+            ],
+            "env": {
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "startup_timeout_sec": 60
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "node_repl",
+          "name": "node_repl",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\789504f803e82e2b\\bin\\node_repl.exe",
+            "env": {
+              "BROWSER_USE_AVAILABLE_BACKENDS": "chrome,iab",
+              "BROWSER_USE_CODEX_APP_BUILD_FLAVOR": "prod",
+              "BROWSER_USE_CODEX_APP_VERSION": "26.609.41114",
+              "CODEX_CLI_PATH": "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\bin\\f1c7ee7a13db5fed\\codex.exe",
+              "CODEX_HOME": "C:\\Users\\45543\\.codex",
+              "NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER": "Control the in-app browser in conjunction with the Browser Plugin.",
+              "NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME": "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative.",
+              "NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS": "1000",
+              "NODE_REPL_NODE_MODULE_DIRS": "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\789504f803e82e2b\\bin\\node_modules",
+              "NODE_REPL_NODE_PATH": "C:\\Users\\45543\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\789504f803e82e2b\\bin\\node.exe",
+              "NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S": "27dca86fd6b571c49414a4b78e46b57bcf683a46cd1319799c11fbb6cfae3110,bdc61752e0f9d9b1e73e3cba25ca71d3d9fe54d335ed8196378106081474d7c1",
+              "NODE_REPL_TRUSTED_CODE_PATHS": "C:\\Users\\45543\\.codex",
+              "SKY_CUA_NATIVE_PIPE": "1",
+              "SKY_CUA_NATIVE_PIPE_DIRECTORY": "\\\\.\\pipe\\codex-computer-use-e2efb0e8-e50a-4dcf-9b83-27bcd1e8bde7"
+            },
+            "startup_timeout_sec": 120
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "filesystem-admin",
+          "name": "filesystem-admin",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "fs-admin"
+            ],
+            "required": false,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        },
+        {
+          "id": "gui-automation",
+          "name": "gui-automation",
+          "server_config": {
+            "type": "stdio",
+            "command": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "args": [
+              "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mcp_profile_launcher.py",
+              "gui"
+            ],
+            "env": {
+              "GUI_OCR_DEVICE": "gpu",
+              "GUI_OCR_FALLBACK_PYTHON": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\venvs\\ocr-py312\\Scripts\\python.exe",
+              "GUI_OCR_PYTHON": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\venvs\\ocr-gpu-py312\\Scripts\\python.exe",
+              "PYTHONIOENCODING": "utf-8",
+              "PYTHONUTF8": "1"
+            },
+            "required": false,
+            "startup_timeout_sec": 60.0
+          },
+          "description": null,
+          "homepage": null,
+          "docs": null,
+          "tags": [],
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0
+        }
+      ]
+    },
+    "prompts": {
+      "row_count": 1,
+      "rows": [
+        {
+          "id": "auto-imported-1781529543",
+          "app_type": "codex",
+          "name": "Auto-imported Prompt 2026-06-15 21:19",
+          "content": "1.对本机上的文件进行修改前必须询问我的意见\n2.修改本机上的文件时必须生成备份，并做好标记，以备后续可能的还原",
+          "description": "Automatically imported on first launch",
+          "enabled": 1,
+          "created_at": 1781529543,
+          "updated_at": 1781529543
+        }
+      ]
+    },
+    "proxy_config": {
+      "row_count": 3,
+      "rows": [
+        {
+          "app_type": "claude",
+          "proxy_enabled": 1,
+          "listen_address": "127.0.0.1",
+          "listen_port": 15721,
+          "enable_logging": 1,
+          "enabled": 1,
+          "auto_failover_enabled": 0,
+          "max_retries": 6,
+          "streaming_first_byte_timeout": 90,
+          "streaming_idle_timeout": 180,
+          "non_streaming_timeout": 600,
+          "circuit_failure_threshold": 8,
+          "circuit_success_threshold": 3,
+          "circuit_timeout_seconds": 90,
+          "circuit_error_rate_threshold": 0.7,
+          "circuit_min_requests": 15,
+          "default_cost_multiplier": "1",
+          "pricing_model_source": "response",
+          "created_at": "2026-06-15 07:39:41",
+          "updated_at": "2026-07-18 23:46:14",
+          "live_takeover_active": 0
+        },
+        {
+          "app_type": "codex",
+          "proxy_enabled": 1,
+          "listen_address": "127.0.0.1",
+          "listen_port": 15721,
+          "enable_logging": 1,
+          "enabled": 1,
+          "auto_failover_enabled": 0,
+          "max_retries": 6,
+          "streaming_first_byte_timeout": 90,
+          "streaming_idle_timeout": 180,
+          "non_streaming_timeout": 600,
+          "circuit_failure_threshold": 4,
+          "circuit_success_threshold": 2,
+          "circuit_timeout_seconds": 60,
+          "circuit_error_rate_threshold": 0.6,
+          "circuit_min_requests": 10,
+          "default_cost_multiplier": "0.1",
+          "pricing_model_source": "response",
+          "created_at": "2026-06-15 07:39:41",
+          "updated_at": "2026-07-18 23:46:14",
+          "live_takeover_active": 0
+        },
+        {
+          "app_type": "gemini",
+          "proxy_enabled": 1,
+          "listen_address": "127.0.0.1",
+          "listen_port": 15721,
+          "enable_logging": 1,
+          "enabled": 0,
+          "auto_failover_enabled": 0,
+          "max_retries": 6,
+          "streaming_first_byte_timeout": 90,
+          "streaming_idle_timeout": 180,
+          "non_streaming_timeout": 600,
+          "circuit_failure_threshold": 4,
+          "circuit_success_threshold": 2,
+          "circuit_timeout_seconds": 60,
+          "circuit_error_rate_threshold": 0.6,
+          "circuit_min_requests": 10,
+          "default_cost_multiplier": "1",
+          "pricing_model_source": "response",
+          "created_at": "2026-06-15 07:39:41",
+          "updated_at": "2026-07-17 05:58:51",
+          "live_takeover_active": 0
+        }
+      ]
+    },
+    "settings": {
+      "row_count": 7,
+      "rows": [
+        {
+          "key": "official_providers_seeded",
+          "value": "true"
+        },
+        {
+          "key": "common_config_legacy_migrated_v1",
+          "value": "true"
+        },
+        {
+          "key": "optimizer_config",
+          "value": {
+            "enabled": true,
+            "thinkingOptimizer": true,
+            "cacheInjection": true,
+            "cacheTtl": "1h"
+          }
+        },
+        {
+          "key": "universal_providers",
+          "value": {
+            "fe2c806b-cb4f-4ee7-864a-931817a1d28d": {
+              "id": "fe2c806b-cb4f-4ee7-864a-931817a1d28d",
+              "name": "NewAPI",
+              "providerType": "newapi",
+              "apps": {
+                "claude": true,
+                "codex": true,
+                "gemini": true
+              },
+              "baseUrl": "https://jojocode.com/v1",
+              "apiKey": "<SECRET:APIKEY>",
+              "models": {
+                "claude": {
+                  "model": "claude-sonnet-4-6",
+                  "haikuModel": "claude-haiku-4-5-20251001",
+                  "sonnetModel": "claude-sonnet-4-6",
+                  "opusModel": "claude-opus-4-8"
+                },
+                "codex": {
+                  "model": "gpt-5.5",
+                  "reasoningEffort": "high"
+                },
+                "gemini": {
+                  "model": "gemini-3.5-flash"
+                }
+              },
+              "websiteUrl": "https://www.newapi.pro",
+              "icon": "newapi",
+              "iconColor": "#00A67E",
+              "createdAt": 1781621178062
+            }
+          }
+        },
+        {
+          "key": "common_config_claude",
+          "value": {
+            "theme": "auto",
+            "includeCoAuthoredBy": false,
+            "autoUpdatesChannel": "latest"
+          }
+        },
+        {
+          "key": "common_config_opencode",
+          "value": {
+            "$schema": "https://opencode.ai/config.json",
+            "provider": {
+              "6i2": {
+                "models": {
+                  "gpt-5.6-terra": {
+                    "name": "gpt-5.6-terra"
+                  }
+                },
+                "npm": "@ai-sdk/openai-compatible",
+                "options": {
+                  "baseURL": "https://6i2.pw/v1",
+                  "setCacheKey": true
+                }
+              },
+              "opopen": {
+                "models": {
+                  "gpt-5.5": {
+                    "name": "gpt-5.5"
+                  },
+                  "gpt-5.6-luna": {
+                    "name": "gpt-5.6-luna"
+                  },
+                  "gpt-5.6-sol": {
+                    "name": "gpt-5.6-sol"
+                  },
+                  "gpt-5.6-terra": {
+                    "name": "gpt-5.6-terra"
+                  }
+                },
+                "npm": "@ai-sdk/openai-compatible",
+                "options": {
+                  "apiKey": "<SECRET:APIKEY>",
+                  "baseURL": "https://6i2.pw/v1",
+                  "setCacheKey": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "log_config",
+          "value": {
+            "enabled": true,
+            "level": "error"
+          }
+        }
+      ]
+    },
+    "skills": {
+      "row_count": 27,
+      "rows": [
+        {
+          "id": "local:global-framework",
+          "name": "global-framework",
+          "description": "Skill index and loading rules. Always active. Routes tasks to correct skills via trigger keywords, common file/output constraints, and conflict resolution priority.",
+          "directory": "global-framework",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "1fcb8cc14b28da884430b044050f3b5c3134d1d1db7b19a71d8ffdc481dc6403",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-essentials-ops",
+          "name": "minecraft-essentials-ops",
+          "description": "EssentialsX ??????/home, /warp, ??, ??????EssentialsX, ??, ????",
+          "directory": "minecraft-essentials-ops",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "ab4649d67f8d4db74a5ca141485226244c2fed85dfef238b121cbf8e7394d2a8",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-imagegen",
+          "name": "minecraft-imagegen",
+          "description": "Generate Minecraft-focused raster assets with Codex's built-in image generation tool, including pack icons, promo art, concept textures, thumbnails, server banners, and UI mockups. Use when the deliverable should be a bitmap image rather than JSON models, SVG, or code-native assets.",
+          "directory": "minecraft-imagegen",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "a22572a487e4f78639ed1d0eddc1c81157bbde69b927ce324607342e1f1e4be7",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-ci-release",
+          "name": "minecraft-ci-release",
+          "description": "Minecraft ?? CI/CD ??????Modrinth/CurseForge ????, Gradle, GitHub Actions????CI/CD, ??mod, Modrinth",
+          "directory": "minecraft-ci-release",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "803702e8d73e340f152d60fcd37f0cb2dfefa4b1cdc092bea2ca399d8468999f",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-modding",
+          "name": "minecraft-modding",
+          "description": "Minecraft NeoForge/Fabric mod?????/??/??/GUI??????mod, NeoForge, Fabric mod",
+          "directory": "minecraft-modding",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "f06120294631a1c6911a161f3f339b6d7bba96a11bddbc63c94822ce27338237",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-multiloader",
+          "name": "minecraft-multiloader",
+          "description": "Architectury ???????NeoForge+Fabric???????mod, Architectury, ????",
+          "directory": "minecraft-multiloader",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "969cf234fb4791faad8649d853911bf2c2a70db5b99084ec1bd0db777c6dff9a",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-plugin-dev",
+          "name": "minecraft-plugin-dev",
+          "description": "Paper/Bukkit/Spigot 1.21 ???????????Paper??, plugin.yml, event handler, Bukkit",
+          "directory": "minecraft-plugin-dev",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "4bf96e87460923b625e16243077749b0cb5daf04b827f55aceb63fab75416b55",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-resource-pack",
+          "name": "minecraft-resource-pack",
+          "description": "Minecraft 1.21 ?????????/??/??/?????????, ??, blockstate, ??JSON",
+          "directory": "minecraft-resource-pack",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "cd2ea67941366745ddfd53d17c240c606b60431e844f11df2b73bd1730147875",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-server-admin",
+          "name": "minecraft-server-admin",
+          "description": "Minecraft ??????Paper/Purpur/Folia/????/????/????????, ?????, ??, Docker",
+          "directory": "minecraft-server-admin",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "7d60467f30253346efb4dc27e02b1fe2bccad9f51fc9621e33c5b5d8bbb5fb7b",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-world-generation",
+          "name": "minecraft-world-generation",
+          "description": "Minecraft 1.21 ??????????/??/??/??/??????????, biome, dimension, placed_feature",
+          "directory": "minecraft-world-generation",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "7e15960d07ccd7361cdea265a7b98cba2343964475b5090244e83bac95defdf9",
+          "updated_at": 0
+        },
+        {
+          "id": "local:webapp-testing",
+          "name": "webapp-testing",
+          "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+          "directory": "webapp-testing",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "6ed68a05894b77862250100d349ed52e2622d454dd5616070b8d7bb115213b92",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-testing",
+          "name": "minecraft-testing",
+          "description": "Minecraft ??/????????GameTest, MockBukkit, JUnit??????mod, GameTest, ????",
+          "directory": "minecraft-testing",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622212,
+          "content_hash": "d70b79715839c8191f1db36d65b2e8c8f024721588161753ef490c0aa222df27",
+          "updated_at": 0
+        },
+        {
+          "id": "local:playwright",
+          "name": "playwright",
+          "description": "Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging) via `playwright-cli` or the bundled wrapper script.",
+          "directory": "playwright",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "2b1315e0e6c865783aaf7fb8d5455920a4bdc4e46511ed2ad78584e3d553cbf0",
+          "updated_at": 0
+        },
+        {
+          "id": "local:multi-agent-patterns",
+          "name": "multi-agent-patterns",
+          "description": "多 agent 系统设计：上下文隔离, supervisor, handoff。触发：多agent, supervisor, swarm",
+          "directory": "multi-agent-patterns",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "86a49d919783815cea649e9cba6221e25737c3fabf9affd6baefd79e5828380f",
+          "updated_at": 0
+        },
+        {
+          "id": "local:context7-cli",
+          "name": "context7-cli",
+          "description": "ctx7 CLI：获取库文档、管理技能、配置 MCP。触发：ctx7, context7, 安装技能",
+          "directory": "context7-cli",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "3eeb5d24c0c559f31d88611a15007529e7bbb78af7b74b92b34a879a8c0f1a97",
+          "updated_at": 0
+        },
+        {
+          "id": "local:context7-mcp",
+          "name": "context7-mcp",
+          "description": "Context7 MCP：为库/框架获取最新文档。触发：库文档, API参考, React, Vue, Next.js",
+          "directory": "context7-mcp",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "6ab132e3449d32fdfbb7f22e8f797acb85bfbd1ef67c2f39570c97c5b04130a9",
+          "updated_at": 0
+        },
+        {
+          "id": "local:self-improvement",
+          "name": "self-improvement",
+          "description": "记录经验教训、错误和用户偏好以实现持续改进。触发条件：(1) 操作失败 (2) 用户纠正 (3) 发现知识过时 (4) 发现更好方法 (5) 安装/修改技能 (6) 用户表达偏好。每次任务开始前回顾已有学习记录。",
+          "directory": "self-improvement",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "d413fdc61430ccf727eea386f3ca6a5dfe28608dc0b6e45f799ac971da4561e1",
+          "updated_at": 0
+        },
+        {
+          "id": "local:fabric-mc-26-1-2",
+          "name": "fabric-mc-26-1-2",
+          "description": "Minecraft Java 26.1.2 Fabric ???/??????MOD?????????????Fabric, mod??, ??",
+          "directory": "fabric-mc-26-1-2",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "b5761a174c37d21f68ec5a095ed3cb4fa2349db5d4e67534cbb8d9e5a3032b23",
+          "updated_at": 0
+        },
+        {
+          "id": "local:context-compression",
+          "name": "context-compression",
+          "description": "长会话上下文压缩、Token节省与缓存优化。触发条件：会话超长需要压缩、需要降低Token消耗、手头文件过多需清理上下文。",
+          "directory": "context-compression",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "5f95a3c0d1043bd99e574865f0a13209bb18fa4491d1abf4961a4938cf484d35",
+          "updated_at": 0
+        },
+        {
+          "id": "local:memory-systems",
+          "name": "memory-systems",
+          "description": "Agent 记忆系统设计：跨会话持久化、实体一致性。触发：agent memory, 持久化, knowledge graph",
+          "directory": "memory-systems",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "8360456b509ab1fb3e2c1dce8f5dd8687061fd5c449985b6c666e57a7b448c60",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-worldedit-ops",
+          "name": "minecraft-worldedit-ops",
+          "description": "WorldEdit ?????????///set/???/??????WorldEdit, //set, schematic",
+          "directory": "minecraft-worldedit-ops",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "cf7663396def9339d8c6a15598d801a42c5f051f3e6e8ad4b3e2d7ce722e36d4",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-datapack",
+          "name": "minecraft-datapack",
+          "description": "Minecraft 1.21 ??????.mcfunction, advancement, loot table, predicate???????, datapack",
+          "directory": "minecraft-datapack",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "1bd4ddc612adfdaef7f4e20db3bf14c3ac7b05cb8dae5625cded763b21a08574",
+          "updated_at": 0
+        },
+        {
+          "id": "local:find-docs",
+          "name": "find-docs",
+          "description": "????/??/SDK/CLI/?????????????????????, API??, ????",
+          "directory": "find-docs",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "17c0b956519b28b0d2600896f52a81743248e3792bf6832c6cdd1c2ebb55fe2f",
+          "updated_at": 0
+        },
+        {
+          "id": "local:agent-browser",
+          "name": "agent-browser",
+          "description": "????? CLI ??????agent-browser, ???????",
+          "directory": "agent-browser",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "8479f75eed4f8fc8725f4450cf2c28d665cb08c707ef82c78448c5f0d8db7b9c",
+          "updated_at": 0
+        },
+        {
+          "id": "local:diagnose",
+          "name": "diagnose",
+          "description": "严格诊断循环：复现→缩小→假设→插桩→修复→回归。触发：debug, 诊断, 崩溃, 性能",
+          "directory": "diagnose",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "7e0e3220ce1ad0a42e111fc99b7480fd75934de463e48463a311fa4e77f3006e",
+          "updated_at": 0
+        },
+        {
+          "id": "local:mc-mod-automation",
+          "name": "mc-mod-automation",
+          "description": "Minecraft Fabric ???????????????? AutoModpack + Fabric Loader 0.19.3 ?????????? ???mod??, client-mods, AutoModpack, Fabric Loader??, mixin??, ????, ???mod??",
+          "directory": "mc-mod-automation",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "0d01ebce232f08afb8660b899067312a984843ae50715e703ff7e156ea113bf3",
+          "updated_at": 0
+        },
+        {
+          "id": "local:minecraft-commands-scripting",
+          "name": "minecraft-commands-scripting",
+          "description": "Minecraft ?????NBT?????execute???????, command block, scoreboard, NBT",
+          "directory": "minecraft-commands-scripting",
+          "repo_owner": null,
+          "repo_name": null,
+          "repo_branch": null,
+          "readme_url": null,
+          "enabled_claude": 0,
+          "enabled_codex": 1,
+          "enabled_gemini": 0,
+          "enabled_opencode": 0,
+          "enabled_hermes": 0,
+          "installed_at": 1781622213,
+          "content_hash": "ff3c908f31d22b0271ca85149acdc6baec7269ea6aa7af9387e4c7a80861a1ea",
+          "updated_at": 0
+        }
+      ]
+    },
+    "skill_repos": {
+      "row_count": 4,
+      "rows": [
+        {
+          "owner": "anthropics",
+          "name": "skills",
+          "branch": "main",
+          "enabled": 1
+        },
+        {
+          "owner": "ComposioHQ",
+          "name": "awesome-claude-skills",
+          "branch": "master",
+          "enabled": 1
+        },
+        {
+          "owner": "cexll",
+          "name": "myclaude",
+          "branch": "master",
+          "enabled": 1
+        },
+        {
+          "owner": "JimLiu",
+          "name": "baoyu-skills",
+          "branch": "main",
+          "enabled": 1
+        }
+      ]
+    },
+    "model_pricing": {
+      "row_count": 174,
+      "rows": [
+        {
+          "model_id": "claude-fable-5",
+          "display_name": "Claude Fable 5",
+          "input_cost_per_million": "10",
+          "output_cost_per_million": "50",
+          "cache_read_cost_per_million": "1.00",
+          "cache_creation_cost_per_million": "12.50"
+        },
+        {
+          "model_id": "claude-mythos-5",
+          "display_name": "Claude Mythos 5",
+          "input_cost_per_million": "10",
+          "output_cost_per_million": "50",
+          "cache_read_cost_per_million": "1.00",
+          "cache_creation_cost_per_million": "12.50"
+        },
+        {
+          "model_id": "claude-opus-4-8",
+          "display_name": "Claude Opus 4.8",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "25",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "claude-opus-4-7",
+          "display_name": "Claude Opus 4.7",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "25",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "claude-opus-4-6-20260206",
+          "display_name": "Claude Opus 4.6",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "25",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "claude-sonnet-4-6-20260217",
+          "display_name": "Claude Sonnet 4.6",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.30",
+          "cache_creation_cost_per_million": "3.75"
+        },
+        {
+          "model_id": "claude-opus-4-5-20251101",
+          "display_name": "Claude Opus 4.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "25",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "claude-sonnet-4-5-20250929",
+          "display_name": "Claude Sonnet 4.5",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.30",
+          "cache_creation_cost_per_million": "3.75"
+        },
+        {
+          "model_id": "claude-haiku-4-5-20251001",
+          "display_name": "Claude Haiku 4.5",
+          "input_cost_per_million": "1",
+          "output_cost_per_million": "5",
+          "cache_read_cost_per_million": "0.10",
+          "cache_creation_cost_per_million": "1.25"
+        },
+        {
+          "model_id": "claude-opus-4-20250514",
+          "display_name": "Claude Opus 4",
+          "input_cost_per_million": "15",
+          "output_cost_per_million": "75",
+          "cache_read_cost_per_million": "1.50",
+          "cache_creation_cost_per_million": "18.75"
+        },
+        {
+          "model_id": "claude-opus-4-1-20250805",
+          "display_name": "Claude Opus 4.1",
+          "input_cost_per_million": "15",
+          "output_cost_per_million": "75",
+          "cache_read_cost_per_million": "1.50",
+          "cache_creation_cost_per_million": "18.75"
+        },
+        {
+          "model_id": "claude-sonnet-4-20250514",
+          "display_name": "Claude Sonnet 4",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.30",
+          "cache_creation_cost_per_million": "3.75"
+        },
+        {
+          "model_id": "claude-3-5-haiku-20241022",
+          "display_name": "Claude 3.5 Haiku",
+          "input_cost_per_million": "0.80",
+          "output_cost_per_million": "4",
+          "cache_read_cost_per_million": "0.08",
+          "cache_creation_cost_per_million": "1"
+        },
+        {
+          "model_id": "claude-3-5-sonnet-20241022",
+          "display_name": "Claude 3.5 Sonnet",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.30",
+          "cache_creation_cost_per_million": "3.75"
+        },
+        {
+          "model_id": "gpt-5.5",
+          "display_name": "GPT-5.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.5-low",
+          "display_name": "GPT-5.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.5-medium",
+          "display_name": "GPT-5.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.5-high",
+          "display_name": "GPT-5.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.5-xhigh",
+          "display_name": "GPT-5.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.5-minimal",
+          "display_name": "GPT-5.5",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.4",
+          "display_name": "GPT-5.4",
+          "input_cost_per_million": "2.50",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.25",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.4-mini",
+          "display_name": "GPT-5.4 Mini",
+          "input_cost_per_million": "0.75",
+          "output_cost_per_million": "4.50",
+          "cache_read_cost_per_million": "0.075",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.4-nano",
+          "display_name": "GPT-5.4 Nano",
+          "input_cost_per_million": "0.20",
+          "output_cost_per_million": "1.25",
+          "cache_read_cost_per_million": "0.02",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2",
+          "display_name": "GPT-5.2",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-low",
+          "display_name": "GPT-5.2",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-medium",
+          "display_name": "GPT-5.2",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-high",
+          "display_name": "GPT-5.2",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-xhigh",
+          "display_name": "GPT-5.2",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-codex",
+          "display_name": "GPT-5.2 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-codex-low",
+          "display_name": "GPT-5.2 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-codex-medium",
+          "display_name": "GPT-5.2 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-codex-high",
+          "display_name": "GPT-5.2 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.2-codex-xhigh",
+          "display_name": "GPT-5.2 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.3-codex",
+          "display_name": "GPT-5.3 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.3-codex-low",
+          "display_name": "GPT-5.3 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.3-codex-medium",
+          "display_name": "GPT-5.3 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.3-codex-high",
+          "display_name": "GPT-5.3 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.3-codex-xhigh",
+          "display_name": "GPT-5.3 Codex",
+          "input_cost_per_million": "1.75",
+          "output_cost_per_million": "14",
+          "cache_read_cost_per_million": "0.175",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1",
+          "display_name": "GPT-5.1",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-low",
+          "display_name": "GPT-5.1",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-medium",
+          "display_name": "GPT-5.1",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-high",
+          "display_name": "GPT-5.1",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-minimal",
+          "display_name": "GPT-5.1",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-codex",
+          "display_name": "GPT-5.1 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-codex-mini",
+          "display_name": "GPT-5.1 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-codex-max",
+          "display_name": "GPT-5.1 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-codex-max-high",
+          "display_name": "GPT-5.1 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5.1-codex-max-xhigh",
+          "display_name": "GPT-5.1 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5",
+          "display_name": "GPT-5",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-low",
+          "display_name": "GPT-5",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-medium",
+          "display_name": "GPT-5",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-high",
+          "display_name": "GPT-5",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-minimal",
+          "display_name": "GPT-5",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex-low",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex-medium",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex-high",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex-mini",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex-mini-medium",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-codex-mini-high",
+          "display_name": "GPT-5 Codex",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "o3",
+          "display_name": "OpenAI o3",
+          "input_cost_per_million": "2",
+          "output_cost_per_million": "8",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "o4-mini",
+          "display_name": "OpenAI o4-mini",
+          "input_cost_per_million": "1.10",
+          "output_cost_per_million": "4.40",
+          "cache_read_cost_per_million": "0.275",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-4.1",
+          "display_name": "GPT-4.1",
+          "input_cost_per_million": "2",
+          "output_cost_per_million": "8",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-4.1-mini",
+          "display_name": "GPT-4.1 Mini",
+          "input_cost_per_million": "0.40",
+          "output_cost_per_million": "1.60",
+          "cache_read_cost_per_million": "0.10",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-4.1-nano",
+          "display_name": "GPT-4.1 Nano",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.40",
+          "cache_read_cost_per_million": "0.025",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-3.5-flash",
+          "display_name": "Gemini 3.5 Flash",
+          "input_cost_per_million": "1.50",
+          "output_cost_per_million": "9.00",
+          "cache_read_cost_per_million": "0.15",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-3.1-pro-preview",
+          "display_name": "Gemini 3.1 Pro Preview",
+          "input_cost_per_million": "2",
+          "output_cost_per_million": "12",
+          "cache_read_cost_per_million": "0.20",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-3.1-flash-lite",
+          "display_name": "Gemini 3.1 Flash Lite",
+          "input_cost_per_million": "0.25",
+          "output_cost_per_million": "1.50",
+          "cache_read_cost_per_million": "0.025",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-3.1-flash-lite-preview",
+          "display_name": "Gemini 3.1 Flash Lite Preview",
+          "input_cost_per_million": "0.25",
+          "output_cost_per_million": "1.50",
+          "cache_read_cost_per_million": "0.025",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-3-pro-preview",
+          "display_name": "Gemini 3 Pro Preview",
+          "input_cost_per_million": "2",
+          "output_cost_per_million": "12",
+          "cache_read_cost_per_million": "0.2",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-3-flash-preview",
+          "display_name": "Gemini 3 Flash Preview",
+          "input_cost_per_million": "0.5",
+          "output_cost_per_million": "3",
+          "cache_read_cost_per_million": "0.05",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-2.5-pro",
+          "display_name": "Gemini 2.5 Pro",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0.125",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-2.5-flash",
+          "display_name": "Gemini 2.5 Flash",
+          "input_cost_per_million": "0.3",
+          "output_cost_per_million": "2.5",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-2.5-flash-lite",
+          "display_name": "Gemini 2.5 Flash Lite",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.40",
+          "cache_read_cost_per_million": "0.01",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gemini-2.0-flash",
+          "display_name": "Gemini 2.0 Flash",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.40",
+          "cache_read_cost_per_million": "0.025",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "step-3.7-flash",
+          "display_name": "Step 3.7 Flash",
+          "input_cost_per_million": "0.19",
+          "output_cost_per_million": "1.13",
+          "cache_read_cost_per_million": "0.04",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "step-3.5-flash",
+          "display_name": "Step 3.5 Flash",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.30",
+          "cache_read_cost_per_million": "0.02",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "step-3.5-flash-2603",
+          "display_name": "Step 3.5 Flash 2603",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.30",
+          "cache_read_cost_per_million": "0.02",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-code",
+          "display_name": "Doubao Seed Code",
+          "input_cost_per_million": "0.17",
+          "output_cost_per_million": "1.11",
+          "cache_read_cost_per_million": "0.02",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-0-pro",
+          "display_name": "Doubao Seed 2.0 Pro",
+          "input_cost_per_million": "0.47",
+          "output_cost_per_million": "2.37",
+          "cache_read_cost_per_million": "0.09",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-0-code",
+          "display_name": "Doubao Seed 2.0 Code",
+          "input_cost_per_million": "0.47",
+          "output_cost_per_million": "2.37",
+          "cache_read_cost_per_million": "0.09",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-0-code-preview-latest",
+          "display_name": "Doubao Seed 2.0 Code Preview",
+          "input_cost_per_million": "0.47",
+          "output_cost_per_million": "2.37",
+          "cache_read_cost_per_million": "0.09",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-0-lite",
+          "display_name": "Doubao Seed 2.0 Lite",
+          "input_cost_per_million": "0.08",
+          "output_cost_per_million": "0.50",
+          "cache_read_cost_per_million": "0.017",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-0-mini",
+          "display_name": "Doubao Seed 2.0 Mini",
+          "input_cost_per_million": "0.03",
+          "output_cost_per_million": "0.31",
+          "cache_read_cost_per_million": "0.0056",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-v3.2",
+          "display_name": "DeepSeek V3.2",
+          "input_cost_per_million": "0.28",
+          "output_cost_per_million": "0.42",
+          "cache_read_cost_per_million": "0.028",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-v3.1",
+          "display_name": "DeepSeek V3.1",
+          "input_cost_per_million": "0.55",
+          "output_cost_per_million": "1.67",
+          "cache_read_cost_per_million": "0.055",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-v3",
+          "display_name": "DeepSeek V3",
+          "input_cost_per_million": "0.28",
+          "output_cost_per_million": "1.11",
+          "cache_read_cost_per_million": "0.028",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-chat",
+          "display_name": "DeepSeek Chat",
+          "input_cost_per_million": "0.27",
+          "output_cost_per_million": "1.10",
+          "cache_read_cost_per_million": "0.07",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-reasoner",
+          "display_name": "DeepSeek Reasoner",
+          "input_cost_per_million": "0.55",
+          "output_cost_per_million": "2.19",
+          "cache_read_cost_per_million": "0.14",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-v4-flash",
+          "display_name": "DeepSeek V4 Flash",
+          "input_cost_per_million": "0.14",
+          "output_cost_per_million": "0.28",
+          "cache_read_cost_per_million": "0.0028",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "display_name": "DeepSeek V4 Pro",
+          "input_cost_per_million": "0.435",
+          "output_cost_per_million": "0.87",
+          "cache_read_cost_per_million": "0.003625",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "kimi-k2-thinking",
+          "display_name": "Kimi K2 Thinking",
+          "input_cost_per_million": "0.55",
+          "output_cost_per_million": "2.20",
+          "cache_read_cost_per_million": "0.10",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "kimi-k2-0905",
+          "display_name": "Kimi K2",
+          "input_cost_per_million": "0.55",
+          "output_cost_per_million": "2.20",
+          "cache_read_cost_per_million": "0.10",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "kimi-k2-turbo",
+          "display_name": "Kimi K2 Turbo",
+          "input_cost_per_million": "1.11",
+          "output_cost_per_million": "8.06",
+          "cache_read_cost_per_million": "0.14",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "kimi-k2.5",
+          "display_name": "Kimi K2.5",
+          "input_cost_per_million": "0.60",
+          "output_cost_per_million": "3.00",
+          "cache_read_cost_per_million": "0.10",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "kimi-k2.6",
+          "display_name": "Kimi K2.6",
+          "input_cost_per_million": "0.95",
+          "output_cost_per_million": "4.00",
+          "cache_read_cost_per_million": "0.16",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "kimi-k2.7-code",
+          "display_name": "Kimi K2.7 Code",
+          "input_cost_per_million": "0.95",
+          "output_cost_per_million": "4.00",
+          "cache_read_cost_per_million": "0.19",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "minimax-m2.1",
+          "display_name": "MiniMax M2.1",
+          "input_cost_per_million": "0.27",
+          "output_cost_per_million": "0.95",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "minimax-m2.1-lightning",
+          "display_name": "MiniMax M2.1 Lightning",
+          "input_cost_per_million": "0.27",
+          "output_cost_per_million": "2.33",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "minimax-m2",
+          "display_name": "MiniMax M2",
+          "input_cost_per_million": "0.27",
+          "output_cost_per_million": "0.95",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "minimax-m2.5",
+          "display_name": "MiniMax M2.5",
+          "input_cost_per_million": "0.15",
+          "output_cost_per_million": "0.95",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "minimax-m2.5-lightning",
+          "display_name": "MiniMax M2.5 Lightning",
+          "input_cost_per_million": "0.30",
+          "output_cost_per_million": "2.40",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "minimax-m2.7",
+          "display_name": "MiniMax M2.7",
+          "input_cost_per_million": "0.30",
+          "output_cost_per_million": "1.20",
+          "cache_read_cost_per_million": "0.06",
+          "cache_creation_cost_per_million": "0.375"
+        },
+        {
+          "model_id": "minimax-m2.7-highspeed",
+          "display_name": "MiniMax M2.7 Highspeed",
+          "input_cost_per_million": "0.60",
+          "output_cost_per_million": "2.40",
+          "cache_read_cost_per_million": "0.06",
+          "cache_creation_cost_per_million": "0.375"
+        },
+        {
+          "model_id": "minimax-m3",
+          "display_name": "MiniMax M3",
+          "input_cost_per_million": "0.60",
+          "output_cost_per_million": "2.40",
+          "cache_read_cost_per_million": "0.12",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "glm-4.7",
+          "display_name": "GLM-4.7",
+          "input_cost_per_million": "0.6",
+          "output_cost_per_million": "2.2",
+          "cache_read_cost_per_million": "0.11",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "glm-4.6",
+          "display_name": "GLM-4.6",
+          "input_cost_per_million": "0.6",
+          "output_cost_per_million": "2.2",
+          "cache_read_cost_per_million": "0.11",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "glm-5",
+          "display_name": "GLM-5",
+          "input_cost_per_million": "1",
+          "output_cost_per_million": "3.2",
+          "cache_read_cost_per_million": "0.2",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "glm-5.1",
+          "display_name": "GLM-5.1",
+          "input_cost_per_million": "1.4",
+          "output_cost_per_million": "4.4",
+          "cache_read_cost_per_million": "0.26",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mimo-v2-flash",
+          "display_name": "MiMo V2 Flash",
+          "input_cost_per_million": "0.09",
+          "output_cost_per_million": "0.29",
+          "cache_read_cost_per_million": "0.009",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mimo-v2-pro",
+          "display_name": "MiMo V2 Pro",
+          "input_cost_per_million": "0.435",
+          "output_cost_per_million": "0.87",
+          "cache_read_cost_per_million": "0.0036",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mimo-v2.5",
+          "display_name": "MiMo V2.5",
+          "input_cost_per_million": "0.14",
+          "output_cost_per_million": "0.29",
+          "cache_read_cost_per_million": "0.0028",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mimo-v2.5-pro",
+          "display_name": "MiMo V2.5 Pro",
+          "input_cost_per_million": "0.435",
+          "output_cost_per_million": "0.87",
+          "cache_read_cost_per_million": "0.0036",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3.7-max",
+          "display_name": "Qwen3.7 Max",
+          "input_cost_per_million": "2.50",
+          "output_cost_per_million": "7.50",
+          "cache_read_cost_per_million": "0.25",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3.7-plus",
+          "display_name": "Qwen3.7 Plus",
+          "input_cost_per_million": "0.40",
+          "output_cost_per_million": "1.60",
+          "cache_read_cost_per_million": "0.08",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3.6-plus",
+          "display_name": "Qwen3.6 Plus",
+          "input_cost_per_million": "0.325",
+          "output_cost_per_million": "1.95",
+          "cache_read_cost_per_million": "0.065",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3.5-plus",
+          "display_name": "Qwen3.5 Plus",
+          "input_cost_per_million": "0.26",
+          "output_cost_per_million": "1.56",
+          "cache_read_cost_per_million": "0.052",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-max",
+          "display_name": "Qwen3 Max",
+          "input_cost_per_million": "0.78",
+          "output_cost_per_million": "3.90",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-235b-a22b",
+          "display_name": "Qwen3 235B-A22B",
+          "input_cost_per_million": "0.70",
+          "output_cost_per_million": "8.40",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-coder-plus",
+          "display_name": "Qwen3 Coder Plus",
+          "input_cost_per_million": "0.65",
+          "output_cost_per_million": "3.25",
+          "cache_read_cost_per_million": "0.13",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-coder-480b",
+          "display_name": "Qwen3 Coder 480B",
+          "input_cost_per_million": "0.65",
+          "output_cost_per_million": "3.25",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-coder-480b-a35b-instruct",
+          "display_name": "Qwen3 Coder 480B-A35B Instruct",
+          "input_cost_per_million": "0.65",
+          "output_cost_per_million": "3.25",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-coder-flash",
+          "display_name": "Qwen3 Coder Flash",
+          "input_cost_per_million": "0.195",
+          "output_cost_per_million": "0.975",
+          "cache_read_cost_per_million": "0.039",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-coder-next",
+          "display_name": "Qwen3 Coder Next",
+          "input_cost_per_million": "0.12",
+          "output_cost_per_million": "0.75",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwq-plus",
+          "display_name": "QwQ Plus",
+          "input_cost_per_million": "0.80",
+          "output_cost_per_million": "2.40",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwq-32b",
+          "display_name": "QwQ 32B",
+          "input_cost_per_million": "0.20",
+          "output_cost_per_million": "0.60",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "qwen3-32b",
+          "display_name": "Qwen3 32B",
+          "input_cost_per_million": "0.16",
+          "output_cost_per_million": "0.64",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-4.3",
+          "display_name": "Grok 4.3",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "2.50",
+          "cache_read_cost_per_million": "0.20",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-4.20-0309-reasoning",
+          "display_name": "Grok 4.20 Reasoning",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "2.50",
+          "cache_read_cost_per_million": "0.20",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-4.20-0309-non-reasoning",
+          "display_name": "Grok 4.20",
+          "input_cost_per_million": "1.25",
+          "output_cost_per_million": "2.50",
+          "cache_read_cost_per_million": "0.20",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-4-1-fast-reasoning",
+          "display_name": "Grok 4.1 Fast Reasoning",
+          "input_cost_per_million": "0.20",
+          "output_cost_per_million": "0.50",
+          "cache_read_cost_per_million": "0.05",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-4-1-fast-non-reasoning",
+          "display_name": "Grok 4.1 Fast",
+          "input_cost_per_million": "0.20",
+          "output_cost_per_million": "0.50",
+          "cache_read_cost_per_million": "0.05",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-4",
+          "display_name": "Grok 4",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.75",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-code-fast-1",
+          "display_name": "Grok Build 0.1 (Code Fast Alias)",
+          "input_cost_per_million": "1",
+          "output_cost_per_million": "2",
+          "cache_read_cost_per_million": "0.20",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-build-0.1",
+          "display_name": "Grok Build 0.1",
+          "input_cost_per_million": "1",
+          "output_cost_per_million": "2",
+          "cache_read_cost_per_million": "0.20",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-3",
+          "display_name": "Grok 3",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.75",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "grok-3-mini",
+          "display_name": "Grok 3 Mini",
+          "input_cost_per_million": "0.25",
+          "output_cost_per_million": "0.50",
+          "cache_read_cost_per_million": "0.075",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mistral-medium-3.5",
+          "display_name": "Mistral Medium 3.5",
+          "input_cost_per_million": "1.50",
+          "output_cost_per_million": "7.50",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mistral-small-4",
+          "display_name": "Mistral Small 4",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.30",
+          "cache_read_cost_per_million": "0.01",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "devstral-small-2-2512",
+          "display_name": "Devstral Small 2",
+          "input_cost_per_million": "0.10",
+          "output_cost_per_million": "0.30",
+          "cache_read_cost_per_million": "0.01",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "magistral-small",
+          "display_name": "Magistral Small",
+          "input_cost_per_million": "0.50",
+          "output_cost_per_million": "1.50",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "codestral-2508",
+          "display_name": "Codestral",
+          "input_cost_per_million": "0.30",
+          "output_cost_per_million": "0.90",
+          "cache_read_cost_per_million": "0.03",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "devstral-small-1.1",
+          "display_name": "Devstral Small 1.1",
+          "input_cost_per_million": "0.07",
+          "output_cost_per_million": "0.28",
+          "cache_read_cost_per_million": "0.01",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "devstral-2-2512",
+          "display_name": "Devstral 2",
+          "input_cost_per_million": "0.40",
+          "output_cost_per_million": "2",
+          "cache_read_cost_per_million": "0.04",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "devstral-medium",
+          "display_name": "Devstral Medium",
+          "input_cost_per_million": "0.40",
+          "output_cost_per_million": "2",
+          "cache_read_cost_per_million": "0.04",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mistral-large-3-2512",
+          "display_name": "Mistral Large 3",
+          "input_cost_per_million": "0.50",
+          "output_cost_per_million": "1.50",
+          "cache_read_cost_per_million": "0.05",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mistral-medium-3.1",
+          "display_name": "Mistral Medium 3.1",
+          "input_cost_per_million": "0.40",
+          "output_cost_per_million": "2",
+          "cache_read_cost_per_million": "0.04",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "mistral-small-3.2-24b",
+          "display_name": "Mistral Small 3.2",
+          "input_cost_per_million": "0.075",
+          "output_cost_per_million": "0.20",
+          "cache_read_cost_per_million": "0.01",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "magistral-medium",
+          "display_name": "Magistral Medium",
+          "input_cost_per_million": "2",
+          "output_cost_per_million": "5",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "command-a",
+          "display_name": "Cohere Command A",
+          "input_cost_per_million": "2.50",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "command-r-plus",
+          "display_name": "Cohere Command R+",
+          "input_cost_per_million": "2.50",
+          "output_cost_per_million": "10",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "command-r",
+          "display_name": "Cohere Command R",
+          "input_cost_per_million": "0.15",
+          "output_cost_per_million": "0.60",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "o3-pro",
+          "display_name": "OpenAI o3-pro",
+          "input_cost_per_million": "20",
+          "output_cost_per_million": "80",
+          "cache_read_cost_per_million": "0",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "o3-mini",
+          "display_name": "OpenAI o3-mini",
+          "input_cost_per_million": "0.55",
+          "output_cost_per_million": "2.20",
+          "cache_read_cost_per_million": "0.55",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "o1",
+          "display_name": "OpenAI o1",
+          "input_cost_per_million": "15",
+          "output_cost_per_million": "60",
+          "cache_read_cost_per_million": "7.50",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "o1-mini",
+          "display_name": "OpenAI o1-mini",
+          "input_cost_per_million": "0.55",
+          "output_cost_per_million": "2.20",
+          "cache_read_cost_per_million": "0.55",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "codex-mini",
+          "display_name": "Codex Mini",
+          "input_cost_per_million": "0.75",
+          "output_cost_per_million": "3",
+          "cache_read_cost_per_million": "0.025",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-mini",
+          "display_name": "GPT-5 Mini",
+          "input_cost_per_million": "0.25",
+          "output_cost_per_million": "2",
+          "cache_read_cost_per_million": "0.025",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "gpt-5-nano",
+          "display_name": "GPT-5 Nano",
+          "input_cost_per_million": "0.05",
+          "output_cost_per_million": "0.40",
+          "cache_read_cost_per_million": "0.005",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-1-pro",
+          "display_name": "Doubao Seed 2.1 Pro",
+          "input_cost_per_million": "0.84",
+          "output_cost_per_million": "4.2",
+          "cache_read_cost_per_million": "0.17",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "doubao-seed-2-1-turbo",
+          "display_name": "Doubao Seed 2.1 Turbo",
+          "input_cost_per_million": "0.42",
+          "output_cost_per_million": "2.1",
+          "cache_read_cost_per_million": "0.08",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "glm-5.2",
+          "display_name": "GLM-5.2",
+          "input_cost_per_million": "1.4",
+          "output_cost_per_million": "4.4",
+          "cache_read_cost_per_million": "0.26",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "claude-sonnet-5",
+          "display_name": "Claude Sonnet 5",
+          "input_cost_per_million": "3",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.30",
+          "cache_creation_cost_per_million": "3.75"
+        },
+        {
+          "model_id": "gpt-5.6-sol",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "gpt-5.6-terra",
+          "display_name": "GPT-5.6 Terra",
+          "input_cost_per_million": "2.50",
+          "output_cost_per_million": "15",
+          "cache_read_cost_per_million": "0.25",
+          "cache_creation_cost_per_million": "3.125"
+        },
+        {
+          "model_id": "gpt-5.6-luna",
+          "display_name": "GPT-5.6 Luna",
+          "input_cost_per_million": "1",
+          "output_cost_per_million": "6",
+          "cache_read_cost_per_million": "0.10",
+          "cache_creation_cost_per_million": "1.25"
+        },
+        {
+          "model_id": "gpt-5.6",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "gpt-5.6-low",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "gpt-5.6-medium",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "gpt-5.6-high",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "gpt-5.6-xhigh",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "gpt-5.6-minimal",
+          "display_name": "GPT-5.6 Sol",
+          "input_cost_per_million": "5",
+          "output_cost_per_million": "30",
+          "cache_read_cost_per_million": "0.50",
+          "cache_creation_cost_per_million": "6.25"
+        },
+        {
+          "model_id": "hunyuan-hy3",
+          "display_name": "Hunyuan Hy3",
+          "input_cost_per_million": "0.14",
+          "output_cost_per_million": "0.56",
+          "cache_read_cost_per_million": "0.035",
+          "cache_creation_cost_per_million": "0"
+        },
+        {
+          "model_id": "hy3",
+          "display_name": "Hunyuan Hy3",
+          "input_cost_per_million": "0.14",
+          "output_cost_per_million": "0.56",
+          "cache_read_cost_per_million": "0.035",
+          "cache_creation_cost_per_million": "0"
+        }
+      ]
+    }
+  }
+}
