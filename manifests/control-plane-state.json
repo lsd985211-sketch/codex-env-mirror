@@ -1,13 +1,13 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-20T10:18:26.222641+00:00",
+  "generated_at": "2026-07-20T11:31:13.413644+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260720T101754Z-97b78c9505",
-    "created_at": "2026-07-20T10:18:01.314691+00:00",
-    "asset_count": 2045,
-    "total_bytes": 25237686,
-    "capture_mode": "incremental"
+    "snapshot_id": "20260720T112952Z-136e432d90",
+    "created_at": "2026-07-20T11:30:49.085497+00:00",
+    "asset_count": 2049,
+    "total_bytes": 25299698,
+    "capture_mode": "full"
   },
   "readiness": {
     "mirror_valid": true,
@@ -86,7 +86,7 @@
     {
       "path": "manifests/restore-order.json",
       "role": "static_contract",
-      "sha256": "49eb9300080c41e8f6b0176122d7b6b1e8f6f119e973fa44b96a7a50dcd9eb90"
+      "sha256": "24b38b67869fdcd00eac4b083d549b7e1319faad215c49eedbfb8bf3c09ae62b"
     },
     {
       "path": "manifests/schemas/snapshot-manifest.schema.json",
@@ -101,17 +101,17 @@
     {
       "path": "manifests/source-authorities.json",
       "role": "static_contract",
-      "sha256": "78521f6450e8ba6756fc228364cb8b4b71224a43e97b219828887b7ce95ba2f0"
+      "sha256": "513557dfecc1707fbe3117914bdd61f1d9cfae3ef5087adc4e6094291ee97888"
     },
     {
       "path": "manifests/verification-matrix.json",
       "role": "static_contract",
-      "sha256": "6b7b6f79838d1e887c58daf5c7fe24556148bc71759bf492ac49003ae2efa6a6"
+      "sha256": "67e951a164536e991245582fad9f391b77664bb650bb3321f4ed81ba98bf6073"
     },
     {
       "path": "scripts/mirror_cli.py",
       "role": "static_contract",
-      "sha256": "cd15d4acf656aa3d68327a0fa8ae660c7a75cd39c9692a82f99fbc15d2caf760"
+      "sha256": "3c74e3758528d94e042ec5535f946cef73a182b43bee86a99340a4b4cacd4a1a"
     },
     {
       "path": "scripts/refresh-mirror.ps1",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "f4b9dcc3e5e20b79bba3f0d6260fc0315c2a975c492ddba80f83c8fa101b571e"
+  "current_md_sha256": "8e85595be00c398afe86d07a1ecd4ebaf6925c1aec3e7ba76d098ba64288323a"
 }
