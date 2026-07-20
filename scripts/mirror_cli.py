@@ -776,6 +776,15 @@ def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep)
     }
 
 
+def incremental_recapture_ids(config: dict[str, Any]) -> tuple[set[str], set[str]]:
+    policy = config.get("policy") if isinstance(config.get("policy"), dict) else {}
+    quiescence = policy.get("capture_quiescence") if isinstance(policy.get("capture_quiescence"), dict) else {}
+    return (
+        {str(item) for item in quiescence.get("source_ids", []) if str(item)},
+        {str(item) for item in quiescence.get("generated_source_ids", []) if str(item)},
+    )
+
+
 def export_plugin_inventory(config_path: Path, cache_root: Path) -> bytes:
     config = tomllib.loads(read_text(config_path))
     plugins = config.get("plugins", {})
@@ -1885,6 +1894,13 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
         write_snapshot_transaction(transaction)
         affected_ids = set(incremental_plan.get("affected_source_ids", [])) if capture_mode == "incremental" else set()
         affected_generated_ids = set(incremental_plan.get("dependent_generated_source_ids", [])) if capture_mode == "incremental" else set()
+        if capture_mode == "incremental":
+            # These host-owned sources are not represented in the Work Git
+            # delta. Reusing their old snapshot payload guarantees a later
+            # freshness failure whenever they changed since that snapshot.
+            recapture_sources, recapture_generated = incremental_recapture_ids(config)
+            affected_ids.update(recapture_sources)
+            affected_generated_ids.update(recapture_generated)
         source_file_changes = {
             str(source_id): {str(path) for path in paths}
             for source_id, paths in (incremental_plan.get("source_file_changes") or {}).items()
@@ -2013,6 +2029,12 @@ def snapshot_with_lock(config: dict[str, Any], *, changed_paths: list[str] | Non
                     "recovery": recovery,
                 }
             result = create_snapshot(config, changed_paths=changed_paths)
+            if result.get("ok"):
+                result["live_validation"] = validate_snapshot(
+                    str(result.get("snapshot_id") or "latest"),
+                    live_sources=True,
+                    control_plane=False,
+                )
             if isinstance(result, dict):
                 result["interrupted_recovery"] = recovery
             return result

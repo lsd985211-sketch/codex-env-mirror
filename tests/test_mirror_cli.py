@@ -743,6 +743,12 @@ class MirrorCliTests(unittest.TestCase):
         self.assertFalse(result["candidate_created"])
         transaction.assert_not_called()
 
+    def test_incremental_capture_recaptures_quiescence_sources_not_in_work_git_delta(self) -> None:
+        config = {"policy": {"capture_quiescence": {"source_ids": ["config"], "generated_source_ids": ["semantic"]}}}
+        sources, generated = mirror_cli.incremental_recapture_ids(config)
+        self.assertEqual(sources, {"config"})
+        self.assertEqual(generated, {"semantic"})
+
     def test_plugin_inventory_records_enabled_manifest_only(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
