@@ -40,6 +40,20 @@ Validate in dependency order:
 10. Windows scheduled-task and shortcut specifications;
 11. external encrypted archives and secret requirements.
 
+For MCP implementations, use the restored Work Git owner to acquire the exact
+milestone assets before activation:
+
+```text
+python workspace/_bridge/mcp_recovery_bundle_owner.py --archive-root <isolated-bundle-root> import-release --repo lsd985211-sketch/codex-env-mirror --tag <seed-vX.Y.Z>
+python workspace/_bridge/mcp_recovery_bundle_owner.py --archive-root <isolated-bundle-root> verify
+python workspace/_bridge/mcp_recovery_bundle_owner.py --archive-root <isolated-bundle-root> materialize --target-root <isolated-mcp-root>
+```
+
+The import reads `mcp-bundle-index.json` from the GitHub Release and verifies
+every archive hash before indexing it. Do not substitute unverified package
+manager installs. Windows private archives, enabled plugins, secrets, and
+remote MCP credentials still require their recorded owner handoff receipts.
+
 ## Phase 4: Owner Activation
 
 Activation is performed in the target environment, not by `mirror_cli.py`.
