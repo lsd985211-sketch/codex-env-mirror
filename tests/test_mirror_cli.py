@@ -576,6 +576,7 @@ class MirrorCliTests(unittest.TestCase):
             self.assertTrue(result["ok"])
             self.assertEqual(result["schema"], "codex_mirror.control_plane_validate.v1")
 
+
     def test_affected_source_plan_unknown_change_requires_full_rebuild(self) -> None:
         config = {"variables": {}, "sources": [{"id": "config", "kind": "file", "source": "C:/known.toml"}], "generated_sources": []}
         plan = mirror_cli.affected_source_plan(config, ["C:/outside.txt"])
