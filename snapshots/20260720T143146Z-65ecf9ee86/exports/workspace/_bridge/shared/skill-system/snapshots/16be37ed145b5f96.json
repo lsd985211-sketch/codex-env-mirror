@@ -1,0 +1,20 @@
+{
+  "skill_id": "16be37ed145b5f96",
+  "name": "memory-systems",
+  "path": "C:\\Users\\45543\\.codex\\skills\\memory-systems",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d099d1772f83599ab868988a54b152da0cf958c7d2916f9bd5cc2ef906f21895",
+    "agents": null,
+    "scripts": "30ade0733a87b1bd45acc8914b6f45c286f5e036ce53d4d4b876b7a0805c5825",
+    "references": "c08c2e73a1b71a22c2b5fd54b1ccddf66436fcc2355af5881fc7e313500b4629",
+    "assets": null
+  }
+}
