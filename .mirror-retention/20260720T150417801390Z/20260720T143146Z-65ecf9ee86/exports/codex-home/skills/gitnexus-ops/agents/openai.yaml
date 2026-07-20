@@ -1,4 +1,0 @@
-interface:
-  display_name: "GitNexus Operations"
-  short_description: "MCP-first code knowledge graph workflows"
-  default_prompt: "Use $gitnexus-ops to analyze a repository through the managed GitNexus MCP route."
