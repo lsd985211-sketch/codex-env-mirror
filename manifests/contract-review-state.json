@@ -1,70 +1,22 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-19T14:05:20.737658+00:00",
+  "reviewed_at": "2026-07-20T04:22:10.694676+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "f7891c3f37b11330df53db4d82cc4ed5eef47ab5b62464e18970f95a3fc18991",
-  "baseline_tag": "seed-v2.3.1",
-  "proposed_tag": "seed-v2.4.0",
+  "control_plane_fingerprint": "6fcbff1da7e638240d8394e5d98e2c498425e6b2c98197969cb376b40ed8d293",
+  "baseline_tag": "seed-v2.4.0",
+  "proposed_tag": "seed-v2.5.0",
   "changed_control_plane_files": [
-    ".gitignore",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/agent-home/skills/windows-diagnostic-evidence/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/settings.template.json",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/agent-browser/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context-compression/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context-compression/references/evaluation-framework.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context-compression/references/token-practice.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context-compression/scripts/compression_evaluator.py",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context-compression/tests/test_compression_evaluator.py",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context7-cli/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context7-cli/references/docs.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context7-cli/references/setup.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context7-cli/references/skills.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/context7-mcp/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/diagnose/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/fabric-mc-26-1-2/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/find-docs/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/global-framework/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/mc-mod-automation/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/memory-systems/README.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/memory-systems/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/memory-systems/references/implementation.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/memory-systems/scripts/memory_store.py",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/memory-systems/scripts/verify.py",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-ci-release/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-commands-scripting/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-commands-scripting/references/execute-cheat-sheet.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-commands-scripting/references/selector-cheat-sheet.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-datapack/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-datapack/scripts/jq-shim.mjs",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-essentials-ops/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-essentials-ops/references/permissions-and-rollout-checklists.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-imagegen/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-imagegen/references/asset-recipes.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-imagegen/references/prompt-patterns.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-modding/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-modding/references/common-patterns.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-modding/references/fabric-api.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-modding/references/neoforge-api.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-multiloader/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-multiloader/references/architectury-reference.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-plugin-dev/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-plugin-dev/references/runtime-patterns.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-resource-pack/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-resource-pack/scripts/jq-shim.mjs",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-server-admin/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-server-admin/references/deployment-checklists.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-testing/SKILL.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-testing/references/test-layouts.md",
-    ".mirror-retention/20260719T033340866089Z/20260719T024016Z-0881b7a29c/exports/cc-switch/skills/minecraft-world-generation/SKILL.md"
+    "scripts/mirror_cli.py",
+    "tests/test_mirror_cli.py"
   ],
   "decisions": [
     {
       "path": "AGENTS.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "README.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "MIRROR_POLICY.md",
@@ -84,6 +36,6 @@
     }
   ],
   "release_impact": "minor",
-  "summary": "Updated the recovery contracts for WSL Work Git authority, the WSL facade, and concurrent final publish handoff; restore and security boundaries remain compatible.",
+  "summary": "File-level incremental recovery capture preserves complete immutable snapshots, membership authority refresh, validation, and restore boundaries.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
