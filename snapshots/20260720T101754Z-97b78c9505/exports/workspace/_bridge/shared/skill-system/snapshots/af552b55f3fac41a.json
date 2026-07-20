@@ -1,0 +1,20 @@
+{
+  "skill_id": "af552b55f3fac41a",
+  "name": "minecraft-essentials-ops",
+  "path": "C:\\Users\\45543\\.codex\\skills\\minecraft-essentials-ops",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "4fc3582d85f979fecfdca75175f2e02fd083b3a36429551199b2940dc3763eb8",
+    "agents": null,
+    "scripts": null,
+    "references": "c7f0d0576cb473cce8e884fbbdb4c587158c94ca1453ac070d744ebc3dd18aa7",
+    "assets": null
+  }
+}
