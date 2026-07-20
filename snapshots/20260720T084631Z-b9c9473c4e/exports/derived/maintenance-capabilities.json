@@ -1,0 +1,27 @@
+{
+  "schema": "maintenance_capability_registry.metrics.v1",
+  "ok": true,
+  "capability_count": 142,
+  "system_count": 15,
+  "systems": {
+    "audio": 4,
+    "backup": 3,
+    "bridge": 22,
+    "hardware": 3,
+    "mail": 1,
+    "mcp": 17,
+    "memory": 9,
+    "network": 7,
+    "records": 4,
+    "resource": 20,
+    "scheduler": 6,
+    "skills": 7,
+    "startup": 10,
+    "workflow": 26,
+    "wsl_workspace": 3
+  },
+  "index_exists": true,
+  "index_fresh": true,
+  "source_path": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace\\workspace\\_bridge\\docs\\maintenance_surface_map.md",
+  "index_path": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace\\workspace\\_bridge\\runtime\\maintenance_capabilities.sqlite"
+}
