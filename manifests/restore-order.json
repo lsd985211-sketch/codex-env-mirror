@@ -51,6 +51,24 @@
       "action": "restore profile definitions and regenerate route projections"
     },
     {
+      "id": "mcp-bundle-plan",
+      "depends_on": ["mcp-plan", "platform-preflight"],
+      "owner": "mcp_recovery_bundle_owner",
+      "action": "read the single MCP recovery manifest, resolve platform/authorization boundaries, and require an archive or owner reacquisition/reconnect receipt for every required implementation"
+    },
+    {
+      "id": "mcp-bundle-materialization",
+      "depends_on": ["mcp-bundle-plan"],
+      "owner": "mcp_recovery_bundle_owner",
+      "action": "verify content-addressed bundle hashes and safe archive members; materialize only into the isolated stage and never run package installation during restore"
+    },
+    {
+      "id": "mcp-tools-list-smoke",
+      "depends_on": ["mcp-bundle-materialization"],
+      "owner": "mcp_recovery_bundle_owner",
+      "action": "run isolated MCP initialize/tools/list and representative read-only tools/call smoke for each executable local bundle; remote/plugin/private assets require their owner receipts"
+    },
+    {
       "id": "skills-plan",
       "depends_on": ["workflow-stage"],
       "owner": "skill_lifecycle_governance",
@@ -77,7 +95,7 @@
     {
       "id": "acceptance",
       "depends_on": [
-        "provider-plan", "plugin-plan", "mcp-plan", "skills-plan", "memory-plan",
+        "provider-plan", "plugin-plan", "mcp-plan", "mcp-bundle-plan", "mcp-bundle-materialization", "mcp-tools-list-smoke", "skills-plan", "memory-plan",
         "windows-integration-plan", "external-state-plan"
       ],
       "owner": "workflow_finalization",
@@ -85,4 +103,3 @@
     }
   ]
 }
-

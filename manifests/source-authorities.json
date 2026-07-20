@@ -384,6 +384,29 @@
       "required": true
     },
     {
+      "id": "mcp-bundle-readiness",
+      "kind": "command_json",
+      "command": [
+        "wsl.exe", "-d", "Codex-Wsl-Lab", "--",
+        "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/mcp_recovery_bundle_owner.py",
+        "--archive-root", "/home/codexlab/.codex-app/mcp-recovery-bundles", "readiness"
+      ],
+      "destination": "exports/derived/mcp-bundle-readiness.json",
+      "classification": "authority_export",
+      "owner": "mcp_recovery_bundle_owner",
+      "activation": "owner_verify_only",
+      "depends_on": ["mcp-route-snapshot", "workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "mcp_recovery_bundle_owner.py",
+          "mcp_recovery_bundle_manifest.json",
+          "tools/**",
+          "docs/mcp_capability_matrix.md"
+        ]
+      },
+      "required": true
+    },
+    {
       "id": "memory-snapshot",
       "kind": "command_json",
       "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\local_pmb_memory.py", "snapshot"],

@@ -2351,6 +2351,7 @@ def validate_snapshot(
     for asset_id, checks in {
         "codex-plugin-inventory": (("unresolved_count", 0, "plugin_inventory_unresolved"),),
         "runtime-versions": (("codex_desktop.ok", True, "codex_desktop_version_missing"),),
+        "mcp-bundle-readiness": (("bundle_plan_ready", True, "mcp_bundle_plan_not_ready"),),
     }.items():
         asset = asset_by_id.get(asset_id)
         if not asset:
@@ -2401,6 +2402,17 @@ def validate_snapshot(
             remotes = [line for line in completed.stdout.splitlines() if line.strip()]
     all_issues = [*issues, *source_issues]
     mirror_valid = not issues
+    mcp_bundle_asset = asset_by_id.get("mcp-bundle-readiness")
+    mcp_bundle_ready = False
+    if mcp_bundle_asset:
+        try:
+            mcp_bundle_payload = load_json(path / Path(str(mcp_bundle_asset["snapshot_path"])))
+            mcp_bundle_ready = mcp_bundle_payload.get("bundle_plan_ready") is True
+        except (OSError, ValueError, json.JSONDecodeError):
+            mcp_bundle_ready = False
+    else:
+        issues.append({"code": "required_generated_asset_missing", "asset_id": "mcp-bundle-readiness"})
+    mirror_valid = not issues
     source_freshness_ok = not source_issues if live_sources else None
     return {
         "schema": "codex_mirror.validate.v1",
@@ -2408,7 +2420,7 @@ def validate_snapshot(
         "snapshot_id": manifest.get("snapshot_id"),
         "validation_scope": "snapshot_and_live_sources" if live_sources else "snapshot",
         "mirror_valid": mirror_valid,
-        "capability_restore_ready": mirror_valid,
+        "capability_restore_ready": mirror_valid and mcp_bundle_ready,
         "source_freshness_checked": live_sources,
         "source_freshness_ok": source_freshness_ok,
         "full_state_restore_ready": mirror_valid and not required_archive_gaps and bool(remotes),
