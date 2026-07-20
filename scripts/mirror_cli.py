@@ -710,6 +710,72 @@ def export_cc_switch_semantic(source: Path) -> bytes:
         connection.close()
 
 
+def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep) -> dict[str, Any]:
+    """Confirm selected mutable recovery sources are stable before copying a snapshot."""
+    policy = config.get("policy") if isinstance(config.get("policy"), dict) else {}
+    settings = policy.get("capture_quiescence") if isinstance(policy.get("capture_quiescence"), dict) else {}
+    source_ids = [str(item) for item in settings.get("source_ids", []) if str(item)]
+    generated_ids = [str(item) for item in settings.get("generated_source_ids", []) if str(item)]
+    if not source_ids and not generated_ids:
+        return {"schema": "codex_mirror.capture_quiescence.v1", "ok": True, "enabled": False}
+    try:
+        sample_count = int(settings.get("sample_count", 2))
+        interval_seconds = float(settings.get("interval_seconds", 1.0))
+    except (TypeError, ValueError):
+        return {"schema": "codex_mirror.capture_quiescence.v1", "ok": False, "reason": "capture_quiescence_policy_invalid"}
+    if sample_count < 2 or interval_seconds < 0:
+        return {"schema": "codex_mirror.capture_quiescence.v1", "ok": False, "reason": "capture_quiescence_policy_invalid"}
+    sources = {str(spec.get("id") or ""): spec for spec in config.get("sources", [])}
+    generated = {str(spec.get("id") or ""): spec for spec in config.get("generated_sources", [])}
+    unknown = sorted(set(source_ids) - set(sources) | set(generated_ids) - set(generated))
+    if unknown:
+        return {
+            "schema": "codex_mirror.capture_quiescence.v1", "ok": False,
+            "reason": "capture_quiescence_target_unknown", "targets": unknown,
+        }
+    variables = expanded_variables(config)
+
+    def sample() -> dict[str, str]:
+        signatures: dict[str, str] = {}
+        for source_id in source_ids:
+            spec = sources[source_id]
+            source = Path(expand_tokens(str(spec.get("source") or ""), variables))
+            if not source.is_file():
+                raise FileNotFoundError(f"capture_quiescence_source_not_file:{source_id}")
+            content_kind = source_content_kind(source, spec)
+            data, _, _ = source_payload(source, str(spec.get("mode") or "copy"), content_kind)
+            signatures[source_id] = sha256_bytes(data)
+        for asset_id in generated_ids:
+            spec = generated[asset_id]
+            kind = str(spec.get("kind") or "")
+            if kind != "cc_switch_semantic_export":
+                raise ValueError(f"capture_quiescence_generated_kind_unsupported:{asset_id}:{kind}")
+            payload = json.loads(export_cc_switch_semantic(Path(expand_tokens(str(spec.get("source") or ""), variables))))
+            signatures[asset_id] = str(payload.get("semantic_sha256") or "")
+        return signatures
+
+    observed: list[dict[str, str]] = []
+    try:
+        for index in range(sample_count):
+            observed.append(sample())
+            if index + 1 < sample_count and interval_seconds:
+                sleep(interval_seconds)
+    except (OSError, ValueError, json.JSONDecodeError, sqlite3.Error) as exc:
+        return {
+            "schema": "codex_mirror.capture_quiescence.v1", "ok": False,
+            "reason": "capture_quiescence_probe_failed", "detail": f"{type(exc).__name__}:{exc}",
+        }
+    changed = [
+        {"asset_id": asset_id, "before": observed[0][asset_id][:12], "after": observed[-1][asset_id][:12]}
+        for asset_id in sorted(observed[0]) if any(item.get(asset_id) != observed[0][asset_id] for item in observed[1:])
+    ]
+    return {
+        "schema": "codex_mirror.capture_quiescence.v1", "ok": not changed, "enabled": True,
+        "sample_count": sample_count, "interval_seconds": interval_seconds, "changed": changed,
+        "reason": "source_capture_not_quiescent" if changed else "",
+    }
+
+
 def export_plugin_inventory(config_path: Path, cache_root: Path) -> bytes:
     config = tomllib.loads(read_text(config_path))
     plugins = config.get("plugins", {})
@@ -1769,6 +1835,13 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
     plan = collect_plan(config)
     if not plan["ok"]:
         return {"schema": "codex_mirror.snapshot.v1", "ok": False, "reason": "plan_blocked", "plan": plan}
+    quiescence = capture_quiescence_probe(config)
+    if not quiescence.get("ok"):
+        return {
+            "schema": "codex_mirror.snapshot.v1", "ok": False,
+            "reason": str(quiescence.get("reason") or "capture_quiescence_probe_failed"),
+            "candidate_created": False, "capture_quiescence": quiescence,
+        }
     incremental_plan = None
     previous_root: Path | None = None
     previous_manifest: dict[str, Any] | None = None

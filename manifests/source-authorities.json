@@ -23,6 +23,12 @@
     "max_file_bytes": 5242880,
     "max_snapshot_bytes": 134217728,
     "max_snapshot_relative_path_chars": 220,
+    "capture_quiescence": {
+      "sample_count": 2,
+      "interval_seconds": 1.0,
+      "source_ids": ["codex-config-template", "cc-switch-settings"],
+      "generated_source_ids": ["cc-switch-semantic-export"]
+    },
     "allowed_extensions": [
       ".bat", ".cfg", ".cmd", ".css", ".html", ".ini", ".js", ".json",
       ".jsx", ".md", ".mjs", ".ps1", ".py", ".sql", ".toml", ".ts",

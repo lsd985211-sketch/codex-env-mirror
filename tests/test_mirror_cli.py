@@ -699,6 +699,50 @@ class MirrorCliTests(unittest.TestCase):
             self.assertNotEqual(payload["source_sha256"], updated["source_sha256"])
             self.assertEqual(payload["semantic_sha256"], updated["semantic_sha256"])
 
+    def test_capture_quiescence_uses_recoverable_redacted_content_and_semantic_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            config_file = root / "config.toml"
+            config_file.write_text('api_token = "secret-a"\nmode = "stable"\n', encoding="utf-8")
+            settings = root / "settings.json"
+            settings.write_text('{"api_token":"secret-a","mode":"stable"}', encoding="utf-8")
+            database = root / "cc-switch.db"
+            connection = sqlite3.connect(database)
+            for table in mirror_cli.CC_SWITCH_SEMANTIC_TABLES:
+                connection.execute(f'CREATE TABLE "{table}" (id TEXT)')
+            connection.commit()
+            connection.close()
+            config = {
+                "variables": {},
+                "policy": {"capture_quiescence": {"source_ids": ["config", "settings"], "generated_source_ids": ["semantic"], "interval_seconds": 1}},
+                "sources": [
+                    {"id": "config", "source": str(config_file), "mode": "redact_toml"},
+                    {"id": "settings", "source": str(settings), "mode": "redact_json"},
+                ],
+                "generated_sources": [{"id": "semantic", "kind": "cc_switch_semantic_export", "source": str(database)}],
+            }
+            self.assertTrue(mirror_cli.capture_quiescence_probe(config)["ok"])
+
+            def mutate_between_samples(_: float) -> None:
+                settings.write_text('{"api_token":"secret-b","mode":"changed"}', encoding="utf-8")
+
+            probe = mirror_cli.capture_quiescence_probe(config, sleep=mutate_between_samples)
+            self.assertFalse(probe["ok"])
+            self.assertEqual(probe["reason"], "source_capture_not_quiescent")
+            self.assertEqual(probe["changed"][0]["asset_id"], "settings")
+
+    def test_capture_quiescence_rejects_change_before_snapshot_staging(self) -> None:
+        config = {"policy": {"capture_quiescence": {"source_ids": ["config"]}}, "sources": [{"id": "config"}], "generated_sources": []}
+        unstable = {"schema": "codex_mirror.capture_quiescence.v1", "ok": False, "reason": "source_capture_not_quiescent"}
+        with patch.object(mirror_cli, "collect_plan", return_value={"ok": True}), \
+                patch.object(mirror_cli, "capture_quiescence_probe", return_value=unstable), \
+                patch.object(mirror_cli, "write_snapshot_transaction") as transaction:
+            result = mirror_cli.create_snapshot(config)
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["reason"], "source_capture_not_quiescent")
+        self.assertFalse(result["candidate_created"])
+        transaction.assert_not_called()
+
     def test_plugin_inventory_records_enabled_manifest_only(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
