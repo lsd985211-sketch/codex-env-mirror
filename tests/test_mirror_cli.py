@@ -392,6 +392,12 @@ class MirrorCliTests(unittest.TestCase):
                         "depends_on": ["workspace-bridge-source"],
                         "depends_on_paths": {"workspace-bridge-source": ["wsl_workspace_owner.py", "shared/**"]},
                     },
+                    {
+                        "id": mirror_cli.WORK_GIT_RELEASE_SOURCE_ID,
+                        "kind": "command_json",
+                        "command": ["python", "-c", "print('{}')"],
+                        "depends_on": ["workspace-bridge-source"],
+                    },
                 ],
             }
 
@@ -400,7 +406,35 @@ class MirrorCliTests(unittest.TestCase):
 
             self.assertNotIn("wsl-export", unrelated_plan["dependent_generated_source_ids"])
             self.assertIn(mirror_cli.MEMBERSHIP_ASSET_ID, unrelated_plan["dependent_generated_source_ids"])
+            self.assertIn(mirror_cli.WORK_GIT_RELEASE_SOURCE_ID, unrelated_plan["dependent_generated_source_ids"])
             self.assertIn("wsl-export", watched_plan["dependent_generated_source_ids"])
+
+    def test_work_git_release_proof_requires_matching_clean_heads(self) -> None:
+        captured = {"ok": True, "work_git": {"release_ready": True, "clean": True, "worktree_head": "abc", "bare_head": "abc"}}
+        current = {"ok": True, "work_git": {"release_ready": True, "clean": True, "worktree_head": "abc", "bare_head": "abc"}}
+
+        self.assertTrue(mirror_cli.work_git_release_proves_snapshot_source(captured, current))
+        self.assertFalse(mirror_cli.work_git_release_proves_snapshot_source(captured, {"ok": True, "work_git": {**current["work_git"], "worktree_head": "def"}}))
+        self.assertFalse(mirror_cli.work_git_release_proves_snapshot_source(captured, {"ok": True, "work_git": {**current["work_git"], "clean": False}}))
+
+    def test_trusted_work_git_source_coverage_requires_captured_release_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            receipt = root / "work-git-release.json"
+            captured = {"ok": True, "work_git": {"release_ready": True, "clean": True, "worktree_head": "abc", "bare_head": "abc"}}
+            receipt.write_text(json.dumps(captured), encoding="utf-8")
+            manifest = {"assets": [{"asset_id": mirror_cli.WORK_GIT_RELEASE_SOURCE_ID, "snapshot_path": receipt.name}]}
+            with patch.object(mirror_cli, "current_work_git_release", return_value=captured):
+                trusted, evidence = mirror_cli.trusted_work_git_source_coverage(root, manifest, {
+                    "variables": {"WORK_GIT_ROOT": str(root / "work-git")},
+                    "sources": [
+                        {"id": mirror_cli.WORK_GIT_SOURCE_ID, "source": "${WORK_GIT_ROOT}/workspace/_bridge"},
+                        {"id": "external", "source": "/outside"},
+                    ],
+                })
+
+            self.assertEqual(trusted, {mirror_cli.WORK_GIT_SOURCE_ID})
+            self.assertEqual(evidence, {"mode": "work_git_release_receipt", "head": "abc", "source_count": 1})
 
     def test_snapshot_recovery_removes_stale_staging_after_crash(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -472,6 +506,21 @@ class MirrorCliTests(unittest.TestCase):
             self.assertFalse(candidate.exists())
             self.assertEqual(json.loads(latest.read_text(encoding="utf-8"))["snapshot_id"], "previous")
             self.assertEqual(recovery["actions"][0]["code"], "invalid_latest_candidate_reverted")
+
+    def test_incremental_reuse_checks_snapshot_integrity_without_current_governance(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            snapshot = root / "snapshot"
+            snapshot.mkdir()
+            (snapshot / "snapshot-manifest.json").write_text(json.dumps({"snapshot_id": "snapshot"}), encoding="utf-8")
+            with patch.object(mirror_cli, "resolve_snapshot", return_value=snapshot), \
+                    patch.object(mirror_cli, "validate_snapshot", return_value={"ok": True}) as validate:
+                path, manifest, status = mirror_cli.previous_snapshot_for_incremental()
+
+            self.assertEqual(path, snapshot)
+            self.assertEqual(manifest, {"snapshot_id": "snapshot"})
+            self.assertEqual(status, "previous_snapshot_valid")
+            validate.assert_called_once_with("snapshot", control_plane=False, governance=False)
 
     def test_incremental_reuse_keeps_unmodified_tree_asset(self) -> None:
         asset = {"asset_id": "workspace-bridge-source:unchanged.py"}

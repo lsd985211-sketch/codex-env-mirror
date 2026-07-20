@@ -1,0 +1,20 @@
+{
+  "skill_id": "1dbce374e1bf832f",
+  "name": "mem-monthly",
+  "path": "C:\\Users\\45543\\.codex\\skills\\mem-monthly",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "f45802b915ade67a050fe4c03843b67ad86707c80c5e135fbc827e6e2b4f11df",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

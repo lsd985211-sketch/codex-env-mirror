@@ -60,6 +60,8 @@ INLINE_SENSITIVE_PATTERN = re.compile(
 )
 CONFIG_EXTENSIONS = {".cfg", ".ini", ".json", ".toml", ".yaml", ".yml"}
 MEMBERSHIP_ASSET_ID = "system-membership-snapshot"
+WORK_GIT_RELEASE_SOURCE_ID = "wsl-work-git-release-receipt"
+WORK_GIT_SOURCE_ID = "workspace-bridge-source"
 CC_SWITCH_SEMANTIC_TABLES = (
     "providers",
     "provider_endpoints",
@@ -1750,7 +1752,14 @@ def previous_snapshot_for_incremental() -> tuple[Path | None, dict[str, Any] | N
     try:
         path = resolve_snapshot("latest")
         manifest = load_json(path / "snapshot-manifest.json")
-        validation = validate_snapshot(str(manifest.get("snapshot_id") or "latest"))
+        # Reuse needs immutable snapshot-integrity evidence. Current owner
+        # governance is deliberately checked again on the candidate, so an
+        # implementation upgrade must not force a full source recapture.
+        validation = validate_snapshot(
+            str(manifest.get("snapshot_id") or "latest"),
+            control_plane=False,
+            governance=False,
+        )
         if not validation.get("ok"):
             return None, None, "previous_snapshot_invalid"
         return path, manifest, "previous_snapshot_valid"
@@ -2032,7 +2041,95 @@ def repository_secret_findings() -> list[dict[str, str]]:
     return findings
 
 
-def source_coverage_issues(manifest: dict[str, Any]) -> list[dict[str, Any]]:
+def wsl_location_from_unc(value: str) -> tuple[str, str] | None:
+    raw = str(value or "").replace("/", "\\")
+    matched = re.match(r"^\\\\(?:wsl\.localhost|wsl\$)\\([^\\]+)(\\.*)$", raw, flags=re.IGNORECASE)
+    if not matched:
+        return None
+    return matched.group(1), "/" + matched.group(2).lstrip("\\").replace("\\", "/")
+
+
+def current_work_git_release(config: dict[str, Any]) -> dict[str, Any]:
+    authority = config.get("workspace_authority") if isinstance(config.get("workspace_authority"), dict) else {}
+    variables = expanded_variables(config)
+    location = wsl_location_from_unc(str(variables.get("WORK_GIT_ROOT") or authority.get("work_git_root") or ""))
+    if location is None:
+        return {}
+    distribution, worktree = location
+    user = str(authority.get("wsl_user") or "").strip()
+    command = ["wsl.exe", "-d", distribution]
+    if user:
+        command.extend(["-u", user])
+    command.extend([
+        "--",
+        "python3",
+        f"{worktree}/workspace/_bridge/wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "work-git-release",
+    ])
+    try:
+        completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=90)
+        if completed.returncode != 0:
+            return {}
+        payload = json.loads(completed.stdout.lstrip("\ufeff"))
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def work_git_release_proves_snapshot_source(captured: dict[str, Any], current: dict[str, Any]) -> bool:
+    captured_git = captured.get("work_git") if isinstance(captured.get("work_git"), dict) else {}
+    current_git = current.get("work_git") if isinstance(current.get("work_git"), dict) else {}
+    captured_head = str(captured_git.get("worktree_head") or "")
+    current_head = str(current_git.get("worktree_head") or "")
+    return bool(
+        captured.get("ok")
+        and current.get("ok")
+        and captured_git.get("release_ready")
+        and current_git.get("release_ready")
+        and captured_git.get("clean")
+        and current_git.get("clean")
+        and captured_head
+        and captured_head == str(captured_git.get("bare_head") or "")
+        and captured_head == current_head
+        and current_head == str(current_git.get("bare_head") or "")
+    )
+
+
+def source_ids_within_work_git(config: dict[str, Any]) -> set[str]:
+    variables = expanded_variables(config)
+    root = normalized_path(str(variables.get("WORK_GIT_ROOT") or "")).rstrip("/")
+    if not root:
+        return set()
+    source_ids: set[str] = set()
+    for spec in config.get("sources", []):
+        source_id = str(spec.get("id") or "")
+        source = normalized_path(expand_tokens(str(spec.get("source") or ""), variables))
+        if source_id and (source == root or source.startswith(root + "/")):
+            source_ids.add(source_id)
+    return source_ids
+
+
+def trusted_work_git_source_coverage(snapshot_root: Path, manifest: dict[str, Any], config: dict[str, Any]) -> tuple[set[str], dict[str, Any]]:
+    asset = next((item for item in manifest.get("assets", []) if item.get("asset_id") == WORK_GIT_RELEASE_SOURCE_ID), None)
+    if not isinstance(asset, dict):
+        return set(), {"mode": "full_hash", "reason": "captured_work_git_release_receipt_missing"}
+    try:
+        captured = load_json(snapshot_root / Path(str(asset["snapshot_path"])))
+    except (OSError, ValueError, json.JSONDecodeError):
+        return set(), {"mode": "full_hash", "reason": "captured_work_git_release_receipt_unreadable"}
+    current = current_work_git_release(config)
+    if not work_git_release_proves_snapshot_source(captured, current):
+        return set(), {"mode": "full_hash", "reason": "work_git_release_receipt_mismatch"}
+    head = str((captured.get("work_git") or {}).get("worktree_head") or "")
+    source_ids = source_ids_within_work_git(config)
+    if not source_ids:
+        return set(), {"mode": "full_hash", "reason": "work_git_source_roots_unresolved"}
+    return source_ids, {"mode": "work_git_release_receipt", "head": head, "source_count": len(source_ids)}
+
+
+def source_coverage_issues(manifest: dict[str, Any], *, trusted_source_ids: set[str] | None = None) -> list[dict[str, Any]]:
     config = load_json(SOURCE_MANIFEST)
     variables = expanded_variables(config)
     policy = config["policy"]
@@ -2041,6 +2138,8 @@ def source_coverage_issues(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     guard = manifest.get("membership_guard", {})
     issues: list[dict[str, Any]] = []
     for spec in config.get("sources", []):
+        if str(spec.get("id") or "") in (trusted_source_ids or set()):
+            continue
         if spec.get("coverage_required", True) is False:
             continue
         source = Path(expand_tokens(spec["source"], variables))
@@ -2154,9 +2253,11 @@ def validate_snapshot(
     *,
     live_sources: bool = False,
     control_plane: bool = True,
+    governance: bool = True,
 ) -> dict[str, Any]:
     issues: list[dict[str, Any]] = []
     source_issues: list[dict[str, Any]] = []
+    work_git_source_coverage = {"mode": "not_checked"}
     try:
         path = resolve_snapshot(snapshot)
         manifest = load_json(path / "snapshot-manifest.json")
@@ -2216,10 +2317,12 @@ def validate_snapshot(
         except ValueError:
             issues.append({"code": "text_asset_decode_failed", "path": relative})
     if live_sources:
-        source_issues.extend(membership_projection_issues(load_json(SOURCE_MANIFEST)))
-        source_issues.extend(source_coverage_issues(manifest))
+        source_config = load_json(SOURCE_MANIFEST)
+        trusted_source_ids, work_git_source_coverage = trusted_work_git_source_coverage(path, manifest, source_config)
+        source_issues.extend(membership_projection_issues(source_config))
+        source_issues.extend(source_coverage_issues(manifest, trusted_source_ids=trusted_source_ids))
         source_issues.extend(generated_source_issues(path, manifest))
-        source_issues.extend(collect_asset_dispositions(load_json(SOURCE_MANIFEST))["issues"])
+        source_issues.extend(collect_asset_dispositions(source_config)["issues"])
     asset_by_id = {str(item.get("asset_id")): item for item in manifest.get("assets", [])}
     for asset_id, checks in {
         "codex-plugin-inventory": (("unresolved_count", 0, "plugin_inventory_unresolved"),),
@@ -2239,10 +2342,11 @@ def validate_snapshot(
                     issues.append({"code": code, "asset_id": asset_id, "observed": value, "expected": expected})
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             issues.append({"code": "generated_asset_validation_failed", "asset_id": asset_id, "detail": str(exc)})
-    current_hashes = governance_hashes()
-    for name, expected in manifest.get("governance_hashes", {}).items():
-        if current_hashes.get(name) != expected:
-            issues.append({"code": "governance_drift", "path": name, "snapshot_hash": expected, "current_hash": current_hashes.get(name, "missing")})
+    if governance:
+        current_hashes = governance_hashes()
+        for name, expected in manifest.get("governance_hashes", {}).items():
+            if current_hashes.get(name) != expected:
+                issues.append({"code": "governance_drift", "path": name, "snapshot_hash": expected, "current_hash": current_hashes.get(name, "missing")})
     if control_plane:
         issues.extend(control_plane_issues(str(manifest.get("snapshot_id") or "")))
     issues.extend(restore_graph_issues())
@@ -2290,6 +2394,7 @@ def validate_snapshot(
             "git_initialized": git_dir.exists(),
             "git_remotes": remotes,
             "remote_required_for_off_machine_recovery": True,
+            "work_git_source_coverage": work_git_source_coverage,
         },
         "summary": manifest.get("summary", {}),
     }

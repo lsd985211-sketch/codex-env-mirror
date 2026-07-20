@@ -560,14 +560,6 @@
       "depends_on": [
         "workspace-bridge-source"
       ],
-      "depends_on_paths": {
-        "workspace-bridge-source": [
-          "wsl_workspace_owner.py",
-          "bootstrap_wsl_workspace.py",
-          "platform_paths.py",
-          "shared/**"
-        ]
-      },
       "required": true
     }
   ]

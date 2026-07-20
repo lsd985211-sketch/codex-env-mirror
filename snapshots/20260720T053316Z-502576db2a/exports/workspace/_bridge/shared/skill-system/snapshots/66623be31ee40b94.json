@@ -1,0 +1,20 @@
+{
+  "skill_id": "66623be31ee40b94",
+  "name": "long-term-plan",
+  "path": "C:\\Users\\45543\\.codex\\skills\\long-term-plan",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "a9423dae723f253a7d1db8a566092000c4da71086be7faa2e2dad7c428d3d991",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
