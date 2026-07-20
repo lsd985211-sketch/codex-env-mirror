@@ -538,6 +538,44 @@ class MirrorCliTests(unittest.TestCase):
             {"workspace-bridge-source": {"changed.py"}},
         ))
 
+    def test_incremental_reuse_links_verified_previous_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            previous = root / "previous"
+            stage = root / "stage"
+            source = previous / "exports" / "asset.txt"
+            source.parent.mkdir(parents=True)
+            source.write_text("verified", encoding="utf-8")
+            asset = {
+                "asset_id": "asset",
+                "snapshot_path": "exports/asset.txt",
+                "sha256": mirror_cli.sha256_file(source),
+                "bytes": source.stat().st_size,
+                "content_kind": "text",
+            }
+
+            copied = mirror_cli.copy_previous_asset(stage, previous, asset)
+
+            destination = stage / "exports" / "asset.txt"
+            self.assertEqual(destination.read_text(encoding="utf-8"), "verified")
+            self.assertEqual(copied["sha256"], asset["sha256"])
+            self.assertIn(copied["reuse"]["mode"], {"previous_snapshot_hardlink", "previous_snapshot_copy"})
+
+    def test_control_plane_validation_reuses_verified_asset_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "snapshot-manifest.json").write_text(json.dumps({"snapshot_id": "snapshot", "governance_hashes": {"scripts/mirror_cli.py": "same"}}), encoding="utf-8")
+            with patch.object(mirror_cli, "resolve_snapshot", return_value=root), \
+                    patch.object(mirror_cli, "governance_hashes", return_value={"scripts/mirror_cli.py": "same"}), \
+                    patch.object(mirror_cli, "control_plane_issues", return_value=[]), \
+                    patch.object(mirror_cli, "restore_graph_issues", return_value=[]), \
+                    patch.object(mirror_cli, "agent_bootstrap_issues", return_value=[]), \
+                    patch.object(mirror_cli, "repository_secret_findings", return_value=[]):
+                result = mirror_cli.validate_control_plane("snapshot")
+
+            self.assertTrue(result["ok"])
+            self.assertEqual(result["schema"], "codex_mirror.control_plane_validate.v1")
+
     def test_affected_source_plan_unknown_change_requires_full_rebuild(self) -> None:
         config = {"variables": {}, "sources": [{"id": "config", "kind": "file", "source": "C:/known.toml"}], "generated_sources": []}
         plan = mirror_cli.affected_source_plan(config, ["C:/outside.txt"])

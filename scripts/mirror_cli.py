@@ -1728,20 +1728,18 @@ def copy_previous_asset(stage: Path, previous_root: Path, asset: dict[str, Any])
     source = previous_root / Path(str(asset["snapshot_path"]))
     if not source.is_file():
         raise FileNotFoundError(f"previous_asset_missing:{asset.get('asset_id')}")
-    copied = add_asset(
-        stage=stage,
-        snapshot_path=str(asset["snapshot_path"]),
-        data=source.read_bytes(),
-        asset_id=str(asset["asset_id"]),
-        owner=str(asset.get("owner") or ""),
-        classification=str(asset.get("classification") or ""),
-        source_path=str(asset.get("source_path") or ""),
-        restore_template=str(asset.get("restore_template") or ""),
-        mode=str(asset.get("mode") or "copy"),
-        content_kind=str(asset.get("content_kind") or "text"),
-    )
+    destination = stage / Path(str(asset["snapshot_path"]))
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        os.link(source, destination)
+        reuse_mode = "previous_snapshot_hardlink"
+    except OSError:
+        shutil.copy2(source, destination)
+        reuse_mode = "previous_snapshot_copy"
+    copied = dict(asset)
+    copied.pop("reuse", None)
     copied["reuse"] = {
-        "mode": "previous_snapshot",
+        "mode": reuse_mode,
         "snapshot_id": previous_root.name,
         "source_asset_id": str(asset.get("asset_id") or ""),
     }
@@ -2248,6 +2246,32 @@ def generated_source_issues(snapshot_root: Path, manifest: dict[str, Any]) -> li
     return issues
 
 
+def validate_control_plane(snapshot: str = "latest") -> dict[str, Any]:
+    try:
+        path = resolve_snapshot(snapshot)
+        manifest = load_json(path / "snapshot-manifest.json")
+    except Exception as exc:
+        return {"schema": "codex_mirror.control_plane_validate.v1", "ok": False, "issues": [{"code": "snapshot_load_failed", "detail": str(exc)}]}
+    issues: list[dict[str, Any]] = []
+    current_hashes = governance_hashes()
+    for name, expected in manifest.get("governance_hashes", {}).items():
+        if current_hashes.get(name) != expected:
+            issues.append({"code": "governance_drift", "path": name, "snapshot_hash": expected, "current_hash": current_hashes.get(name, "missing")})
+    issues.extend(control_plane_issues(str(manifest.get("snapshot_id") or "")))
+    issues.extend(restore_graph_issues())
+    issues.extend(agent_bootstrap_issues())
+    issues.extend({"code": "repository_secret_detected", **finding} for finding in repository_secret_findings())
+    return {
+        "schema": "codex_mirror.control_plane_validate.v1",
+        "ok": not issues,
+        "snapshot_id": manifest.get("snapshot_id"),
+        "mirror_valid": not issues,
+        "capability_restore_ready": not issues,
+        "full_state_restore_ready": False,
+        "issues": issues,
+    }
+
+
 def validate_snapshot(
     snapshot: str = "latest",
     *,
@@ -2515,6 +2539,8 @@ def main(argv: list[str] | None = None) -> int:
     validate_parser.add_argument("--snapshot", default="latest")
     validate_parser.add_argument("--live-sources", action="store_true")
     validate_parser.add_argument("--skip-control-plane", action="store_true", help=argparse.SUPPRESS)
+    control_plane_parser = sub.add_parser("control-plane-validate")
+    control_plane_parser.add_argument("--snapshot", default="latest")
     restore_parser = sub.add_parser("restore-plan")
     restore_parser.add_argument("--snapshot", default="latest")
     restore_parser.add_argument("--target-root", required=True)
@@ -2538,6 +2564,8 @@ def main(argv: list[str] | None = None) -> int:
             live_sources=args.live_sources,
             control_plane=not args.skip_control_plane,
         )
+    elif args.command == "control-plane-validate":
+        payload = validate_control_plane(args.snapshot)
     elif args.command == "restore-plan":
         payload = restore_plan(args.snapshot, Path(args.target_root))
     else:
