@@ -1,0 +1,20 @@
+{
+  "skill_id": "6be8c9290711eb93",
+  "name": "context-compression",
+  "path": "C:\\Users\\45543\\.codex\\skills\\context-compression",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "4f5f869906f5881a4a628f29519fe85be94a84f35b2af9889e0eb5aad309e2cf",
+    "agents": null,
+    "scripts": "88fc4b26fbfa34bcded714b21a0116f9ec3b67ff873519299346710d1528372d",
+    "references": "b687748dbc8d2b9fdb3644d896ecb28492d4b27cb92ba17b995e6b125cc013f2",
+    "assets": null
+  }
+}

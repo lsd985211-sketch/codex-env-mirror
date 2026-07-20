@@ -1,13 +1,13 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-20T04:23:17.371039+00:00",
+  "generated_at": "2026-07-20T04:48:41.567779+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260720T041153Z-f9cb067617",
-    "created_at": "2026-07-20T04:12:46.520767+00:00",
+    "snapshot_id": "20260720T044708Z-5f55813779",
+    "created_at": "2026-07-20T04:47:41.043279+00:00",
     "asset_count": 2031,
-    "total_bytes": 25097035,
-    "capture_mode": "full"
+    "total_bytes": 25106939,
+    "capture_mode": "incremental"
   },
   "readiness": {
     "mirror_valid": true,
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "8fffdaee4baa855d74464da2c0039ce2d63c09f41fa390d40fbc3b53c74541aa"
+  "current_md_sha256": "cce8e02c600d6ce2072077dee378b24b4bc66057269f52c7bca5bef86db3dae7"
 }
