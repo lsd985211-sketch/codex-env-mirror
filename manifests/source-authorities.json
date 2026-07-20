@@ -316,6 +316,15 @@
       "classification": "authority_export",
       "owner": "system_membership",
       "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "system_membership.py",
+          "platform_paths.py",
+          "shared/**",
+          "docs/maintenance_surface_map.md",
+          "docs/mcp_capability_matrix.md"
+        ]
+      },
       "required": true
     },
     {
@@ -326,6 +335,14 @@
       "classification": "authority_export",
       "owner": "rule_governance",
       "depends_on": ["codex-global-agents", "workspace-agents", "workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "rule_governance.py",
+          "system_membership.py",
+          "shared/**",
+          "docs/maintenance_surface_map.md"
+        ]
+      },
       "required": true
     },
     {
@@ -336,6 +353,14 @@
       "classification": "authority_export",
       "owner": "maintenance_capability_registry",
       "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "maintenance_capability_registry.py",
+          "system_membership.py",
+          "shared/**",
+          "docs/maintenance_surface_map.md"
+        ]
+      },
       "required": true
     },
     {
@@ -346,6 +371,16 @@
       "classification": "authority_export",
       "owner": "mcp_capability_routes",
       "depends_on": ["codex-config-template", "workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "mcp_capability_routes.py",
+          "mcp_session_doctor.py",
+          "local_mcp_hub.py",
+          "platform_paths.py",
+          "shared/**",
+          "docs/mcp_capability_matrix.md"
+        ]
+      },
       "required": true
     },
     {
@@ -356,6 +391,16 @@
       "classification": "authority_export",
       "owner": "memory_governance",
       "depends_on": ["codex-memory-index", "codex-native-memory-files", "codex-user-preferences", "workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "local_pmb_memory.py",
+          "pmb_platform_runtime.py",
+          "pmb_compatibility.py",
+          "memory_governance.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
       "required": false
     },
     {
@@ -401,6 +446,9 @@
       "owner": "memory_governance",
       "activation": "owner_import_only",
       "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["shared/**"]
+      },
       "required": true
     },
     {
@@ -409,7 +457,7 @@
       "destination": "exports/windows/scheduled-tasks.json",
       "classification": "configuration_template",
       "owner": "windows_integration",
-      "depends_on": ["codex-scripts", "workspace-bridge-source"],
+      "depends_on": ["codex-scripts"],
       "required": true,
       "patterns": ["Codex", "CC Switch", "MCP", "PMB", "OpenClaw"]
     },
@@ -419,7 +467,7 @@
       "destination": "exports/windows/shortcuts.json",
       "classification": "configuration_template",
       "owner": "windows_integration",
-      "depends_on": ["codex-scripts", "workspace-bridge-source"],
+      "depends_on": ["codex-scripts"],
       "required": false,
       "patterns": ["Codex", "CC Switch", "OpenClaw"]
     },
@@ -441,6 +489,14 @@
       "owner": "wsl_workspace",
       "activation": "owner_export_only",
       "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "wsl_workspace_owner.py",
+          "bootstrap_wsl_workspace.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
       "required": true
     },
     {
@@ -452,6 +508,14 @@
       "owner": "wsl_workspace",
       "activation": "owner_export_only",
       "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "wsl_workspace_owner.py",
+          "bootstrap_wsl_workspace.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
       "required": true
     },
     {
@@ -469,6 +533,14 @@
       "owner": "wsl_workspace",
       "activation": "owner_export_only",
       "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "wsl_workspace_owner.py",
+          "bootstrap_wsl_workspace.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
       "required": true
     },
     {
@@ -488,6 +560,14 @@
       "depends_on": [
         "workspace-bridge-source"
       ],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "wsl_workspace_owner.py",
+          "bootstrap_wsl_workspace.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
       "required": true
     }
   ]

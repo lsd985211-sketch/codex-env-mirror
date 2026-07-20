@@ -91,6 +91,27 @@ class MirrorCliTests(unittest.TestCase):
             self.assertEqual(content_kind, "text")
             self.assertIn(b"<SECRET:BEARER_TOKEN>", data)
 
+    def test_redact_toml_preserves_non_sensitive_text_after_syntax_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "config.toml"
+            original = b'enabled = true\r\n[plugins]\r\nname = "example"\r\n'
+            path.write_bytes(original)
+
+            payload = mirror_cli.redact_toml(path)
+
+            self.assertEqual(payload, original)
+
+    def test_redact_toml_rewrites_only_sensitive_assignment(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "config.toml"
+            path.write_bytes(b'endpoint = "https://example.test"\r\napi_token = "not-for-export"\r\n')
+
+            payload = mirror_cli.redact_toml(path).decode("utf-8")
+
+            self.assertIn('endpoint = "https://example.test"\r\n', payload)
+            self.assertIn('api_token = "<SECRET:API_TOKEN>"\r\n', payload)
+            self.assertNotIn("not-for-export", payload)
+
     def test_sensitive_json_keys_are_redacted(self) -> None:
         payload = mirror_cli.redact_json_value({"token": "abc", "nested": {"password": "def"}})
         self.assertEqual(payload["token"], "<SECRET:TOKEN>")
@@ -349,6 +370,108 @@ class MirrorCliTests(unittest.TestCase):
             self.assertFalse(plan["full_rebuild_required"])
             self.assertEqual(plan["source_file_changes"], {"workspace-bridge-source": ["local_mcp_hub.py"]})
             self.assertTrue(plan["guard_authority_refreshed"])
+
+    def test_path_aware_generated_dependency_skips_unrelated_bridge_change(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            bridge = root / "workspace" / "_bridge"
+            unrelated = bridge / "codex_environment_mirror.py"
+            watched = bridge / "wsl_workspace_owner.py"
+            unrelated.parent.mkdir(parents=True)
+            unrelated.write_text("unrelated\n", encoding="utf-8")
+            watched.write_text("watched\n", encoding="utf-8")
+            config = {
+                "variables": {},
+                "sources": [{"id": "workspace-bridge-source", "kind": "tree", "source": str(bridge)}],
+                "generated_sources": [
+                    {"id": mirror_cli.MEMBERSHIP_ASSET_ID, "kind": "command_json", "command": ["python", "-c", "print('{}')"]},
+                    {
+                        "id": "wsl-export",
+                        "kind": "command_json",
+                        "command": ["python", "-c", "print('{}')"],
+                        "depends_on": ["workspace-bridge-source"],
+                        "depends_on_paths": {"workspace-bridge-source": ["wsl_workspace_owner.py", "shared/**"]},
+                    },
+                ],
+            }
+
+            unrelated_plan = mirror_cli.affected_source_plan(config, [str(unrelated)])
+            watched_plan = mirror_cli.affected_source_plan(config, [str(watched)])
+
+            self.assertNotIn("wsl-export", unrelated_plan["dependent_generated_source_ids"])
+            self.assertIn(mirror_cli.MEMBERSHIP_ASSET_ID, unrelated_plan["dependent_generated_source_ids"])
+            self.assertIn("wsl-export", watched_plan["dependent_generated_source_ids"])
+
+    def test_snapshot_recovery_removes_stale_staging_after_crash(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            runtime = root / "runtime"
+            snapshots = root / "snapshots"
+            latest = snapshots / "latest.json"
+            stale_stage = runtime / "staging" / "candidate"
+            stale_stage.mkdir(parents=True)
+            snapshots.mkdir()
+            mirror_cli.write_json_atomic(latest, {"snapshot_id": "previous"})
+            with patch.object(mirror_cli, "RUNTIME_ROOT", runtime), \
+                    patch.object(mirror_cli, "SNAPSHOT_ROOT", snapshots), \
+                    patch.object(mirror_cli, "LATEST_PATH", latest):
+                mirror_cli.write_snapshot_transaction({
+                    "token": "stale", "pid": 0, "snapshot_id": "candidate", "stage_path": str(stale_stage),
+                    "phase": "capturing_sources", "previous_latest": {"snapshot_id": "previous"},
+                })
+                recovery = mirror_cli.recover_interrupted_snapshot_state()
+
+            self.assertTrue(recovery["ok"])
+            self.assertTrue(recovery["recovered"])
+            self.assertFalse(stale_stage.exists())
+            self.assertEqual(json.loads(latest.read_text(encoding="utf-8"))["snapshot_id"], "previous")
+            self.assertFalse((runtime / "transactions" / mirror_cli.SNAPSHOT_TRANSACTION_NAME).exists())
+
+    def test_snapshot_recovery_removes_unpublished_promoted_candidate(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            runtime = root / "runtime"
+            snapshots = root / "snapshots"
+            latest = snapshots / "latest.json"
+            candidate = snapshots / "candidate"
+            candidate.mkdir(parents=True)
+            (candidate / "snapshot-manifest.json").write_text(json.dumps({"snapshot_id": "candidate"}), encoding="utf-8")
+            mirror_cli.write_json_atomic(latest, {"snapshot_id": "previous"})
+            with patch.object(mirror_cli, "RUNTIME_ROOT", runtime), \
+                    patch.object(mirror_cli, "SNAPSHOT_ROOT", snapshots), \
+                    patch.object(mirror_cli, "LATEST_PATH", latest):
+                mirror_cli.write_snapshot_transaction({
+                    "token": "stale", "pid": 0, "snapshot_id": "candidate", "phase": "promoted",
+                    "previous_latest": {"snapshot_id": "previous"},
+                })
+                recovery = mirror_cli.recover_interrupted_snapshot_state()
+
+            self.assertTrue(recovery["ok"])
+            self.assertFalse(candidate.exists())
+            self.assertEqual(recovery["actions"][0]["code"], "orphan_snapshot_candidate_removed")
+
+    def test_snapshot_recovery_reverts_invalid_latest_candidate(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            runtime = root / "runtime"
+            snapshots = root / "snapshots"
+            latest = snapshots / "latest.json"
+            candidate = snapshots / "candidate"
+            candidate.mkdir(parents=True)
+            mirror_cli.write_json_atomic(latest, {"snapshot_id": "candidate"})
+            with patch.object(mirror_cli, "RUNTIME_ROOT", runtime), \
+                    patch.object(mirror_cli, "SNAPSHOT_ROOT", snapshots), \
+                    patch.object(mirror_cli, "LATEST_PATH", latest):
+                mirror_cli.write_snapshot_transaction({
+                    "token": "stale", "pid": 0, "snapshot_id": "candidate", "phase": "latest_updated",
+                    "previous_latest": {"snapshot_id": "previous"},
+                })
+                recovery = mirror_cli.recover_interrupted_snapshot_state()
+
+            self.assertTrue(recovery["ok"])
+            self.assertFalse(candidate.exists())
+            self.assertEqual(json.loads(latest.read_text(encoding="utf-8"))["snapshot_id"], "previous")
+            self.assertEqual(recovery["actions"][0]["code"], "invalid_latest_candidate_reverted")
 
     def test_incremental_reuse_keeps_unmodified_tree_asset(self) -> None:
         asset = {"asset_id": "workspace-bridge-source:unchanged.py"}

@@ -1,0 +1,20 @@
+{
+  "skill_id": "f36d597de392ddc3",
+  "name": "meridian",
+  "path": "C:\\Users\\45543\\.codex\\skills\\meridian",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d9e6a2de0fd245bc6b2a42b2bf9ac78d939f92125ecf0b9f8028ae28a1f239a3",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

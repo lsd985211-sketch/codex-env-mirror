@@ -38,6 +38,7 @@ RESTORE_ORDER = MANIFEST_ROOT / "restore-order.json"
 SNAPSHOT_ROOT = ROOT / "snapshots"
 RUNTIME_ROOT = ROOT / "runtime"
 LATEST_PATH = SNAPSHOT_ROOT / "latest.json"
+SNAPSHOT_TRANSACTION_NAME = "snapshot.json"
 GOVERNANCE_HASH_MODE = "canonical_utf8_lf_v1"
 CURRENT_STATE_PATH = ROOT / "CURRENT.md"
 
@@ -162,6 +163,137 @@ def write_json_atomic(path: Path, value: Any) -> None:
     temp_path.replace(path)
 
 
+def snapshot_transaction_path() -> Path:
+    return RUNTIME_ROOT / "transactions" / SNAPSHOT_TRANSACTION_NAME
+
+
+def snapshot_candidate_path(snapshot_id: str) -> Path | None:
+    candidate_id = str(snapshot_id or "")
+    if not candidate_id or Path(candidate_id).name != candidate_id:
+        return None
+    root = SNAPSHOT_ROOT.resolve()
+    candidate = (root / candidate_id).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError:
+        return None
+    return candidate
+
+
+def latest_snapshot_payload() -> dict[str, Any] | None:
+    try:
+        payload = load_json(LATEST_PATH)
+    except (OSError, ValueError, json.JSONDecodeError):
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def restore_latest_snapshot_payload(payload: dict[str, Any] | None) -> None:
+    if payload is None:
+        LATEST_PATH.unlink(missing_ok=True)
+        return
+    write_json_atomic(LATEST_PATH, payload)
+
+
+def write_snapshot_transaction(payload: dict[str, Any]) -> None:
+    write_json_atomic(snapshot_transaction_path(), payload)
+
+
+def clear_snapshot_transaction(token: str) -> None:
+    path = snapshot_transaction_path()
+    current = read_lock_owner(path)
+    if current.get("token") == token:
+        path.unlink(missing_ok=True)
+
+
+def _remove_stale_staging_directories() -> list[str]:
+    staging_root = RUNTIME_ROOT / "staging"
+    if not staging_root.is_dir():
+        return []
+    removed: list[str] = []
+    for candidate in staging_root.iterdir():
+        if candidate.is_dir() and not candidate.is_symlink():
+            shutil.rmtree(candidate, ignore_errors=True)
+            removed.append(candidate.name)
+    return sorted(removed)
+
+
+def recover_interrupted_snapshot_state() -> dict[str, Any]:
+    """Recover stale snapshot scratch state after a terminated writer.
+
+    The membership guard constrains what a completed snapshot may contain. This
+    journal instead owns the capture transaction: it never removes a valid
+    latest snapshot and only deletes a candidate when its journal proves that
+    it was not published through the latest pointer.
+    """
+    path = snapshot_transaction_path()
+    if not path.exists():
+        return {
+            "schema": "codex_mirror.snapshot_recovery.v1",
+            "ok": True,
+            "recovered": False,
+            "removed_staging": _remove_stale_staging_directories(),
+            "actions": [],
+        }
+    transaction = read_lock_owner(path)
+    if not transaction:
+        return {
+            "schema": "codex_mirror.snapshot_recovery.v1",
+            "ok": False,
+            "recovered": False,
+            "reason": "snapshot_transaction_unreadable",
+            "journal": str(path),
+        }
+    if process_is_alive(int(transaction.get("pid") or 0)):
+        return {
+            "schema": "codex_mirror.snapshot_recovery.v1",
+            "ok": True,
+            "recovered": False,
+            "reason": "snapshot_transaction_active",
+            "journal": str(path),
+        }
+
+    snapshot_id = str(transaction.get("snapshot_id") or "")
+    candidate = snapshot_candidate_path(snapshot_id)
+    previous_latest = transaction.get("previous_latest")
+    previous_latest = previous_latest if isinstance(previous_latest, dict) else None
+    latest = latest_snapshot_payload()
+    latest_id = str((latest or {}).get("snapshot_id") or "")
+    phase = str(transaction.get("phase") or "")
+    actions: list[dict[str, Any]] = []
+    removed_staging = _remove_stale_staging_directories()
+
+    manifest_valid = False
+    if candidate and candidate.is_dir():
+        try:
+            manifest_valid = str(load_json(candidate / "snapshot-manifest.json").get("snapshot_id") or "") == snapshot_id
+        except (OSError, ValueError, json.JSONDecodeError):
+            manifest_valid = False
+
+    if candidate and candidate.is_dir() and latest_id != snapshot_id:
+        if candidate.name != str((previous_latest or {}).get("snapshot_id") or ""):
+            shutil.rmtree(candidate, ignore_errors=True)
+            actions.append({"code": "orphan_snapshot_candidate_removed", "snapshot_id": snapshot_id, "phase": phase})
+    elif latest_id == snapshot_id and not manifest_valid:
+        restore_latest_snapshot_payload(previous_latest)
+        if candidate and candidate.is_dir():
+            shutil.rmtree(candidate, ignore_errors=True)
+        actions.append({"code": "invalid_latest_candidate_reverted", "snapshot_id": snapshot_id, "phase": phase})
+    elif latest_id == snapshot_id and manifest_valid:
+        actions.append({"code": "valid_latest_candidate_preserved", "snapshot_id": snapshot_id, "phase": phase})
+
+    token = str(transaction.get("token") or "")
+    if token:
+        clear_snapshot_transaction(token)
+    return {
+        "schema": "codex_mirror.snapshot_recovery.v1",
+        "ok": True,
+        "recovered": bool(actions or removed_staging),
+        "removed_staging": removed_staging,
+        "actions": actions,
+    }
+
+
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -229,16 +361,24 @@ def scrub_known_tokens(text: str) -> str:
 def redact_toml(path: Path) -> bytes:
     text = read_text(path)
     tomllib.loads(text)
-    lines: list[str] = []
-    assignment = re.compile(r"^(\s*)([A-Za-z0-9_.-]+)(\s*=\s*)(.*)$")
-    for line in text.splitlines():
-        match = assignment.match(line)
+    assignment = re.compile(r"^(\s*)([A-Za-z0-9_.-]+)(\s*=\s*)([^\r\n]*)(\r?)$", re.MULTILINE)
+    def redact_assignment(match: re.Match[str]) -> str:
         if match and SENSITIVE_KEY.search(match.group(2)):
             secret_id = re.sub(r"[^A-Za-z0-9]+", "_", match.group(2)).upper().strip("_")
-            line = f'{match.group(1)}{match.group(2)}{match.group(3)}"<SECRET:{secret_id}>"'
-        line = INLINE_SENSITIVE_PATTERN.sub(lambda m: m.group(1) + '"<SECRET:REQUIRED>"', line)
-        lines.append(scrub_known_tokens(line))
-    return ("\n".join(lines) + "\n").encode("utf-8")
+            return f'{match.group(1)}{match.group(2)}{match.group(3)}"<SECRET:{secret_id}>"{match.group(5)}'
+        return match.group(0)
+
+    # Keep the parser as the syntax guard, but avoid rebuilding every line when
+    # the configuration has no redaction candidate.
+    needs_redaction = bool(SENSITIVE_KEY.search(text) or any(pattern.search(text) for _, pattern in HIGH_CONFIDENCE_SECRET_PATTERNS))
+    if not needs_redaction:
+        return text.encode("utf-8")
+    redacted = assignment.sub(redact_assignment, text)
+    redacted = INLINE_SENSITIVE_PATTERN.sub(
+        lambda match: match.group(0) if "<SECRET:" in match.group(2) else match.group(1) + '"<SECRET:REQUIRED>"',
+        redacted,
+    )
+    return scrub_known_tokens(redacted).encode("utf-8")
 
 
 def redact_url_value(value: str) -> str:
@@ -1329,6 +1469,18 @@ def source_dependency_graph(config: dict[str, Any]) -> dict[str, Any]:
         missing = sorted(set(dependencies) - nodes)
         if missing:
             issues.append({"code": "source_dependency_missing", "source_id": source_id, "missing": missing})
+        watched_paths = spec.get("depends_on_paths")
+        if watched_paths is None:
+            continue
+        if not isinstance(watched_paths, dict):
+            issues.append({"code": "source_dependency_paths_invalid", "source_id": source_id})
+            continue
+        for dependency, patterns in watched_paths.items():
+            dependency_id = str(dependency)
+            if dependency_id not in dependencies:
+                issues.append({"code": "source_dependency_path_without_dependency", "source_id": source_id, "dependency": dependency_id})
+            elif not isinstance(patterns, list) or not any(str(pattern).strip() for pattern in patterns):
+                issues.append({"code": "source_dependency_paths_empty", "source_id": source_id, "dependency": dependency_id})
     visiting: set[str] = set()
     visited: set[str] = set()
 
@@ -1388,6 +1540,34 @@ def expand_changed_path(raw: str, variables: dict[str, str]) -> Path:
     return Path(value).expanduser()
 
 
+def source_path_for_current_host(value: str) -> Path:
+    """Interpret manifest separators correctly in direct WSL repository tests."""
+    return Path(value if os.name == "nt" else value.replace("\\", "/"))
+
+
+def generated_dependency_is_affected(
+    spec: dict[str, Any],
+    dependency_id: str,
+    source_file_changes: dict[str, set[str]],
+) -> bool:
+    """Apply optional path watches without weakening undeclared dependencies."""
+    watched_paths = spec.get("depends_on_paths")
+    if not isinstance(watched_paths, dict) or dependency_id not in watched_paths:
+        return True
+    changed_paths = source_file_changes.get(dependency_id)
+    if not changed_paths:
+        # A root-level source change has no safely narrow file set.
+        return True
+    patterns = [str(item).replace("\\", "/").lstrip("/") for item in watched_paths.get(dependency_id, []) if str(item).strip()]
+    if not patterns:
+        return True
+    return any(
+        fnmatch.fnmatchcase(changed.replace("\\", "/").lstrip("/").lower(), pattern.lower())
+        for changed in changed_paths
+        for pattern in patterns
+    )
+
+
 def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> dict[str, Any]:
     variables = expanded_variables(config)
     sources, generated = source_specs(config)
@@ -1404,7 +1584,7 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
         candidate = Path(raw)
         matched = False
         for source_id, spec in sources.items():
-            source = Path(expand_tokens(str(spec.get("source") or ""), variables))
+            source = source_path_for_current_host(expand_tokens(str(spec.get("source") or ""), variables))
             if source and path_matches_source(candidate, source, str(spec.get("kind") or "file")):
                 direct_sources.add(source_id)
                 if str(spec.get("kind") or "file") == "tree" and normalized_path(str(candidate)) != normalized_path(str(source)):
@@ -1428,6 +1608,9 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
     while queue:
         current = queue.pop(0)
         for dependent in dependency["reverse"].get(current, []):
+            dependent_spec = generated.get(dependent)
+            if dependent_spec and not generated_dependency_is_affected(dependent_spec, current, source_file_changes):
+                continue
             if dependent not in affected:
                 affected.add(dependent)
                 queue.append(dependent)
@@ -1608,7 +1791,22 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
     stage.mkdir(parents=True)
     assets: list[dict[str, Any]] = []
     missing: list[str] = []
+    target = SNAPSHOT_ROOT / snapshot_id
+    token = f"{os.getpid()}-{time.time_ns()}"
+    transaction = {
+        "schema": "codex_mirror.snapshot_transaction.v1",
+        "token": token,
+        "pid": os.getpid(),
+        "started_at": now_iso(),
+        "snapshot_id": snapshot_id,
+        "stage_path": str(stage),
+        "phase": "staging_created",
+        "previous_latest": latest_snapshot_payload(),
+    }
+    promoted = False
+    latest_updated = False
     try:
+        write_snapshot_transaction(transaction)
         affected_ids = set(incremental_plan.get("affected_source_ids", [])) if capture_mode == "incremental" else set()
         affected_generated_ids = set(incremental_plan.get("dependent_generated_source_ids", [])) if capture_mode == "incremental" else set()
         source_file_changes = {
@@ -1620,6 +1818,8 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
             for asset in previous_manifest.get("assets", []):
                 if reuse_previous_asset_for_incremental(asset, affected_ids, affected_generated_ids, source_file_changes):
                     assets.append(copy_previous_asset(stage, previous_root, asset))
+        transaction["phase"] = "capturing_sources"
+        write_snapshot_transaction(transaction)
         for spec in config.get("sources", []):
             if capture_mode == "incremental" and str(spec.get("id")) not in affected_ids:
                 continue
@@ -1643,6 +1843,8 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
                 data, effective_mode, content_kind = source_payload(path, "copy", content_kind)
                 assets.append(add_asset(stage=stage, snapshot_path=destination, data=data, asset_id=f"{spec['id']}:{rel}", owner=spec["owner"], classification=spec["classification"], source_path=str(path), restore_template=restore_template, mode=effective_mode, content_kind=content_kind))
 
+        transaction["phase"] = "capturing_generated"
+        write_snapshot_transaction(transaction)
         for spec in config.get("generated_sources", []):
             if capture_mode == "incremental" and str(spec.get("id")) not in affected_generated_ids:
                 continue
@@ -1698,14 +1900,27 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
             "dependency_graph": source_dependency_graph(config),
         }
         write_json_atomic(stage / "snapshot-manifest.json", manifest)
-        target = SNAPSHOT_ROOT / snapshot_id
         if target.exists():
             raise FileExistsError(target)
+        transaction["phase"] = "ready_to_promote"
+        write_snapshot_transaction(transaction)
         stage.replace(target)
+        promoted = True
+        transaction["phase"] = "promoted"
+        write_snapshot_transaction(transaction)
         write_json_atomic(LATEST_PATH, {"schema": "codex_mirror.latest.v1", "snapshot_id": snapshot_id, "updated_at": now_iso()})
+        latest_updated = True
+        transaction["phase"] = "latest_updated"
+        write_snapshot_transaction(transaction)
+        clear_snapshot_transaction(token)
         return {"schema": "codex_mirror.snapshot.v1", "ok": True, "snapshot_id": snapshot_id, "path": str(target), "summary": manifest["summary"], "capture_mode": capture_mode, "fallback_reason": fallback_reason}
     except Exception as exc:
+        if latest_updated:
+            restore_latest_snapshot_payload(transaction["previous_latest"])
+        if promoted:
+            shutil.rmtree(target, ignore_errors=True)
         shutil.rmtree(stage, ignore_errors=True)
+        clear_snapshot_transaction(token)
         return {"schema": "codex_mirror.snapshot.v1", "ok": False, "reason": str(exc), "snapshot_id": snapshot_id}
 
 
@@ -1713,7 +1928,18 @@ def snapshot_with_lock(config: dict[str, Any], *, changed_paths: list[str] | Non
     lock_path = RUNTIME_ROOT / "locks" / "snapshot.lock"
     try:
         with exclusive_operation_lock(lock_path, "snapshot"):
-            return create_snapshot(config, changed_paths=changed_paths)
+            recovery = recover_interrupted_snapshot_state()
+            if not recovery.get("ok"):
+                return {
+                    "schema": "codex_mirror.snapshot.v1",
+                    "ok": False,
+                    "reason": "snapshot_recovery_failed",
+                    "recovery": recovery,
+                }
+            result = create_snapshot(config, changed_paths=changed_paths)
+            if isinstance(result, dict):
+                result["interrupted_recovery"] = recovery
+            return result
     except MirrorOperationBusy as exc:
         return {
             "schema": "codex_mirror.snapshot.v1",
@@ -2081,7 +2307,7 @@ def stage_relative_path(template: str, snapshot_path: str) -> Path:
     for prefix, base in mappings.items():
         if normalized.upper().startswith(prefix.upper()):
             suffix = normalized[len(prefix):].lstrip("\\")
-            return base / Path(suffix)
+            return base / Path(suffix.replace("\\", "/"))
     return Path("derived") / Path(snapshot_path)
 
 
