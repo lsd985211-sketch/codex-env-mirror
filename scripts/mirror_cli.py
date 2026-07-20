@@ -1396,9 +1396,10 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
     normalized_changes = [str(expand_changed_path(item, variables)) for item in original_changes]
     direct_sources: set[str] = set()
     direct_generated: set[str] = set()
+    source_file_changes: dict[str, set[str]] = {}
     unmatched: list[str] = []
     reasons: list[str] = []
-    membership_ids = {MEMBERSHIP_ASSET_ID, "workspace-bridge-source"}
+    membership_ids = {MEMBERSHIP_ASSET_ID}
     for original, raw in zip(original_changes, normalized_changes):
         candidate = Path(raw)
         matched = False
@@ -1406,6 +1407,10 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
             source = Path(expand_tokens(str(spec.get("source") or ""), variables))
             if source and path_matches_source(candidate, source, str(spec.get("kind") or "file")):
                 direct_sources.add(source_id)
+                if str(spec.get("kind") or "file") == "tree" and normalized_path(str(candidate)) != normalized_path(str(source)):
+                    relative = relative_posix(candidate, source)
+                    if relative not in {"", "."}:
+                        source_file_changes.setdefault(source_id, set()).add(relative)
                 matched = True
         for source_id, spec in generated.items():
             destination = normalized_path(str(spec.get("destination") or ""))
@@ -1426,7 +1431,7 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
             if dependent not in affected:
                 affected.add(dependent)
                 queue.append(dependent)
-    if affected & membership_ids or direct_generated & {MEMBERSHIP_ASSET_ID}:
+    if direct_generated & membership_ids:
         reasons.append("membership_scope_changed")
     if not normalized_changes:
         reasons.append("changed_paths_required_for_incremental")
@@ -1447,6 +1452,7 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
         "ok": dependency["ok"] and not unmatched and bool(normalized_changes),
         "changed_files": normalized_changes,
         "direct_source_ids": sorted(direct_sources),
+        "source_file_changes": {key: sorted(value) for key, value in sorted(source_file_changes.items())},
         "direct_generated_source_ids": sorted(direct_generated),
         "dependent_generated_source_ids": affected_generated,
         "affected_source_ids": affected_sources,
@@ -1462,6 +1468,25 @@ def affected_source_plan(config: dict[str, Any], changed_paths: list[str]) -> di
 
 def source_id_for_asset(asset_id: str) -> str:
     return str(asset_id).split(":", 1)[0]
+
+
+def reuse_previous_asset_for_incremental(
+    asset: dict[str, Any],
+    affected_source_ids: set[str],
+    affected_generated_ids: set[str],
+    source_file_changes: dict[str, set[str]],
+) -> bool:
+    """Reuse a previous asset unless its source or generated owner requires recapture."""
+    asset_id = str(asset.get("asset_id") or "")
+    if asset_id in affected_generated_ids:
+        return False
+    source_id = source_id_for_asset(asset_id)
+    if source_id not in affected_source_ids:
+        return True
+    changed_files = source_file_changes.get(source_id)
+    if not changed_files or ":" not in asset_id:
+        return False
+    return asset_id.split(":", 1)[1] not in changed_files
 
 
 def strip_volatile_value(value: Any) -> Any:
@@ -1586,9 +1611,14 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
     try:
         affected_ids = set(incremental_plan.get("affected_source_ids", [])) if capture_mode == "incremental" else set()
         affected_generated_ids = set(incremental_plan.get("dependent_generated_source_ids", [])) if capture_mode == "incremental" else set()
+        source_file_changes = {
+            str(source_id): {str(path) for path in paths}
+            for source_id, paths in (incremental_plan.get("source_file_changes") or {}).items()
+            if isinstance(paths, list)
+        } if capture_mode == "incremental" else {}
         if capture_mode == "incremental" and previous_manifest is not None and previous_root is not None:
             for asset in previous_manifest.get("assets", []):
-                if source_id_for_asset(str(asset.get("asset_id") or "")) not in affected_ids and str(asset.get("asset_id") or "") not in affected_generated_ids:
+                if reuse_previous_asset_for_incremental(asset, affected_ids, affected_generated_ids, source_file_changes):
                     assets.append(copy_previous_asset(stage, previous_root, asset))
         for spec in config.get("sources", []):
             if capture_mode == "incremental" and str(spec.get("id")) not in affected_ids:
@@ -1605,6 +1635,8 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
                 continue
             for path in iter_source_files(source, spec, policy):
                 rel = relative_posix(path, source)
+                if capture_mode == "incremental" and str(spec.get("id")) in source_file_changes and rel not in source_file_changes[str(spec.get("id"))]:
+                    continue
                 destination = str(Path(spec["destination"]) / Path(rel)).replace("\\", "/")
                 restore_template = str(Path(spec.get("restore_path", "")) / Path(rel)).replace("/", "\\")
                 content_kind = source_content_kind(path, spec)

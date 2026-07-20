@@ -325,6 +325,47 @@ class MirrorCliTests(unittest.TestCase):
             self.assertIn(mirror_cli.MEMBERSHIP_ASSET_ID, plan["dependent_generated_source_ids"])
             self.assertNotIn(mirror_cli.MEMBERSHIP_ASSET_ID, plan["reused_generated_source_ids"])
 
+    def test_workspace_bridge_file_change_is_incremental_and_refreshes_membership(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            bridge = root / "workspace" / "_bridge"
+            changed = bridge / "local_mcp_hub.py"
+            changed.parent.mkdir(parents=True)
+            changed.write_text("ok\n", encoding="utf-8")
+            config = {
+                "variables": {},
+                "sources": [{"id": "workspace-bridge-source", "kind": "tree", "source": str(bridge)}],
+                "generated_sources": [{
+                    "id": mirror_cli.MEMBERSHIP_ASSET_ID,
+                    "kind": "command_json",
+                    "command": ["python", "-c", "print('{}')"],
+                    "depends_on": ["workspace-bridge-source"],
+                }],
+            }
+
+            plan = mirror_cli.affected_source_plan(config, [str(changed)])
+
+            self.assertTrue(plan["ok"])
+            self.assertFalse(plan["full_rebuild_required"])
+            self.assertEqual(plan["source_file_changes"], {"workspace-bridge-source": ["local_mcp_hub.py"]})
+            self.assertTrue(plan["guard_authority_refreshed"])
+
+    def test_incremental_reuse_keeps_unmodified_tree_asset(self) -> None:
+        asset = {"asset_id": "workspace-bridge-source:unchanged.py"}
+
+        self.assertTrue(mirror_cli.reuse_previous_asset_for_incremental(
+            asset,
+            {"workspace-bridge-source"},
+            set(),
+            {"workspace-bridge-source": {"changed.py"}},
+        ))
+        self.assertFalse(mirror_cli.reuse_previous_asset_for_incremental(
+            {"asset_id": "workspace-bridge-source:changed.py"},
+            {"workspace-bridge-source"},
+            set(),
+            {"workspace-bridge-source": {"changed.py"}},
+        ))
+
     def test_affected_source_plan_unknown_change_requires_full_rebuild(self) -> None:
         config = {"variables": {}, "sources": [{"id": "config", "kind": "file", "source": "C:/known.toml"}], "generated_sources": []}
         plan = mirror_cli.affected_source_plan(config, ["C:/outside.txt"])
