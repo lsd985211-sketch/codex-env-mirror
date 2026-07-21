@@ -87,6 +87,13 @@ remote branch, and verifies that the remote branch resolves to the local
 `HEAD`. A local-only refresh is useful for inspection, but it is not considered
 published for off-machine recovery.
 
+MCP release archives are content-addressed. A new milestone uploads an archive
+only when its name, SHA-256, or size changed; unchanged public archives are
+referenced in the new `mcp-bundle-index.json` by their verified prior release
+tag and asset URL. Restore follows those references and verifies the archive
+hash after download, so this optimization never substitutes an unverified
+asset or weakens fresh-device recovery.
+
 Every successful refresh or publish also refreshes the generated current-state
 surfaces before the final full validation and commit. Routine snapshot
 publication remains tag-free. `release-plan` classifies changes since the last

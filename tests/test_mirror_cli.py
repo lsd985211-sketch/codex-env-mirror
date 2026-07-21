@@ -89,6 +89,13 @@ class MirrorCliTests(unittest.TestCase):
         worktrees = next(rule for rule in codex_home["rules"] if "worktrees" in rule.get("names", []))
         self.assertEqual(worktrees["disposition"], "regenerate")
 
+    def test_wsl_workspace_guide_is_a_recoverable_incremental_source(self) -> None:
+        config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
+        source = next(item for item in config["sources"] if item["id"] == "wsl-workspace-guide")
+        self.assertEqual(source["source"], "${WORK_GIT_ROOT}\\WSL_WORKSPACE.md")
+        self.assertEqual(source["classification"], "bootstrap_source")
+        self.assertEqual(source["owner"], "wsl_workspace")
+
     def test_known_token_is_redacted(self) -> None:
         token = "sk-" + "abcdefghijklmnopqrstuvwxyz"
         value = "key=" + token
