@@ -590,6 +590,56 @@
         "workspace-bridge-source"
       ],
       "required": true
+    },
+    {
+      "id": "wsl-codex-app-server-status",
+      "kind": "command_json",
+      "command": [
+        "python",
+        "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "codex-app-server-status"
+      ],
+      "destination": "exports/derived/wsl-codex-app-server-status.json",
+      "classification": "authority_export",
+      "owner": "wsl_codex_app_server",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "wsl_codex_app_server.py",
+          "wsl_workspace_owner.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
+      "required": true
+    },
+    {
+      "id": "wsl-codex-app-server-unit",
+      "kind": "command_json",
+      "command": [
+        "python",
+        "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "codex-app-server-unit"
+      ],
+      "destination": "exports/derived/wsl-codex-app-server-unit.json",
+      "classification": "authority_export",
+      "owner": "wsl_codex_app_server",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "wsl_codex_app_server.py",
+          "wsl_workspace_owner.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
+      "required": true
     }
   ]
 }
