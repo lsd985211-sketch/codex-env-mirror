@@ -726,7 +726,7 @@
     {
       "id": "host-compatibility-projection",
       "kind": "command_json",
-      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py", "snapshot"],
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/wsl_workspace_owner.py", "snapshot"],
       "destination": "exports/derived/host-compatibility-projection.json",
       "classification": "authority_export",
       "owner": "wsl_workspace_owner",

@@ -353,6 +353,10 @@ class MirrorCliTests(unittest.TestCase):
             self.assertEqual(spec["kind"], "command_json")
             self.assertTrue(spec["required"])
             self.assertEqual(spec["depends_on"], ["workspace-bridge-source"] if source_id not in {"host-compatibility-projection"} else ["workspace-bridge-source", "wsl-workspace-guide"])
+        self.assertEqual(
+            generated["host-compatibility-projection"]["command"][:5],
+            ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3"],
+        )
 
     def test_source_dependency_graph_reports_missing_and_cycles(self) -> None:
         graph = mirror_cli.source_dependency_graph({
