@@ -1,13 +1,14 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-21T00:20:09.490696+00:00",
+  "reviewed_at": "2026-07-21T23:56:20.513542+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "8515431a3842ce0ba36a6012d3623b367d28fca990805fcfde80523bd14ffb7c",
-  "baseline_tag": "seed-v2.7.0",
-  "proposed_tag": "seed-v2.8.0",
+  "control_plane_fingerprint": "2ab10aa40242bd9eebc6d0dcea9c0afbb4e064e5dd41b2baece520e63f8dd5c7",
+  "baseline_tag": "seed-v2.8.0",
+  "proposed_tag": "seed-v2.9.0",
   "changed_control_plane_files": [
-    "manifests/asset-dispositions.json",
+    "README.md",
     "manifests/source-authorities.json",
+    "scripts/mirror_cli.py",
     "tests/test_mirror_cli.py"
   ],
   "decisions": [
@@ -37,6 +38,6 @@
     }
   ],
   "release_impact": "minor",
-  "summary": "WSL user app-server recovery receipts and explicit disposable worktree disposition; stable recovery contracts remain semantically compatible.",
+  "summary": "WSL host-compatibility projection capture now executes through the named WSL distribution from the Windows-owned mirror generator; stable recovery contracts remain semantically compatible.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
