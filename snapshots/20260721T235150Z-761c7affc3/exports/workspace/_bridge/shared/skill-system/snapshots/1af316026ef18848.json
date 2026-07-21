@@ -1,0 +1,20 @@
+{
+  "skill_id": "1af316026ef18848",
+  "name": "topic-reviewer",
+  "path": "C:\\Users\\45543\\.codex\\skills\\topic-reviewer",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "fb47d2c67bbfeac1043a923b4d67cee91d62e40ef5887cccf8bf9299208a6aca",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

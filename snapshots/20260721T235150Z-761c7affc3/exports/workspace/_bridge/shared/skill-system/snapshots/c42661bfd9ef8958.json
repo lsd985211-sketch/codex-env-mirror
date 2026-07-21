@@ -1,0 +1,20 @@
+{
+  "skill_id": "c42661bfd9ef8958",
+  "name": "self-improvement",
+  "path": "C:\\Users\\45543\\.codex\\skills\\self-improvement",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "7e33e10fc040ecc27879ab310e55ece067dbb0886ff8431a6e6df641e45293ac",
+    "agents": null,
+    "scripts": "1a155ae44ee3aaa4acbfe5fac85974b5b372f3b22f47e5fd66d970caa6ed998f",
+    "references": "f43a0f8461f7609677412e1f0692cb451d50e48d246050073f9365fdb06c378e",
+    "assets": "38dba733916efef5bd55b6908da77cbd51649991a547906b2454b0b8d66e3e24"
+  }
+}
