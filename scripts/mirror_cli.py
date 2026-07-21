@@ -779,9 +779,14 @@ def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep)
 def incremental_recapture_ids(config: dict[str, Any]) -> tuple[set[str], set[str]]:
     policy = config.get("policy") if isinstance(config.get("policy"), dict) else {}
     quiescence = policy.get("capture_quiescence") if isinstance(policy.get("capture_quiescence"), dict) else {}
+    always_recapture = {
+        str(spec.get("id") or "")
+        for spec in config.get("generated_sources", [])
+        if isinstance(spec, dict) and spec.get("always_recapture") is True and str(spec.get("id") or "")
+    }
     return (
         {str(item) for item in quiescence.get("source_ids", []) if str(item)},
-        {str(item) for item in quiescence.get("generated_source_ids", []) if str(item)},
+        {str(item) for item in quiescence.get("generated_source_ids", []) if str(item)} | always_recapture,
     )
 
 

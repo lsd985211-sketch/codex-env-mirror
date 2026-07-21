@@ -96,6 +96,24 @@ class MirrorCliTests(unittest.TestCase):
         self.assertEqual(source["classification"], "bootstrap_source")
         self.assertEqual(source["owner"], "wsl_workspace")
 
+    def test_incremental_recapture_keeps_runtime_versions_fresh(self) -> None:
+        configured = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
+        runtime = next(item for item in configured["generated_sources"] if item["id"] == "runtime-versions")
+        self.assertTrue(runtime["always_recapture"])
+
+        sources, generated = mirror_cli.incremental_recapture_ids({
+            "policy": {"capture_quiescence": {
+                "source_ids": ["mutable-source"],
+                "generated_source_ids": ["mutable-generated"],
+            }},
+            "generated_sources": [
+                {"id": "runtime-versions", "always_recapture": True},
+                {"id": "stable-generated"},
+            ],
+        })
+        self.assertEqual(sources, {"mutable-source"})
+        self.assertEqual(generated, {"mutable-generated", "runtime-versions"})
+
     def test_known_token_is_redacted(self) -> None:
         token = "sk-" + "abcdefghijklmnopqrstuvwxyz"
         value = "key=" + token

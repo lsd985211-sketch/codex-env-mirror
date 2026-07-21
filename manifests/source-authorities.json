@@ -518,6 +518,7 @@
       "classification": "bootstrap_source",
       "owner": "runtime",
       "depends_on": ["codex-version"],
+      "always_recapture": true,
       "required": true
     },
     {
