@@ -1,6 +1,6 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-21T23:54:28.878238+00:00",
+  "generated_at": "2026-07-21T23:57:20.819670+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
     "snapshot_id": "20260721T235150Z-761c7affc3",
@@ -19,7 +19,7 @@
     "ok": true
   },
   "milestone": {
-    "latest_tag": "seed-v2.8.0"
+    "latest_tag": "seed-v2.9.0"
   },
   "required_archive_gaps": [
     "cc-switch-database",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "e6c503a12f485a145a689e0ad589842e18b784cef38a1d8276ae8b54b1da4407"
+  "current_md_sha256": "4e4b630ecb5e3b9a75677f92af249f74facb8db84344f1dbe48bf04ee0e21697"
 }
