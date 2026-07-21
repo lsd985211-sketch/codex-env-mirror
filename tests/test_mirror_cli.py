@@ -336,6 +336,24 @@ class MirrorCliTests(unittest.TestCase):
         issues = mirror_cli.membership_projection_issues(config, {}, projection)
         self.assertEqual(issues, [{"code": "source_missing_membership_owner", "source_id": "new-source"}])
 
+    def test_manifest_registers_active_hardware_and_host_projection_exports(self) -> None:
+        config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
+        generated = {item["id"]: item for item in config["generated_sources"]}
+        expected = {
+            "hardware-system-route-contract",
+            "host-compatibility-projection",
+            "mtp-media-archive-owner-contract",
+            "windows-execution-agent-status",
+            "wsl-hardware-snapshot",
+            "wsl-hardware-tool-health",
+        }
+        self.assertTrue(expected.issubset(generated))
+        for source_id in expected:
+            spec = generated[source_id]
+            self.assertEqual(spec["kind"], "command_json")
+            self.assertTrue(spec["required"])
+            self.assertEqual(spec["depends_on"], ["workspace-bridge-source"] if source_id not in {"host-compatibility-projection"} else ["workspace-bridge-source", "wsl-workspace-guide"])
+
     def test_source_dependency_graph_reports_missing_and_cycles(self) -> None:
         graph = mirror_cli.source_dependency_graph({
             "sources": [{"id": "a", "depends_on": ["b"]}, {"id": "b", "depends_on": ["a", "missing"]}],

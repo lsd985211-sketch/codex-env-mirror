@@ -652,6 +652,90 @@
         ]
       },
       "required": true
+    },
+    {
+      "id": "hardware-system-route-contract",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\hardware_system_owner.py", "routes"],
+      "destination": "exports/derived/hardware-system-routes.json",
+      "classification": "authority_export",
+      "owner": "hardware_system_owner",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["hardware_system_owner.py", "windows_hardware_owner.py", "wsl_hardware_owner.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "mtp-media-archive-owner-contract",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\mtp_media_archive_owner.py", "validate"],
+      "destination": "exports/derived/mtp-media-archive-owner-contract.json",
+      "classification": "authority_export",
+      "owner": "mtp_media_archive_owner",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["mtp_media_archive_owner.py", "shared/windows_powershell.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "wsl-hardware-snapshot",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/wsl_hardware_owner.py", "snapshot"],
+      "destination": "exports/derived/wsl-hardware-snapshot.json",
+      "classification": "authority_export",
+      "owner": "wsl_hardware_owner",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["wsl_hardware_owner.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "wsl-hardware-tool-health",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/wsl_hardware_owner.py", "doctor"],
+      "destination": "exports/derived/wsl-hardware-tool-health.json",
+      "classification": "authority_export",
+      "owner": "wsl_hardware_owner",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["wsl_hardware_owner.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "windows-execution-agent-status",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\windows_execution_agent.py", "status"],
+      "destination": "exports/derived/windows-execution-agent-status.json",
+      "classification": "authority_export",
+      "owner": "windows_execution_agent",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["windows_execution_agent.py", "shared/codex_scheduler_runner.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "host-compatibility-projection",
+      "kind": "command_json",
+      "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py", "snapshot"],
+      "destination": "exports/derived/host-compatibility-projection.json",
+      "classification": "authority_export",
+      "owner": "wsl_workspace_owner",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source", "wsl-workspace-guide"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["wsl_workspace_owner.py", "platform_paths.py"]
+      },
+      "required": true
     }
   ]
 }
