@@ -1,0 +1,20 @@
+{
+  "skill_id": "9de593d031378273",
+  "name": "mcsmanager-fabric-mc",
+  "path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\.codex\\skills\\mcsmanager-fabric-mc",
+  "source": "project-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "5c9c4b54c131cc268dd76dfe691f4bbac42dc0248ec5b55b03e0592d0f42882a",
+    "agents": null,
+    "scripts": "c8a069b8dd401789b5bdd12627a4e4c0c9d9eeaa582284f655f76d6cd870edc6",
+    "references": "75678abf71cdf4cfab9abe9f8b3026a19f38337eeb12e7f548338e26fc6cd6d3",
+    "assets": null
+  }
+}
