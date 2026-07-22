@@ -1,0 +1,20 @@
+{
+  "skill_id": "2f3321f624456b5a",
+  "name": "mem-weekly",
+  "path": "C:\\Users\\45543\\.codex\\skills\\mem-weekly",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d5faa642cebe4ce5e1745339eb7c495c624ba81b0123d6cf9a83fb3723fb2bc0",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
