@@ -1,0 +1,173 @@
+{
+  "schema": "windows_execution_agent.v1.snapshot",
+  "ok": true,
+  "generated_at": "2026-07-21T23:53:43.507730+00:00",
+  "control_plane": "wsl_work_git_and_systemd",
+  "execution_plane": "windows_user_session_scheduled_tasks",
+  "transport": "one_shot_windows_interop",
+  "resident_privileged_endpoint": false,
+  "inventory": {
+    "ok": true,
+    "reason": "inventory_complete",
+    "tasks": [
+      {
+        "task_name": "CodexLocalMcpHub",
+        "state": "Ready",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Limited",
+        "execute": "C:\\WINDOWS\\System32\\wscript.exe",
+        "arguments": "//B //Nologo \"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\run-hidden.vbs\" \"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\run-local-mcp-hub.ps1\" -HostAddress 127.0.0.1 -Port 18881",
+        "last_result": 0,
+        "last_run": "2026-07-20T21:43:42.0000000Z",
+        "next_run": ""
+      },
+      {
+        "task_name": "CodexConfigGuard",
+        "state": "Ready",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Limited",
+        "execute": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe",
+        "arguments": "\"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_config_guard.py\" run-once --apply",
+        "last_result": 0,
+        "last_run": "2026-07-21T23:51:31.0000000Z",
+        "next_run": "2026-07-21T23:56:30.0000000Z"
+      },
+      {
+        "task_name": "CodexModelProviderWatcher",
+        "state": "Running",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Limited",
+        "execute": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe",
+        "arguments": "\"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\codex_model_provider_watcher.py\" supervise --poll-seconds 2 --debounce-seconds 1.5 --drift-check-seconds 10",
+        "last_result": 2147946720,
+        "last_run": "2026-07-21T23:50:08.0000000Z",
+        "next_run": "2026-07-21T23:55:07.0000000Z"
+      },
+      {
+        "task_name": "MobileOpenClawBridgeWorker",
+        "state": "Running",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Limited",
+        "execute": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe",
+        "arguments": "\"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\start_worker_hidden.py\" --interval-seconds 1 --limit 5",
+        "last_result": 267009,
+        "last_run": "2026-07-21T09:23:33.0000000Z",
+        "next_run": ""
+      },
+      {
+        "task_name": "OpenClawGatewayWorker",
+        "state": "Running",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Limited",
+        "execute": "C:\\Users\\45543\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\pythonw.exe",
+        "arguments": "\"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\start_openclaw_gateway_hidden.py\" --port 18789",
+        "last_result": 267009,
+        "last_run": "2026-07-21T09:23:33.0000000Z",
+        "next_run": ""
+      },
+      {
+        "task_name": "CodexSchedulerRunner",
+        "state": "Ready",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Highest",
+        "execute": "C:\\WINDOWS\\System32\\wscript.exe",
+        "arguments": "//B //Nologo \"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\run-hidden.vbs\" \"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\run-codex-scheduler.ps1\" -IntervalSeconds 60",
+        "last_result": 0,
+        "last_run": "2026-07-21T09:33:23.0000000Z",
+        "next_run": ""
+      },
+      {
+        "task_name": "CodexDesktopElevatedAtLogon",
+        "state": "Ready",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Highest",
+        "execute": "C:\\WINDOWS\\System32\\wscript.exe",
+        "arguments": "//B //Nologo \"C:\\Users\\45543\\.codex\\scripts\\run-hidden-wait.vbs\" \"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"C:\\Users\\45543\\.codex\\scripts\\start-codex-desktop-elevated.ps1\"",
+        "last_result": 0,
+        "last_run": "2026-07-20T21:43:42.0000000Z",
+        "next_run": ""
+      },
+      {
+        "task_name": "Codex-KernelPool-Governance",
+        "state": "Ready",
+        "user_id": "user",
+        "logon_type": "Interactive",
+        "run_level": "Highest",
+        "execute": "C:\\Python314\\pythonw.exe",
+        "arguments": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\windows_kernel_pool_diagnostics.py capture --label governed-periodic --summary-only --top 25 --output-root C:\\Users\\45543\\Desktop\\Codex资源库\\诊断\\内核池",
+        "last_result": 0,
+        "last_run": "2026-07-21T23:41:14.0000000Z",
+        "next_run": "2026-07-22T00:11:13.0000000Z"
+      }
+    ]
+  },
+  "task_count": 8,
+  "capabilities": {
+    "schema": "windows_execution_agent.v1.capabilities",
+    "ok": true,
+    "generated_at": "2026-07-21T23:53:43.507730+00:00",
+    "operations": [
+      {
+        "operation": "local_mcp_hub.start",
+        "task_name": "CodexLocalMcpHub",
+        "owner": "local_mcp_hub",
+        "lane": "standard_user",
+        "confirmation": "RUN-WINDOWS-EXECUTION:local_mcp_hub.start"
+      },
+      {
+        "operation": "config_guard.run",
+        "task_name": "CodexConfigGuard",
+        "owner": "codex_config_guard",
+        "lane": "standard_user",
+        "confirmation": "RUN-WINDOWS-EXECUTION:config_guard.run"
+      },
+      {
+        "operation": "model_provider_watcher.start",
+        "task_name": "CodexModelProviderWatcher",
+        "owner": "codex_model_provider_watcher",
+        "lane": "standard_user",
+        "confirmation": "RUN-WINDOWS-EXECUTION:model_provider_watcher.start"
+      },
+      {
+        "operation": "scheduler.start",
+        "task_name": "CodexSchedulerRunner",
+        "owner": "codex_scheduler_runner",
+        "lane": "approved_elevated",
+        "confirmation": "RUN-WINDOWS-EXECUTION:scheduler.start"
+      },
+      {
+        "operation": "desktop.start_elevated",
+        "task_name": "CodexDesktopElevatedAtLogon",
+        "owner": "codex_desktop_launcher",
+        "lane": "approved_elevated",
+        "confirmation": "RUN-WINDOWS-EXECUTION:desktop.start_elevated"
+      }
+    ],
+    "boundaries": {
+      "arbitrary_command": false,
+      "arbitrary_arguments": false,
+      "task_creation": false,
+      "permission_escalation": false,
+      "system_account": false,
+      "reverse_work_git_write": false,
+      "periodic_execution_owner": "codex_scheduler_runner",
+      "second_scheduler_created": false
+    }
+  },
+  "boundary": {
+    "linux_root_implies_windows_admin": false,
+    "default_lane": "standard_user",
+    "elevated_lane": "fixed_catalogued_tasks_only",
+    "arbitrary_shell": false,
+    "named_pipe_or_tcp_listener": false,
+    "windows_source_authority": false,
+    "periodic_execution_owner": "codex_scheduler_runner"
+  }
+}
