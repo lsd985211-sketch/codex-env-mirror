@@ -1,4 +1,0 @@
-interface:
-  display_name: "Windows USB Operations"
-  short_description: "Safe Windows and WSL USB handoffs"
-  default_prompt: "Use $windows-usb-ops to diagnose this USB device and coordinate its Windows or WSL handoff."
