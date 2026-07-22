@@ -1,0 +1,12 @@
+charset-normalizer>=3.4,<4
+openpyxl>=3.1,<4
+pandas>=3.0,<4
+pillow>=12,<13
+pypdf>=6,<7
+pdfplumber>=0.11,<0.12
+python-docx>=1.2,<2
+python-pptx>=1.0,<2
+ruamel.yaml>=0.18,<0.19
+xlrd>=2.0,<3
+odfpy>=1.4,<2
+py7zr>=1.0,<2
