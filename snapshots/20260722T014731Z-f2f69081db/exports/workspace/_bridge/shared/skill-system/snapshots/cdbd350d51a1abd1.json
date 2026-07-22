@@ -1,0 +1,20 @@
+{
+  "skill_id": "cdbd350d51a1abd1",
+  "name": "control-chrome",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-bundled\\chrome\\26.616.71553\\skills\\control-chrome",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "656a97e10e7a5eb32113c44d924cbca9b42e327feae127bdb63e4a9f1201fc8d",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
