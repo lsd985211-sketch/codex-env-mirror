@@ -1,0 +1,20 @@
+{
+  "skill_id": "2a89a015853e8b2e",
+  "name": "email-ops",
+  "path": "C:\\Users\\45543\\.codex\\skills\\email-ops",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "ecf68b6baa50a2a95c3927f23c3b56f97f1142d360cc1f1c3a0b16cd10f7558a",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
