@@ -1,0 +1,20 @@
+{
+  "skill_id": "20a93caebaaffbb2",
+  "name": "slack-gif-creator",
+  "path": "C:\\Users\\45543\\.codex\\skills\\slack-gif-creator",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "efc2804bb2e4afa7dddf6994c5015cc84cec6aed42549f50ecde4dd3fe15dcee",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
