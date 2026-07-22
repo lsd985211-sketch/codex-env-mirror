@@ -654,6 +654,58 @@
       "required": true
     },
     {
+      "id": "local-mcp-hub-service-status",
+      "kind": "command_json",
+      "command": [
+        "python",
+        "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "local-mcp-hub-service-status"
+      ],
+      "destination": "exports/derived/local-mcp-hub-service-status.json",
+      "classification": "authority_export",
+      "owner": "local_mcp_hub_process",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "local_mcp_hub.py",
+          "local_mcp_hub_process.py",
+          "wsl_workspace_owner.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
+      "required": true
+    },
+    {
+      "id": "local-mcp-hub-user-unit",
+      "kind": "command_json",
+      "command": [
+        "python",
+        "${WORKSPACE_ROOT}\\_bridge\\wsl_workspace_owner.py",
+        "mirror-export",
+        "--kind",
+        "local-mcp-hub-user-unit"
+      ],
+      "destination": "exports/derived/local-mcp-hub-user-unit.json",
+      "classification": "authority_export",
+      "owner": "local_mcp_hub_process",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": [
+          "local_mcp_hub.py",
+          "local_mcp_hub_process.py",
+          "wsl_workspace_owner.py",
+          "platform_paths.py",
+          "shared/**"
+        ]
+      },
+      "required": true
+    },
+    {
       "id": "hardware-system-route-contract",
       "kind": "command_json",
       "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\hardware_system_owner.py", "routes"],

@@ -76,13 +76,18 @@ class MirrorCliTests(unittest.TestCase):
         self.assertEqual(disposition_for("codex-home", "diagnostics"), "regenerate")
         self.assertEqual(disposition_for("cc-switch-home", "crash.log"), "regenerate")
 
-    def test_wsl_app_server_receipts_and_task_worktrees_have_explicit_contracts(self) -> None:
+    def test_wsl_services_and_task_worktrees_have_explicit_contracts(self) -> None:
         config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
         generated = {item["id"]: item for item in config["generated_sources"]}
         for source_id in ("wsl-codex-app-server-status", "wsl-codex-app-server-unit"):
             self.assertEqual(generated[source_id]["owner"], "wsl_codex_app_server")
             self.assertTrue(generated[source_id]["required"])
             self.assertEqual(generated[source_id]["activation"], "owner_export_only")
+        for source_id in ("local-mcp-hub-service-status", "local-mcp-hub-user-unit"):
+            self.assertEqual(generated[source_id]["owner"], "local_mcp_hub_process")
+            self.assertTrue(generated[source_id]["required"])
+            self.assertEqual(generated[source_id]["activation"], "owner_export_only")
+            self.assertEqual(generated[source_id]["command"][-2:], ["--kind", source_id])
 
         policy = json.loads(mirror_cli.ASSET_DISPOSITIONS.read_text(encoding="utf-8"))
         codex_home = next(item for item in policy["roots"] if item["id"] == "codex-home")
