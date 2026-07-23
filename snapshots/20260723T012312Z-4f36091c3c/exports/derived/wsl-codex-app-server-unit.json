@@ -1,0 +1,36 @@
+{
+  "schema": "wsl_workspace_owner.v1.mirror_export.codex_app_server_unit.v1",
+  "ok": true,
+  "status": "completed",
+  "generated_at": "2026-07-23T01:34:29.011956+00:00",
+  "owner": "wsl_codex_app_server",
+  "export_kind": "codex_app_server_unit",
+  "unit": {
+    "schema": "wsl_codex_app_server.v1.plan",
+    "ok": true,
+    "generated_at": "2026-07-23T01:34:29.011816+00:00",
+    "service": "codex-app-server.service",
+    "unit_path": "/home/codexlab/.config/systemd/user/codex-app-server.service",
+    "executable": "/usr/lib/node_modules/@openai/codex/bin/codex.js",
+    "executable_sha256": "134063e133f0b4244fa3b251acf973d4fe4b4aeeacbdc135211bf480f59f1477",
+    "codex_home": "/home/codexlab/.codex-app",
+    "workspace": "/home/codexlab/work/codex-workspace",
+    "socket_path": "/run/user/1000/codex-app-server.sock",
+    "unit_sha256": "8a60497ce5baa6e587e4e368ef3ccd32db8cb5a78243b78d67ce3deff2df426e",
+    "installed_unit_sha256": "8a60497ce5baa6e587e4e368ef3ccd32db8cb5a78243b78d67ce3deff2df426e",
+    "would_change": false,
+    "blockers": [],
+    "apply_contract": {
+      "confirmation": "INSTALL-CODEX-APP-SERVER",
+      "writes": [
+        "/home/codexlab/.config/systemd/user/codex-app-server.service"
+      ],
+      "transport": "user_systemd_unix_socket",
+      "tcp_exposed": false,
+      "root_required": false
+    }
+  },
+  "activation_performed": false,
+  "host_runtime_imported": false,
+  "mirror_reverse_overwrite": false
+}

@@ -1,0 +1,20 @@
+{
+  "skill_id": "d597b34d3c95ce6e",
+  "name": "gemini-image",
+  "path": "C:\\Users\\45543\\.codex\\skills\\gemini-image",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "dbe8fdfbc8bcf7fdec17c0f7c5e67dbe0c2c77c945fe41aba96bd359961e1709",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
