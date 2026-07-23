@@ -1,43 +1,52 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-21T23:56:20.513542+00:00",
+  "reviewed_at": "2026-07-23T02:18:52.552189+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "2ab10aa40242bd9eebc6d0dcea9c0afbb4e064e5dd41b2baece520e63f8dd5c7",
-  "baseline_tag": "seed-v2.8.0",
-  "proposed_tag": "seed-v2.9.0",
+  "control_plane_fingerprint": "29012d589aea2966e89a775baed8fe4bf28a9bd961162c537fb2a1d51e5073eb",
+  "baseline_tag": "seed-v2.10.0",
+  "proposed_tag": "seed-v2.11.0",
   "changed_control_plane_files": [
+    "AGENTS.md",
+    "BOOTSTRAP.md",
+    "MIRROR_POLICY.md",
     "README.md",
+    "RESTORE.md",
+    "SECURITY.md",
+    "manifests/asset-dispositions.json",
+    "manifests/external-archives.json",
+    "manifests/restore-order.json",
     "manifests/source-authorities.json",
+    "manifests/verification-matrix.json",
     "scripts/mirror_cli.py",
     "tests/test_mirror_cli.py"
   ],
   "decisions": [
     {
       "path": "AGENTS.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     },
     {
       "path": "README.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     },
     {
       "path": "MIRROR_POLICY.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     },
     {
       "path": "BOOTSTRAP.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     },
     {
       "path": "RESTORE.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     },
     {
       "path": "SECURITY.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     }
   ],
-  "release_impact": "minor",
-  "summary": "WSL host-compatibility projection capture now executes through the named WSL distribution from the Windows-owned mirror generator; stable recovery contracts remain semantically compatible.",
+  "release_impact": "major",
+  "summary": "Exclude volatile provider, model, and CC Switch state from the public recovery mirror; preserve stable owners, inventories, secret requirements, skills, and target-side reacquisition paths.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
