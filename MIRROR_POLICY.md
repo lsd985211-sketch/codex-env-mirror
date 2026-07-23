@@ -89,9 +89,11 @@ over a live memory repository.
 Plaintext credentials, tokens, cookies, authentication files, browser profiles,
 raw sessions, logs, SQLite/DB files, downloaded resources, package caches,
 runtime dependencies, executable programs, unapproved archives or binaries,
-and files above the source policy size limit are prohibited. The raw CC Switch
-database, full checkpoint history, plugin cache payloads, and runtime databases
-remain external; only sanitized semantic or version evidence enters Git.
+active provider/model configuration, model catalogs, mutable CC Switch
+settings, CC Switch database semantics, and files above the source policy size
+limit are prohibited. An optional raw CC Switch database, full checkpoint
+history, plugin cache payloads, and runtime databases remain external; only
+stable capability inventory and reacquisition requirements enter Git.
 
 ## Restore Boundary
 

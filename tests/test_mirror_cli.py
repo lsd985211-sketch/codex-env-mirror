@@ -1,6 +1,5 @@
 import importlib.util
 import json
-import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
@@ -74,7 +73,28 @@ class MirrorCliTests(unittest.TestCase):
             return ""
 
         self.assertEqual(disposition_for("codex-home", "diagnostics"), "regenerate")
+        self.assertEqual(disposition_for("codex-home", "cc-switch-model-catalog.json"), "regenerate")
+        self.assertEqual(disposition_for("codex-home", "config.toml"), "reacquire")
         self.assertEqual(disposition_for("cc-switch-home", "crash.log"), "regenerate")
+        self.assertEqual(disposition_for("cc-switch-home", "settings.json"), "reacquire")
+
+    def test_source_contract_excludes_volatile_model_and_cc_switch_state(self) -> None:
+        config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
+        source_ids = {item["id"] for item in config["sources"]}
+        generated_ids = {item["id"] for item in config["generated_sources"]}
+
+        self.assertTrue({"codex-skills", "cc-switch-skills"}.issubset(source_ids))
+        self.assertIn("codex-plugin-inventory", generated_ids)
+        self.assertTrue(
+            {
+                "codex-model-catalog",
+                "codex-config-template",
+                "wsl-codex-config-template",
+                "cc-switch-settings",
+            }.isdisjoint(source_ids)
+        )
+        self.assertNotIn("cc-switch-semantic-export", generated_ids)
+        self.assertNotIn("capture_quiescence", config["policy"])
 
     def test_wsl_services_and_task_worktrees_have_explicit_contracts(self) -> None:
         config = json.loads(mirror_cli.SOURCE_MANIFEST.read_text(encoding="utf-8"))
@@ -731,60 +751,21 @@ class MirrorCliTests(unittest.TestCase):
             self.assertEqual(asset["content_kind"], "binary")
             self.assertEqual(asset["sha256"], mirror_cli.sha256_bytes(bytes(range(256))))
 
-    def test_cc_switch_semantic_export_redacts_nested_secrets(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            database = Path(temp_dir) / "cc-switch.db"
-            connection = sqlite3.connect(database)
-            for table in mirror_cli.CC_SWITCH_SEMANTIC_TABLES:
-                if table == "providers":
-                    connection.execute("CREATE TABLE providers (id TEXT, settings_config TEXT)")
-                elif table == "settings":
-                    connection.execute("CREATE TABLE settings (key TEXT, value TEXT)")
-                else:
-                    connection.execute(f'CREATE TABLE "{table}" (id TEXT)')
-            connection.execute(
-                "INSERT INTO providers VALUES (?, ?)",
-                ("provider-1", json.dumps({"api_key": "raw-secret", "headers": {"Authorization": "Bearer raw-secret"}, "base_url": "https://example.com?v=1"})),
-            )
-            connection.execute("INSERT INTO settings VALUES (?, ?)", ("access_token", "raw-token"))
-            connection.commit()
-            connection.close()
-            payload = json.loads(mirror_cli.export_cc_switch_semantic(database))
-            serialized = json.dumps(payload)
-            self.assertNotIn("raw-secret", serialized)
-            self.assertNotIn("raw-token", serialized)
-            self.assertIn("<SECRET:API_KEY>", serialized)
-            self.assertEqual(payload["tables"]["providers"]["row_count"], 1)
-            connection = sqlite3.connect(database)
-            connection.execute("CREATE TABLE request_logs (id TEXT)")
-            connection.execute("INSERT INTO request_logs VALUES ('runtime-only')")
-            connection.commit()
-            connection.close()
-            updated = json.loads(mirror_cli.export_cc_switch_semantic(database))
-            self.assertNotEqual(payload["source_sha256"], updated["source_sha256"])
-            self.assertEqual(payload["semantic_sha256"], updated["semantic_sha256"])
-
-    def test_capture_quiescence_uses_recoverable_redacted_content_and_semantic_hash(self) -> None:
+    def test_capture_quiescence_uses_recoverable_redacted_content(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             config_file = root / "config.toml"
             config_file.write_text('api_token = "secret-a"\nmode = "stable"\n', encoding="utf-8")
             settings = root / "settings.json"
             settings.write_text('{"api_token":"secret-a","mode":"stable"}', encoding="utf-8")
-            database = root / "cc-switch.db"
-            connection = sqlite3.connect(database)
-            for table in mirror_cli.CC_SWITCH_SEMANTIC_TABLES:
-                connection.execute(f'CREATE TABLE "{table}" (id TEXT)')
-            connection.commit()
-            connection.close()
             config = {
                 "variables": {},
-                "policy": {"capture_quiescence": {"source_ids": ["config", "settings"], "generated_source_ids": ["semantic"], "interval_seconds": 1}},
+                "policy": {"capture_quiescence": {"source_ids": ["config", "settings"], "interval_seconds": 1}},
                 "sources": [
                     {"id": "config", "source": str(config_file), "mode": "redact_toml"},
                     {"id": "settings", "source": str(settings), "mode": "redact_json"},
                 ],
-                "generated_sources": [{"id": "semantic", "kind": "cc_switch_semantic_export", "source": str(database)}],
+                "generated_sources": [],
             }
             self.assertTrue(mirror_cli.capture_quiescence_probe(config)["ok"])
 

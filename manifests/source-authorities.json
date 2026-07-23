@@ -23,12 +23,6 @@
     "max_file_bytes": 5242880,
     "max_snapshot_bytes": 134217728,
     "max_snapshot_relative_path_chars": 220,
-    "capture_quiescence": {
-      "sample_count": 2,
-      "interval_seconds": 1.0,
-      "source_ids": ["codex-config-template", "cc-switch-settings"],
-      "generated_source_ids": ["cc-switch-semantic-export"]
-    },
     "allowed_extensions": [
       ".bat", ".cfg", ".cmd", ".css", ".html", ".ini", ".js", ".json",
       ".jsx", ".md", ".mjs", ".ps1", ".py", ".sql", ".toml", ".ts",
@@ -106,42 +100,6 @@
       "mode": "copy",
       "classification": "bootstrap_source",
       "owner": "codex_cli",
-      "required": true
-    },
-    {
-      "id": "codex-model-catalog",
-      "kind": "file",
-      "source": "${CODEX_HOME}\\cc-switch-model-catalog.json",
-      "destination": "exports/codex-home/cc-switch-model-catalog.json",
-      "restore_path": "${CODEX_HOME}\\cc-switch-model-catalog.json",
-      "mode": "copy",
-      "classification": "configuration_template",
-      "owner": "codex_model_provider",
-      "required": true
-    },
-    {
-      "id": "codex-config-template",
-      "kind": "file",
-      "source": "${CODEX_HOME}\\config.toml",
-      "destination": "exports/codex-home/config.template.toml",
-      "restore_path": "${CODEX_HOME}\\config.toml",
-      "mode": "redact_toml",
-      "classification": "configuration_template",
-      "owner": "codex_config_guard",
-      "activation": "owner_merge_only",
-      "required": true
-    },
-    {
-      "id": "wsl-codex-config-template",
-      "kind": "file",
-      "source": "${WORK_GIT_ROOT}\\codex-home\\config.wsl.template.toml",
-      "destination": "exports/work-git/codex-home/config.wsl.template.toml",
-      "restore_path": "${WORK_GIT_ROOT}\\codex-home\\config.wsl.template.toml",
-      "mode": "copy",
-      "classification": "configuration_template",
-      "owner": "wsl_workspace",
-      "activation": "owner_merge_only",
-      "coverage_required": true,
       "required": true
     },
     {
@@ -301,18 +259,6 @@
       "required": true
     },
     {
-      "id": "cc-switch-settings",
-      "kind": "file",
-      "source": "${CC_SWITCH_HOME}\\settings.json",
-      "destination": "exports/cc-switch/settings.template.json",
-      "restore_path": "${CC_SWITCH_HOME}\\settings.json",
-      "mode": "redact_json",
-      "classification": "configuration_template",
-      "owner": "cc_switch",
-      "activation": "owner_merge_only",
-      "required": true
-    },
-    {
       "id": "cc-switch-skills",
       "kind": "tree",
       "source": "${CC_SWITCH_HOME}\\skills",
@@ -387,7 +333,7 @@
       "destination": "exports/derived/mcp-capability-routes.json",
       "classification": "authority_export",
       "owner": "mcp_capability_routes",
-      "depends_on": ["codex-config-template", "workspace-bridge-source"],
+      "depends_on": ["workspace-bridge-source"],
       "depends_on_paths": {
         "workspace-bridge-source": [
           "mcp_capability_routes.py",
@@ -450,19 +396,7 @@
       "destination": "exports/derived/secret-vault-metadata.json",
       "classification": "configuration_template",
       "owner": "secret_vault",
-      "depends_on": ["codex-config-template"],
       "required": false
-    },
-    {
-      "id": "cc-switch-semantic-export",
-      "kind": "cc_switch_semantic_export",
-      "source": "${CC_SWITCH_HOME}\\cc-switch.db",
-      "destination": "exports/derived/cc-switch-semantic.json",
-      "classification": "configuration_template",
-      "owner": "cc_switch",
-      "activation": "owner_import_only",
-      "depends_on": ["cc-switch-settings"],
-      "required": true
     },
     {
       "id": "codex-plugin-inventory",
@@ -473,7 +407,7 @@
       "classification": "bootstrap_source",
       "owner": "codex_cli",
       "activation": "owner_reacquire_only",
-      "depends_on": ["codex-config-template", "codex-skills"],
+      "depends_on": ["codex-skills"],
       "required": true
     },
     {

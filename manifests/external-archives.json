@@ -14,9 +14,9 @@
       "source": "C:\\Users\\45543\\.cc-switch\\cc-switch.db",
       "owner": "cc_switch",
       "classification": "private",
-      "required_for": "provider_and_model_fidelity",
+      "required_for": "optional_legacy_provider_and_model_fidelity",
       "restore_mode": "owner_import_or_version-compatible_database_restore",
-      "status": "archive_receipt_missing"
+      "status": "optional_archive_receipt_missing"
     },
     {
       "asset_id": "codex-native-memory-state",

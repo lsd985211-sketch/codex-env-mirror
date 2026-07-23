@@ -33,7 +33,8 @@ Validate in dependency order:
 3. workflow, membership, and rule-governance source;
 4. maintenance capability and MCP route source;
 5. user-owned Codex helper tools and runtime prerequisites;
-6. Codex configuration template and sanitized CC Switch semantic state;
+6. configuration capability requirements, followed by target-side
+   provider/model and CC Switch configuration;
 7. enabled plugin inventory and owner-driven plugin reacquisition;
 8. active `.codex` and compatibility `.agents` user skills with text and binary dependencies, then automations;
 9. current native memory text, memory semantic exports, and the manifest-selected current checkpoints;
@@ -58,10 +59,11 @@ remote MCP credentials still require their recorded owner handoff receipts.
 
 Activation is performed in the target environment, not by `mirror_cli.py`.
 Each owner must create a target backup, apply its supported migration/import,
-run the smallest relevant validator, and emit a receipt. Configuration and
-CC Switch semantic state must be merged/imported through current owners rather
-than copied wholesale. Platform and plugin-managed skills must be reacquired
-from the recorded inventory; only active user-owned skills are file-restored.
+run the smallest relevant validator, and emit a receipt. Provider/model and CC
+Switch settings must be recreated through current target owners rather than
+copied or semantically imported from the source machine. Platform and
+plugin-managed skills must be reacquired from the recorded inventory; only
+active user-owned skills are file-restored.
 
 ## Phase 5: Acceptance
 

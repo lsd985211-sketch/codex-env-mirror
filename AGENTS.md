@@ -33,6 +33,10 @@ explicit asset disposition, isolated staging, and recovery evidence.
 ## Hard Boundaries
 
 - Keep active, generated, historical, private, and reacquired assets distinct.
+- Do not mirror active provider/model configuration, model catalogs, mutable CC
+  Switch settings, or CC Switch database semantics. Recover the owning code,
+  capability inventory, logical secret requirements, and target-side
+  reacquisition path instead.
 - Retired members, tombstones, `.disabled`, `.system`, backups, caches, logs,
   secrets, sessions, and runtime databases do not enter capability snapshots.
 - Valuable excluded state must have an explicit external-archive, reacquire,

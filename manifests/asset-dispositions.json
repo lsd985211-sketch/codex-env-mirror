@@ -35,6 +35,18 @@
           "evidence": "machine or installation identity marker"
         },
         {
+          "names": ["cc-switch-model-catalog.json"],
+          "disposition": "regenerate",
+          "owner": "codex_model_provider",
+          "evidence": "volatile model catalog is rebuilt from the target provider owner and never enters the public mirror"
+        },
+        {
+          "names": ["config.toml"],
+          "disposition": "reacquire",
+          "owner": "codex_config_guard",
+          "evidence": "active provider, model, endpoint, and machine-local configuration is recreated through target owners"
+        },
+        {
           "names": ["chrome-native-hosts-v2.json"],
           "disposition": "generated_representation",
           "owner": "runtime",
@@ -121,6 +133,12 @@
           "disposition": "regenerate",
           "owner": "cc_switch",
           "evidence": "derived operational logs"
+        },
+        {
+          "names": ["settings.json"],
+          "disposition": "reacquire",
+          "owner": "cc_switch",
+          "evidence": "mutable provider and model preferences are recreated on the target and never enter the public mirror"
         },
         {
           "patterns": ["*.db-journal"],

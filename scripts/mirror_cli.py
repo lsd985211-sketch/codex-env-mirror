@@ -10,7 +10,6 @@ import json
 import os
 import re
 import shutil
-import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -62,17 +61,6 @@ CONFIG_EXTENSIONS = {".cfg", ".ini", ".json", ".toml", ".yaml", ".yml"}
 MEMBERSHIP_ASSET_ID = "system-membership-snapshot"
 WORK_GIT_RELEASE_SOURCE_ID = "wsl-work-git-release-receipt"
 WORK_GIT_SOURCE_ID = "workspace-bridge-source"
-CC_SWITCH_SEMANTIC_TABLES = (
-    "providers",
-    "provider_endpoints",
-    "mcp_servers",
-    "prompts",
-    "proxy_config",
-    "settings",
-    "skills",
-    "skill_repos",
-    "model_pricing",
-)
 MIRROR_SOURCE_READ_ONLY_ENV = {
     "CODEX_MIRROR_SOURCE_READ_ONLY": "1",
     "CODEX_MIRROR_REVERSE_OVERWRITE_BLOCKED": "1",
@@ -660,63 +648,12 @@ def redact_semantic_value(value: Any) -> Any:
     return redact_string_value(value)
 
 
-def export_cc_switch_semantic(source: Path) -> bytes:
-    if not source.is_file():
-        raise FileNotFoundError(f"cc_switch_database_missing:{source}")
-    connection = sqlite3.connect(source.resolve().as_uri() + "?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    try:
-        available = {
-            str(row[0])
-            for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")
-        }
-        missing = [name for name in CC_SWITCH_SEMANTIC_TABLES if name not in available]
-        if missing:
-            raise ValueError("cc_switch_semantic_tables_missing:" + ",".join(missing))
-        tables: dict[str, Any] = {}
-        for table in CC_SWITCH_SEMANTIC_TABLES:
-            rows: list[dict[str, Any]] = []
-            for raw in connection.execute(f'SELECT * FROM "{table}"'):
-                row: dict[str, Any] = {}
-                for key in raw.keys():
-                    value = raw[key]
-                    if SENSITIVE_KEY.search(str(key)):
-                        row[str(key)] = "<SECRET:" + re.sub(r"[^A-Za-z0-9]+", "_", str(key)).upper().strip("_") + ">"
-                    else:
-                        row[str(key)] = redact_semantic_value(value)
-                if table == "settings" and SENSITIVE_KEY.search(str(row.get("key") or "")):
-                    row["value"] = "<SECRET:SETTING_VALUE>"
-                rows.append(row)
-            tables[table] = {"row_count": len(rows), "rows": rows}
-        semantic_sha256 = sha256_bytes(json.dumps(tables, ensure_ascii=False, sort_keys=True).encode("utf-8"))
-        payload = {
-            "schema": "codex_mirror.cc_switch_semantic_export.v1",
-            "generated_at": now_iso(),
-            "authority": "derived_from_cc_switch_database",
-            "source_sha256": sha256_file(source),
-            "semantic_sha256": semantic_sha256,
-            "excluded_state": [
-                "request_logs",
-                "usage_logs",
-                "stream_logs",
-                "health_state",
-                "transient_backups",
-                "raw_credentials",
-            ],
-            "tables": tables,
-        }
-        return json_bytes(payload)
-    finally:
-        connection.close()
-
-
 def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep) -> dict[str, Any]:
     """Confirm selected mutable recovery sources are stable before copying a snapshot."""
     policy = config.get("policy") if isinstance(config.get("policy"), dict) else {}
     settings = policy.get("capture_quiescence") if isinstance(policy.get("capture_quiescence"), dict) else {}
     source_ids = [str(item) for item in settings.get("source_ids", []) if str(item)]
-    generated_ids = [str(item) for item in settings.get("generated_source_ids", []) if str(item)]
-    if not source_ids and not generated_ids:
+    if not source_ids:
         return {"schema": "codex_mirror.capture_quiescence.v1", "ok": True, "enabled": False}
     try:
         sample_count = int(settings.get("sample_count", 2))
@@ -726,8 +663,7 @@ def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep)
     if sample_count < 2 or interval_seconds < 0:
         return {"schema": "codex_mirror.capture_quiescence.v1", "ok": False, "reason": "capture_quiescence_policy_invalid"}
     sources = {str(spec.get("id") or ""): spec for spec in config.get("sources", [])}
-    generated = {str(spec.get("id") or ""): spec for spec in config.get("generated_sources", [])}
-    unknown = sorted(set(source_ids) - set(sources) | set(generated_ids) - set(generated))
+    unknown = sorted(set(source_ids) - set(sources))
     if unknown:
         return {
             "schema": "codex_mirror.capture_quiescence.v1", "ok": False,
@@ -745,13 +681,6 @@ def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep)
             content_kind = source_content_kind(source, spec)
             data, _, _ = source_payload(source, str(spec.get("mode") or "copy"), content_kind)
             signatures[source_id] = sha256_bytes(data)
-        for asset_id in generated_ids:
-            spec = generated[asset_id]
-            kind = str(spec.get("kind") or "")
-            if kind != "cc_switch_semantic_export":
-                raise ValueError(f"capture_quiescence_generated_kind_unsupported:{asset_id}:{kind}")
-            payload = json.loads(export_cc_switch_semantic(Path(expand_tokens(str(spec.get("source") or ""), variables))))
-            signatures[asset_id] = str(payload.get("semantic_sha256") or "")
         return signatures
 
     observed: list[dict[str, str]] = []
@@ -760,7 +689,7 @@ def capture_quiescence_probe(config: dict[str, Any], *, sleep: Any = time.sleep)
             observed.append(sample())
             if index + 1 < sample_count and interval_seconds:
                 sleep(interval_seconds)
-    except (OSError, ValueError, json.JSONDecodeError, sqlite3.Error) as exc:
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
         return {
             "schema": "codex_mirror.capture_quiescence.v1", "ok": False,
             "reason": "capture_quiescence_probe_failed", "detail": f"{type(exc).__name__}:{exc}",
@@ -1954,8 +1883,6 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
                 data = export_windows_shortcuts(spec.get("patterns", []))
             elif kind == "runtime_versions":
                 data = export_runtime_versions(variables)
-            elif kind == "cc_switch_semantic_export":
-                data = export_cc_switch_semantic(Path(expand_tokens(spec["source"], variables)))
             elif kind == "plugin_inventory":
                 data = export_plugin_inventory(
                     Path(expand_tokens(spec["config_source"], variables)),
@@ -2311,13 +2238,7 @@ def generated_source_issues(snapshot_root: Path, manifest: dict[str, Any]) -> li
         kind = str(spec["kind"])
         try:
             snapshot_payload = load_json(snapshot_payload_path)
-            if kind == "cc_switch_semantic_export":
-                source = Path(expand_tokens(spec["source"], variables))
-                if source.is_file():
-                    current = json.loads(export_cc_switch_semantic(source))
-                    if snapshot_payload.get("semantic_sha256") != current.get("semantic_sha256"):
-                        issues.append({"code": "generated_source_changed", "asset_id": asset_id, "source": "cc_switch_semantic_tables"})
-            elif kind == "plugin_inventory":
+            if kind == "plugin_inventory":
                 config_source = Path(expand_tokens(spec["config_source"], variables))
                 cache_root = Path(expand_tokens(spec["cache_root"], variables))
                 if config_source.is_file() and cache_root.is_dir():
@@ -2337,7 +2258,7 @@ def generated_source_issues(snapshot_root: Path, manifest: dict[str, Any]) -> li
                     current = json.loads(export_runtime_versions(variables))
                     if strip_volatile_fields(current) != strip_volatile_fields(snapshot_payload):
                         issues.append({"code": "generated_source_changed", "asset_id": asset_id, "source": "runtime_versions"})
-        except (OSError, ValueError, json.JSONDecodeError, sqlite3.Error) as exc:
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
             issues.append({"code": "generated_source_freshness_failed", "asset_id": asset_id, "detail": str(exc)})
     return issues
 

@@ -24,10 +24,10 @@ staleness when their hashes remain compatible with the current snapshot.
 
 | Area | Active source | Recovery treatment |
 | --- | --- | --- |
-| Codex home | `C:\Users\45543\.codex` | active user skills with required dependencies, current native memory text, rules, scripts, tools, templates, and runtime compatibility evidence; platform/plugin caches and secrets excluded |
+| Codex home | `C:\Users\45543\.codex` | active user skills with required dependencies, current native memory text, rules, scripts, tools, and runtime compatibility evidence; active provider/model configuration, model catalogs, platform/plugin caches, and secrets excluded |
 | Agent compatibility home | `C:\Users\45543\.agents` | active compatibility skills only; `.disabled` and caches excluded |
 | Workspace governance | `/home/codexlab/work/codex-workspace` (`\\wsl.localhost\Codex-Wsl-Lab\home\codexlab\work\codex-workspace`) | authoritative Work Git `AGENTS.md` plus `_bridge` source, policies, docs, tests, scripts, and a manifest-selected current checkpoint export; the Windows native workspace is a generated compatibility projection only |
-| CC Switch | `C:\Users\45543\.cc-switch` | settings, skills, and a recursively redacted semantic database export; raw database remains an encrypted external archive |
+| CC Switch | `C:\Users\45543\.cc-switch` | stable user-owned skills only; mutable settings and database semantics are excluded, while an optional private legacy database archive remains owner-managed |
 | Codex plugins | enabled entries in `config.toml` plus plugin cache manifests | identity, marketplace, version/revision, and manifest hash only; plugin payloads are reacquired |
 | Resource library | `C:\Users\45543\Desktop\Codex资源库` | separate asset repository/archive; only a recovery pointer is stored here |
 | Windows integration | scheduled tasks and desktop shortcuts | structured specifications, not raw runtime state |
@@ -145,8 +145,9 @@ environment's owners after backup and validation.
 - `mirror_valid`: manifests, text/binary hashes, text secret scans, generated
   snapshot assets, references, membership guards, and repository governance are
   internally valid.
-- `capability_restore_ready`: rules, owner source, configuration templates,
-  skills, and bootstrap evidence can be staged and validated.
+- `capability_restore_ready`: rules, owner source, stable configuration
+  requirements, skills, and bootstrap evidence can be staged and validated;
+  target-local provider/model selection remains an explicit reacquisition step.
 - `source_freshness_checked` / `source_freshness_ok`: whether the optional live
   source comparison ran and whether the active source still matches the snapshot.
 - `full_state_restore_ready`: all required encrypted external archives and

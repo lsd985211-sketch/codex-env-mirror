@@ -1,0 +1,20 @@
+{
+  "skill_id": "98ccb3cd637f0d06",
+  "name": "frontend-app-builder",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\build-web-apps\\bd2122cb\\skills\\frontend-app-builder",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "62b27eb930de74432fba337ba5028419711e443dab8ecd0bef3e672683b6bb3a",
+    "agents": "a009c5172be0f965636fec201098992b8eff79636866275e3e60a3b427c1e5fb",
+    "scripts": null,
+    "references": "1cb15f70b8491a99cc3505b06316ebbb7d526d2e3a40cb91be64dad70b8ef99f",
+    "assets": null
+  }
+}

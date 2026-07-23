@@ -18,6 +18,10 @@ Use this document when the original Codex environment is unavailable.
 8. Activate each domain through its owner, with a fresh target backup and the
    target environment's current workflow gates.
 
+Provider/model selection and CC Switch settings are target-local state. Rebuild
+them through the target owners after secret reacquisition; do not expect or
+reconstruct them from this public repository.
+
 Do not restore cookies, sessions, browser profiles, caches, logs, or internal
 Codex databases as a default action. Recreate or import them only when their
 owner explicitly supports the target Codex version.

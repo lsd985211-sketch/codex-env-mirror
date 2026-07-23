@@ -1,13 +1,13 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-23T01:35:12.578241+00:00",
+  "generated_at": "2026-07-23T02:17:08.525920+00:00",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260723T012312Z-4f36091c3c",
-    "created_at": "2026-07-23T01:34:45.071007+00:00",
+    "snapshot_id": "20260723T021558Z-1cd45a5843",
+    "created_at": "2026-07-23T02:16:33.956715+00:00",
     "asset_count": 2087,
-    "total_bytes": 25997975,
-    "capture_mode": "full"
+    "total_bytes": 25998470,
+    "capture_mode": "incremental"
   },
   "readiness": {
     "mirror_valid": true,
@@ -22,7 +22,6 @@
     "latest_tag": "seed-v2.10.0"
   },
   "required_archive_gaps": [
-    "cc-switch-database",
     "codex-native-memory-state",
     "codex-goal-state",
     "mail-and-scheduler-state"
@@ -41,37 +40,37 @@
     {
       "path": "AGENTS.md",
       "role": "static_contract",
-      "sha256": "67e350adf22d17f909dbec3bb5dad35d152dff196669f696200fbe2000a4be5a"
+      "sha256": "e4e83efc62a6d0958f00284bcf8f34c46d39ce8172328d0b0a251a73a465bd96"
     },
     {
       "path": "BOOTSTRAP.md",
       "role": "static_contract",
-      "sha256": "2e2cb81b3a28acb0024a3d107a97074d43753f7ed6f9f369a68f2b47650ec30a"
+      "sha256": "5e8bebd0b32aacf01f0248ddf5f86b539a597ecbea8cad444fd72d4201056465"
     },
     {
       "path": "MIRROR_POLICY.md",
       "role": "static_contract",
-      "sha256": "972c479727122a202a2a5a0537e57da4c42aa6cce6df52e1779f4cbfbb28c9a7"
+      "sha256": "b743dd2a29b16db73187aa08864af19314d2e2fbd83ebbc20934903bd7c90530"
     },
     {
       "path": "README.md",
       "role": "static_contract",
-      "sha256": "4172c172d6a864d963f01e2df2e91246d6cfeeb5a5c02a51b419fa88caadea60"
+      "sha256": "1b08aa67980cd96edaeae039bfcc2e27a409646cd553ac8608c75433e7838392"
     },
     {
       "path": "RESTORE.md",
       "role": "static_contract",
-      "sha256": "cfd2444ff1168de587b7fbd56635f277a28c5e1305e68c2f047a16182ec7a75d"
+      "sha256": "846a30c0030818bb39d67930b0b2ab3e12398d4ac1b59668fd396426cc2fae11"
     },
     {
       "path": "SECURITY.md",
       "role": "static_contract",
-      "sha256": "4607c43040656f58f91d387e3f6d0133ede1042db62b85710e97b4bf530bfb32"
+      "sha256": "bb29b5b6cba07fcc60b59e16b5c8c4d05da1287fe4124c1e572118b124e6088b"
     },
     {
       "path": "manifests/asset-dispositions.json",
       "role": "static_contract",
-      "sha256": "7ea8930ccf928d62ba8cbd94cad9068fac1600d040cacc0adad6f7a595338f28"
+      "sha256": "f74439a13bf157c1d2baf3f3d3a2a4d7150e7a1d16d073419e111bb731ce57b7"
     },
     {
       "path": "manifests/control-plane-contract.json",
@@ -81,12 +80,12 @@
     {
       "path": "manifests/external-archives.json",
       "role": "static_contract",
-      "sha256": "df08dffe3ae6264357a28b01af1f86023fdacb0e2fe6391cbf831c0a7729d351"
+      "sha256": "7489cf46691641a3ba49ad7833c1a33d0a0769359074cfd9567325f21a616862"
     },
     {
       "path": "manifests/restore-order.json",
       "role": "static_contract",
-      "sha256": "24b38b67869fdcd00eac4b083d549b7e1319faad215c49eedbfb8bf3c09ae62b"
+      "sha256": "6e6876808813aeef0dad7df605f28d81e5e227c44f71a33d4866896109279dc6"
     },
     {
       "path": "manifests/schemas/snapshot-manifest.schema.json",
@@ -101,17 +100,17 @@
     {
       "path": "manifests/source-authorities.json",
       "role": "static_contract",
-      "sha256": "8168fd7aa628adbb4a47f67f3361339870c9b5b11372ce05d189e4fdbea015ed"
+      "sha256": "aa16beffb46825b9f91785ca530aa6d3a3cf0d5c61830ac02f09e391981c39bf"
     },
     {
       "path": "manifests/verification-matrix.json",
       "role": "static_contract",
-      "sha256": "67e951a164536e991245582fad9f391b77664bb650bb3321f4ed81ba98bf6073"
+      "sha256": "1dfda16417ec5113e9c7a7c1123086bcd08669790ed2026fe9f4fa80255a37ec"
     },
     {
       "path": "scripts/mirror_cli.py",
       "role": "static_contract",
-      "sha256": "0663869cfbc55885e7ce6b26bb246d708f7f302cb22d516b425069c55c2ef018"
+      "sha256": "ca785bb446fa3a9659fa100838ef1aa1963247ad621b8ffe4e3c4889da0356d4"
     },
     {
       "path": "scripts/refresh-mirror.ps1",
@@ -121,12 +120,12 @@
     {
       "path": "tests/test_mirror_cli.py",
       "role": "static_contract",
-      "sha256": "ef91a74d276a101841ec21e17d1328da346434fb5f39e97bdd700f57263324d0"
+      "sha256": "a20efdb161bde01e6f78d2550eb025b3e72d5a1ee092a19f6f3a9f5645eb4206"
     }
   ],
   "roles": {
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "a0f18d025b6af56697fabec586c5e50436f105a606921c7632a57f0599e773c8"
+  "current_md_sha256": "2741b96c0b0fa96fcd78c6226c763fa6529708b9b5ee11aeedb89547abbd9a34"
 }

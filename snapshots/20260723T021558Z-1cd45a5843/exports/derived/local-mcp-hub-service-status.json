@@ -1,0 +1,39 @@
+{
+  "schema": "wsl_workspace_owner.v1.mirror_export.local_mcp_hub_service_status.v1",
+  "ok": true,
+  "status": "completed",
+  "generated_at": "2026-07-23T01:34:29.683092+00:00",
+  "owner": "local_mcp_hub_process",
+  "export_kind": "local_mcp_hub_service_status",
+  "service_status": {
+    "ok": true,
+    "service": "codex-local-mcp-hub.service",
+    "unit_path": "/home/codexlab/.config/systemd/user/codex-local-mcp-hub.service",
+    "unit_exists": true,
+    "enabled": true,
+    "active": true,
+    "systemd": {
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "Result": "success",
+      "ExecMainPID": "554"
+    },
+    "schema": "local_mcp_hub.service_status.v1",
+    "authority": "wsl_user_systemd",
+    "bind": {
+      "host": "127.0.0.1",
+      "port": 18881,
+      "loopback_only": true
+    },
+    "identity": {
+      "user": "codexlab",
+      "uid": 1000,
+      "root_or_system": false
+    }
+  },
+  "activation_performed": false,
+  "host_runtime_imported": false,
+  "mirror_reverse_overwrite": false
+}

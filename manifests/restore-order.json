@@ -30,13 +30,13 @@
       "id": "config-plan",
       "depends_on": ["workflow-stage"],
       "owner": "codex_config_guard",
-      "action": "compare templates with target config; never overwrite wholesale"
+      "action": "create target configuration from stable owner and capability contracts; do not restore machine-local provider, model, endpoint, or CC Switch settings"
     },
     {
       "id": "provider-plan",
       "depends_on": ["config-plan"],
       "owner": "codex_model_provider",
-      "action": "import the sanitized CC Switch semantic export through its owner, then reapply provider catalog and model projection"
+      "action": "reacquire provider credentials and let the target owner select models and rebuild its catalog; never import legacy CC Switch settings or semantic database state from the public mirror"
     },
     {
       "id": "plugin-plan",

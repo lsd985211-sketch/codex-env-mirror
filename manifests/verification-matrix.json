@@ -14,7 +14,7 @@
     {"id": "snapshot-budget", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "file and total size budgets are respected"},
     {"id": "authority-boundary", "tier": "mirror", "required": true, "owner": "rule_governance", "predicate": "exports declare derived_snapshot and do not claim live authority"},
     {"id": "restore-dag", "tier": "mirror", "required": true, "owner": "mirror_cli", "predicate": "restore dependencies resolve without cycles"},
-    {"id": "cc-switch-semantic", "tier": "mirror", "required": true, "owner": "cc_switch", "predicate": "approved semantic tables export successfully with recursively redacted secrets and no transient logs"},
+    {"id": "volatile-config-exclusion", "tier": "mirror", "required": true, "owner": "codex_config_guard", "predicate": "active provider/model configuration, model catalogs, mutable CC Switch settings, and CC Switch database semantics are absent from public snapshot assets"},
     {"id": "plugin-inventory", "tier": "mirror", "required": true, "owner": "codex_cli", "predicate": "every enabled plugin resolves to version and manifest hash evidence without copying cache payloads"},
     {"id": "current-checkpoints", "tier": "mirror", "required": true, "owner": "memory_governance", "predicate": "checkpoint export contains MANIFEST-selected shared docs and recent checkpoints only"},
     {"id": "runtime-compatibility", "tier": "mirror", "required": true, "owner": "runtime", "predicate": "CLI, Desktop package, and sanitized native-host compatibility versions are recorded"},

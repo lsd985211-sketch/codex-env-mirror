@@ -8,6 +8,9 @@ access control.
   output committed to the repository.
 - Configuration templates use logical placeholders such as
   `<SECRET:OPENAI_API_KEY>`.
+- Active provider/model selections, endpoint configuration, model catalogs,
+  mutable CC Switch settings, and CC Switch database semantics are private,
+  volatile target state and are not published even in redacted form.
 - DPAPI-protected data is considered machine/user bound. Cross-machine recovery
   uses secret re-acquisition or an owner-supported export, not blind file copy.
 - External bulk state must be encrypted before leaving this machine and linked
