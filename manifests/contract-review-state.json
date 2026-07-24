@@ -1,52 +1,42 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-23T02:18:52.552189+00:00",
+  "reviewed_at": "2026-07-24T02:45:22.719745+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "29012d589aea2966e89a775baed8fe4bf28a9bd961162c537fb2a1d51e5073eb",
-  "baseline_tag": "seed-v2.10.0",
-  "proposed_tag": "seed-v2.11.0",
+  "control_plane_fingerprint": "c000c3a869d9f82aa6d0af194792ca4298875720645acd319e7200be18d9573f",
+  "baseline_tag": "seed-v3.0.0",
+  "proposed_tag": "seed-v3.1.0",
   "changed_control_plane_files": [
-    "AGENTS.md",
-    "BOOTSTRAP.md",
-    "MIRROR_POLICY.md",
-    "README.md",
-    "RESTORE.md",
-    "SECURITY.md",
-    "manifests/asset-dispositions.json",
-    "manifests/external-archives.json",
-    "manifests/restore-order.json",
     "manifests/source-authorities.json",
-    "manifests/verification-matrix.json",
     "scripts/mirror_cli.py",
     "tests/test_mirror_cli.py"
   ],
   "decisions": [
     {
       "path": "AGENTS.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "README.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "MIRROR_POLICY.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "BOOTSTRAP.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "RESTORE.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     },
     {
       "path": "SECURITY.md",
-      "disposition": "updated"
+      "disposition": "compatible"
     }
   ],
-  "release_impact": "major",
-  "summary": "Exclude volatile provider, model, and CC Switch state from the public recovery mirror; preserve stable owners, inventories, secret requirements, skills, and target-side reacquisition paths.",
+  "release_impact": "minor",
+  "summary": "Reviewed six stable recovery contracts against added owner-generated service exports and governance-hash full-capture gate; semantics, restore flow, and security boundaries remain compatible.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
