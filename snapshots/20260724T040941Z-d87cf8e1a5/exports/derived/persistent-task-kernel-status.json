@@ -1,0 +1,8 @@
+{
+  "schema": "persistent_task_kernel.snapshot.v1",
+  "ok": true,
+  "db_path": "/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/persistent_task_kernel/tasks.sqlite",
+  "counts": {},
+  "tasks": [],
+  "recent_events": []
+}

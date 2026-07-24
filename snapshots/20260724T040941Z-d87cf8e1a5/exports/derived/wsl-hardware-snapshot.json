@@ -1,0 +1,190 @@
+{
+  "ok": true,
+  "schema": "wsl_hardware_owner.v1.snapshot",
+  "read_only": true,
+  "captured_at": "2026-07-24T04:12:00.873994+00:00",
+  "platform": {
+    "scope": "wsl_host",
+    "is_wsl": true,
+    "kernel_release": "6.18.33.2-microsoft-standard-WSL2",
+    "distro": {
+      "pretty_name": "Ubuntu 26.04 LTS",
+      "version_id": "26.04",
+      "id": "ubuntu"
+    }
+  },
+  "authority": {
+    "host_hardware_truth": false,
+    "linux_visible_projection_only": true,
+    "windows_owner": "windows_hardware_owner"
+  },
+  "tools": {
+    "lsblk": {
+      "available": true,
+      "required": true,
+      "path": "/usr/bin/lsblk",
+      "version": "lsblk from util-linux 2.41.3"
+    },
+    "udevadm": {
+      "available": true,
+      "required": true,
+      "path": "/usr/bin/udevadm",
+      "version": "259"
+    },
+    "lsusb": {
+      "available": false,
+      "required": false,
+      "path": "",
+      "version": "not_found"
+    },
+    "lspci": {
+      "available": false,
+      "required": false,
+      "path": "",
+      "version": "not_found"
+    },
+    "nvidia-smi": {
+      "available": true,
+      "required": false,
+      "path": "/usr/lib/wsl/lib/nvidia-smi",
+      "version": "610.62"
+    }
+  },
+  "block": {
+    "ok": true,
+    "devices": [
+      {
+        "name": "sda",
+        "kname": "sda",
+        "path": "/dev/sda",
+        "type": "disk",
+        "size": 374251520,
+        "model": "Virtual Disk",
+        "serial": "60022480df18deb7e179255b7b21f6fa",
+        "tran": null,
+        "fstype": "ext4",
+        "mountpoints": [],
+        "ro": true,
+        "rm": false
+      },
+      {
+        "name": "sdb",
+        "kname": "sdb",
+        "path": "/dev/sdb",
+        "type": "disk",
+        "size": 167149568,
+        "model": "Virtual Disk",
+        "serial": "60022480e63378b2d3a4a263252875a1",
+        "tran": null,
+        "fstype": "ext4",
+        "mountpoints": [],
+        "ro": true,
+        "rm": false
+      },
+      {
+        "name": "sdc",
+        "kname": "sdc",
+        "path": "/dev/sdc",
+        "type": "disk",
+        "size": 2147487744,
+        "model": "Virtual Disk",
+        "serial": "600224805efcbb3974e8f3aeed63fa33",
+        "tran": null,
+        "fstype": "swap",
+        "mountpoints": [
+          "[SWAP]"
+        ],
+        "ro": false,
+        "rm": false
+      },
+      {
+        "name": "sdd",
+        "kname": "sdd",
+        "path": "/dev/sdd",
+        "type": "disk",
+        "size": 1099511627776,
+        "model": "Virtual Disk",
+        "serial": "60022480f5561f3e3014f0be37c75dee",
+        "tran": null,
+        "fstype": "ext4",
+        "mountpoints": [
+          "/mnt/wslg/distro",
+          "/"
+        ],
+        "ro": false,
+        "rm": false
+      },
+      {
+        "name": "sde",
+        "kname": "sde",
+        "path": "/dev/sde",
+        "type": "disk",
+        "size": 1099511627776,
+        "model": "Virtual Disk",
+        "serial": "60022480f5561f3e3014f0be37c75dee",
+        "tran": null,
+        "fstype": "ext4",
+        "mountpoints": [],
+        "ro": false,
+        "rm": false
+      }
+    ]
+  },
+  "usb": {
+    "ok": false,
+    "reason": "lsusb_not_found",
+    "devices": []
+  },
+  "pci": {
+    "ok": false,
+    "reason": "lspci_not_found",
+    "devices": [],
+    "device_count": 0
+  },
+  "gpu": {
+    "ok": true,
+    "reason": "",
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "uuid": "GPU-44795818-e595-d020-b65b-c8e83f7346b0",
+        "driver_version": "610.62",
+        "memory_total_mib": "6144",
+        "compute_capability": "8.6"
+      }
+    ]
+  },
+  "safety": {
+    "device_writes_supported": false,
+    "mount_changes_supported": false,
+    "driver_changes_supported": false,
+    "arbitrary_command_supported": false
+  },
+  "output_budget": {
+    "max_inline_bytes": 24576,
+    "original_bytes": 2503,
+    "returned_bytes": 3059,
+    "truncated": false,
+    "artifact_ref": "python _bridge/wsl_hardware_owner.py snapshot --full",
+    "detail_rule": "default output is bounded; fetch detail explicitly by reference",
+    "functional_summary_rule": "aggregation supplements representative decision rows; it does not replace actionable results",
+    "functional_compression": {
+      "functional_integrity": "preserved",
+      "required_fields": [],
+      "preserved_inline": [],
+      "reference_required": [],
+      "compression_rule": "redundant_representation_only"
+    }
+  },
+  "output_mode": "default_bounded",
+  "output_evidence_policy": {
+    "success": "bounded_traceable_summary",
+    "failure": "decision_complete_inline_evidence",
+    "failure_reference_required": true,
+    "full": "richer_bounded_projection_with_artifact_reference",
+    "aggregation_rule": "aggregates_supplement_not_replace_actionable_rows",
+    "full_detail_access": "explicit_id_or_artifact_reference",
+    "compression_rule": "remove_redundant_representation_only; required_functional_fields_must_remain_inline_or_referenceable"
+  },
+  "raw_result_ref": "python _bridge/wsl_hardware_owner.py snapshot --full"
+}

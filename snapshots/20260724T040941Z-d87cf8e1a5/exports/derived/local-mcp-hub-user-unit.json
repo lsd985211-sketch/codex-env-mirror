@@ -1,0 +1,31 @@
+{
+  "schema": "wsl_workspace_owner.v1.mirror_export.local_mcp_hub_user_unit.v1",
+  "ok": true,
+  "status": "completed",
+  "generated_at": "2026-07-24T04:11:41.298191+00:00",
+  "owner": "local_mcp_hub_process",
+  "export_kind": "local_mcp_hub_user_unit",
+  "unit": {
+    "schema": "local_mcp_hub.service_plan.v1",
+    "ok": true,
+    "service": "codex-local-mcp-hub.service",
+    "unit_path": "/home/codexlab/.config/systemd/user/codex-local-mcp-hub.service",
+    "python": "/usr/bin/python3.14",
+    "script": "/home/codexlab/work/codex-workspace/workspace/_bridge/local_mcp_hub.py",
+    "unit_sha256": "c9b9dcddcd99a079a959c006d48e74a4040ee7ef78f59a0913b47257df6fb7f8",
+    "installed_unit_sha256": "c9b9dcddcd99a079a959c006d48e74a4040ee7ef78f59a0913b47257df6fb7f8",
+    "would_change": false,
+    "blockers": [],
+    "apply_contract": {
+      "confirmation": "INSTALL-CODEX-LOCAL-MCP-HUB",
+      "writes": [
+        "/home/codexlab/.config/systemd/user/codex-local-mcp-hub.service"
+      ],
+      "authority": "wsl_user_systemd",
+      "windows_task_role": "controlled_recovery_fallback_only"
+    }
+  },
+  "activation_performed": false,
+  "host_runtime_imported": false,
+  "mirror_reverse_overwrite": false
+}

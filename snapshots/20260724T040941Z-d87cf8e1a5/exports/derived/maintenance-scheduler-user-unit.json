@@ -1,0 +1,20 @@
+{
+  "schema": "maintenance_scheduler_service.v1.plan",
+  "ok": true,
+  "service": "codex-maintenance-scheduler.service",
+  "unit_path": "/home/codexlab/.config/systemd/user/codex-maintenance-scheduler.service",
+  "python": "/usr/bin/python3.14",
+  "script": "/home/codexlab/work/codex-workspace/workspace/_bridge/shared/codex_scheduler_runner.py",
+  "unit_sha256": "87f04af591d7617355f8a524a65b008d66fbb7eb9ae2fd92e5a5ccb982095a66",
+  "installed_unit_sha256": "87f04af591d7617355f8a524a65b008d66fbb7eb9ae2fd92e5a5ccb982095a66",
+  "would_change": false,
+  "blockers": [],
+  "apply_contract": {
+    "confirmation": "INSTALL-CODEX-MAINTENANCE-SCHEDULER",
+    "writes": [
+      "/home/codexlab/.config/systemd/user/codex-maintenance-scheduler.service"
+    ],
+    "task_authority": "shared/codex_scheduler_runner.py",
+    "windows_conversion_after_acceptance": "INSTALL-CODEX-WSL-CONTROL-PLANE-WAKE"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "skill_id": "39aebf8cf3fd3440",
+  "name": "gantt-chart-visualization",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\build-web-data-visualization\\3c06cb2e\\skills\\gantt-chart-visualization",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d207d3a674d0aca0a3cec35b68cf5cf80c968e9c70a08f393d7bf555dc6a97f1",
+    "agents": "cc045541456c41ef6269a69f1fdfb4abd4a6eaf1823e63bd3a822463867d2657",
+    "scripts": null,
+    "references": "68e7192ad55557e52848dee80533a9bb38a0fceab36b9b2636fe7d48fd8b1abd",
+    "assets": null
+  }
+}
