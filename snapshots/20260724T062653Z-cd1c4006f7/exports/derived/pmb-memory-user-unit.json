@@ -1,0 +1,34 @@
+{
+  "schema": "local_pmb_memory_service.v1.plan",
+  "ok": true,
+  "service": "codex-pmb-memory.service",
+  "unit_path": "/home/codexlab/.config/systemd/user/codex-pmb-memory.service",
+  "unit_sha256": "c163c90cc25b1f3125fe15dddfed9708d715aa3e0234f0c9973dd99151419931",
+  "installed_unit_sha256": "c163c90cc25b1f3125fe15dddfed9708d715aa3e0234f0c9973dd99151419931",
+  "would_change": false,
+  "fastembed_cache": {
+    "ok": true,
+    "path": "/home/codexlab/.local/share/codex-runtimes/pmb-memory/cache/fastembed",
+    "exists": true,
+    "persistent": true,
+    "writable": true,
+    "private": true,
+    "mode": "700",
+    "will_create": false
+  },
+  "takeover": {
+    "required": false,
+    "method": "pmb daemon stop, then systemd foreground daemon run",
+    "registered_pid": 254912
+  },
+  "blockers": [],
+  "apply_contract": {
+    "confirmation": "INSTALL-CODEX-PMB-MEMORY",
+    "writes": [
+      "/home/codexlab/.config/systemd/user/codex-pmb-memory.service",
+      "/home/codexlab/.local/share/codex-runtimes/pmb-memory/cache/fastembed"
+    ],
+    "stops_only": "PMB registered daemon or the existing PMB systemd unit",
+    "starts": "codex-pmb-memory.service"
+  }
+}
