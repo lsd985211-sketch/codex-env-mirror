@@ -1,4 +1,0 @@
-interface:
-  display_name: "Hardware Operations"
-  short_description: "Route Windows host and WSL hardware evidence"
-  default_prompt: "Use $hardware-ops to identify the authoritative platform owner and diagnose this hardware request."
