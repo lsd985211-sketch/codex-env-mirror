@@ -279,6 +279,27 @@ class MirrorCliTests(unittest.TestCase):
             path.write_bytes(b"line-1\r\nline-2\r\n")
             self.assertEqual(mirror_cli.sha256_text_file(path), lf_hash)
 
+    def test_incremental_capture_rejects_changed_governance_contract(self) -> None:
+        current = {"manifests/source-authorities.json": "new"}
+        self.assertEqual(
+            mirror_cli.incremental_governance_change_reason(
+                {"governance_hashes": dict(current)},
+                current,
+            ),
+            "",
+        )
+        self.assertEqual(
+            mirror_cli.incremental_governance_change_reason(
+                {"governance_hashes": {"manifests/source-authorities.json": "old"}},
+                current,
+            ),
+            "governance_contract_changed",
+        )
+        self.assertEqual(
+            mirror_cli.incremental_governance_change_reason({}, current),
+            "previous_governance_hashes_missing",
+        )
+
     def test_control_plane_state_detects_static_drift_and_snapshot_mismatch(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

@@ -1,0 +1,93 @@
+{
+  "ok": true,
+  "service": "codex-maintenance-scheduler.service",
+  "unit_path": "/home/codexlab/.config/systemd/user/codex-maintenance-scheduler.service",
+  "unit_exists": true,
+  "enabled": true,
+  "active": true,
+  "systemd": {
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "UnitFileState": "enabled",
+    "Result": "success",
+    "ExecMainPID": "325012"
+  },
+  "schema": "maintenance_scheduler_service.v1.status",
+  "authority": "wsl_user_systemd",
+  "heartbeat": {
+    "ok": true,
+    "path": "/home/codexlab/.local/state/codex/scheduler/scheduler-heartbeat.json",
+    "updated_at": "2026-07-24T10:37:24.268628+08:00",
+    "age_seconds": 166.306,
+    "service_mode": "wsl-user-systemd",
+    "loop_pid": 325012,
+    "payload": {
+      "ok": true,
+      "pid": 325012,
+      "loop_pid": 325012,
+      "service_mode": "wsl-user-systemd",
+      "hostname": "lsdpc",
+      "updated_at": "2026-07-24T10:37:24.268628+08:00",
+      "timezone": "Asia/Shanghai",
+      "state_path": "/home/codexlab/.local/state/codex/scheduler/scheduler-state.json",
+      "tasks_path": "/home/codexlab/.local/state/codex/scheduler/maintenance_tasks.json",
+      "overrides_path": "/home/codexlab/.local/state/codex/scheduler/maintenance_task_overrides.json",
+      "log_path": "/home/codexlab/.local/state/codex/scheduler/logs/codex-scheduler.log",
+      "last_run_due_count": 2,
+      "last_run_summary": [
+        {
+          "task_id": "persistent_task_kernel_recover_expired",
+          "ok": true,
+          "skipped": false,
+          "timed_out": false,
+          "duration_seconds": 0.063,
+          "exit_code": 0,
+          "record_path": "/home/codexlab/.local/state/codex/scheduler/records/2026-07/20260724-persistent_task_kernel_recover_expired.jsonl",
+          "error": ""
+        },
+        {
+          "task_id": "email_scheduler_run_due",
+          "ok": true,
+          "skipped": false,
+          "timed_out": false,
+          "duration_seconds": 2.645,
+          "exit_code": 0,
+          "record_path": "/home/codexlab/.local/state/codex/scheduler/records/2026-07/20260724-email_scheduler_run_due.jsonl",
+          "error": ""
+        }
+      ],
+      "state_normalization": {
+        "changed": []
+      }
+    }
+  },
+  "identity": {
+    "user": "codexlab",
+    "uid": 1000,
+    "root_or_system": false,
+    "service_pid": 325012,
+    "loop_pid": 325012,
+    "matches": true
+  },
+  "windows_wake": {
+    "ok": true,
+    "task_name": "CodexSchedulerRunner",
+    "exists": true,
+    "converted": true,
+    "row": {
+      "task_name": "CodexSchedulerRunner",
+      "state": "Ready",
+      "user_id": "user",
+      "logon_type": "Interactive",
+      "run_level": "Limited",
+      "execute": "C:\\WINDOWS\\System32\\wsl.exe",
+      "arguments": "-d \"Codex-Wsl-Lab\" -u \"codexlab\" -- systemctl --user start codex-app-server.service codex-local-mcp-hub.service codex-pmb-memory.service codex-maintenance-scheduler.service",
+      "last_result": 4294967295,
+      "last_run": "2026-07-23T05:15:36.0000000Z",
+      "next_run": ""
+    },
+    "resident_windows_loop": false,
+    "role": "login_wake_only"
+  }
+}

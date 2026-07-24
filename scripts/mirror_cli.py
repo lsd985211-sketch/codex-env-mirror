@@ -901,6 +901,16 @@ def governance_hashes() -> dict[str, str]:
     return results
 
 
+def incremental_governance_change_reason(
+    previous_manifest: dict[str, Any],
+    current_governance_hashes: dict[str, str],
+) -> str:
+    previous = previous_manifest.get("governance_hashes")
+    if not isinstance(previous, dict):
+        return "previous_governance_hashes_missing"
+    return "" if previous == current_governance_hashes else "governance_contract_changed"
+
+
 def control_plane_issues(snapshot_id: str) -> list[dict[str, Any]]:
     issues: list[dict[str, Any]] = []
     try:
@@ -1781,6 +1791,7 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
             "reason": str(quiescence.get("reason") or "capture_quiescence_probe_failed"),
             "candidate_created": False, "capture_quiescence": quiescence,
         }
+    current_governance_hashes = governance_hashes()
     incremental_plan = None
     previous_root: Path | None = None
     previous_manifest: dict[str, Any] | None = None
@@ -1795,12 +1806,18 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
                 incremental_plan["reasons"] = sorted(set(incremental_plan["reasons"]) | {previous_status})
                 fallback_reason = previous_status
             else:
-                capture_mode = "incremental"
+                governance_reason = incremental_governance_change_reason(previous_manifest, current_governance_hashes)
+                if governance_reason:
+                    incremental_plan["full_rebuild_required"] = True
+                    incremental_plan["reasons"] = sorted(set(incremental_plan["reasons"]) | {governance_reason})
+                    fallback_reason = governance_reason
+                else:
+                    capture_mode = "incremental"
         else:
             fallback_reason = ",".join(incremental_plan["reasons"]) or "incremental_plan_not_safe"
     variables = expanded_variables(config)
     policy = config["policy"]
-    seed = json.dumps({"time": now_iso(), "governance": governance_hashes()}, sort_keys=True).encode("utf-8")
+    seed = json.dumps({"time": now_iso(), "governance": current_governance_hashes}, sort_keys=True).encode("utf-8")
     snapshot_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + sha256_bytes(seed)[:10]
     staging_parent = RUNTIME_ROOT / "staging"
     staging_parent.mkdir(parents=True, exist_ok=True)
@@ -1914,7 +1931,7 @@ def create_snapshot(config: dict[str, Any], *, changed_paths: list[str] | None =
             "authority_mode": "derived_snapshot",
             "source_manifest": "manifests/source-authorities.json",
             "governance_hash_mode": GOVERNANCE_HASH_MODE,
-            "governance_hashes": governance_hashes(),
+            "governance_hashes": current_governance_hashes,
             "assets": assets,
             "membership_guard": membership_guard,
             "asset_dispositions": plan["asset_dispositions"],

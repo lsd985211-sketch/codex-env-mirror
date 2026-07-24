@@ -640,6 +640,90 @@
       "required": true
     },
     {
+      "id": "pmb-memory-user-unit",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/local_pmb_memory_service.py", "plan"],
+      "destination": "exports/derived/pmb-memory-user-unit.json",
+      "classification": "authority_export",
+      "owner": "local_pmb_memory_service",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["local_pmb_memory.py", "local_pmb_memory_service.py", "platform_paths.py", "shared/**"]
+      },
+      "required": true
+    },
+    {
+      "id": "pmb-memory-service-status",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/local_pmb_memory_service.py", "status"],
+      "destination": "exports/derived/pmb-memory-service-status.json",
+      "classification": "authority_export",
+      "owner": "local_pmb_memory_service",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["local_pmb_memory.py", "local_pmb_memory_service.py", "platform_paths.py", "shared/**"]
+      },
+      "required": true
+    },
+    {
+      "id": "maintenance-scheduler-user-unit",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/maintenance_scheduler_service.py", "plan"],
+      "destination": "exports/derived/maintenance-scheduler-user-unit.json",
+      "classification": "authority_export",
+      "owner": "maintenance_scheduler_service",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["maintenance_scheduler_service.py", "shared/codex_scheduler_runner.py", "shared/wsl_user_systemd.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "maintenance-scheduler-service-status",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/maintenance_scheduler_service.py", "status"],
+      "destination": "exports/derived/maintenance-scheduler-service-status.json",
+      "classification": "authority_export",
+      "owner": "maintenance_scheduler_service",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["maintenance_scheduler_service.py", "shared/codex_scheduler_runner.py", "shared/wsl_user_systemd.py"]
+      },
+      "required": true
+    },
+    {
+      "id": "windows-control-plane-wake-task",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/maintenance_scheduler_service.py", "windows-wake-plan"],
+      "destination": "exports/derived/windows-control-plane-wake-task.json",
+      "classification": "authority_export",
+      "owner": "maintenance_scheduler_service",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["maintenance_scheduler_service.py", "windows_execution_agent.py", "shared/install-codex-scheduler-task.ps1"]
+      },
+      "required": true
+    },
+    {
+      "id": "persistent-task-kernel-status",
+      "kind": "command_json",
+      "command": ["wsl.exe", "-d", "Codex-Wsl-Lab", "--", "python3", "/home/codexlab/work/codex-workspace/workspace/_bridge/persistent_task_kernel.py", "snapshot"],
+      "destination": "exports/derived/persistent-task-kernel-status.json",
+      "classification": "authority_export",
+      "owner": "persistent_task_kernel",
+      "activation": "owner_export_only",
+      "depends_on": ["workspace-bridge-source"],
+      "depends_on_paths": {
+        "workspace-bridge-source": ["persistent_task_kernel.py", "persistent_task_dispatcher.py", "shared/long_command_receipt.py"]
+      },
+      "required": true
+    },
+    {
       "id": "hardware-system-route-contract",
       "kind": "command_json",
       "command": ["python", "${WORKSPACE_ROOT}\\_bridge\\hardware_system_owner.py", "routes"],
