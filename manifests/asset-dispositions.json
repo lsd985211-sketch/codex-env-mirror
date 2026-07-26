@@ -27,7 +27,7 @@
         },
         {
           "names": [
-            ".app-server-state-reconciled-v1", ".personality_migration", "cap_sid",
+            ".app-server-state-reconciled-v1", ".personality_migration", ".sandbox_migration", "cap_sid",
             "installation_id"
           ],
           "disposition": "regenerate",
