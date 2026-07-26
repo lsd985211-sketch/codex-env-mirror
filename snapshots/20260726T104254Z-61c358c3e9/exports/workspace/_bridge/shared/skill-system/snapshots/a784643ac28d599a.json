@@ -1,0 +1,20 @@
+{
+  "skill_id": "a784643ac28d599a",
+  "name": "baoyu-format-markdown",
+  "path": "C:\\Users\\45543\\.codex\\skills\\baoyu-format-markdown",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "44ab626b8c48949c7bd3fff01749853af49a8fc99970d9664734726ca5d555a5",
+    "agents": null,
+    "scripts": "3e4a659d0fed5ee74e1c05e0ff2fc0de0d51c2369ffc6eeb0dcc36b44596b237",
+    "references": null,
+    "assets": null
+  }
+}

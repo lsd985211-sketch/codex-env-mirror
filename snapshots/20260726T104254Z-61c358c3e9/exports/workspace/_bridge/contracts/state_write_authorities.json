@@ -1,0 +1,13 @@
+{
+  "schema": "state_write_authorities.v1",
+  "version": 1,
+  "authority_policy": "Each state target has one authority domain. Multiple adapters may write only when declared here, coordinated by the domain lease, fenced by its monotonic generation, and validated against the same desired-state signature.",
+  "reverse_absorption_allowed": false,
+  "domains": [
+    {"domain_id": "codex_config", "authority": "codex_startup_baseline_plus_runtime_field_owners", "coordination_mode": "shared_lease_generation", "targets": ["windows_codex_config", "windows_managed_config_projection", "wsl_codex_config", "wsl_managed_config_projection"], "allowed_writers": ["codex_config_projection", "codex_state_repair", "codex_desktop_environment_selection", "wsl_codex_runtime", "codex_environment_mirror"], "external_runtime_fields": [{"target": "windows_codex_config", "path": ["marketplaces", "openai-bundled", "source"], "authority": "codex_desktop_runtime", "policy": "preserve_live_exclude_from_recovery_ledger_and_publication_signature"}, {"target": "windows_codex_config", "path": ["marketplaces", "openai-bundled", "last_updated"], "authority": "codex_desktop_runtime", "policy": "preserve_live_exclude_from_recovery_ledger_and_publication_signature"}], "publication_barrier_writer": "codex_environment_mirror", "negative_authority": "codex_startup_baseline.decommissioned_mcp_and_plugins", "validation": "python _bridge/state_write_authority.py validate"},
+    {"domain_id": "work_git_history", "authority": "work_git_change_owner", "coordination_mode": "owner_serialized", "targets": ["work_git_main", "windows_bare_main"], "allowed_writers": ["work_git_change_owner"], "validation": "python _bridge/wsl_workspace_owner.py mirror-export --kind work-git-release"},
+    {"domain_id": "mirror_snapshot_pointer", "authority": "codex_environment_mirror", "coordination_mode": "owner_serialized", "targets": ["mirror_latest_pointer", "mirror_control_plane", "github_recovery_main"], "allowed_writers": ["codex_environment_mirror"], "validation": "python _bridge/codex_workflow_entry.py mirror status --force-fresh"},
+    {"domain_id": "workflow_closeout", "authority": "codex_workflow_entry", "coordination_mode": "owner_serialized", "targets": ["workflow_closeout_receipts", "workflow_finalization_checkpoint"], "allowed_writers": ["codex_workflow_entry", "project_checkpoint_finalize"], "validation": "python _bridge/workflow_orchestrator.py validate"},
+    {"domain_id": "dependency_validation_cursor", "authority": "dependency_change_intelligence", "coordination_mode": "owner_serialized", "targets": ["dependency_last_validated"], "allowed_writers": ["dependency_change_intelligence"], "validation": "python _bridge/dependency_change_intelligence.py status"}
+  ]
+}

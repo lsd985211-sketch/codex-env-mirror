@@ -1,0 +1,13 @@
+{
+  "schema": "mtp_media_archive_owner.v1.validate",
+  "ok": true,
+  "allowed_public_roots": [
+    "Tencent/MicroMsg",
+    "Android/media/com.tencent.mm"
+  ],
+  "writes_files": false,
+  "writes_device": false,
+  "wechat_chat_history_restore": false,
+  "video_archive_apply_available": false,
+  "video_archive_blocked_backend_reason": "headless_shell_copyhere_backend_forbidden"
+}
