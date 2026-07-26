@@ -1,0 +1,20 @@
+{
+  "skill_id": "682e212208188b45",
+  "name": "podcast-workflow",
+  "path": "C:\\Users\\45543\\.codex\\skills\\podcast-workflow",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "ebd5849565a194d2941382468ad13461aa4cee8b2faae0a418d7db2f987e9ccd",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

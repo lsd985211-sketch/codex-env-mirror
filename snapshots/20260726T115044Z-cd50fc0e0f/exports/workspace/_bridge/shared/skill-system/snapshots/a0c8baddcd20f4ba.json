@@ -1,0 +1,20 @@
+{
+  "skill_id": "a0c8baddcd20f4ba",
+  "name": "fabric-mc-26-1-2",
+  "path": "C:\\Users\\45543\\.codex\\skills\\fabric-mc-26-1-2",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "80c583d3b4e671094331a44d210d0b4e43e03a1ef70ea0456f45498d67a5a9c6",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

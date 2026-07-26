@@ -1,0 +1,20 @@
+{
+  "skill_id": "1d0c1acba212e4d5",
+  "name": "cli-anything-microsoft-office",
+  "path": "C:\\Users\\45543\\.codex\\skills\\cli-anything-microsoft-office",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c4b7079049e9f577ddbfdc4eef293b53640a22ccf46038ae35676b84a01ccb8a",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

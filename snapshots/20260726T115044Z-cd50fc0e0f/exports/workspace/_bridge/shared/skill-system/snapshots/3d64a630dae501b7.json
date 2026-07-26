@@ -1,0 +1,20 @@
+{
+  "skill_id": "3d64a630dae501b7",
+  "name": "gui-app-weixin",
+  "path": "C:\\Users\\45543\\.codex\\skills\\gui-app-weixin",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "1b29bbb39bbd77867ef405321cb803c32096bd9ab69491317c7f4dc6280d9ea3",
+    "agents": null,
+    "scripts": null,
+    "references": "bb244924ec0ad7963f860de54eeecea340f8e16aaf92d16c00fce23fb750527b",
+    "assets": null
+  }
+}

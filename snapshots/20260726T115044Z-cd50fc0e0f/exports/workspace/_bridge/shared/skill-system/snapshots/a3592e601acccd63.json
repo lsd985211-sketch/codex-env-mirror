@@ -1,0 +1,20 @@
+{
+  "skill_id": "a3592e601acccd63",
+  "name": "imagegen",
+  "path": "C:\\Users\\45543\\.codex\\skills\\.system\\imagegen",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T00:38:47+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "critical",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "613f892ba9259cbfcb44ee74e81587cc7ce288de86ae2f1eab5eacb190e34f58",
+    "agents": "1797be4076717806df54aa9331c07ac8eebe32c69f32132d5858712b05406146",
+    "scripts": "c026734f1a9146b41c417fe39f5000b9b9d854646410e0f5c247e8b6beb8a1b8",
+    "references": "83478eee109eb0931e804084ccba15c4eb54483d1b80fd1c925a6bbbc3ca341c",
+    "assets": "ea9d15f447e2fd5e07e3ab5364b6b2cfaf0b2718e1120b4ec497f0bfac6b23f4"
+  }
+}

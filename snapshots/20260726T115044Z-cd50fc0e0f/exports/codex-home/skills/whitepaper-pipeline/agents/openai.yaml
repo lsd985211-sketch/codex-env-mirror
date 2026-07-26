@@ -1,0 +1,4 @@
+interface:
+  display_name: "Whitepaper Pipeline"
+  short_description: "Orchestrate research, whitepaper production, and web publication"
+  default_prompt: "Collect evidence, create a validated whitepaper, and publish or update its public website through the existing owner skills."
