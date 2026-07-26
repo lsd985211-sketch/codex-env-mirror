@@ -1,14 +1,12 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-24T02:45:22.719745+00:00",
+  "reviewed_at": "2026-07-26T03:44:32.873521+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "c000c3a869d9f82aa6d0af194792ca4298875720645acd319e7200be18d9573f",
-  "baseline_tag": "seed-v3.0.0",
-  "proposed_tag": "seed-v3.1.0",
+  "control_plane_fingerprint": "5be85636c07e89d327c490e2e981b22c7ed1ef10f1a7f32eb6d9806edad3d5cd",
+  "baseline_tag": "seed-v3.2.0",
+  "proposed_tag": "seed-v3.3.0",
   "changed_control_plane_files": [
-    "manifests/source-authorities.json",
-    "scripts/mirror_cli.py",
-    "tests/test_mirror_cli.py"
+    "manifests/asset-dispositions.json"
   ],
   "decisions": [
     {
@@ -37,6 +35,6 @@
     }
   ],
   "release_impact": "minor",
-  "summary": "Reviewed six stable recovery contracts against added owner-generated service exports and governance-hash full-capture gate; semantics, restore flow, and security boundaries remain compatible.",
+  "summary": "已逐一审阅稳定契约；.sandbox_migration 是既有机器身份标记 regenerate/codex_cli 规则的新增实例，现有权限、恢复、未知项阻断与 staging/activation 边界保持兼容。",
   "validation": "all required stable contracts read against current control-plane changes"
 }
