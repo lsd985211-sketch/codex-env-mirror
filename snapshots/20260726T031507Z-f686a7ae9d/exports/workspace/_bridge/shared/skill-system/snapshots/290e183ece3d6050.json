@@ -1,0 +1,20 @@
+{
+  "skill_id": "290e183ece3d6050",
+  "name": "fabric-mc-architecture",
+  "path": "C:\\Users\\45543\\.codex\\skills\\fabric-mc-architecture",
+  "source": "user-managed",
+  "state": "approved",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": "2026-07-12T10:48:51+08:00",
+  "last_approved_at": "2026-07-12T10:49:11+08:00",
+  "last_change_level": "none",
+  "last_report_path": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\shared\\skill-system\\reports\\290e183ece3d6050-2026-07-12T104851_0800.json",
+  "fingerprints": {
+    "skill_md": "31a66f7a903471cb7f438e4630ce9568bd05a98745dd7a605d22d87a438c32f7",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
