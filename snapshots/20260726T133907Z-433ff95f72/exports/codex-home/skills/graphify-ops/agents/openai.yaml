@@ -1,0 +1,4 @@
+interface:
+  display_name: "Graphify Operations"
+  short_description: "Managed local knowledge graph workflows"
+  default_prompt: "Use $graphify-ops to safely analyze a scoped local corpus."

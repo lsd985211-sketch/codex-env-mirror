@@ -1,0 +1,20 @@
+{
+  "skill_id": "1b4b2f506e9e30d4",
+  "name": "game-studio",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\game-studio\\7fd3161c\\skills\\game-studio",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "b76eac4342df15cca37ae26fe5908f11929dabe19596f08636a98a66cf9f2be8",
+    "agents": "c7e01fc2f94b85b0541025653f79599439857922e1634dfc92b935188840d990",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

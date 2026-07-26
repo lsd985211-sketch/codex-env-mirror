@@ -1,0 +1,20 @@
+{
+  "skill_id": "f6ab06c0110f6eb7",
+  "name": "google-slides",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\google-drive\\c6ea566d\\skills\\google-slides",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "f1a7954fb87ffa5353e0ecb97ae4f484c4ade70fafede68ec392085b73ccc292",
+    "agents": "c93b66486cc6df212d2eb3fabb57a3495eba07e3ae900612c3c72a1cb2315605",
+    "scripts": null,
+    "references": "3b13f38f78c9ecba8d9328ad3a92b6b950a834f21df39aa5e845f0319b081bd7",
+    "assets": "e71da55c5e9e299f661206a7538fa5b1d01100c76bf46f2427ff38dfcfc38619"
+  }
+}
