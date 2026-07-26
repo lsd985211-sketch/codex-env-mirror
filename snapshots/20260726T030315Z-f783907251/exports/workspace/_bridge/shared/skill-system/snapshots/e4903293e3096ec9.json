@@ -1,0 +1,20 @@
+{
+  "skill_id": "e4903293e3096ec9",
+  "name": "gsap",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\hyperframes\\bd2122cb\\skills\\gsap",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "0ace76d56e2d2b021a7ee3f2ef7e69895cdef3b8787b58f4586e3959043ace17",
+    "agents": "e5b14ec425a9d5d2edad6cb9763b12d6eab6dd03d8fa6c1aef6e1cf21c282b3f",
+    "scripts": "1fe173f97a146e0e77ea0b493c7d1a30d875cc8644b9a1bfc4255fb2332a1ee1",
+    "references": "c067d3b5ae59e1245665d2ba690fd2ae9b1f1a040853c9b0ec4a6fec7a0bff5b",
+    "assets": null
+  }
+}

@@ -1,12 +1,13 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-24T06:32:39.851072+00:00",
+  "generated_at": "2026-07-26T03:05:59.553604+00:00",
+  "source_signature": "1cbbb732daac77e8b8982cba2e1537ab50cead065b7c56eb41cfc653ecd21b6e",
   "control_plane_version": "2.2.0",
   "snapshot": {
-    "snapshot_id": "20260724T062653Z-cd1c4006f7",
-    "created_at": "2026-07-24T06:28:56.465315+00:00",
-    "asset_count": 2112,
-    "total_bytes": 26132936,
+    "snapshot_id": "20260726T030315Z-f783907251",
+    "created_at": "2026-07-26T03:05:31.232727+00:00",
+    "asset_count": 2144,
+    "total_bytes": 26543708,
     "capture_mode": "full"
   },
   "readiness": {
@@ -70,7 +71,7 @@
     {
       "path": "manifests/asset-dispositions.json",
       "role": "static_contract",
-      "sha256": "f74439a13bf157c1d2baf3f3d3a2a4d7150e7a1d16d073419e111bb731ce57b7"
+      "sha256": "69ef7c3050a1af55e3ba54d91e2781dc6fcdae7f9e2e44606bcb5906858cc661"
     },
     {
       "path": "manifests/control-plane-contract.json",
@@ -127,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "3d0bf768c77fd1bf8112d6e7f9d38c90e83f84266d9a293dc66f0d5a75a9bfb0"
+  "current_md_sha256": "d9d5ba0d6d30eb46d888eb11ebcbcc3f08321ebbfceeafb1cfb2009d715bcb34"
 }
