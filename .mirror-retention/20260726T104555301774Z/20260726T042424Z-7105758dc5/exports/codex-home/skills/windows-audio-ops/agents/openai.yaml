@@ -1,4 +1,0 @@
-interface:
-  display_name: "Windows Audio Ops"
-  short_description: "Diagnose and control Windows audio safely"
-  default_prompt: "Use $windows-audio-ops to diagnose current audio playback and stop music without killing player processes."

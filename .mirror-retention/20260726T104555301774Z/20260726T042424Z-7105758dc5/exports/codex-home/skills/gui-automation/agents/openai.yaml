@@ -1,4 +1,0 @@
-interface:
-  display_name: "GUI Automation"
-  short_description: "Reliable Windows GUI automation workflow"
-  default_prompt: "Use $gui-automation to operate a Windows app safely with evidence and recovery."
