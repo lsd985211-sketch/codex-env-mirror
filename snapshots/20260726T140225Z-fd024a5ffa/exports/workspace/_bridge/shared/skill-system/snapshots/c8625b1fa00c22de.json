@@ -1,0 +1,20 @@
+{
+  "skill_id": "c8625b1fa00c22de",
+  "name": "baoyu-cover-image",
+  "path": "C:\\Users\\45543\\.codex\\skills\\baoyu-cover-image",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c62465e3529139c4e044e8390be6f896a676ae95d0663c9e3c248c80f8a5afe4",
+    "agents": null,
+    "scripts": null,
+    "references": "d1ed4a621f0335c6af98fca53eb34409257737ab5c7d6aaf9c32a07c595c4c05",
+    "assets": null
+  }
+}

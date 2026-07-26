@@ -1,0 +1,20 @@
+{
+  "skill_id": "60c7b1a76025c04d",
+  "name": "minecraft-modding",
+  "path": "C:\\Users\\45543\\.codex\\skills\\minecraft-modding",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c61a8313b85a5a382809e65e9502e285f2a4effe81e684442f32f613c41bcc9d",
+    "agents": null,
+    "scripts": "f60f8c2721823798428b914e8af7e1cc3754ac72092c1aa772f30091927ceb04",
+    "references": "309e28c6354687730ed4b5c15e8aa5bf42fb2b5f5138d53f75200f7f12f406fd",
+    "assets": null
+  }
+}
