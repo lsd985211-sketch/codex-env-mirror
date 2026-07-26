@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Environment Mirror"
+  short_description: "Capture, validate, and stage the Codex recovery mirror"
+  default_prompt: "Use $codex-environment-mirror to inspect or refresh the active Codex recovery mirror safely."

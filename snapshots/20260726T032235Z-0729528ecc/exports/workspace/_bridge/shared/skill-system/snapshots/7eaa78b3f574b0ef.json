@@ -1,0 +1,20 @@
+{
+  "skill_id": "7eaa78b3f574b0ef",
+  "name": "doc-coauthoring",
+  "path": "C:\\Users\\45543\\.codex\\skills\\doc-coauthoring",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "9e94f7e064d35e94715416cbc8898402ee3336456a2b25376f8a4b89534b1939",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "skill_id": "42b8173af189e1d9",
+  "name": "branded-content",
+  "path": "C:\\Users\\45543\\.codex\\skills\\branded-content",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "0d0ba0989eee82361642b821a327e936dd82199b5300b5ce32ebd1140fac1647",
+    "agents": null,
+    "scripts": null,
+    "references": "9fede1d9af4bcacb2e3073f208a275fd0011f39d1be4a17a9213f6065a1cffc9",
+    "assets": null
+  }
+}
