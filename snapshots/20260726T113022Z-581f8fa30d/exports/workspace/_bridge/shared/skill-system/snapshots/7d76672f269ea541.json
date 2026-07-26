@@ -1,0 +1,20 @@
+{
+  "skill_id": "7d76672f269ea541",
+  "name": "baoyu-infographic",
+  "path": "C:\\Users\\45543\\.codex\\skills\\baoyu-infographic",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "5cab1dbb959e8c59e26101e12971731be3ebb503e58d1910186d9c6f006c004c",
+    "agents": null,
+    "scripts": null,
+    "references": "fa563ee7744909ff98f0e1ad835489d40e00c24d3f38bd952b3e0bf9a318d6f4",
+    "assets": null
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "skill_id": "378c8eba512cb249",
+  "name": "openai-docs",
+  "path": "C:\\Users\\45543\\.codex\\skills\\.system\\openai-docs",
+  "source": "system-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "117e696f80607076f63887f4f892418f38b6af4c56ccf2b6e50e1dd1a4871da4",
+    "agents": "e720e8def05cee556a360d0e5a97a1bf191ce6d8ec65a7a51292566c18bb181d",
+    "scripts": "51239c6c98a141475efb5c28099cc378239efb1009d1266be6f586554855909a",
+    "references": "7f4e08560700bb28a8bb593f326a0c4092df75e679250db0770fc2d9196ee333",
+    "assets": "5e0b8275dafa1295b0b8bda8d023a850790785b8fc2510dbc24af6da297fd646"
+  }
+}
