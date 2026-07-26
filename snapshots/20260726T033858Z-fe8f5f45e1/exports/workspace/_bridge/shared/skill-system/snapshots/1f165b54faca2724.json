@@ -1,0 +1,20 @@
+{
+  "skill_id": "1f165b54faca2724",
+  "name": "canva-translate-design",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\canva\\bd2122cb\\skills\\canva-translate-design",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "e373c8849e71066034ded5e5df3beec607fcb57ef300d3dc09b521cb1f89fa5b",
+    "agents": "d35e500835cc00d8df162dd9b4d1d8cf88e1b47ccf8b3ae4a0f29aacfd28e802",
+    "scripts": null,
+    "references": null,
+    "assets": "7f8a22a7ca113c91f0d94e8e7bfe21ecf052e1532bfa1aaeb7d7eb41bd4dbf37"
+  }
+}

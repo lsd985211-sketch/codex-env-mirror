@@ -1,0 +1,20 @@
+{
+  "skill_id": "ec5aa9f27cae3932",
+  "name": "github",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\github\\c6ea566d\\skills\\github",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "81dbdd90934fe86a79ddc4790fd211e5fca866302a74090ad153395f56f2bd42",
+    "agents": "b5757b2531a1cae7a25a0b437dabd222f81e3deb901e5ef931e967e2d81c7efa",
+    "scripts": null,
+    "references": null,
+    "assets": "0d86cdf63fc246bde904f0be8d48e981804615a6f0191f1412e22a5f6df3e7a4"
+  }
+}
