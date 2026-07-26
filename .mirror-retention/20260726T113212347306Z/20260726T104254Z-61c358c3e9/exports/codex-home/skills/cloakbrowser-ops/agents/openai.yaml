@@ -1,4 +1,0 @@
-interface:
-  display_name: "CloakBrowser Ops"
-  short_description: "Plan isolated authorized CloakBrowser use"
-  default_prompt: "Plan an explicitly authorized isolated CloakBrowser task without replacing the default browser chain."
