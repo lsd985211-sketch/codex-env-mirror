@@ -1,4 +1,0 @@
-interface:
-  display_name: "Mobile Weixin Bridge Ops"
-  short_description: "Operate the OpenClaw Weixin bridge safely"
-  default_prompt: "Use $mobile-weixin-bridge-ops to diagnose mobile Weixin task delivery, replies, stop/resume, and worker state."
