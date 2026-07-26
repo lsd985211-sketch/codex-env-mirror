@@ -1,2 +1,0 @@
-click>=8.1
-prompt_toolkit>=3.0
