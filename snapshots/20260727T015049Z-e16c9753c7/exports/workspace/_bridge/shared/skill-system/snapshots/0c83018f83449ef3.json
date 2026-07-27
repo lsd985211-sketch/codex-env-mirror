@@ -1,0 +1,20 @@
+{
+  "skill_id": "0c83018f83449ef3",
+  "name": "latex-doctor",
+  "path": "C:\\Users\\45543\\.codex\\.tmp\\bundled-marketplaces\\openai-bundled.staging-062b6f51-7322-41c7-9662-c3ff1bdf8021\\plugins\\latex\\skills\\latex-doctor",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T00:38:47+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "critical",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "f9146d54a36e4fe3262e7a6368c289da985b64d63bd36d6b662d92af87c6e8a6",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

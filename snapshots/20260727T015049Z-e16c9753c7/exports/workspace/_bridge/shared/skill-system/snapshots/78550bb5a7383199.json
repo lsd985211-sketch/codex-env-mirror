@@ -1,0 +1,20 @@
+{
+  "skill_id": "78550bb5a7383199",
+  "name": "baoyu-slide-deck",
+  "path": "C:\\Users\\45543\\.codex\\skills\\baoyu-slide-deck",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d866e2e1ff456443e757b23a4b4f1168b7b44cdbc9d6fa9f08844a1090f96998",
+    "agents": null,
+    "scripts": "c96646cb29c785bdabac28797e8379d05e3d298d583137e911f2d616c8d27e15",
+    "references": "7df6511519babdcc7711e0cdd4286606c53ad27cc7376e9a61d230c46bbc0980",
+    "assets": null
+  }
+}

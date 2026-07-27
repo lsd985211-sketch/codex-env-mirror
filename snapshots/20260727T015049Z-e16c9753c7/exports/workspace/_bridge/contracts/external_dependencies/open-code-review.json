@@ -1,0 +1,153 @@
+{
+  "schema": "external_dependency_profile.v1",
+  "schema_version": 1,
+  "profile_id": "open-code-review",
+  "display_name": "Alibaba OpenCodeReview",
+  "owner": "dependency_change_intelligence.py",
+  "trust_policy": {
+    "runtime_handshake": 1,
+    "bounded_differential_probe": 2,
+    "official_document_or_release": 3,
+    "official_repository_issue": 4,
+    "signed_package_or_static_feature": 5
+  },
+  "configuration_boundaries": [
+    "managed_wsl_developer_toolchain",
+    "codex_plugin_marketplace",
+    "repository_local_review_rules"
+  ],
+  "fingerprint_components": [
+    "official_release",
+    "managed_cli",
+    "codex_plugin"
+  ],
+  "source_tasks": [
+    {
+      "item_id": "official-open-code-review-releases",
+      "required": true,
+      "acceptance": {
+        "consumable_required": true,
+        "provenance_required": true,
+        "allowed_sources": [
+          "github"
+        ],
+        "minimum_candidates": 1,
+        "maximum_age_hours": 168
+      },
+      "request": {
+        "task": "Read bounded releases for alibaba/open-code-review",
+        "target": "https://github.com/alibaba/open-code-review",
+        "url": "https://github.com/alibaba/open-code-review",
+        "intent": "external_dependency",
+        "auto_owner": true,
+        "timeout_seconds": 35,
+        "metadata": {
+          "source_execution_contract": {
+            "operations": [
+              "release_read"
+            ],
+            "selectors": {
+              "repository": "alibaba/open-code-review"
+            },
+            "limits": {
+              "page_count": 1,
+              "item_count": 12,
+              "content_chars": 24000,
+              "response_bytes": 262144
+            },
+            "acceptance": {
+              "required_deliverables": [
+                "releases"
+              ],
+              "allow_partial": false
+            }
+          }
+        }
+      }
+    }
+  ],
+  "capability_contracts": [
+    {
+      "capability_id": "code_review.delegation_mode",
+      "contract": "OpenCodeReview supplies deterministic file selection and rule resolution while Codex performs review reasoning without an OCR-managed LLM credential.",
+      "hosts": [
+        "remote_wsl"
+      ],
+      "product_surfaces": [
+        "ocr_cli",
+        "codex_managed_skill"
+      ],
+      "authentication_boundary": "no_ocr_llm_credential_in_delegation_mode",
+      "version_components": [
+        "official_release",
+        "managed_cli",
+        "codex_plugin"
+      ],
+      "probes": [
+        {
+          "type": "command",
+          "command": [
+            "ocr",
+            "version"
+          ],
+          "timeout_seconds": 15,
+          "evidence_level": 1
+        }
+      ],
+      "affected_owners": [
+        "developer_toolchain_owner.py",
+        "wsl_codex_runtime.py"
+      ],
+      "risk": "medium",
+      "planned_actions": [
+        {
+          "owner": "developer_toolchain_owner.py",
+          "action": "review_locked_release_and_plugin_compatibility",
+          "state_changes": []
+        }
+      ],
+      "rollback_owner": "developer_toolchain_owner.py",
+      "required_validation": [
+        "managed_binary_version",
+        "delegate_preview_without_llm"
+      ]
+    },
+    {
+      "capability_id": "code_review.telemetry_default_off",
+      "contract": "OpenCodeReview telemetry remains disabled unless a user explicitly configures an exporter; review content is never enabled for telemetry by this integration.",
+      "hosts": [
+        "remote_wsl"
+      ],
+      "product_surfaces": [
+        "ocr_runtime_config"
+      ],
+      "version_components": [
+        "official_release"
+      ],
+      "probes": [
+        {
+          "type": "fixture",
+          "observed": "disabled_by_default",
+          "expected": "disabled_by_default",
+          "evidence_level": 3,
+          "evidence_ref": "official_telemetry_documentation"
+        }
+      ],
+      "affected_owners": [
+        "developer_toolchain_owner.py"
+      ],
+      "risk": "high",
+      "planned_actions": [
+        {
+          "owner": "developer_toolchain_owner.py",
+          "action": "retain_default_off_and_require_explicit_runtime_configuration",
+          "state_changes": []
+        }
+      ],
+      "rollback_owner": "developer_toolchain_owner.py",
+      "required_validation": [
+        "no_integration_owned_telemetry_override"
+      ]
+    }
+  ]
+}
