@@ -1,0 +1,20 @@
+{
+  "skill_id": "9e3a513caea7411e",
+  "name": "cli-anything",
+  "path": "C:\\Users\\45543\\.codex\\skills\\cli-anything",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "9301d79785b4146aa480a7e832dfd1afbf6d228691a88d1e81d4b7df145a9366",
+    "agents": "b0a7de947ed72ba5090793dbbbc1529f324782e27e8d50b235dfd895af8329c2",
+    "scripts": "509b76993ab4cca5b869e06e5ba9b1e9d9cfea6c5fd77e9227308ea2700af33e",
+    "references": "45eea36f5a30efd749a779a6e8e21933cc598e82a1ea08c5818c04d8605462b4",
+    "assets": null
+  }
+}

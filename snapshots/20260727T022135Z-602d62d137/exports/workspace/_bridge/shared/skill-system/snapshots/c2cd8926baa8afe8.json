@@ -1,0 +1,20 @@
+{
+  "skill_id": "c2cd8926baa8afe8",
+  "name": "computer-use",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-bundled\\computer-use\\26.623.141536\\skills\\computer-use",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c375b860be0abdbbe5cf8e2ff0d4baa9a4691d6edaab1a0e50bce1f5c0a4cf1d",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
