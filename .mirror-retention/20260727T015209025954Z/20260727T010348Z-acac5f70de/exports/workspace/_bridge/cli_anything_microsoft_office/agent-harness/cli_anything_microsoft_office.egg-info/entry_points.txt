@@ -1,2 +1,0 @@
-[console_scripts]
-cli-anything-microsoft-office = cli_anything.microsoft_office.microsoft_office_cli:main
