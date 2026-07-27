@@ -1,4 +1,0 @@
-interface:
-  display_name: "Presentation Craft"
-  short_description: "Create and polish PPTX decks"
-  default_prompt: "Create, restructure, and polish presentation decks with clear narrative flow, concise slides, and strong visual hierarchy."
