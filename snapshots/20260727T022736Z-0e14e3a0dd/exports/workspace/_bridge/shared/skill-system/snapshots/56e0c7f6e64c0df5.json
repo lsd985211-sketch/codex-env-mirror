@@ -1,0 +1,20 @@
+{
+  "skill_id": "56e0c7f6e64c0df5",
+  "name": "spreadsheets",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-primary-runtime\\spreadsheets\\26.619.11828\\skills\\spreadsheets",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "af8500164d7008b097b553b389f564793767ab0b8b0fbefb60bc0ec6c2a6c365",
+    "agents": "18eb739db3a18e7d1bbd2c17b6884eff011f9b07814ab23216aba926b4de9cd7",
+    "scripts": null,
+    "references": null,
+    "assets": "fb70a9acd2d90cf9f4408ebf4b24934a93c4d78990f2a950232e5b4cacb4c1e3"
+  }
+}

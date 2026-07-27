@@ -1,0 +1,4 @@
+interface:
+  display_name: "Open Code Review"
+  short_description: "Deterministic OCR review scope and rules"
+  default_prompt: "Review my current code changes with OCR delegation mode."
