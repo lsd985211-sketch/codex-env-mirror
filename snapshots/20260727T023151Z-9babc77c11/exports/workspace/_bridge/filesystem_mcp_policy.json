@@ -1,0 +1,206 @@
+{
+  "schema": "filesystem_mcp_usage_policy.v1",
+  "version": 3,
+  "updated_at": "2026-07-14T12:00:00+08:00",
+  "purpose": "Define how Codex should choose between filesystem MCP, filesystem-admin MCP, SQLite MCP, codegraph, shell search, apply_patch, and project CLIs.",
+  "profiles": {
+    "filesystem": {
+      "scope": "bounded_roots",
+      "default_profile": false,
+      "role": "restricted_compatibility_fallback",
+      "allowed_roots": [
+        "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+        "C:\\Users\\45543\\Desktop\\Codex资源库",
+        "C:\\Users\\45543\\.codex\\skills",
+        "C:\\Users\\45543\\.codex\\memories",
+        "C:\\Users\\45543\\.codex\\plugins"
+      ],
+      "use_for": [
+        "reading known small or medium text files inside allowed roots",
+        "listing known directories inside allowed roots",
+        "reading media files inside allowed roots",
+        "handling Chinese paths, spaces, and Windows quoting-sensitive paths",
+        "checking allowed directory boundaries"
+      ],
+      "do_not_use_for": [
+        "whole-repository code understanding when codegraph is available",
+        "large recursive text search where rg is faster and more controllable",
+        "searching broad directory trees with search_files when a known path can be read directly",
+        "manual code patches when apply_patch can provide a clearer audit trail"
+      ]
+    },
+    "filesystem-admin": {
+      "scope": "c_drive",
+      "default_profile": true,
+      "execution_affinity": "hub_first",
+      "allowed_roots": [
+        "C:\\"
+      ],
+      "use_for": [
+        "default bounded reads and listings through the Hub read-only allowlist",
+        "explicit full-disk or cross-directory local file inspection",
+        "system configuration or log lookup when the path is outside bounded filesystem roots",
+        "read-only diagnosis of dispersed Windows/Codex resources"
+      ],
+      "default_mode": "read_first",
+      "write_policy": "Only write through this profile after explicit user approval, backup when applicable, and a concrete target path review.",
+      "do_not_use_for": [
+        "treating default profile selection as permission to write",
+        "broad recursive scans over C:\\ without a narrow target, pattern, and excludes",
+        "destructive recursive delete or move operations",
+        "bypassing approval, backup, permission, or project maintenance contracts"
+      ],
+      "privilege_note": "This MCP exposes C:\\ as an allowed root, but Windows protected-path access still depends on the Codex host process token and UAC/ACLs."
+    }
+    ,
+    "sqlite-scratch": {
+      "scope": "dedicated_scratch_database",
+      "default_for_sqlite": true,
+      "database": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\data\\sqlite\\codex_scratch.sqlite",
+      "use_for": [
+        "default SQLite-backed working data when the user asks for SQLite without naming a production database",
+        "temporary structured analysis tables",
+        "agent work queues, indexes, caches, and intermediate records that are not production state",
+        "safe create/update/delete/ddl experiments inside the dedicated scratch DB",
+        "structured record writes through sqlite_insert_record, sqlite_upsert_record, or _bridge\\tool_coordination.py record-* commands"
+      ],
+      "write_policy": "Writable by default for scratch/work data after normal task approval boundaries; do not store secrets or production bridge state here. Complex records and UPSERT-style writes must use structured tools or coordination CLI commands instead of long raw sqlite_execute payloads.",
+      "do_not_use_for": [
+        "direct mutation of bridge, mail, scheduler, Codex config, memory, or other production databases",
+        "copying secrets, tokens, private logs, or large sensitive datasets into scratch tables",
+        "using scratch data as authoritative production state",
+        "passing long raw SQL plus many parameters through Codex MCP when a structured write tool exists"
+      ]
+    },
+    "sqlite-bridge-ro": {
+      "scope": "active_bridge_database_readonly",
+      "default_for_sqlite": false,
+      "database": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge\\mobile_openclaw_bridge\\mobile_openclaw_bridge.db",
+      "use_for": [
+        "read-only inspection of active mobile OpenClaw bridge tables",
+        "bridge incident analysis that needs SQL queries",
+        "counting, sampling, and joining bridge task/event state without mutating it"
+      ],
+      "write_policy": "Never grant write permissions to this profile. Any bridge DB mutation must go through bridge maintenance commands with backup, dry-run, validation, and explicit approval.",
+      "do_not_use_for": [
+        "default scratch work",
+        "manual state repair",
+        "ad hoc UPDATE/DELETE/DDL against bridge production data"
+      ]
+    }
+  },
+  "current_turn_behavior": {
+    "principle": "A configured and protocol-healthy MCP is not enough; use the tool only when it is exposed and callable in the current Codex turn.",
+    "filesystem_unbound": {
+      "classification": "current_turn_tool_unbound",
+      "action": "Use bounded CLI fallback for the current task instead of repeated tool_search loops or broad retries.",
+      "fallbacks": [
+        "known text file: PowerShell Get-Content -LiteralPath with explicit path",
+        "broad search: rg or rg --files with narrow roots and excludes",
+        "generated text edit: apply_patch after approval and backup",
+        "media/file existence check: PowerShell Test-Path/Get-Item with explicit path"
+      ],
+      "closeout": "Record the current-turn observation in the task summary and run mcp_session_doctor/codex_state_audit only when the task affects MCP health or tool governance."
+    },
+    "slash_commands_unbound": {
+      "classification": "current_turn_tool_unbound",
+      "action": "Read _bridge/slash_commands/commands.json directly and render mentally or through the local wrapper; never treat slash commands as shell execution.",
+      "abort_or_hang_rule": "If one current-turn slash render call aborts or hangs while direct stdio/protocol smoke is healthy, stop using the MCP tool for that task and use local registry/protocol fallback."
+    },
+    "sqlite_unbound": {
+      "classification": "current_turn_tool_unbound",
+      "action": "Use _bridge\\tool_coordination.py for coordination records or local Python sqlite3 only against the dedicated scratch DB; do not fallback to production DB writes."
+    }
+  },
+  "indexed_query_contract": {
+    "default_result": "Return bounded decision rows with stable IDs, owner/status/time/summary fields, pagination state, and source or artifact references.",
+    "aggregation_role": "Counts, totals, rates, and health summaries supplement actual results; they must not replace representative rows required to answer the task.",
+    "drill_down": "Use a returned ID or source/artifact reference for targeted detail retrieval instead of broad log or filesystem scans.",
+    "write_boundary": "SQLite indexes remain derived query surfaces; mutations continue through the owning business or maintenance command unless the database is the dedicated scratch DB."
+  },
+  "tool_selection": [
+    {
+      "case": "understand existing indexed code, call graph, or blast radius before editing",
+      "primary": "codegraph",
+      "fallback": "rg plus targeted file read"
+    },
+    {
+      "case": "find files or text across many files",
+      "primary": "rg or rg --files",
+      "fallback": "filesystem search only for very small, path-specific cases with explicit excludes"
+    },
+    {
+      "case": "read a known file inside bounded roots",
+      "primary": "Hub owner_mcp.call_readonly with filesystem-admin.read_text_file or read_media_file",
+      "fallback": "filesystem restricted profile, then the configured MCP forward chain, then PowerShell Get-Content"
+    },
+    {
+      "case": "filesystem MCP is configured but not exposed in the current turn",
+      "primary": "continue from the configured profile stage to Hub fresh-stdio or same-boundary gateway",
+      "fallback": "bounded CLI with explicit path/root only after the MCP chain reaches its local stage"
+    },
+    {
+      "case": "read a known file outside bounded roots",
+      "primary": "filesystem-admin.read_text_file or filesystem-admin.read_media_file",
+      "fallback": "PowerShell Get-Content with explicit path"
+    },
+    {
+      "case": "write or edit source code by hand",
+      "primary": "apply_patch after backup and approval",
+      "fallback": "filesystem edit_file only when apply_patch is unsuitable and the change is narrow"
+    },
+    {
+      "case": "write generated non-code artifact in an allowed root",
+      "primary": "filesystem.write_file when path and overwrite semantics are explicit",
+      "fallback": "apply_patch for text artifacts that benefit from diff review"
+    },
+    {
+      "case": "structured project operation with an existing CLI",
+      "primary": "project CLI or maintenance command",
+      "fallback": "filesystem only for inspecting its inputs/outputs"
+    },
+    {
+      "case": "SQLite work when no production database is explicitly named",
+      "primary": "sqlite-scratch",
+      "fallback": "local Python sqlite3 against the dedicated scratch DB"
+    },
+    {
+      "case": "inspect active bridge database",
+      "primary": "sqlite-bridge-ro",
+      "fallback": "bridge maintenance CLI or read-only sqlite3 query"
+    },
+    {
+      "case": "repeatable task prompt, policy reminder, or coordination package",
+      "primary": "custom-slash-commands render only",
+      "fallback": "read _bridge\\slash_commands\\commands.json and apply the template manually"
+    }
+  ],
+  "safety_rules": [
+    "Before any local file modification, ask for user approval unless the current turn already clearly approved that exact change.",
+    "Before any modification, create a marked backup when the active project rules require it.",
+    "Use filesystem-admin as the default file MCP profile, while keeping every mutating tool behind explicit task authorization, backup, and owner validation.",
+    "Do not use filesystem-admin to perform broad destructive operations or broad recursive search.",
+    "For code edits, keep apply_patch as the default audit-friendly write path.",
+    "For indexed code exploration, keep codegraph as the default context source before edits.",
+    "For large searches, keep rg as the default performance path.",
+    "Treat filesystem MCP search as a bounded last resort, not a generic discovery engine.",
+    "Do not assume a configured MCP is usable in the current turn; check current tool exposure before choosing it as the active path.",
+    "If the selected filesystem MCP stage fails, continue forward through the configured MCP priority chain before using the local CLI stage.",
+    "If any MCP tool call aborts or hangs once in the current turn, do not keep probing that same tool path; classify it as current_turn_tool_surface_unstable and switch to the bounded fallback.",
+    "SQLite defaults to the writable sqlite-scratch profile for agent working data.",
+    "For complex SQLite writes, use sqlite_insert_record/sqlite_upsert_record or _bridge\\tool_coordination.py record-* commands; keep sqlite_execute for short bounded SQL only.",
+    "Production or business databases must be selected explicitly and should default to read-only unless the owning maintenance command authorizes a write path.",
+    "Custom slash commands are the repeatable workflow checklist layer: render them before recurring tool-heavy flows, but never treat a template as execution or let it bypass approval and backup rules.",
+    "Use SQLite/Hub indexed query surfaces for queues, scheduler state, record-store evidence, and operational history before broad file or log scans.",
+    "Bounded or aggregate output must remain decision-complete: include representative rows, stable IDs, status/error/next action, pagination, and drill-down references; never substitute a count-only response when the task needs actual records.",
+    "After MCP config, wrapper, or tool-governance changes, validate with mcp_session_doctor smoke, slash registry validation, and codex_state_audit."
+  ],
+  "validation": {
+    "filesystem": "python _bridge\\mcp_session_doctor.py smoke --profile filesystem --timeout-seconds 90",
+    "filesystem_admin": "python _bridge\\mcp_session_doctor.py smoke --profile filesystem-admin --timeout-seconds 90",
+    "sqlite_scratch": "python _bridge\\mcp_session_doctor.py smoke --profile sqlite-scratch --timeout-seconds 90",
+    "sqlite_bridge_ro": "python _bridge\\mcp_session_doctor.py smoke --profile sqlite-bridge-ro --timeout-seconds 90",
+    "slash_registry": "python _bridge\\mcp_session_doctor.py smoke --profile custom-slash-commands --timeout-seconds 90, plus current-turn slash_validate_registry when exposed",
+    "config_audit": "python _bridge\\codex_state_audit.py --json"
+  }
+}

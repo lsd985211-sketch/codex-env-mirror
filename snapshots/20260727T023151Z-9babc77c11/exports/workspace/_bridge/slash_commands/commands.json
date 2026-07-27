@@ -1,0 +1,535 @@
+{
+  "schema": "custom_slash_commands.v1",
+  "version": 8,
+  "updated_at": "2026-07-15T11:51:04.905003+00:00",
+  "commands": [
+    {
+      "name": "workflow-router",
+      "aliases": [
+        "route-workflow",
+        "slash-router"
+      ],
+      "category": "router",
+      "description": "Render the command-selection router for choosing the smallest useful slash workflow.",
+      "target_module": "custom_slash_commands",
+      "output_contract": "workflow_routing_plan",
+      "variables": [
+        "intent",
+        "context",
+        "risk"
+      ],
+      "template": "Route workflow intent={{intent}} context={{context}} risk={{risk}}. First recall relevant memory and load the relevant skill for the domain; then choose the smallest useful slash command set by category: maintenance for health/drift/closeout, tooling for filesystem/MCP access, email for send/inbox/reply, github for remote repo work, bridge for mobile owned-result tasks, editing for local file changes, memory for persistence, resource-library for mirror/backup cleanup, database for sqlite scratch. Render selected command templates only; do not execute them. If no command fits, proceed manually and consider adding a bounded template after validation."
+    },
+    {
+      "name": "command-catalog",
+      "aliases": [
+        "slash-catalog",
+        "workflow-catalog"
+      ],
+      "category": "router",
+      "description": "Render the organized local slash command catalog and when to use each category.",
+      "target_module": "custom_slash_commands",
+      "output_contract": "slash_command_catalog",
+      "variables": [
+        "scope"
+      ],
+      "template": "Show slash command catalog for scope={{scope}}. Organize commands by category and use case: router, maintenance, tooling, email, github, bridge, editing, memory, resource-library, database. Prefer workflow-router first when intent is unclear; prefer the specific command when the workflow is obvious. Render templates as checklists, never as direct execution."
+    },
+    {
+      "name": "mcp-health",
+      "aliases": [
+        "tools-health"
+      ],
+      "category": "maintenance",
+      "description": "Render a bounded MCP health check prompt for Codex.",
+      "target_module": "mcp_session_doctor",
+      "output_contract": "diagnostic_prompt",
+      "variables": [
+        "profile"
+      ],
+      "template": "Check MCP health for {{profile}}. Use mcp_session_doctor smoke/validate when needed, separate service health from current-session tool-surface issues, and report evidence compactly."
+    },
+    {
+      "name": "filesystem-policy",
+      "aliases": [
+        "fs-policy"
+      ],
+      "category": "tooling",
+      "description": "Render the local filesystem MCP tool-selection policy reminder.",
+      "target_module": "tool_policy",
+      "output_contract": "policy_reminder",
+      "variables": [],
+      "template": "Apply _bridge/filesystem_mcp_policy.json: use codegraph for indexed code understanding, rg for bounded broad search, filesystem-admin as the default file MCP through the Hub read-only route, filesystem as the restricted compatibility fallback, and apply_patch for manual code edits after approval and backup. Continue the configured MCP chain before dropping to local CLI."
+    },
+    {
+      "name": "sqlite-scratch-plan",
+      "aliases": [
+        "db-scratch"
+      ],
+      "category": "database",
+      "description": "Render a prompt for using the scratch SQLite MCP safely.",
+      "target_module": "sqlite-scratch",
+      "output_contract": "sqlite_work_plan",
+      "variables": [
+        "task"
+      ],
+      "template": "Route this structured data task before scanning files: {{task}}. Use record_store/email_state Hub SQLite aliases for their indexed owner evidence, sqlite-bridge-ro for bridge inspection, and sqlite-scratch only for task-scoped writable analysis. Keep production writes behind the owning business CLI."
+    },
+    {
+      "name": "task-package",
+      "aliases": [
+        "package-task",
+        "coord-task"
+      ],
+      "category": "coordination",
+      "description": "Render a normalized cross-module task package without executing it.",
+      "target_module": "tool_coordination",
+      "output_contract": "coordination_task_package",
+      "variables": [
+        "intent",
+        "target_module",
+        "source",
+        "required_fields",
+        "evidence_ref",
+        "next_action"
+      ],
+      "template": "Create a coordination task package only; do not execute it. intent={{intent}} target_module={{target_module}} source={{source}} required_fields={{required_fields}} evidence_ref={{evidence_ref}} next_action={{next_action}}. Store only coordination metadata in sqlite-scratch; hand execution to the owning module and keep production state authoritative there."
+    },
+    {
+      "name": "filesystem-known-file",
+      "aliases": [
+        "fs-read",
+        "known-file"
+      ],
+      "category": "tooling",
+      "description": "Render a known-file access plan that prefers filesystem MCP when callable and bounded CLI fallback when it is not.",
+      "target_module": "tool_policy",
+      "output_contract": "filesystem_access_plan",
+      "variables": [
+        "path",
+        "purpose",
+        "operation"
+      ],
+      "template": "Access known file path={{path}} purpose={{purpose}} operation={{operation}}. Prefer filesystem MCP only if exposed in the current turn and the path is inside allowed roots. If unbound, use explicit CLI fallback with LiteralPath and narrow scope. For edits, require approval, backup, and apply_patch unless a generated artifact write is explicitly requested."
+    },
+    {
+      "name": "tool-surface-drift",
+      "aliases": [
+        "tool-unbound",
+        "mcp-unbound"
+      ],
+      "category": "maintenance",
+      "description": "Render a bounded response plan for an MCP that is configured or protocol-healthy but unavailable in the current Codex turn.",
+      "target_module": "mcp_session_doctor",
+      "output_contract": "tool_surface_drift_plan",
+      "variables": [
+        "tool",
+        "task",
+        "fallback"
+      ],
+      "template": "Handle current-turn tool-surface drift for {{tool}} during {{task}}. Separate config/list health, protocol smoke health, and current-turn callable state. Use bounded fallback={{fallback}} for the active task, record current_turn_tool_unbound, and avoid repeated discovery loops. Defer rebind/restart to maintenance unless the user asked to repair MCP exposure."
+    },
+    {
+      "name": "post-work-closeout",
+      "aliases": [
+        "closeout",
+        "finish-work"
+      ],
+      "category": "maintenance",
+      "description": "Render the standard post-work persistence and validation checklist.",
+      "target_module": "maintenance_contract",
+      "output_contract": "closeout_checklist",
+      "variables": [
+        "change",
+        "validation",
+        "persistence"
+      ],
+      "template": "Close out change={{change}}. Verify validation={{validation}}. Decide persistence={{persistence}}: memory note, checkpoint, skill update, baseline update, or no persistent update with reason. Include backups, changed files, and any current-turn tool-surface observations."
+    },
+    {
+      "name": "tool-stability-matrix",
+      "aliases": [
+        "tools-stability",
+        "all-tools"
+      ],
+      "category": "maintenance",
+      "description": "Render the full existing-tool stability inspection flow.",
+      "target_module": "tool_exposure_doctor",
+      "output_contract": "tool_stability_matrix_plan",
+      "variables": [
+        "scope",
+        "task"
+      ],
+      "template": "Inspect existing tool stability for scope={{scope}} task={{task}}. Use _bridge/tool_exposure_doctor.py snapshot/doctor/metrics plus _bridge/mcp_session_doctor.py metrics. Report configured, cli_visible, protocol_smoke_supported, current_turn, usable_state, fallback, and circuit_breaker per tool. Do not claim a tool is fully usable without current-turn success evidence; do not repeatedly call a tool after aborted/hang/timeout."
+    },
+    {
+      "name": "email-send-flow",
+      "aliases": [
+        "mail-send",
+        "send-mail"
+      ],
+      "category": "email",
+      "description": "Render the normal email send/schedule/resend flow through the scheduler.",
+      "target_module": "email_scheduler",
+      "output_contract": "email_send_plan",
+      "variables": [
+        "recipient",
+        "subject",
+        "time",
+        "content",
+        "attachments"
+      ],
+      "template": "Prepare an email send flow recipient={{recipient}} subject={{subject}} time={{time}} content={{content}} attachments={{attachments}}. Use email_scheduler intent-dry-run before intent-create. Preserve normal task -> content/outbox -> delivery -> SMTP receipt flow. Validate attachment paths and sizes before sending; do not use ad hoc SMTP."
+    },
+    {
+      "name": "email-inbox-flow",
+      "aliases": [
+        "mail-inbox",
+        "inbox-reply"
+      ],
+      "category": "email",
+      "description": "Render the inbound email poll/classify/reply queue flow.",
+      "target_module": "email_scheduler",
+      "output_contract": "email_inbox_plan",
+      "variables": [
+        "account",
+        "scope",
+        "action"
+      ],
+      "template": "Handle inbound mail account={{account}} scope={{scope}} action={{action}}. Use inbox-validate, inbox-poll, inbox-refresh-index, peek-inbox, and doctor. Subject containing 待处理 is only a queue signal. Worker should create mail_kind=reply tasks; actual replies must still flow through content jobs, outbox, delivery jobs, and SMTP receipts."
+    },
+    {
+      "name": "github-repo-flow",
+      "aliases": [
+        "github-repo",
+        "repo-docs"
+      ],
+      "category": "github",
+      "description": "Render a GitHub repository inspection or documentation update flow.",
+      "target_module": "github_mcp",
+      "output_contract": "github_repo_plan",
+      "variables": [
+        "owner",
+        "repo",
+        "intent",
+        "paths"
+      ],
+      "template": "Work on GitHub repo {{owner}}/{{repo}} intent={{intent}} paths={{paths}}. Use GitHub MCP get/list/read tools first, avoid mixing local workspace state with remote repo state, and write only the requested docs/code surface. For updates, verify token write permissions, provide commit SHA/result, and do not expose secrets."
+    },
+    {
+      "name": "cli-anything-flow",
+      "aliases": [
+        "cli-hub-flow",
+        "agent-cli-harness"
+      ],
+      "category": "tooling",
+      "description": "Render the CLI-Anything / cli-hub discovery, harness build, install, refine, test, and validation flow.",
+      "target_module": "cli_anything_governance",
+      "output_contract": "cli_anything_plan",
+      "variables": [
+        "target",
+        "intent",
+        "mode"
+      ],
+      "template": "Handle CLI-Anything target={{target}} intent={{intent}} mode={{mode}}. First use the installed cli-anything skill for methodology when building/refining/testing a harness. For existing harness discovery, run _bridge/cli_anything_governance.py search/info/validate or cli-hub list/search with CLI_HUB_NO_ANALYTICS=1. Treat CLI-Anything as trusted, but concrete harness install/generation is still a package-manager or file-generation action: verify source, run the smallest install/build step needed, then validate entry point --help, JSON output when supported, and tests/smoke checks. Do not replace an owning MCP/API if it already provides authoritative state."
+    },
+    {
+      "name": "mobile-bridge-task",
+      "aliases": [
+        "weixin-task",
+        "bridge-task"
+      ],
+      "category": "bridge",
+      "description": "Render the mobile bridge owned-result handling flow.",
+      "target_module": "mobile_openclaw_bridge",
+      "output_contract": "mobile_bridge_task_plan",
+      "variables": [
+        "task_id",
+        "request",
+        "risk"
+      ],
+      "template": "Handle mobile bridge task task_id={{task_id}} risk={{risk}} request={{request}}. Emit exact ack first when required, consume supplements before work and before final, keep final only in owned result markers, and base recovery on receipts/ownership rather than visible input. If supplement MCP is unavailable, use the documented CLI fallback."
+    },
+    {
+      "name": "system-change-contract",
+      "aliases": [
+        "maintenance-contract",
+        "system-contract"
+      ],
+      "category": "maintenance",
+      "description": "Render the maintenance contract checklist for system-level changes.",
+      "target_module": "maintenance_contract",
+      "output_contract": "system_change_contract_plan",
+      "variables": [
+        "module",
+        "change",
+        "risk"
+      ],
+      "template": "For system change module={{module}} change={{change}} risk={{risk}}, first query the maintenance capability catalog and render the smallest matching checklist. Prefer SQLite/indexed evidence over raw logs, keep default diagnostic output bounded, then run the owner snapshot/doctor/repair-plan/validate/metrics contract as relevant. Update business, maintenance, scheduling, capability-index, backup, and closeout surfaces together without copying owner state into the facade."
+    },
+    {
+      "name": "memory-skill-closeout",
+      "aliases": [
+        "memory-closeout",
+        "skill-closeout"
+      ],
+      "category": "memory",
+      "description": "Render the persistence decision flow for memory, skill, and baseline updates.",
+      "target_module": "memory_and_skills",
+      "output_contract": "memory_skill_closeout_plan",
+      "variables": [
+        "lesson",
+        "scope",
+        "evidence"
+      ],
+      "template": "Decide persistence for lesson={{lesson}} scope={{scope}} evidence={{evidence}}. Persist only reusable rules, not incident noise. Choose memory note, skill update, baseline update, checkpoint, or no-op with reason. For file edits, back up first and validate the updated skill/baseline."
+    },
+    {
+      "name": "skill-revision-gate",
+      "aliases": [
+        "skill-gate",
+        "myskills-revision",
+        "skill-authoring-fix"
+      ],
+      "category": "memory",
+      "description": "Render the MySkills authoring/revision gate cleanup flow after a draft or revision returns warnings, blockers, or transport issues.",
+      "target_module": "myskills",
+      "output_contract": "skill_revision_gate_plan",
+      "variables": [
+        "skill",
+        "goal",
+        "gate_findings",
+        "tool_status"
+      ],
+      "template": "Handle MySkills authoring gate for skill={{skill}} goal={{goal}} gate_findings={{gate_findings}} tool_status={{tool_status}}. First classify findings as blockers, warnings, or transport/tool-surface issues. If blockers/warnings concern content, revise the SKILL.md once with explicit Inputs, Boundaries, Output, Quality Bar, trigger-style description, and no unsafe execution fields. If native MySkills returns Transport closed, stop repeating the same handle this turn; keep any existing pending revision as the current artifact and record the tool-surface observation. Do not bypass MySkills by writing a live skill directly to disk unless the user explicitly approves that weaker safety model. After a successful proposal, report proposal id/status, remaining warnings, and whether human review is still required."
+    },
+    {
+      "name": "backup-safe-edit",
+      "aliases": [
+        "safe-edit",
+        "backup-edit"
+      ],
+      "category": "editing",
+      "description": "Render a safe local edit flow with backup and targeted validation.",
+      "target_module": "file_editing",
+      "output_contract": "safe_edit_plan",
+      "variables": [
+        "path",
+        "change",
+        "validation"
+      ],
+      "template": "Edit local path={{path}} change={{change}}. Confirm approval, first run backup-router plan/create for every file with a clear remark/category/purpose, verify the generated manifest, use apply_patch for manual edits, keep UTF-8 explicit for Chinese/resource files, run validation={{validation}}, and avoid reverting unrelated user changes. Do not create source-adjacent .bak-* files unless the source directory is itself a planned backup root."
+    },
+    {
+      "name": "resource-library-cleanup",
+      "aliases": [
+        "resource-cleanup",
+        "library-cleanup"
+      ],
+      "category": "resource-library",
+      "description": "Render a bounded Codex resource library cleanup and mirror consistency flow.",
+      "target_module": "resource_library",
+      "output_contract": "resource_cleanup_plan",
+      "variables": [
+        "area",
+        "problem",
+        "target_state"
+      ],
+      "template": "Clean resource library area={{area}} problem={{problem}} target_state={{target_state}}. Do bounded inspection, move backups into a dedicated backup/archive directory instead of leaving them at root, keep human-readable mirrors aligned with runtime state, and validate with the owning module's doctor/validate command."
+    },
+    {
+      "name": "resource-process-governance",
+      "aliases": [
+        "resource-process",
+        "process-fanout"
+      ],
+      "category": "maintenance",
+      "description": "Render the resource/MCP process fanout diagnosis and cleanup flow.",
+      "target_module": "resource_process_doctor",
+      "output_contract": "resource_process_plan",
+      "variables": [
+        "symptom",
+        "scope"
+      ],
+      "template": "Diagnose resource process issue symptom={{symptom}} scope={{scope}}. Use _bridge/resource_process_doctor.py snapshot/doctor/metrics and bounded cleanup planning. Distinguish short-lived stdio launch waves from leaks. Do not kill protected bridge/Codex processes without explicit repair approval."
+    },
+    {
+      "name": "encoding-governance",
+      "aliases": [
+        "encoding-check",
+        "mojibake"
+      ],
+      "category": "maintenance",
+      "description": "Render the UTF-8 and mojibake governance flow.",
+      "target_module": "encoding_governance",
+      "output_contract": "encoding_governance_plan",
+      "variables": [
+        "path",
+        "symptom"
+      ],
+      "template": "Handle encoding issue path={{path}} symptom={{symptom}}. Use _bridge/encoding_governance.py snapshot/doctor/repair-plan/validate/metrics. Treat UTF-8 as default, use LiteralPath, do not normalize mojibake paths until compared, backed up, and validated."
+    },
+    {
+      "name": "backup-hygiene",
+      "aliases": [
+        "backup-cleanup",
+        "backup-doctor"
+      ],
+      "category": "maintenance",
+      "description": "Render backup placement and cleanup hygiene flow.",
+      "target_module": "backup_hygiene_doctor",
+      "output_contract": "backup_hygiene_plan",
+      "variables": [
+        "area",
+        "problem"
+      ],
+      "template": "Handle backup hygiene area={{area}} problem={{problem}}. Use backup-router plan/create for new edit backups and backup_hygiene_doctor snapshot/doctor/repair-plan/validate for governance. Classify backups by module/category, require manifest evidence for trusted rollback points, move only legacy scattered backup artifacts through reviewed archive repair plans, never delete user data without approval, and verify roots are clean after migration."
+    },
+    {
+      "name": "performance-network-check",
+      "aliases": [
+        "perf-net",
+        "system-performance"
+      ],
+      "category": "maintenance",
+      "description": "Render bounded performance and network diagnosis flow.",
+      "target_module": "performance_network_doctor",
+      "output_contract": "performance_network_plan",
+      "variables": [
+        "symptom",
+        "duration"
+      ],
+      "template": "Diagnose performance/network symptom={{symptom}} duration={{duration}}. Prefer _bridge/performance_doctor.py and _bridge/network_doctor.py bounded probes. Report top offenders, classify Codex/MCP/resource processes separately, and avoid broad recursive scans that create load."
+    },
+    {
+      "name": "dashboard-cdp-health",
+      "aliases": [
+        "cdp-health",
+        "dashboard-health"
+      ],
+      "category": "bridge",
+      "description": "Render dashboard/CDP health and port drift diagnosis flow.",
+      "target_module": "mobile_dashboard_cdp",
+      "output_contract": "dashboard_cdp_plan",
+      "variables": [
+        "symptom",
+        "port"
+      ],
+      "template": "Diagnose dashboard/CDP symptom={{symptom}} expected_port={{port}}. Use dashboard smoke/API/perf probes and current remote-debugging port discovery. Separate panel HTTP health, browser/CDP transport, and Codex app-server ownership. Avoid visible UI automation until probes show it is needed."
+    },
+    {
+      "name": "mobile-bridge-maintenance",
+      "aliases": [
+        "bridge-maint",
+        "mobile-maint"
+      ],
+      "category": "bridge",
+      "description": "Render the mobile bridge maintenance and repair command flow.",
+      "target_module": "mobile_openclaw_bridge",
+      "output_contract": "mobile_bridge_maintenance_plan",
+      "variables": [
+        "symptom",
+        "command"
+      ],
+      "template": "Handle mobile bridge maintenance symptom={{symptom}} command={{command}}. Use mobile_openclaw_cli.py and mobile_maintenance.py snapshot/doctor/repair-plan/validate/metrics where available. For repair/no-feedback issues, inspect durable task state and owned-result receipts before retrying."
+    },
+    {
+      "name": "iteration-review",
+      "aliases": [
+        "iteration-gate",
+        "knowledge-review"
+      ],
+      "category": "memory",
+      "description": "Render the iteration and knowledge review flow after meaningful changes.",
+      "target_module": "iteration_layer",
+      "output_contract": "iteration_review_plan",
+      "variables": [
+        "change",
+        "evidence"
+      ],
+      "template": "Run iteration review for change={{change}} evidence={{evidence}}. Use _bridge/iteration_layer_review.py with quick validation first. Promote only reusable lessons to knowledge/skills/baselines; keep incident details out unless they define a durable rule."
+    },
+    {
+      "name": "memory-query-flow",
+      "aliases": [
+        "memory-query",
+        "pmb-query"
+      ],
+      "category": "memory",
+      "description": "Render a memory lookup and evidence reconciliation flow.",
+      "target_module": "local_pmb_memory",
+      "output_contract": "memory_query_plan",
+      "variables": [
+        "topic",
+        "purpose"
+      ],
+      "template": "Query memory topic={{topic}} purpose={{purpose}}. Prefer the current PMB/local memory tool when callable; use fallback CLI only if tool-surface is unavailable. Treat memory as guidance, verify drift-prone facts live, and update memory only with reusable lessons."
+    },
+    {
+      "name": "codegraph-health-flow",
+      "aliases": [
+        "codegraph-health",
+        "codegraph-repair"
+      ],
+      "category": "tooling",
+      "description": "Render CodeGraph health, index, and transport troubleshooting flow.",
+      "target_module": "codegraph_health",
+      "output_contract": "codegraph_health_plan",
+      "variables": [
+        "project",
+        "symptom"
+      ],
+      "template": "Diagnose CodeGraph project={{project}} symptom={{symptom}}. Separate index existence, watcher freshness, protocol smoke, current-turn tool call, and transport closed. Use codegraph_health or guarded wrapper evidence; fall back to rg/read only for the current task if CodeGraph is unavailable."
+    },
+    {
+      "name": "plugin-config-health",
+      "aliases": [
+        "plugins-health",
+        "codex-plugin-health"
+      ],
+      "category": "maintenance",
+      "description": "Render Codex plugin/config health diagnosis flow.",
+      "target_module": "codex_plugin_config_health",
+      "output_contract": "plugin_config_health_plan",
+      "variables": [
+        "symptom",
+        "scope"
+      ],
+      "template": "Diagnose Codex plugin/config health symptom={{symptom}} scope={{scope}}. Use _bridge/codex_plugin_config_health.py and targeted config reads. Separate missing plugin tables, stale cache, unsupported remote MCP endpoints, and current-turn tool exposure. Back up config before changes."
+    },
+    {
+      "name": "slash-template-governance",
+      "aliases": [
+        "slash-template",
+        "template-governance"
+      ],
+      "category": "maintenance",
+      "description": "Govern adding or repairing custom slash command templates through proposal, validation, routed backup, apply, and render smoke.",
+      "target_module": "slash_command_governance",
+      "output_contract": "slash_template_change_plan",
+      "variables": [
+        "intent",
+        "name",
+        "category",
+        "boundary"
+      ],
+      "template": "Govern slash template change intent={{intent}} name={{name}} category={{category}} boundary={{boundary}}. First run slash_command_governance.py snapshot and validate. Draft a proposal with name, aliases, category, description, target_module, output_contract, variables, and template text. Confirm the rendered text is only a checklist/prompt and does not execute commands or bypass approval. Apply only through slash_command_governance.py apply --confirm-apply after routed backup, then run validate plus render-smoke and update docs or rules only if routing changed."
+    },
+    {
+      "name": "codex-environment-mirror",
+      "aliases": [
+        "environment-mirror",
+        "recovery-mirror"
+      ],
+      "category": "maintenance",
+      "description": "Render the governed Codex environment mirror status, refresh, validation, and isolated recovery flow.",
+      "target_module": "codex_environment_mirror",
+      "output_contract": "codex_environment_mirror_plan",
+      "variables": [
+        "action",
+        "target_root"
+      ],
+      "template": "Operate the Codex environment mirror action={{action}} target_root={{target_root}}. Load the codex-environment-mirror skill, then use python _bridge\\\\codex_workflow_entry.py mirror as the only normal entry. Start with status; use plan before uncertain refreshes; use publish for a completed remote recovery seed. Require REFRESH-CODEX-MIRROR for local refresh, PUBLISH-CODEX-MIRROR for remote publish, and STAGE-RESTORE for isolated stage. Consume structured readiness, local Git, push, remote-head, and hash results. Never activate staged state, mirror secrets/runtime databases, or bypass active-root, owner, confirmation, or remote verification boundaries."
+    }
+  ]
+}

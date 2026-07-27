@@ -1,0 +1,20 @@
+{
+  "skill_id": "3d05b1be9da5e1e1",
+  "name": "accessibility-and-inclusive-visualization",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\build-web-data-visualization\\3c06cb2e\\skills\\accessibility-and-inclusive-visualization",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "fc052419e290f113b044b7abd7a5e809b6000b4dec03441e63796b02f474a2c8",
+    "agents": "a6d098767fea882a03cf98cac93b32e7219ec6f45b8855e4f4ffb554f6f57fb2",
+    "scripts": null,
+    "references": "27220b3513870cebb5cf2e9f6bc0fa0db9170ce173ae1df8474e4228f2bdbaca",
+    "assets": null
+  }
+}
