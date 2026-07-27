@@ -1,0 +1,68 @@
+{
+  "skill_id": "7ddeeff85fddd14d",
+  "name": "codex-cli",
+  "path": "C:\\Users\\45543\\.codex\\skills\\codex-cli",
+  "source": "user-managed",
+  "current_state": "audit-pending",
+  "detected_change_level": "critical",
+  "declared_primary_layer": null,
+  "suggested_primary_layer": null,
+  "framework_mode": "auto",
+  "audited_at": "2026-07-12T10:47:31+08:00",
+  "encoding_result": {
+    "command": [
+      "C:\\Python314\\python.exe",
+      "C:\\Users\\45543\\.codex\\skills\\global-framework\\scripts\\check_encoding.py",
+      "--json",
+      "C:\\Users\\45543\\.codex\\skills\\codex-cli"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"checked\": 1,\n  \"issues\": []\n}\n",
+    "stderr": "",
+    "ok": true,
+    "parsed": {
+      "checked": 1,
+      "issues": []
+    }
+  },
+  "gate_result": {
+    "command": [
+      "C:\\Python314\\python.exe",
+      "C:\\Users\\45543\\.codex\\skills\\.system\\skill-creator\\scripts\\quick_validate.py",
+      "C:\\Users\\45543\\.codex\\skills\\codex-cli",
+      "--framework",
+      "auto"
+    ],
+    "exit_code": 1,
+    "stdout": "Usage: python quick_validate.py <skill_directory>\n",
+    "stderr": "",
+    "ok": false,
+    "parsed": null
+  },
+  "contract_result": {
+    "command": [],
+    "exit_code": null,
+    "stdout": "",
+    "stderr": "",
+    "ok": false,
+    "parsed": null,
+    "skipped": true,
+    "reason": "declared_primary_layer missing or unsupported"
+  },
+  "overlap_result": {
+    "command": [
+      "C:\\Python314\\python.exe",
+      "C:\\Users\\45543\\.codex\\skills\\global-framework\\scripts\\check_skill_overlaps.py",
+      "--json",
+      "C:\\Users\\45543\\.codex\\skills\\codex-cli"
+    ],
+    "exit_code": 0,
+    "stdout": "{}\n",
+    "stderr": "",
+    "ok": true,
+    "parsed": {}
+  },
+  "risk_level": "high",
+  "recommended_action": "revise-before-approve",
+  "summary": "Encoding or gate validation failed."
+}

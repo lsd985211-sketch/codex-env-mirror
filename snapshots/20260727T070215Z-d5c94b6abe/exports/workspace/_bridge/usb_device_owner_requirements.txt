@@ -1,0 +1,8 @@
+# Installed only through the approved resource package owner into
+# _bridge/runtime/usb_device_owner/python. Never install into global Python.
+pyserial==3.5
+PyUSB==1.3.1
+hidapi==0.15.0
+fido2==2.2.1
+pyscard==2.3.1
+libusb-package==1.0.30.0
