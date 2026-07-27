@@ -1,0 +1,20 @@
+{
+  "skill_id": "22ce0f0a8f4772c0",
+  "name": "personal-data-harvester",
+  "path": "C:\\Users\\45543\\.codex\\skills\\personal-data-harvester",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c702d9fbe8f981b707ede4bb12de98bc743c62c19fbe74b36806178eaef95f35",
+    "agents": null,
+    "scripts": null,
+    "references": "f70b3d031a05541bc54e6feed655c9d4c2ba7d25d0d0a310dee75edec3199e54",
+    "assets": null
+  }
+}

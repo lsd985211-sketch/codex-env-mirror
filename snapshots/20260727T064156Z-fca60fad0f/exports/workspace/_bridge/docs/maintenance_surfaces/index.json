@@ -1,0 +1,204 @@
+{
+  "schema": "maintenance_surface_index.v1",
+  "authority_rule": "Each maintenance contract exists in exactly one system shard; this index stores navigation metadata only.",
+  "selection_guide": "maintenance_surfaces/selection-guide.md",
+  "systems": [
+    {
+      "system": "audio",
+      "path": "maintenance_surfaces/audio.md",
+      "terms": [
+        "audio",
+        "music",
+        "音频",
+        "音乐"
+      ],
+      "contract_count": 1
+    },
+    {
+      "system": "backup",
+      "path": "maintenance_surfaces/backup.md",
+      "terms": [
+        "backup",
+        "mirror",
+        "recovery",
+        "备份",
+        "镜像",
+        "恢复"
+      ],
+      "contract_count": 4
+    },
+    {
+      "system": "bridge",
+      "path": "maintenance_surfaces/bridge.md",
+      "terms": [
+        "bridge",
+        "mobile",
+        "weixin",
+        "桥接",
+        "微信"
+      ],
+      "contract_count": 16
+    },
+    {
+      "system": "drafts",
+      "path": "maintenance_surfaces/drafts.md",
+      "terms": [
+        "drafts",
+        "draft",
+        "草案"
+      ],
+      "contract_count": 1
+    },
+    {
+      "system": "hardware",
+      "path": "maintenance_surfaces/hardware.md",
+      "terms": [
+        "hardware",
+        "usb",
+        "mtp",
+        "device",
+        "硬件",
+        "设备"
+      ],
+      "contract_count": 6
+    },
+    {
+      "system": "mail",
+      "path": "maintenance_surfaces/mail.md",
+      "terms": [
+        "mail",
+        "email",
+        "邮件"
+      ],
+      "contract_count": 2
+    },
+    {
+      "system": "mcp",
+      "path": "maintenance_surfaces/mcp.md",
+      "terms": [
+        "mcp",
+        "hub",
+        "tool",
+        "工具"
+      ],
+      "contract_count": 12
+    },
+    {
+      "system": "memory",
+      "path": "maintenance_surfaces/memory.md",
+      "terms": [
+        "memory",
+        "pmb",
+        "checkpoint",
+        "记忆"
+      ],
+      "contract_count": 6
+    },
+    {
+      "system": "network",
+      "path": "maintenance_surfaces/network.md",
+      "terms": [
+        "network",
+        "proxy",
+        "gateway",
+        "网络",
+        "代理"
+      ],
+      "contract_count": 5
+    },
+    {
+      "system": "office",
+      "path": "maintenance_surfaces/office.md",
+      "terms": [
+        "office",
+        "document",
+        "pdf",
+        "文档"
+      ],
+      "contract_count": 1
+    },
+    {
+      "system": "records",
+      "path": "maintenance_surfaces/records.md",
+      "terms": [
+        "records",
+        "sqlite",
+        "index",
+        "记录",
+        "索引"
+      ],
+      "contract_count": 3
+    },
+    {
+      "system": "resource",
+      "path": "maintenance_surfaces/resource.md",
+      "terms": [
+        "resource",
+        "download",
+        "package",
+        "资源",
+        "下载"
+      ],
+      "contract_count": 21
+    },
+    {
+      "system": "scheduler",
+      "path": "maintenance_surfaces/scheduler.md",
+      "terms": [
+        "scheduler",
+        "schedule",
+        "task",
+        "调度",
+        "定时"
+      ],
+      "contract_count": 4
+    },
+    {
+      "system": "skills",
+      "path": "maintenance_surfaces/skills.md",
+      "terms": [
+        "skills",
+        "skill",
+        "技能"
+      ],
+      "contract_count": 2
+    },
+    {
+      "system": "startup",
+      "path": "maintenance_surfaces/startup.md",
+      "terms": [
+        "startup",
+        "desktop",
+        "session",
+        "启动",
+        "会话"
+      ],
+      "contract_count": 8
+    },
+    {
+      "system": "workflow",
+      "path": "maintenance_surfaces/workflow.md",
+      "terms": [
+        "workflow",
+        "governance",
+        "closeout",
+        "工作流",
+        "治理",
+        "收口"
+      ],
+      "contract_count": 32
+    },
+    {
+      "system": "wsl_workspace",
+      "path": "maintenance_surfaces/wsl_workspace.md",
+      "terms": [
+        "wsl",
+        "workspace",
+        "git",
+        "工作区",
+        "仓库"
+      ],
+      "contract_count": 6
+    }
+  ]
+}

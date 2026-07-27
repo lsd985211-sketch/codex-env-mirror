@@ -1,0 +1,20 @@
+{
+  "skill_id": "e904b6d31365c939",
+  "name": "phaser-2d-game",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\game-studio\\bd2122cb\\skills\\phaser-2d-game",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "a1268f00d6ac270fed74bc246358758e9f0ca6cf5764e628be0d5528cae5cff4",
+    "agents": "adfcb9888c386a5ee15071e2b890a1cce36d4d58850d90d6245c1265d7b6f6c8",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
