@@ -1,0 +1,20 @@
+{
+  "skill_id": "1ef9535650dd3e81",
+  "name": "security-best-practices",
+  "path": "C:\\Users\\45543\\.codex\\skills\\security-best-practices",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "d15f39d5fc773bf4e9324b488e7bf53e575e25cb3cd9f35d66eed6c195a3f914",
+    "agents": "6e9c6f2edce448eb2b589f81ad6e3f722665021785513bcbfd0bf7b86b529171",
+    "scripts": null,
+    "references": "bcfc319b42ae901479832f15520f4b34016c9d84b144772ee90d351dc10295b4",
+    "assets": null
+  }
+}

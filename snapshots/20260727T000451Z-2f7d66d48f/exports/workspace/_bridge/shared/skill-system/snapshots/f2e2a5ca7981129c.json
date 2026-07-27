@@ -1,0 +1,20 @@
+{
+  "skill_id": "f2e2a5ca7981129c",
+  "name": "presentation-craft",
+  "path": "C:\\Users\\45543\\.codex\\skills\\presentation-craft",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": "execution",
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "76669b11bde8fcf0f2e13bfae2a3590fdf88ae03668a9ccaed4a76aadd64672c",
+    "agents": "cfb041a5a497f9c521ba5db26552d4299bf248204cb1bb203fccad71c6f35ffc",
+    "scripts": null,
+    "references": "be62ff2fb5e4035332403eb8296499890c95b911dab342c1f17a91a6924ce46b",
+    "assets": null
+  }
+}

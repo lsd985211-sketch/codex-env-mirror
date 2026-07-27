@@ -1,0 +1,4 @@
+interface:
+  display_name: "Office Craft"
+  short_description: "Create, edit, analyze, and validate office documents."
+  default_prompt: "Use this skill to work with Word, Excel, PDF, and general office deliverables with backup-first and validation-first workflows."
