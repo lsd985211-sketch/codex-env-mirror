@@ -1,0 +1,20 @@
+{
+  "skill_id": "6cef748fa7ce6ee7",
+  "name": "minecraft-ci-release",
+  "path": "C:\\Users\\45543\\.codex\\skills\\minecraft-ci-release",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "61c269fd0c952881602ede4026679c56e66237ccac01c7afe52cde3416b64bb3",
+    "agents": null,
+    "scripts": "e65f10d47a16eedeaacfcb5f17f4e193aef8f0deb05431298cba7cd2aee8ec33",
+    "references": "7c71253290d475e1de77123f005f39749c5e87111a6a33ba0407bb46dc357c15",
+    "assets": null
+  }
+}

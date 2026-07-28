@@ -1,0 +1,20 @@
+{
+  "skill_id": "2daca2c654549a87",
+  "name": "pdf",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-primary-runtime\\pdf\\26.619.11828\\skills\\pdf",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T01:05:46+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "ed1fe8b3d13d67775310133e93f1398d96f2414025d5b7fea1102a7706a9106a",
+    "agents": "5819dd168e544e3293d1501174130c56e139eb37c7d176884d8c6de4b9354f56",
+    "scripts": null,
+    "references": null,
+    "assets": "8aaafb838916f432c695701ce4468b4aa53345a4178ef9613f4174b5181ea61e"
+  }
+}

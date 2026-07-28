@@ -1,0 +1,20 @@
+{
+  "skill_id": "e1f5138da0d2ca10",
+  "name": "security-diff-scan",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\codex-security\\c6ea566d\\skills\\security-diff-scan",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3d9811c39246986e92d3001a198e5d5572cac07ad2ef9bbb18cfc374bae46feb",
+    "agents": "f3d31e09befbb8532b53fdccb63a34c0b894a7fb96215b40e84647cd9f8e1b50",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
