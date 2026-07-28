@@ -1,4 +1,0 @@
-interface:
-  display_name: "FormatFactory GUI"
-  short_description: "Operate FormatFactory through GUI evidence"
-  default_prompt: "Use $gui-app-formatfactory to automate FormatFactory conservatively through its GUI."
