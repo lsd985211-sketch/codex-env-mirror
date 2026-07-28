@@ -1,4 +1,0 @@
-interface:
-  display_name: "CodeGraph Ops"
-  short_description: "Query code graphs and impact."
-  default_prompt: "Use CodeGraph to analyze this code structure or impact."
