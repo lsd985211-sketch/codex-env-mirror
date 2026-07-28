@@ -1,0 +1,20 @@
+{
+  "skill_id": "840c65624bf09044",
+  "name": "typescript-data-visualization-engineering",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-api-curated\\build-web-data-visualization\\bd2122cb\\skills\\typescript-data-visualization-engineering",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3a080b13543b99749926504659f8095c3f6f644e88b2a55ca902ae21d1845fa1",
+    "agents": "9191c2b35bf99f913dcbf53faba722224f14746eb295416c17ec44b0a52f3054",
+    "scripts": null,
+    "references": "ebf4dc9f16434e8b4af28a854f98f64109452c6f2624aa5a1a41a5263424ed4f",
+    "assets": null
+  }
+}
