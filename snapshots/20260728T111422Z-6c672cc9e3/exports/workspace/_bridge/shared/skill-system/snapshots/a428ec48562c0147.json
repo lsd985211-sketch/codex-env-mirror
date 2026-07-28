@@ -1,0 +1,20 @@
+{
+  "skill_id": "a428ec48562c0147",
+  "name": "presentations",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-primary-runtime\\presentations\\26.630.12135\\skills\\presentations",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "10f35237c7f1994139c3518e9e3296f1bd0c02f31b9577732914658aa100473a",
+    "agents": "35fa03254b9d9e2c859a2e1d343406df161e70c07af43a352fc6424d01c03776",
+    "scripts": null,
+    "references": "3b3db033600518e8389d0b0cfa4a4c47e1acf66c56cddd76e666d6c03577ca44",
+    "assets": "be0c33ed781f6541c902ad8cb27fd6143fbc8573ea3f5b07b7c7cfebc019fcfa"
+  }
+}

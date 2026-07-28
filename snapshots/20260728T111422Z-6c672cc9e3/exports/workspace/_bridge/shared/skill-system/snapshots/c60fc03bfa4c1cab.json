@@ -1,0 +1,20 @@
+{
+  "skill_id": "c60fc03bfa4c1cab",
+  "name": "mobile-weixin-bridge-ops",
+  "path": "C:\\Users\\45543\\.codex\\skills\\mobile-weixin-bridge-ops",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "915c5c15801f442032c34fff6c0d67255dbdc7c5446960f1b542c9ca34b3717f",
+    "agents": "2c6c84d3c3ad43b3ab6a55c42eeb0cbba518a5e7ef4a520bbe748c9720c2d5c6",
+    "scripts": null,
+    "references": "7030570839f3a734adea34832788e7112f95e868b06cde440758dadeb9fbd94f",
+    "assets": null
+  }
+}

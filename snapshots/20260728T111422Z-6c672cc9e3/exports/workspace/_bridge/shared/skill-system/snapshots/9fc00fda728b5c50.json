@@ -1,0 +1,20 @@
+{
+  "skill_id": "9fc00fda728b5c50",
+  "name": "template-creator",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-primary-runtime\\template-creator\\26.630.12135\\skills\\template-creator",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3f21fbb968fb9645acdadb7c1057536b6865a31af7e4e4601d44cf089e926d94",
+    "agents": "f8f68c3a73323a3fd43d265b61c8d2596ce306ab0cf942c392e40e8fe73db568",
+    "scripts": "1238b3066c88e9659c59f3d6c4503b48843d325770ecb57e71e465d202b5e7df",
+    "references": null,
+    "assets": null
+  }
+}

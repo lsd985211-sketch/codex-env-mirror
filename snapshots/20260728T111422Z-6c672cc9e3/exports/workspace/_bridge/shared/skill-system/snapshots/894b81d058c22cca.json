@@ -1,0 +1,20 @@
+{
+  "skill_id": "894b81d058c22cca",
+  "name": "minecraft-multiloader",
+  "path": "C:\\Users\\45543\\.codex\\skills\\minecraft-multiloader",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "b9fa9565dc1352e04e7626888df318da21e1bfb3ad09ea0ad4b7b16be76c9bd7",
+    "agents": null,
+    "scripts": "f353f87d61169d00c4afd99ee8b6d50669e286cadbcab2900ba480e79ce11e01",
+    "references": "74288cc2f1ad74a467f794e027dcba2bb0fb32d0c1f343c412eea93e70f1b324",
+    "assets": null
+  }
+}

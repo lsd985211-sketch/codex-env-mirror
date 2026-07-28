@@ -1,0 +1,55 @@
+---
+name: cli-anything-microsoft-office
+description: Operate installed Microsoft Word, Excel, and PowerPoint through a bounded CLI harness. Use for native Office inspection and editing, real Word pagination and layout, Excel calculation and charts, PowerPoint rendering and shapes, application-compatibility checks, or native PDF export.
+---
+
+# Microsoft Office CLI-Anything
+
+Use `cli-anything-microsoft-office` for repeatable local Office operations when
+the real desktop Office renderer, pagination, calculation, or PDF export is
+required.
+
+## Routing
+
+- `system status` checks Office installation and COM registration.
+- `word`, `excel`, and `powerpoint` provide create, info, inspect, structured
+  batch edit, operation schema discovery, and PDF export.
+- `preview` produces or reads immutable preview-bundle metadata.
+
+Prefer `--json` for Codex-facing calls. Use `--dry-run` before a write when the
+destination or overwrite behavior is uncertain. Never pass arbitrary COM,
+PowerShell, VBA, or macro expressions; the harness intentionally exposes only
+declared structured fields.
+
+Use this skill first when installed Word, Excel, or PowerPoint must provide
+real pagination, rendering, calculation, or native PDF export. Keep content
+planning and OOXML-only work with `office-craft`, `docx`, `xlsx`, or `pptx`.
+
+## Workflow
+
+1. Run `system status` when installation or COM health is uncertain.
+2. Run `<app> inspect` before editing an existing file.
+3. Run `<app> operations` when constructing a new operation batch.
+4. Validate with `--dry-run`, then run `edit` to a different output path.
+5. Reopen with `inspect`; use native PDF export or preview when visual fidelity matters.
+
+## References
+
+- Read `references/routing-and-workflow.md` for owner selection and the full lifecycle.
+- Read only the active application's reference: `word-operations.md`, `excel-operations.md`, or `powerpoint-operations.md`.
+- Read `references/recipes.md` for reusable operation batches.
+- Read `references/troubleshooting.md` after any Office, COM, file-lock, rendering, or validation failure.
+
+## Examples
+
+```powershell
+cli-anything-microsoft-office --json system status
+cli-anything-microsoft-office --json word info C:\Temp\brief.docx
+cli-anything-microsoft-office --json word export-pdf C:\Temp\brief.docx C:\Temp\brief.pdf
+cli-anything-microsoft-office --json excel create C:\Temp\table.xlsx --data-json '[["Name","Value"],["A",1]]'
+cli-anything-microsoft-office --json word inspect C:\Temp\brief.docx
+cli-anything-microsoft-office --json --dry-run word edit C:\Temp\brief.docx C:\Temp\brief-edited.docx --operations-file C:\Temp\word-ops.json
+```
+
+Each invocation creates a hidden isolated Office COM instance and releases it
+before returning. Existing visible user sessions are not reused.
