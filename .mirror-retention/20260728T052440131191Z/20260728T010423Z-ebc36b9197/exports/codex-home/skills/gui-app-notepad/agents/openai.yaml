@@ -1,4 +1,0 @@
-interface:
-  display_name: "Notepad GUI"
-  short_description: "Operate Windows Notepad through GUI automation."
-  default_prompt: "Open Notepad, create a new document if needed, type the requested text, and verify the result safely."
