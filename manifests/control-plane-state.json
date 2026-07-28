@@ -1,6 +1,6 @@
 {
   "schema": "codex_mirror.control_plane_state.v1",
-  "generated_at": "2026-07-28T05:24:37.724486+00:00",
+  "generated_at": "2026-07-28T05:30:33.450238+00:00",
   "source_signature": "9e9d95a99a91d6d80fcfcd0bcb53b7e298216abad76bee5aa9bdb9ff7cc14553",
   "control_plane_version": "2.2.0",
   "snapshot": {
@@ -20,7 +20,7 @@
     "ok": true
   },
   "milestone": {
-    "latest_tag": "seed-v3.3.1"
+    "latest_tag": "seed-v3.3.2"
   },
   "required_archive_gaps": [
     "codex-native-memory-state",
@@ -128,5 +128,5 @@
     "static_contract": "changes only when semantics change",
     "generated_current_state": "regenerated transactionally for the current snapshot"
   },
-  "current_md_sha256": "95eb8e3c16f93e1942563eba502dd8ab276335ef8d0c615a90c090c0f6053a15"
+  "current_md_sha256": "5e6d157b30b60f915532224f1e2d13c727b7656cb53d6c085482c9e011768f30"
 }
