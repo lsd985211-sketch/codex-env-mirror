@@ -1,0 +1,20 @@
+{
+  "skill_id": "2f5445ea2ab3de37",
+  "name": "control-chrome",
+  "path": "C:\\Users\\45543\\.codex\\.tmp\\bundled-marketplaces\\openai-bundled.guard-staging-1781530348656\\plugins\\chrome\\skills\\control-chrome",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-06-26T00:38:47+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "critical",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "bd96d819abf24d56862148df287999f42335abc965c9d7cbaf1f95bf6582704a",
+    "agents": null,
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}
