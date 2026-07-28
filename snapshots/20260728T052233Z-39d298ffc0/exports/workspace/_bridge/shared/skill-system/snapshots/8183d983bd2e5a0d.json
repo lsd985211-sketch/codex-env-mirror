@@ -1,0 +1,20 @@
+{
+  "skill_id": "8183d983bd2e5a0d",
+  "name": "security-threat-model",
+  "path": "C:\\Users\\45543\\.codex\\skills\\security-threat-model",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "e03d0a11dbb8adb8eb177862d56c58bbd0c18720977fdf2defb2a6fcc2ea231f",
+    "agents": "3319b59736312abceca614e341c0e59cae47263e3b58a22b2b5ddf1e5fc8c227",
+    "scripts": null,
+    "references": "d84bfdc7b14a4fd6c15ed9a41f5b5e59757bde50eaaa61ec1c92da539d2c36b9",
+    "assets": null
+  }
+}
