@@ -1,12 +1,16 @@
 {
   "schema": "codex_mirror.contract_review_state.v1",
-  "reviewed_at": "2026-07-26T03:46:24.215445+00:00",
+  "reviewed_at": "2026-08-04T10:58:22.721942+00:00",
   "reviewed_by": "codex",
-  "control_plane_fingerprint": "5be85636c07e89d327c490e2e981b22c7ed1ef10f1a7f32eb6d9806edad3d5cd",
-  "baseline_tag": "seed-v3.2.0",
-  "proposed_tag": "seed-v3.3.0",
+  "control_plane_fingerprint": "f8893018afe1517b7f2e46d446605b158c2b551929edf7baab9694b85c54591b",
+  "baseline_tag": "seed-v3.3.3",
+  "proposed_tag": "seed-v3.4.0",
   "changed_control_plane_files": [
-    "manifests/asset-dispositions.json"
+    "OPTIMIZATION_SPEC.md",
+    "README.md",
+    "manifests/asset-dispositions.json",
+    "scripts/mirror_cli.py",
+    "tests/test_mirror_cli.py"
   ],
   "decisions": [
     {
@@ -15,7 +19,7 @@
     },
     {
       "path": "README.md",
-      "disposition": "compatible"
+      "disposition": "updated"
     },
     {
       "path": "MIRROR_POLICY.md",
@@ -35,6 +39,6 @@
     }
   ],
   "release_impact": "minor",
-  "summary": "已逐一审阅稳定契约；.sandbox_migration 是既有机器身份标记 regenerate/codex_cli 规则的新增实例，现有权限、恢复、未知项阻断与 staging/activation 边界保持兼容。",
+  "summary": "Reviewed six stable contracts against OPTIMIZATION_SPEC, README, manifest, mirror CLI, and tests; README semantics updated, remaining contracts compatible.",
   "validation": "all required stable contracts read against current control-plane changes"
 }
