@@ -855,6 +855,41 @@ class MirrorCliTests(unittest.TestCase):
             "agent-home/skills/demo/SKILL.md",
         )
 
+    def test_restore_acceptance_never_claims_target_capability_from_plan_or_stage(self) -> None:
+        actions = [{"asset_id": "owner-source"}, {"asset_id": "runtime"}]
+        validation = {
+            "mirror_valid": True,
+            "capability_restore_ready": True,
+            "advisories": {"required_archive_gaps": ["runtime"]},
+        }
+        planned = mirror_cli.restore_acceptance("snapshot-1", actions, validation)
+        self.assertTrue(planned["snapshot_restore_plan_ready"])
+        self.assertFalse(planned["capability_restore_ready"])
+        self.assertEqual(planned["state"], "snapshot_plan_ready")
+
+        staged = mirror_cli.restore_acceptance(
+            "snapshot-1", actions, validation,
+            staged_assets=[{"asset_id": "owner-source", "hash_verified": True}],
+        )
+        self.assertFalse(staged["stage_asset_inventory_complete"])
+        self.assertFalse(staged["capability_restore_ready"])
+        self.assertEqual(staged["owner_handoffs_pending"], ["runtime"])
+
+    def test_restore_acceptance_requires_complete_hash_verified_stage_before_handoff(self) -> None:
+        actions = [{"asset_id": "owner-source"}, {"asset_id": "runtime"}]
+        validation = {"mirror_valid": True, "capability_restore_ready": True, "advisories": {}}
+        staged = mirror_cli.restore_acceptance(
+            "snapshot-1", actions, validation,
+            staged_assets=[
+                {"asset_id": "owner-source", "hash_verified": True},
+                {"asset_id": "runtime", "hash_verified": True},
+            ],
+        )
+        self.assertTrue(staged["stage_asset_inventory_complete"])
+        self.assertTrue(staged["stage_hashes_verified"])
+        self.assertFalse(staged["capability_restore_ready"])
+        self.assertEqual(staged["state"], "staged_pending_dependency_and_capability_acceptance")
+
     def test_manifest_files_parse(self) -> None:
         for path in (ROOT / "manifests").rglob("*.json"):
             json.loads(path.read_text(encoding="utf-8-sig"))

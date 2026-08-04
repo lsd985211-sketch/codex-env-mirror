@@ -2486,6 +2486,60 @@ def stage_relative_path(template: str, snapshot_path: str) -> Path:
     return Path("derived") / Path(snapshot_path)
 
 
+def restore_acceptance(
+    snapshot_id: str,
+    actions: list[dict[str, Any]],
+    validation: dict[str, Any],
+    *,
+    staged_assets: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Project one explicit, non-activating recovery acceptance state.
+
+    A valid snapshot can prove that its assets and recovery plan are sound, but
+    it cannot prove that a new target has acquired dependencies, reconnected
+    remote services, or passed capability probes.  Keep those states separate
+    so a plan or hash-verified stage is never reported as a restored runtime.
+    """
+    expected_ids = [str(action.get("asset_id") or "") for action in actions]
+    expected_set = {item for item in expected_ids if item}
+    staged = list(staged_assets or [])
+    staged_ids = [str(item.get("asset_id") or "") for item in staged]
+    staged_set = {item for item in staged_ids if item}
+    inventory_complete = (
+        staged_assets is not None
+        and len(staged) == len(expected_ids)
+        and len(staged_set) == len(expected_set)
+        and staged_set == expected_set
+    )
+    hashes_verified = bool(staged) and all(item.get("hash_verified") is True for item in staged)
+    advisories = validation.get("advisories") if isinstance(validation.get("advisories"), dict) else {}
+    archive_gaps = sorted({str(item) for item in advisories.get("required_archive_gaps", []) if str(item)})
+    snapshot_plan_ready = bool(
+        validation.get("snapshot_restore_plan_ready", validation.get("capability_restore_ready", False))
+    )
+    stage_verified = bool(inventory_complete and hashes_verified)
+    return {
+        "schema": "codex_mirror.restore_acceptance.v1",
+        "snapshot_id": snapshot_id,
+        "expected_asset_count": len(expected_ids),
+        "expected_asset_ids": sorted(expected_set),
+        "snapshot_assets_verified": bool(validation.get("mirror_valid")),
+        "snapshot_restore_plan_ready": snapshot_plan_ready,
+        "stage_asset_inventory_complete": inventory_complete,
+        "stage_hashes_verified": hashes_verified if staged_assets is not None else False,
+        "external_archive_gaps": archive_gaps,
+        "owner_handoffs_pending": archive_gaps,
+        "capability_restore_ready": False,
+        "state": "staged_pending_dependency_and_capability_acceptance" if stage_verified else "snapshot_plan_ready",
+        "next_action": (
+            "import or reacquire each declared external archive and owner dependency, then run target capability probes"
+            if stage_verified
+            else "stage every planned asset into an isolated target and verify its hashes before dependency restoration"
+        ),
+        "rule": "capability_restore_ready remains false until target-side owners complete dependencies and capability probes",
+    }
+
+
 def restore_plan(snapshot: str, target_root: Path) -> dict[str, Any]:
     validation = validate_snapshot(snapshot)
     if not validation["ok"]:
@@ -2512,6 +2566,7 @@ def restore_plan(snapshot: str, target_root: Path) -> dict[str, Any]:
         "action_count": len(actions),
         "actions": actions,
         "external_archive_gaps": validation["advisories"]["required_archive_gaps"],
+        "recovery_acceptance": restore_acceptance(manifest["snapshot_id"], actions, validation),
         "rule": "This plan writes only to an isolated stage. Live activation is not included.",
     }
 
@@ -2560,6 +2615,9 @@ def stage_snapshot(snapshot: str, target_root: Path, confirm: str) -> dict[str, 
             "assets": copied,
             "hashes_verified": all(item["hash_verified"] for item in copied),
             "external_archive_gaps": plan["external_archive_gaps"],
+            "recovery_acceptance": restore_acceptance(
+                plan["snapshot_id"], plan["actions"], validation=validate_snapshot(snapshot), staged_assets=copied
+            ),
             "membership_guard": load_json(resolve_snapshot(snapshot) / "snapshot-manifest.json").get("membership_guard", {}),
             "activation_performed": False,
         }
