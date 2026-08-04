@@ -1,0 +1,24 @@
+{
+  "schema": "external_dependency_registry.v1",
+  "schema_version": 1,
+  "profiles": [
+    {
+      "profile_id": "codex",
+      "path": "codex.json",
+      "owner": "dependency_change_intelligence.py",
+      "validation": "python3 workspace/_bridge/dependency_change_intelligence.py validate"
+    },
+    {
+      "profile_id": "open-code-review",
+      "path": "open-code-review.json",
+      "owner": "dependency_change_intelligence.py",
+      "validation": "python3 workspace/_bridge/dependency_change_intelligence.py validate"
+    },
+    {
+      "profile_id": "managed-python-dependencies",
+      "path": "managed-python-dependencies.json",
+      "owner": "dependency_change_intelligence.py",
+      "validation": "python3 workspace/_bridge/dependency_change_intelligence.py validate"
+    }
+  ]
+}

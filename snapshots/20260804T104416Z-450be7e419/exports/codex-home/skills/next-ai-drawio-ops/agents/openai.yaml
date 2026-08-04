@@ -1,0 +1,4 @@
+interface:
+  display_name: "Next AI Draw.io Ops"
+  short_description: "Create and edit governed Draw.io diagrams"
+  default_prompt: "Use the optional Next AI Draw.io owner for an editable diagram task."

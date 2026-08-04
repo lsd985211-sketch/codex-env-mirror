@@ -1,0 +1,20 @@
+{
+  "skill_id": "ecee2b04cfacb122",
+  "name": "content-topic-generator",
+  "path": "C:\\Users\\45543\\.codex\\skills\\content-topic-generator",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "8546560bf552c0910ea3d46428c7111291358efc6c7e0b0c8a7a4414f2499bbf",
+    "agents": null,
+    "scripts": null,
+    "references": "18f6080b0af9a24d3d7c6b6a639c2bbeb35b520825d54189eff1fce50b8173bb",
+    "assets": "e1ef102ea2d07319eabb6e2d9ac7b3e75e389ccd4875555bd6f8b72fc4a6366d"
+  }
+}

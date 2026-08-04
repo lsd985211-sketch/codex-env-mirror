@@ -1,0 +1,20 @@
+{
+  "skill_id": "87bbd94e28a7652f",
+  "name": "multi-agent-patterns",
+  "path": "C:\\Users\\45543\\.codex\\skills\\multi-agent-patterns",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "3dace90aa21f39a5637958afc9e63aa76b9e3f67d449e3ae50a6812f3bf6c26a",
+    "agents": null,
+    "scripts": "9cb1b8c299b680a9a777b863969a0b633f2287f94cbe673f649efcb380cc5af5",
+    "references": "3cdb1554f7286ce0bfef39886b38983a8a94f646cccec4687df9bfb454372e9d",
+    "assets": null
+  }
+}
