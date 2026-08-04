@@ -1,0 +1,20 @@
+{
+  "skill_id": "15c4b53cae04e8b6",
+  "name": "gui-automation",
+  "path": "C:\\Users\\45543\\.codex\\skills\\gui-automation",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "aa6d7f369ea079d31e02de0128caedf901f6480f279aea56b14a07af2420b55a",
+    "agents": "937742ead6c45a4fe1f44b092e210740061183c591d7cb30088334fef138f3e8",
+    "scripts": null,
+    "references": "bcf986f6886f69634ce9ee12e30611d80155da4ed90f20f186ff36aca5cef4a5",
+    "assets": null
+  }
+}

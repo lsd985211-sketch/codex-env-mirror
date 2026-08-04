@@ -1,0 +1,20 @@
+{
+  "skill_id": "861c66d522ebf028",
+  "name": "office-craft",
+  "path": "C:\\Users\\45543\\.codex\\skills\\office-craft",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": "execution",
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "caf4323ed23090a87b8ff78e6ed3f57532b8bed9d10eb5934d8eda164c5aa783",
+    "agents": "e5a775afa07ec228491dd6980defbe2314f005471887b946585d7a285c0536df",
+    "scripts": "bddeac77633ad486fb33db89476f8f69bdc00479b1518bba0caadf66973d0af8",
+    "references": "4c879682b635a6c1dd339bb7f6f018e91bcaf53f21ed2e92cfd742ee9044f2ed",
+    "assets": null
+  }
+}

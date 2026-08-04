@@ -1,0 +1,20 @@
+{
+  "skill_id": "1710e911affe627f",
+  "name": "threat-model",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\codex-security\\c6ea566d\\skills\\threat-model",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "9a73305a379a6e777a2c1476174c429fdc3450c89fc1c00a66fa7eac997004fc",
+    "agents": "a3533478c2548248ef07c9afbbe0a7451f1fa1882883b4def0906d8113b7dd6c",
+    "scripts": null,
+    "references": "556a935f6009bba027415a608025eb826d159a5be156a96cfe0951bae22fb696",
+    "assets": null
+  }
+}

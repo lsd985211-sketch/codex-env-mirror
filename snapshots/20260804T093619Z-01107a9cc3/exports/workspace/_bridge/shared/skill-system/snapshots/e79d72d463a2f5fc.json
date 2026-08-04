@@ -1,0 +1,20 @@
+{
+  "skill_id": "e79d72d463a2f5fc",
+  "name": "gh-address-comments",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\github\\c6ea566d\\skills\\gh-address-comments",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "c1ebc337357402f7faabafe712e0c463981a65f736453efe52abd305bcb74769",
+    "agents": "8b9f604d79717d5aec58abfb192f2d713c45b5558f5572255d9f9e5d39877ee0",
+    "scripts": "15e419dbf230647651908738fc50d4c7e01f86125cd4f7a31663d0f705f28ad7",
+    "references": null,
+    "assets": "0d86cdf63fc246bde904f0be8d48e981804615a6f0191f1412e22a5f6df3e7a4"
+  }
+}

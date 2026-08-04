@@ -1,0 +1,4008 @@
+{
+  "remote-project-connection-backfill-completed": true,
+  "electron-local-remote-control-installation-id": "032cceea-f0f8-4415-98f8-fe60cd5ab2dd",
+  "primary-runtime-update-jitter-ms": 1720864,
+  "electron-persisted-atom-state": {
+    "electron:onboarding-projectless-completed": true,
+    "last_completed_onboarding": 1781509149,
+    "electron:onboarding-primary-runtime-install-ready": true,
+    "electron:onboarding-primary-runtime-install-requested": true,
+    "electron:onboarding-welcome-pending": true,
+    "composer-auto-context-enabled": false,
+    "agent-mode-by-host-id": {
+      "local": "full-access",
+      "remote-wsl:Codex-Wsl-Lab": "full-access"
+    },
+    "skip-full-access-confirm": true,
+    "composer-prompt-drafts-v1": {
+      "client-new-thread:0b562551-4a40-4eb6-81fd-26a0750df4ef": "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: 目录名称无效。 (os error 267)019f743d-069f-7a32-bd75-8e1ab7020b7b 这个",
+      "local:019f743d-069f-7a32-bd75-8e1ab7020b7b": "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: 目录名称无效。 (os error 267)019f743d-069f-7a32-bd75-8e1ab7020b7b 这个",
+      "client-new-thread:5c376e74-bf25-4815-bd55-365f47a2188e": "第一优先级：建立问题类型路由\r\n不要所有问题都默认使用同一种检索。\r\n\r\n建议分成五类\r\n问题类型\t首选路径\t适用例子\r\n直接定义\tFTS + 精确概念匹配\t“什么是蛋白聚糖”\r\n名词列表\tFTS + 章节过滤\t“头部有哪些韧带”\r\n机制解释\t向量 + 图谱 + 邻近 chunk\t“为什么休克会导致细胞损伤”\r\n比较鉴别\t双主题检索 + 结构化重排\t“坏死和凋亡有什么区别”\r\n续学复习\t会话锚点优先 + 局部补证\t“继续学细胞损伤”\r\n这样做的直接效果\r\n例如“蛋白聚糖的功能”：\r\n\r\n不需要先扫描整套教材；\r\n先命中已知概念；\r\n再读取相关生化、组织学、生理学 chunk；\r\n最后按“基质、保水、屏障、细胞调节”组织答案。\r\n而“休克机制”则使用机制型路径，不会只返回一个定义段落。\r\n\r\n这是速度和质量同时提升幅度最大的一项。\r\n\r\n第二优先级：建立会话级结果缓存\r\n缓存不应只缓存原始搜索结果，而应缓存一个来源绑定的证据包。\r\n\r\n每个已学习主题保存\r\n标准主题名；\r\n同义词和常见问法；\r\n关键教材；\r\n章节；\r\n2–6 个核心 chunk_id；\r\n相关机制链；\r\n易错点；\r\n可能的比较对象；\r\ncontent_sha256；\r\n知识包版本签名。\r\n以后再次问到相同或相近问题时：\r\n\r\n先判断是否命中已有主题；\r\n如果命中且版本哈希未变，直接复用核心锚点；\r\n只检索用户新增的角度；\r\n必要时用 medical_get_chunk 做局部核对。\r\n缓存必须带失效条件\r\n以下情况才重新检查：\r\n\r\nmanifest_sha256 变化；\r\ncontent_digest 变化；\r\n主题来源从 eligible 变成风险状态；\r\n用户问题明显超出原主题；\r\n发现不同教材存在直接冲突。\r\n这会显著减少重复搜索。\r\n\r\n第三优先级：增加召回后的重排序\r\n当前是混合检索，但混合召回之后仍需要判断“哪个结果最值得用”。\r\n\r\n建议排序分数综合考虑：\r\n\r\n最终相关性 =\r\n词法匹配\r\n+ 向量相似度\r\n+ 概念/图谱关联\r\n+ 章节一致性\r\n+ 教材优先级\r\n+ 内容完整性\r\n- 重复惩罚\r\n- caution 风险惩罚\r\n重排序时特别处理四件事\r\n1. 同章节相邻 chunk 合并\r\n如果第 30 页和第 31 页属于同一段机制链，不要把它们当成两个完全独立结果。\r\n\r\n2. 同一教材避免重复占满结果\r\n例如前 10 个结果全部来自同一页，只能说明检索很集中，不代表证据最完整。应该适度保留章节和教材多样性。\r\n\r\n3. 精确命中优先于泛相似\r\n“恶性疟原虫”这种明确术语，精确命中应高于仅仅语义相近的“寄生虫病”。\r\n\r\n4. 机制问题优先保留上下游\r\n问“休克为什么致死”时，应同时保留：\r\n\r\n循环障碍\r\n→ 组织灌注不足\r\n→ 细胞缺氧\r\n→ 代谢紊乱\r\n→ 器官功能障碍\r\n而不是只返回“休克的定义”。\r\n\r\n第四优先级：建立受控的医学同义词和别名表\r\n中文医学问题有大量别名、简称和教材差异。例如：\r\n\r\n蛋白多糖 / 蛋白聚糖\r\n细胞外基质 / 细胞间质\r\n恶性疟原虫 / 恶性疟\r\n睫状小带 / 晶状体悬韧带\r\n多器官功能障碍综合征 / MODS\r\n缺血-再灌注损伤 / 缺血再灌注损伤\r\n如果只靠原句搜索，容易漏召回；但如果无限制扩展同义词，又会产生噪声。\r\n\r\n推荐做法\r\n只建立三层别名：\r\n\r\n教材明确同义词\r\n医学常用简称\r\n中英文对应词\r\n不自动把近义但不等价的词强行合并。例如：\r\n\r\n“炎症”不能直接等同于“感染”；\r\n“低氧”不能直接等同于“缺氧”；\r\n“瘢痕”不能直接等同于“纤维化”。\r\n这项优化对短问题、口语问题和错别字尤其有效。",
+      "local:019fbbd0-8522-77f1-b7ea-c6d7fca02b66": "第一优先级：建立问题类型路由\r\n不要所有问题都默认使用同一种检索。\r\n\r\n建议分成五类\r\n问题类型\t首选路径\t适用例子\r\n直接定义\tFTS + 精确概念匹配\t“什么是蛋白聚糖”\r\n名词列表\tFTS + 章节过滤\t“头部有哪些韧带”\r\n机制解释\t向量 + 图谱 + 邻近 chunk\t“为什么休克会导致细胞损伤”\r\n比较鉴别\t双主题检索 + 结构化重排\t“坏死和凋亡有什么区别”\r\n续学复习\t会话锚点优先 + 局部补证\t“继续学细胞损伤”\r\n这样做的直接效果\r\n例如“蛋白聚糖的功能”：\r\n\r\n不需要先扫描整套教材；\r\n先命中已知概念；\r\n再读取相关生化、组织学、生理学 chunk；\r\n最后按“基质、保水、屏障、细胞调节”组织答案。\r\n而“休克机制”则使用机制型路径，不会只返回一个定义段落。\r\n\r\n这是速度和质量同时提升幅度最大的一项。\r\n\r\n第二优先级：建立会话级结果缓存\r\n缓存不应只缓存原始搜索结果，而应缓存一个来源绑定的证据包。\r\n\r\n每个已学习主题保存\r\n标准主题名；\r\n同义词和常见问法；\r\n关键教材；\r\n章节；\r\n2–6 个核心 chunk_id；\r\n相关机制链；\r\n易错点；\r\n可能的比较对象；\r\ncontent_sha256；\r\n知识包版本签名。\r\n以后再次问到相同或相近问题时：\r\n\r\n先判断是否命中已有主题；\r\n如果命中且版本哈希未变，直接复用核心锚点；\r\n只检索用户新增的角度；\r\n必要时用 medical_get_chunk 做局部核对。\r\n缓存必须带失效条件\r\n以下情况才重新检查：\r\n\r\nmanifest_sha256 变化；\r\ncontent_digest 变化；\r\n主题来源从 eligible 变成风险状态；\r\n用户问题明显超出原主题；\r\n发现不同教材存在直接冲突。\r\n这会显著减少重复搜索。\r\n\r\n第三优先级：增加召回后的重排序\r\n当前是混合检索，但混合召回之后仍需要判断“哪个结果最值得用”。\r\n\r\n建议排序分数综合考虑：\r\n\r\n最终相关性 =\r\n词法匹配\r\n+ 向量相似度\r\n+ 概念/图谱关联\r\n+ 章节一致性\r\n+ 教材优先级\r\n+ 内容完整性\r\n- 重复惩罚\r\n- caution 风险惩罚\r\n重排序时特别处理四件事\r\n1. 同章节相邻 chunk 合并\r\n如果第 30 页和第 31 页属于同一段机制链，不要把它们当成两个完全独立结果。\r\n\r\n2. 同一教材避免重复占满结果\r\n例如前 10 个结果全部来自同一页，只能说明检索很集中，不代表证据最完整。应该适度保留章节和教材多样性。\r\n\r\n3. 精确命中优先于泛相似\r\n“恶性疟原虫”这种明确术语，精确命中应高于仅仅语义相近的“寄生虫病”。\r\n\r\n4. 机制问题优先保留上下游\r\n问“休克为什么致死”时，应同时保留：\r\n\r\n循环障碍\r\n→ 组织灌注不足\r\n→ 细胞缺氧\r\n→ 代谢紊乱\r\n→ 器官功能障碍\r\n而不是只返回“休克的定义”。\r\n\r\n第四优先级：建立受控的医学同义词和别名表\r\n中文医学问题有大量别名、简称和教材差异。例如：\r\n\r\n蛋白多糖 / 蛋白聚糖\r\n细胞外基质 / 细胞间质\r\n恶性疟原虫 / 恶性疟\r\n睫状小带 / 晶状体悬韧带\r\n多器官功能障碍综合征 / MODS\r\n缺血-再灌注损伤 / 缺血再灌注损伤\r\n如果只靠原句搜索，容易漏召回；但如果无限制扩展同义词，又会产生噪声。\r\n\r\n推荐做法\r\n只建立三层别名：\r\n\r\n教材明确同义词\r\n医学常用简称\r\n中英文对应词\r\n不自动把近义但不等价的词强行合并。例如：\r\n\r\n“炎症”不能直接等同于“感染”；\r\n“低氧”不能直接等同于“缺氧”；\r\n“瘢痕”不能直接等同于“纤维化”。\r\n这项优化对短问题、口语问题和错别字尤其有效。",
+      "client-new-thread:a50b9041-1362-4c29-b673-2d59efe366c5": "继续执行",
+      "local:019fbc3e-ad17-7882-a770-7543828eb6d2": "继续执行"
+    },
+    "prompt-history": {
+      "global": [
+        "你参考一下这个报告，但不要全盘照搬，要提取真正有价值的内容加以实施   \n\r\n本地医学检索：FTS5 词法 + bge-m3 向量 + 图谱共现 + 教学意图重排序，全部是规则驱动，没有任何学习机制\r\nPMB：有质量测试（health_log.jsonl）和实体共现统计（graph_edges.weight），但不会根据使用调整任何东西\r\n两者的共同问题：检索好不好，全看初始化时写的规则对不对，不会因为用户的使用而变好。\r\n\r\n第一层：最小改动（0 代码结构变化，只加观测）\r\n成本：极低，收益：立即可视化\r\n\r\n1. 给医学检索加一个\"查询日志表\"\r\n在 medical-vector.sqlite 或新建一个 medical-retrieval-log.sqlite 里加一张表：\r\n\r\n\r\nSQL\r\n\r\nCREATE TABLE retrieval_log (\r\n  query_id TEXT PRIMARY KEY,       -- ULID\r\n  query_text TEXT NOT NULL,         -- 用户的查询\r\n  top_chunk_ids TEXT NOT NULL,      -- 返回的 Top-10 chunk_id（JSON 数组）\r\n  top_scores TEXT NOT NULL,         -- 对应的分数（JSON 数组）\r\n  vector_used BOOLEAN NOT NULL,     -- 这次用了向量检索吗\r\n  fts_used BOOLEAN NOT NULL,        -- 这次用了全文检索吗\r\n  graph_used BOOLEAN NOT NULL,      -- 这次用了图谱吗\r\n  teaching_intent TEXT,              -- 识别到的教学意图（definition/mechanism/...）\r\n  created_at TEXT NOT NULL           -- 时间戳\r\n)\r\n为什么重要：现在你根本不知道用户在搜什么、返回了什么。没有日志就没有改进的依据。加了这张表，一周后你就能回答：\r\n\r\n用户最常搜的 20 个问题是什么？\r\n哪些问题向量检索命中率高，哪些只靠 FTS？\r\n教学意图识别的准确率大概怎么样？\r\n2. 给 PMB 的 health_log 加\"自动定时跑\"\r\n现在 health_log.jsonl 里只有 1 条记录（1784040537，那是 6 月 13 日跑的）。说明这个质量检查是手动触发的，不是自动的。\r\n\r\n改成每次 PMB 导入新记忆后自动跑一次 health check，或者每天凌晨跑一次。这样你能看到：\r\n\r\n准确率是在上升还是下降？\r\n导入了新记忆后，旧的查询还能不能命中？\r\n第二层：中等改动（加轻量学习，不碰核心架构）\r\n成本：中等，收益：开始有复利效应\r\n\r\n3. 给医学检索加\"点击/选择反馈\"\r\n这是最简单、最有效的自适应机制。在 retrieval_log 基础上再加一张表：\r\n\r\n\r\nSQL\r\n\r\nCREATE TABLE retrieval_feedback (\r\n  feedback_id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n  query_id TEXT NOT NULL,           -- 对应 retrieval_log.query_id\r\n  selected_chunk_id TEXT NOT NULL,   -- 用户最终选了哪个结果（或 DeepTutor 用了哪个）\r\n  selected_rank INTEGER NOT NULL,    -- 这个结果当时排第几\r\n  feedback_type TEXT NOT NULL,        -- \"click\" / \"used_in_answer\" / \"marked_useful\"\r\n  created_at TEXT NOT NULL\r\n)\r\n然后用这个数据做两件事：\r\n\r\na) 高频查询缓存\r\n\r\n如果某个查询被搜了 3 次以上，而且每次用户选的都是同一个 chunk，直接缓存这个映射\r\n下次同样的查询来，直接返回缓存结果，跳过检索\r\nb) Chunk 权威度加分\r\n\r\n如果某个 chunk 被用户选了 N 次，给它一个 authority_boost = log(N+1)\r\n下次检索时，融合分数里加上这个 boost：final_score = hybrid_score * (1 + authority_boost * 0.1)\r\n这个机制非常轻量，不碰向量模型，不重排序算法，只是在现有分数上加一个小小的权威度偏移。但效果会很明显——常用的、用户认可的内容会慢慢浮上来。\r\n\r\n4. 给 PMB 加\"查询成功率反馈\"\r\nPMB 现在有测试用例，但不知道实际使用中哪些查询成功、哪些失败。可以加一个简单的机制：\r\n\r\n每次 pmb.recall 返回结果后，记录这个查询和返回的 Top-5\r\n如果后续对话中用户引用了返回的内容（比如\"你说的那个 XXX...\"），标记为\"成功\"\r\n如果用户说\"不对\"、\"不是这个\"或者换了个问法，标记为\"失败\"\r\n失败的查询自动加入 adaptive_log.jsonl，成为新的测试用例\r\n这样 PMB 的测试用例就不是人工写的了，而是从真实失败中生长出来的。\r\n\r\n第三层：长期改进（架构级变化，需要深思熟虑）\r\n成本：高，收益：真正的\"越用越聪明\"\r\n\r\n5. 融合检索权重的自动调优（不是在线学习，是定期离线调参）\r\n现在的混合检索：\r\n\r\n\r\nPython\r\n\r\nfinal_score = 0.4 * fts_score + 0.4 * vector_score + 0.2 * graph_score\r\n这些权重（0.4, 0.4, 0.2）是写死的。\r\n\r\n用 retrieval_feedback 里积累的数据，可以定期（比如每周）跑一次离线调优：\r\n\r\n用用户选择的结果作为\"正确答案\"\r\n尝试不同的权重组合，看哪组权重让\"正确答案\"排得最靠前\r\n更新权重配置（存在 SQLite 里，不是写死在代码中）\r\n这不是在线学习（不会每次查询都变），而是定期校准。权重一个月调一次就够了，但每次调都会更准。\r\n\r\n6. \"难例\"路由机制\r\n有些查询天生就难：\r\n\r\n太泛的（\"心脏病\"）→ 应该走 browse，列出子分类\r\n太具体的（\"第 3 版内科学第 156 页第 3 段\"）→ 应该直接按 chunk_id 或页码找\r\n需要跨章节推理的（\"高血压和糖尿病的共同发病机制\"）→ 应该先检索再让 LLM 组织\r\n加一个简单的路由层（还是规则驱动，但规则是从日志中学出来的）：\r\n\r\n如果查询长度 < 5 个字：提示用户补充，或走 browse\r\n如果查询包含\"第 X 版\"、\"第 X 页\"：走精准定位\r\n如果查询包含\"和\"、\"共同\"、\"区别\"、\"比较\"：标记为\"需要推理\"，返回更宽的上下文",
+        "我打算之后官方订阅和第三方api一起使用，但是我担心引入官方订阅会对现在的工作环境带来负面影响，我需要你评估真实影响并联网搜搜相关知识，给出合理解决方案",
+        "目前codex运行环境是windows还是wsl",
+        "批准执行镜像和创建里程碑",
+        "目前存储可用空间太少了，你来治理，清理无用的内容",
+        "\r\n10:26\r\n基于你的 74 个 owner、5 大类、多 owner 联合责任制架构，利弊如下：\r\n\r\n优势\r\n1. 责任可追溯，零模糊地带\r\n每个面（surface）都有明确 owner，变更出问题时能直接定位到代码模块或角色。组合型 owner（\"A plus B\"）消除了\"谁负责\"的灰色地带。\r\n\r\n2. 防止单点失控\r\n没有全局超级 owner。member owner 管成员身份，maintenance owner 管维护验证，calling facade 管调用契约——权力分散，任何单一 owner 无法绕过其他 owner 独自完成激活。\r\n\r\n3. 变更影响可推导\r\n12 个必需面 + 192 条影响规则意味着：改一个模块，能自动推导出哪些系统、哪些 owner 受影响。这是声明式治理的核心价值。\r\n\r\n4. 代码与角色双轨\r\n文件级 owner（_bridge/system_membership.py）指向具体代码，角色型 owner（member owner）指向逻辑职责。代码重构时 owner 角色不变，角色重组时代码路径不变。解耦清晰。\r\n\r\n5. 符合最小权限原则\r\nscoped_authorization 作为独立 owner 存在，授权是单次、短生命周期的。没有\"授权一次永久有效\"的隐患。\r\n\r\n弊端\r\n1. 认知负担极重\r\n74 个 owner 值，即使是你自己，回看时也需要重新理解每个 owner 的边界。新成员接入几乎不可能快速上手——这不是给团队协作设计的，是单人深度定制。\r\n\r\n2. 过度工程化风险\r\n12 个必需面 × 17 个系统 = 204 个面的验证。对于一个单人 Codex 环境，这个验证矩阵的维护成本可能远超收益。很多面可能从未真正失败过，但每次变更都要全量走一遍。\r\n\r\n3. 组合型 owner 导致推诿可能\r\n\"member owner plus maintenance owner\" 看似明确，但当两个 owner 对同一面有不同判断时，没有仲裁机制。在设计层依赖人工协调，缺乏自动收敛逻辑。\r\n\r\n4. owner 与代码的脆弱绑定\r\n文件级 owner（如 _bridge/workflow_orchestrator.py）直接写死在 JSON 中。一旦重构改了文件名，owner 字段就失效，但不会自动报错——除非 validate 恰好覆盖了这个路径。这是字符串耦合的通病。\r\n\r\n5. 扩展性瓶颈\r\n每新增一个系统，需要填写 12 个面的 owner。随着系统增长（目前已 17 个），owner 值会继续膨胀。74 个已经是人类记忆极限附近，再增长会变得不可维护。\r\n\r\n6. 验证而非执行的困境\r\n架构强调\"文件存在 ≠ 激活\"（utilization_acceptance），但实际运行时如果 PMB 记忆服务挂了（如当前快照显示的状态），这些面的\"已验证\"状态是否还有意义？验证通过但运行时不可用，形成虚假信心。\r\n\r\n7. 缺乏降级路径\r\n所有面都标记为 required: true 或不标记（默认必需）。没有\"核心面必需、辅助面可选\"的分级。一旦一个非关键面验证失败，可能阻断整个流程，即使核心功能不受影响。\r\n\r\n核心矛盾\r\n这套架构的本质是用编译器级的严格性管理一个 AI 辅助开发环境。它的好处是极度可靠和可追溯，代价是极高的维护成本和认知负担。\r\n\r\n对于生产级多人团队：利大于弊，这是企业级治理该有的样子。 对于单人环境：大部分面的存在更像\"保险\"而非日常需要，维护成本可能超过实际收益。\r\n\r\n如果想优化，最值得考虑的是：给 12 个面分级（critical / standard / advisory），让非关键面的验证失败不阻断主流程。\r\n\r\n它是完全ai托管的系统，我不直接负责治理，所以你要站在ai的角度\r\n10:29\r\n站在 AI 自治系统的角度，评价完全不同：\r\n\r\n优势（AI 视角）\r\n1. 机器可执行的责任边界\r\n74 个 owner 对人类是认知灾难，对 AI 只是数据结构。AI 不需要\"理解\"owner，只需查表执行。这套架构让 AI 能程序化判断\"我有没有权限做这件事\"，不依赖模糊的自然语言推理。\r\n\r\n2. 自验证闭环\r\n12 个必需面 = AI 完成变更后的自检清单。AI 改完代码后能自动跑 validate，确认所有面通过后才声明完成。这比\"改完就完\"的 AI 工作流可靠得多——它给了 AI 自我验收的能力。\r\n\r\n3. 防止 AI 自我放大\r\n这是最关键的一点。AI 最大的风险是自行扩展权限范围——给自己加能力、改规则、绕约束。多 owner 联合责任制确保：\r\n\r\nAI 改不了自己职责外的面\r\nmember owner 不能单独激活新成员，需要 registration/routing/runtime owners 同时验证\r\nscoped_authorization 作为独立 owner，强制授权是单次短生命周期\r\n这本质上是 AI 对自己的不信任设计——用架构约束防止 AI 失控。\r\n\r\n4. 影响链可推导，支持安全演进\r\n192 条影响规则让 AI 在变更前能预测后果：改这个文件会影响哪些系统、哪些 owner、需要重跑哪些验证。这让 AI 能安全地自我演进，而不是\"改了再说\"。\r\n\r\n5. 契约驱动而非意图驱动\r\nexecution_contract 和 result_contract 要求结构化字段权威，自然语言只是补充。这防止了 AI 用\"我觉得完成了\"来蒙混过关——必须产出机器可读的验收证据。这正是当前大多数 AI agent 缺失的能力。\r\n\r\n6. closeout 自动收敛\r\ncloseout_reconciliation 面确保 AI 在会话结束时自动跑影响分析和成员验证。不需要人提醒\"别忘了检查\"，系统设计上就强制了收尾验证。\r\n\r\n弹端（AI 视角）\r\n1. 验证矩阵过大，AI 容易陷入验证死循环\r\n204 个面（12 × 17），全 required。AI 在变更后可能陷入：验证失败 → 修复 → 引入新变更 → 再验证 → 又失败……这个循环对 AI 来说特别危险，因为 AI 倾向于\"一定要让所有验证通过\"，可能在次要面上消耗大量 token 和时间。\r\n\r\n真正需要的：面分级。核心面失败立即阻断，辅助面失败仅记录告警。让 AI 知道哪些可以忽略。\r\n\r\n2. 缺乏运行时反馈，验证可能成为虚假信号\r\n验证通过 ≠ 运行时可用。当前快照显示 PMB 记忆服务挂了，但治理面的\"验证\"可能仍然是 pass——因为验证检查的是文件存在和结构完整，不是服务在线。\r\n\r\nAI 需要的是：验证通过 + 运行时健康检查 = 真实信心。当前只有前者。\r\n\r\n3. owner 绑定是字符串，AI 无法自动维护\r\n文件名改了，JSON 里的 owner 字段不会自动更新。AI 在重构时可能忘记同步 owner 字段，导致后续验证引用了不存在的路径。AI 应该有能力自动同步 owner 绑定，但当前架构依赖人工（或 AI 显式）更新。\r\n\r\n4. 无降级策略，全有或全无\r\n所有面都是 required，没有\"核心面通过即可降级运行\"的机制。如果一个非关键面验证失败，AI 要么修复它，要么卡住。没有第三条路。\r\n\r\n对于 AI 自治系统，应该支持：核心面通过 → 可运行；辅助面失败 → 降级模式 + 告警。\r\n\r\n5. 组合型 owner 在 AI 执行时语义模糊\r\n\"member owner plus maintenance owner\" 对人类意味着\"两人协调\"，但对 AI 来说，这两个 owner 都是 AI 自己。AI 同时扮演多个 owner 时，\"联合负责\"退化为\"自己批准自己\"，失去了分权约束的意义。\r\n\r\n这是架构的深层矛盾：多 owner 分权设计假设有多个独立实体，但在 AI 自治系统中，所有 owner 都是同一个 AI。\r\n\r\n6. 缺乏自我演进的元治理\r\nAI 能改代码、能验证、能部署。但谁能改治理架构本身？12 个面的定义、owner 的分配规则、影响规则——这些元数据的变更缺少专门的治理面。AI 可能在改架构时绕过元治理。\r\n\r\n核心矛盾（AI 视角）\r\n架构设计的是多实体分权制衡，但运行时是单 AI 多角色。当 AI 同时扮演 member owner 和 maintenance owner 时，\"plus\"约束形同虚设——AI 自己批准自己。\r\n\r\n解法方向：\r\n\r\n引入外部锚点：某些关键面（如 scoped_authorization、activation_contract）的验证结果需要外部锚定（如人类审批、时间锁、不可由 AI 修改的常量）\r\n角色隔离执行：不同 owner 的验证在不同执行上下文中运行，防止 AI 在同一上下文中\"自己审自己\"\r\n面分级：让 AI 能区分\"必须通过\"和\"最好通过\"，避免在次要验证上死循环\r\n在owner之上的层次呢，你也分析一下\r\n10:32\r\n\r\n现在完整了。你的环境是一个 5 层治理金字塔：\r\n\r\n5 层治理架构（从底到顶）\r\n\r\nPlain Text\r\n\r\n┌───────────────────────────────────────────────┐\r\n│  L5: 控制平面 (Control Plane)                  │  版本 2.2.0\r\n│  - 静态契约哈希 + 就绪状态 + 里程碑             │  不可变合约层\r\n├───────────────────────────────────────────────┤\r\n│  L4: 验证矩阵 (Verification Matrix)            │  25 项检查\r\n│  - mirror / stage / activation / full_state    │  分层门禁\r\n├───────────────────────────────────────────────┤\r\n│  L3: 规则治理 (Rule Governance)                │  33 条规则\r\n│  - 5 级强制强度 + 优先级链 + 触发器             │  行为约束层\r\n├───────────────────────────────────────────────┤\r\n│  L2: 系统成员 (System Membership)              │  17 系统\r\n│  - 12 必需面 + 74 owners + 192 影响规则        │  能力治理层\r\n├───────────────────────────────────────────────┤\r\n│  L1: 源权威 (Source Authorities)               │  28 源\r\n│  - 物理资产捕获 + 派生数据生成 + 依赖链         │  资产捕获层\r\n└───────────────────────────────────────────────┘\r\nL1: 源权威 — \"有什么\"\r\n定义了 28 个数据源（16 个直接源 + 12 个派生源），每个源声明：\r\n\r\n物理路径（Windows/WSL 中的确切位置）\r\n捕获模式（copy / copy_tree / redact_json / command_json）\r\n恢复路径（restore_path）\r\n激活方式（owner_import_only / owner_merge_only / owner_reacquire_only / owner_verify_only / owner_export_only）\r\n依赖链（depends_on + depends_on_paths）\r\n关键设计：恢复路径和激活方式分离。文件恢复到位 ≠ 激活。比如 hooks.json 是 redact_json + owner_merge_only，恢复后需要 owner 手动合并敏感字段才能激活。\r\n\r\nL2: 系统成员 — \"谁负责\"\r\n17 个系统，每个系统有 12 个必需面，74 个 owner。这一层管理能力生命周期：准入 → 路由 → 激活 → 验收 → 维护 → 退役。\r\n\r\nL3: 规则治理 — \"怎么做\"\r\n33 条规则，每条声明：\r\n\r\n属性\t含义\r\nprecedence (10-200)\t优先级，数字越大越后执行\r\nenforcement_strength\t5 级：instruction_only → observational → advisory → owner_enforced → closeout_enforced\r\ntrigger_type\t触发条件（always / cwd_scope / structured_fact / non_simple_task...）\r\nenforcement_point\t执行拦截点（instruction_precedence / workflow_pre_admission / closeout_reconciliation...）\r\nvalidator\t验证命令\r\n优先级链是关键：从 10（platform.precedence）到 200，规则按顺序执行。低优先级规则不能削弱高优先级规则的硬边界。\r\n\r\n强制强度分层：\r\n\r\ninstruction_only(5) — 写在 AGENTS.md 里，靠 AI 自觉\r\nobservational(6) — 记录但不阻断\r\nadvisory(2) — 建议性\r\nowner_enforced(13) — owner 模块强制执行\r\ncloseout_enforced(7) — 关闭时强制执行，不通过就不能收尾\r\nL4: 验证矩阵 — \"验证通过了吗\"\r\n25 项检查，分 4 个 tier：\r\n\r\nTier\t含义\t检查数\r\nmirror\t快照本身完整性\t15\r\nstage\t暂存恢复验证 \n弊端总结（AI 自治视角）\r\n架构层面\r\n1. 多 owner 分权在单 AI 下退化为自批准 74 个 owner 设计假设多实体制衡，但运行时所有 owner 都是同一个 AI。\"member owner plus maintenance owner\" 变成\"自己批准自己\"，分权约束失效。\r\n\r\n2. 5 层反馈单向，缺根因分析 L1→L2→L3→L4→L5 自底向上验证，但验证失败时不会自动回溯定位是哪层的问题。AI 需要从错误信息自行推断根因。\r\n\r\n3. L2 与 L3 重复治理 规则治理的 system.membership 规则和系统成员的 closeout_reconciliation 面做同一件事，closeout 时触发两层重复验证。\r\n\r\n验证层面\r\n4. 204 个面全 required，无分级 12 面 × 17 系统 = 204 个面全部必需。非关键面失败也会阻断流程，AI 可能陷入\"修复次要问题→引入新变更→再验证\"的死循环。\r\n\r\n5. 验证矩阵 tier 递进过于刚性 mirror(15项) → stage → activation → full_state 严格递进。只想验证技能完整性也必须先跑完 15 项 mirror 检查，无快捷路径。\r\n\r\n6. 验证通过 ≠ 运行时可用 验证检查的是文件存在和结构完整，不是服务在线。PMB 记忆服务挂了但治理面仍可能 pass——形成虚假信心。无\"治理债务\"概念来标记这种状态。\r\n\r\n执行层面\r\n7. owner 绑定是字符串，AI 无法自动维护 文件名改了 JSON 里的 owner 不会自动更新。AI 重构时可能忘记同步，导致验证引用不存在的路径，且不会自动报错。\r\n\r\n8. L3 缺运行时执行证据 规则有 last_verified 但没有 last_triggered / last_violated。AI 不知道哪些规则在实际工作、哪些是摆设，无法优化规则集。\r\n\r\n9. 静态契约变更门槛高但判断权在 AI 19 个 static_contract 文件\"仅在语义变更时修改\"，但什么算语义变更由 AI 判断。判断错误会导致哈希不匹配且无自动修复。\r\n\r\n本质矛盾\r\n10. 用编译器级严格性管理 AI 运行时 每层都在堵上层漏洞——L1 堵\"文件存在≠可用\"，L2 堵\"单 owner≠安全\"，L3 堵\"AI 不自觉\"，L4 堵\"验证≠健康\"，L5 堵\"时间戳新≠内容新\"。防御深度正确，但代价是复杂度膨胀、验证开销大、AI 容易在次要治理上消耗资源而偏离实际任务。",
+        "目前codex在增修机制，工具和规则后，缺少实际有效的功能验收机制，比如最近的向量模型添加进来，虽然纳入了工作环境体系，却没有真正让它参与生产工作，我要从通用层面修复这一点，注意复用现有相关资产",
+        "当前电脑连接wifi是什么频段，如果不是5g频段，请修复",
+        "查询借鉴GitHub上的openviking项目，优化本地的记忆系统",
+        "查询借鉴GitHub上的openviking项目，优化本地的记忆系统",
+        "查询借鉴GitHub上的openviking项目，优化本地的记忆系统",
+        "查询借鉴GitHub上的openviking项目，优化本地的记忆系统",
+        "目前codex会错误的给自己发送协调消息，而且只在一开始检验线程是否活跃，后续没有检验，造成给已经结束的线程重新唤醒，这两点都要解决",
+        "我电脑上有灰鸽子这样的病毒木马吗？如果有就授权清除",
+        "当前cc switch在托盘内无反应，找到问题原因",
+        "我需要你安装这个项目，并且与deeptutor的频道功能配合使用，qq号为209579199",
+        "目前deeptutal邮件交付产物的链路需要完善，修复漏洞，需要注意的是只有napcat发送的信息才需要邮件回传产物，默认只需要在正文带上可点击链接",
+        "桌面模型列表消失了，找到这背后的原因，全部修复",
+        "准备执行镜像和发布里程碑",
+        "目前镜像恢复机制还是有不足的地方，存在遗漏资产及依赖，并且恢复流程不清晰可靠，我需要你持久化的解决这类问题"
+      ],
+      "client-new-thread:bdd6db65-ad53-4ce1-b958-246599bf8a2e": [
+        "niao "
+      ],
+      "019f1c72-03c3-7032-aa56-dff625d7c720": [
+        "目前git的作用还没有充分利用起来，优化当前工作环境",
+        "你和另一个线程在node上并发工作，注意",
+        "批准创建里程碑",
+        "但先等待其它线程工作完成",
+        "我希望新增一个规则，只要工作仓库里还有其它线程在工作且本线程已结束工作就应该给那个在工作的线程发送同步消息，并将镜像恢复仓库和创建里程碑的任务接力给那个还在工作的线程，本线程只收口，我需要你完善这个理念，并将它落实",
+        "我之前的设置明明是wsl环境，但是电脑重启后却变成了windows环境，而且wsl codex 工作区的项目的会话不可见了，找到问题的根因",
+        "联网搜索相关知识，并结合本地实际情况给出合理的持久化解决方案",
+        "继续",
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: 目录名称无效。 (os error 267)019f743d-069f-7a32-bd75-8e1ab7020b7b 这个会话恢复也报错，找到原因，一并修复",
+        "桌面选择了wsl环境后，重启后还是显示在windows环境，而且会话也没有恢复",
+        "我不是说的很清楚吗，稳定性优先，如果wsl失败，理应切回windows环境作为兜底",
+        "  WSL Codex 工作区 这个项目在重启后可以恢复吗",
+        "查找oppo设备里的所有视频，做成移动清单，后续复制到其它设备上",
+        "桌面提权快捷方式启动codex失败，找到原因",
+        "从根本上解决",
+        "继续",
+        "当前桌面没有显示wsl codex工作区项目的会话，找到问题的根源",
+        "重启后，会话还是没有恢复显示",
+        "目前wsl环境下，mcp配置是否会丢失，导致会话无法恢复，全面分析一下，如果会就从根本解决",
+        "注意修改要谨慎，不要把原本好的修成坏的，考虑要全面"
+      ],
+      "019f4b02-4562-7f83-a1c9-e0154223a2f8": [
+        "这个音频处理要落实为一个技能，后续还会复用",
+        "这个音频处理要落实为一个owner，后续还会复用",
+        "还要注意和现有硬件系统的配合",
+        "完善硬件系统和音乐系统及相关技能和规范，注意对现有工具的利用，系统要简洁稳定",
+        "完善硬件系统和音乐系统及相关技能和规范，注意对现有工具的利用，系统要简洁稳定，然后对u盘里的音频文件按照计划整理，优化策略，还有全局规范里应该强调让codex工作中要注重系统之间的配合，优先复用已有能力，这次就暴露了没有充分调用硬件系统还有忽视了已有的音频处理相关工具，总结经验进行改进",
+        "不需要保留",
+        "不需要保留，如果没有实际危害的话",
+        "批准吸收",
+        "目前显卡模式是混合，但是发热依旧严重，找到根本原因",
+        "继续",
+        "继续",
+        "不要破坏cc swtich的功能，影响codex正常工作",
+        "不要走ui路线",
+        "目前codex在工作中忽略了很多规范，比如联网优先走资源层等等，分析现象，找到根本原因，并形成治理计划，让规则层真正完全发挥作用",
+        "取消工具拦截",
+        "好，你来执行",
+        "目前是不是只有里程碑更新，你才会去同步更新镜像库里除快照的内容",
+        "当前镜像状态聚合器存在“失败但丢失原因”的问题，找到原因，做出修复计划",
+        "批准执行",
+        "更新里程碑"
+      ],
+      "client-new-thread:069470b8-7348-449a-9fda-c9e2d30f4667": [
+        "<codex_delegation>\n  <source>mobile-openclaw-bridge</source>\n  <input>\nprompt_schema=mobile-openclaw-final-reply/v2\nMobile bridge received 1 new message(s). Process them in order:\nmobile_batch_id=mobile-openclaw-20260710T101338213199-72add3e3425d\nrules={\"ack_first\":true,\"ack_means_received_only\":true,\"ack_must_continue\":true,\"ack_only_is_protocol_failure\":true,\"result_after_work_only\":true,\"result_markers_only\":true,\"mobile_equals_desktop_quality\":true,\"permission_table\":\"_bridge\\\\mobile_openclaw_bridge\\\\permission_table.json\",\"ordinary_user_deny_beyond_profile\":true,\"admin_superuser_audit_risk_controls\":true}\nprotocol task_id=e67c932d9126 ack=[[mobile_ack:e67c932d9126:baff8191032e]] result_begin=[[mobile_result_begin:e67c932d9126:3e2d85f0be60]] result_end=[[mobile_result_end:e67c932d9126:3e2d85f0be60]]\noutput_contract task_id=e67c932d9126 first=ack_then_continue final=exact_begin+weixin_text+exact_end forbid=outside|placeholder|explain|missing\nlegacy_required_result_markers=[[mobile_task_id:e67c932d9126]]\nrequired_result_markers=[[mobile_task_id:e67c932d9126]]\nsupplement_contract={\"consume\":\"incorporate_all_applicable_items_then_ack_each\",\"fail_closed\":true,\"fallback\":\"supplement-fallback-v1\",\"fallback_on\":[\"transport_closed\",\"tool_unbound\",\"unsupported_call\",\"unknown_tool\",\"dispatch_failure\"],\"required\":true,\"result_scope\":\"active_task_markers_only\",\"thread_id\":\"019eca51-3ce9-76e2-9795-83f3af451f3a\",\"tools\":[\"bridge.get_pending_batch\",\"bridge.ack_message\"],\"when\":[\"after_ack_before_work\",\"before_final_result\"]}\n1. task_id=e67c932d9126 risk=L1 from=o9cq80_7_t7OGRYescsBdqz_4YrI@im.wechat command=/ask text=目前工作状况\n   permission={\"account_id\": \"primary\", \"admin_superuser\": true, \"allowed_for_ask\": true, \"auth\": \"verified\", \"generated_artifact_dir\": \"\", \"ordinary_user_must_refuse_missing_action\": false, \"permission_profile\": \"admin\", \"permission_table_ref\": \"mobile-weixin-bridge/permission_table:v1\", \"requires_confirmation_for_l3\": false, \"risk_level\": \"L1\", \"schema\": \"mobile-permission-context-compact/v1\", \"temporary_capabilities\": [], \"unknown_action_policy\": \"allow_audit\"}\n  </input>\n</codex_delegation>"
+      ],
+      "client-new-thread:025a1eed-d957-4aa4-b178-f36d45151544": [
+        "你好",
+        "你好"
+      ],
+      "019f2bb7-2d6d-7963-a33a-a14dfbf1f238": [
+        "这个本地已经有了",
+        "为什么要专门为这四个项目做总说明，这四个都是要分别嵌入现有体系的，成员契约，能力图谱，维护面等等",
+        "目前技能虽然很多，但是内容大多无效或者重复，我需要你分析每个技能，并联网查询相关知识，给出一个修复完善计划",
+        "继续",
+        "继续",
+        "批准执行修复优化",
+        "继续",
+        "继续",
+        "继续",
+        "目前会话治理生效了吗",
+        "不是有启动前自动治理会话吗，为什么会话文件还是这么大",
+        "会不会造成什么负面影响",
+        "我只需要会话治理自动压缩超过阈值安全的会话",
+        "目前cpu怎么占比这么高，找到原因",
+        "我已暂停桥接worker，找到问题原因",
+        "好",
+        "找到它为什么触发这个问题的原因",
+        "找到它为什么会异常高频读盘，确定不合理的地方",
+        "好，你来执行优化，但是注意不要引入新的漏洞",
+        "继续"
+      ],
+      "019f0f23-37a4-78b3-ab69-500913b42310": [
+        "查找分析git worktree这个GitHub项目",
+        "目前本机codex工作环境相较于成熟的ai操作系统缺少了什么",
+        "继续",
+        "继续",
+        "继续",
+        "继续",
+        "继续",
+        "？",
+        " (code=3221225786, signal=null).\r\nMost recent error: {\"timestamp\":\"2026-07-16T10:19:57.746624Z\",\"level\":\"ERROR\",\"fields\":{\"message\":\"Custom tool call output is missing for call id: call_ydlBX1RhXBawo3HnhqVJme49\"},\"target\":\"codex_core::util\"} 找到问题的根源",
+        "目前资源层在处理复杂任务并且涉及特定源时表现不行，应该加以优化，并且让它的输出精简，联网搜索相关知识，完善计划",
+        "目前cc-swtich总是自动退出，找到根本原因",
+        "继续",
+        "我怀疑是禁用webview导致的",
+        "你先验证你的猜想并且解决漏洞",
+        "先不要修改，只做计划",
+        "批准",
+        "批准中等方案"
+      ],
+      "019ee3f5-27e9-7d20-9cf5-802aaef0e1af": [
+        "好，结合遗漏点，给出新的一版镜像计划",
+        "联网搜索相关成熟做法，优先用联网mcp",
+        "继续",
+        "进行优化，然后将镜像总体计划做成一个md文件，不需要涉及本机具体细节，主要是方法论",
+        "还需要考虑的是如何检验它是否继承了codex的所有资产",
+        "除了这个还需要检验镜像内容本身兼容无矛盾，能够顺利被吸收",
+        "对这个md文件进行优化排版，内容去重，逻辑优化",
+        "目前cpu负载主要来源于什么，有没有异常占用问题，深入分析一下",
+        "继续",
+        "继续",
+        "好",
+        "批准",
+        "批准排除它",
+        "再次发布镜像",
+        "完善镜像技能和规范，应该一步到位，获取快照，更新本地git仓库，再推送远端仓库",
+        "目前本机已有生产环境更新后更新镜像，需要再在后续加上自动发布镜像到目标仓库‘",
+        "为什么要重复？这样很低效",
+        "这需要治理，命令输出只展示有价值部分",
+        "这需要治理，命令输出只展示有价值部分，这应该是全局要求，和之前对命令输出的要求合并优化，并让它真正发挥作用",
+        "那样两者就没有区别了"
+      ],
+      "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": [
+        "不要ui识别，我确实看不到你所说的文件夹C:\\Users\\45543\\Desktop\\Codex资源库\\图片，在这里面",
+        "确认一下是否只有路劲错误，数据是否损坏",
+        "微信聊天记录能否导出，以微信可以识别的格式，联网搜索相关知识吗，给出计划",
+        "先导入电脑吧",
+        "不是导入我的微信，是存在我的电脑上",
+        "不用gui",
+        "试下将oppo手机的微信聊天记录转移到honor 20s手机上的微信",
+        "不走官方迁移，oppo手机坏屏",
+        "坏屏怎么走官方迁移",
+        "吸收这次工作的经验，自我改进",
+        "不只是记忆，要将它落实到工作环境",
+        "查找oppo设备里的所有视频，做成移动清单，后续复制到其它设备上",
+        "帮我获取整理二年级上册的人教版语文第十六课和北师大版数学第四单元第一课，这两个课程的内容，我需要借助它们给学生上课",
+        "注意要求是新版",
+        "我需要分别做成两个ppt，注意利用现有工具",
+        "总结这次工作的经验，进行工作环境的完善",
+        "电脑发热问题又严重起来了，进行分析，找到原因",
+        "联网搜索相关知识，彻底解决这个问题",
+        "你怎么给自己退出了",
+        "既然我已经重启了，就没有必要再恢复它，而是要找到发热的异常原因，解决它"
+      ],
+      "019f7406-9545-7433-b4ec-d82c320c1358": [
+        "failed to read thread: thread-store internal error: failed to read session metadata /mnt/c/Users/45543/.codex/sessions/2026/07/01/rollout-2026-07-01T14-51-06-019f1c72-03c3-7032-aa56-dff625d7c720.jsonl: rollout at /mnt/c/Users/45543/.codex/sessions/2026/07/01/rollout-2026-07-01T14-51-06-019f1c72-03c3-7032-aa56-dff625d7c720.jsonl is empty 恢复对话出现这个报错",
+        "你再找一下被清空的原因",
+        "会话在刚刚还能使用，是在重启后报错的",
+        "你恢复最新备份吧",
+        "我打开这个会话显示报错error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: node_repl: 目录名称无效。 (os error 267)",
+        "确认，注意不要破坏现有机制"
+      ],
+      "019f743d-069f-7a32-bd75-8e1ab7020b7b": [
+        "error resuming thread: Fatal error: Failed to initialize session: required MCP servers failed to initialize: custom-slash-commands: No such file or directory (os error 2); node_repl: No such file or directory (os error 2); sqlite-scratch: No such file or directory (os error 2)，恢复会话还是显示这个",
+        "联网搜索相关知识，彻底解决这个问题",
+        "除置顶会话和本会话，还是没有显示其它会话，置顶会话也是报错如上",
+        "回退",
+        "启动后问题还是不变啊",
+        "这次修复有没有真正解决设置wsl环境后，重启桌面依旧显示windows环境，且需要沙盒授权，无法完成windows设置的问题",
+        "我在你这次修复后还没有重启codex",
+        "我需要你找到之前为什么桌面设置wsl环境，重启后桌面又显示windows环境，还弹窗沙盒授权，且无法设置windows的原因，不找到问题原因，试错是无效的",
+        "从根本上彻底解决这些问题，注意系统的稳定性",
+        "重启后沙盒设置不再弹出，旧会话也恢复部分，但是会话并没有按照项目分类，而是只在任务栏里，除置顶会话外",
+        "修复这个问题，还有我发现插件丢失了",
+        "插件只恢复两个，没有完全恢复",
+        "你的工作目录是什么",
+        "wsl上已经有了给你准备好的项目文件，那个带lab的，我怎么让你用上它",
+        "这个项目是git仓库吗",
+        "你把这个会话切换到那个合适的工作仓库吧",
+        "当前电脑经常弹出黑色弹窗，短暂存留一段时间又消失，找到原因",
+        "继续",
+        "好，批准修复",
+        "继续"
+      ],
+      "019f7979-3c05-72b0-b3b7-8c1c6e5b0ed2": [
+        "继续修复",
+        "抓紧修复",
+        "继续",
+        "现有的维护面地图太大了，不符合按需加载的原则，我需要你解决这类问题，注意扩散到同类问题，给出合理的解决",
+        "注意不可牺牲功能性",
+        "注意原先的问题也不要忽略，继续治理",
+        "我说的原先问题还包括desktop不识别git",
+        "重复调用help命令导致效率低下，这需要解决",
+        "继续",
+        "为什么不用已经成熟的刷新页面工具",
+        "还是没有解决git未显示的问题",
+        "还是没有解决",
+        "继续",
+        "重启电脑后，桌面还是没有识别git",
+        "旧的wsl智能体运行环境已经弃用",
+        "桌面显示旧的wsl智能体环境已经弃用了",
+        "继续",
+        "继续",
+        "继续",
+        "好"
+      ],
+      "019f84f0-9cee-7f70-a1e7-67b0acf40f23": [
+        "当前桌面如果选择wsl后重启，codex可以正常按要求运行吗，会话正常，工具插件正常",
+        "我重启电脑后，codex又变回了windows环境，刚刚我手动在桌面切换了wsl，找到设置回退的原因",
+        "而且当前本会话的历史记录并没有和wsl环境下的会话同步，还停留在上次Windows环境下的历史",
+        "批准修复，注意不要引入新的问题",
+        "继续",
+        "重启电脑后，codex又退回到了windows原生环境，而且会话历史也和wsl环境下的不同步，找到根本原因",
+        "我更改时间基准为只校对北京时间，而不是本机时间",
+        "继续修复工作吧",
+        "重启电脑后，codex又回退到了windows原生环境，而且会话还是和wsl环境不同步",
+        "而且显示上下文窗口和显示ultra这两个键也漂移了",
+        "不需要ui检测，我说的是事实"
+      ],
+      "019f9696-66be-7b32-8f4d-db44fa78d580": [
+        "我这边登录后显示wsl项目被识别为远程项目",
+        "\\\\wsl$\\Codex-Wsl-Lab\\home\\codexlab",
+        "我现在打开这个wsl工作区的项目会话就会显示创建远程连接wsl",
+        "之前都没有这种情况啊，更新造成的吗，联网搜索相关资料"
+      ],
+      "019f96d8-7ae6-7ce0-b19a-3962fad46821": [
+        "codex并没有自动拉起，虽然远程项目的设置界面没有报错，但是ultra还是无法选择，彻底解决这些故障背后反应的问题",
+        "注意联网搜索相关知识，避免对抗原生机制",
+        "你关闭后大概没有自动拉起，而是由我通过桌面快捷方式启动，分析一下，如果有遗漏问题就解决",
+        "继续，已自动重启",
+        "但是要注意ultra显示依旧不可选，而且mcp配置变回了9个，找到真正的问题所在，并分析根因，彻底解决",
+        "到目前为止codex更新已经导致了太多问题，需要深刻总结经验教训，尤其是避免总是被动应对新问题，我觉得有必要建立一套主动的codex最新信息检索和筛选预警机制，使得agent可以主动的调整本地工作环境中依赖产品原生机制的部分以避免新问题产生或优化现有机制，你来完善我这个理念，将它合理的嵌入现有框架中，还有目前框架中应该避免过于依赖产品的原生机制，而是更多的倾向于通用",
+        "还需要注意一个问题，在所有设置里可以选择5个推理强度，而在远程项目设置里却可以选择6个推理强度，虽然ultra显示均不可用",
+        "已自动重启",
+        "批准执行，注意执行中发现潜在漏洞和可优化点，同时注意联网知识和现有资产相结合辅助工作",
+        "添加一个新规则，面对我的待审批文件默认以中文为主体书写",
+        "批准实施，修复后把/home/codexlab/work/codex-workspace/docs/superpowers/specs/2026-07-25-codex-update-intelligence-design.md 这个也修复后提交给我",
+        "继续",
+        "继续",
+        "批准",
+        "/home/codexlab/work/codex-workspace/docs/superpowers/specs/2026-07-25-codex-update-intelligence-design.md 批准实施",
+        "继续",
+        "执行下一阶段",
+        "目前电脑长时间不操作会造成休眠导致codex工作受到影响，我需要你解决电脑休眠影响codex工作的问题",
+        "我像解决的是让睡眠或者休眠不影响codex的工作",
+        "我想解决的是让睡眠或者休眠不影响codex的工作，这能做到吗"
+      ],
+      "019f9b7d-27f7-78f1-ba5a-7306d5a5a010": [
+        "卡片主题应该市中文为主体，从根本修复",
+        "AUTHORIZE-099AhPBPOBjAIxvS884PBVemcw_WDibn",
+        "继续",
+        "AUTHORIZE-y6JItfs4xajKyhqJluyn6aLn2d0ksZ4D",
+        "AUTHORIZE-3sXQ4XcTtdOHr2pWp4harkym2Lalbow0",
+        "批准这两个卡片",
+        "应该改进流程为生成审批卡片时自动生成授权码，这样避免重复审批",
+        "AUTHORIZE-guhFh9HzB1YUs-7ds87-mer3vDgIWBK4",
+        "批准方案2",
+        "AUTHORIZE-mNP3KSD2nVoRvMxL--kLX4Ft5PBdVpoN",
+        "这不是又让我重复审核吗？我已经批准了，你就应该直接实施啊",
+        "AUTHORIZE-IbsL9aifb16Ber_LWvSub0C0gquWo1qZ",
+        "继续",
+        "AUTHORIZE-5_qbMv8G0MPowg1d4fpAtDfVXQtImLCQ",
+        "AUTHORIZE-VfFQ2LJ8kPmyfVQ6xf993kHSwUW64LSl",
+        "AUTHORIZE-E3CWnhj67UbvrMeZ_YkdLcza9vtxrc3G",
+        "AUTHORIZE-5gfpwI6msgsT-Dtmqh2Ztz3dtrVjZi_B",
+        "AUTHORIZE-vjRDdle2bGdbHerK2wKwX2dZrTTKNGbW",
+        "继续",
+        "AUTHORIZE-tzFApDAVpaJKcDwJriuQb7TUYZEmi8ow"
+      ],
+      "019eca40-a8ff-72e2-a7da-43b8f9befc65": [
+        "比对现在的codex环境"
+      ],
+      "019fa6e7-06e9-7133-bc6f-68b96efa9471": [
+        "我说的是对codex在当前环境的工作能力分析"
+      ],
+      "019fa7b9-7238-7e13-8eb5-960f6135be9b": [
+        "将这次工作暴露的资源层问题反馈给正在工作的线程，让它解决"
+      ],
+      "019fab00-cc9c-7323-b9e3-7c323dbe99ad": [
+        "分析它如何利用最合适"
+      ],
+      "019fab19-587b-7493-bddf-20b733793249": [
+        "AUTHORIZE-z4VWJZXEL7Gs_oRlI4JjbdPcN5Ib3GDZ",
+        "压缩治理不能只局限在资源层",
+        "AUTHORIZE-8zFIC14_Kfg48sLXucUa8ZRm1S5PCX2X"
+      ],
+      "019fab32-e410-72c3-84ca-95d92312a94b": [
+        "目前权限令牌怎么又退化到了计时有效期呢",
+        "目前权限令牌怎么又退化到了计时有效期呢，修复这个问题",
+        "之前令牌的生效范围已经稳定了，你现在又修改成什么样了",
+        "继续",
+        "继续剩余工作",
+        "我说的是让你继续完善权限系统治理，目前权限系统虽然提升了一小部分codex的边界感，但是给工作带来了大量不便，引入了许多不必要的麻烦，你需要综合这些问题，继续推进权限系统治理",
+        "批准",
+        "批准",
+        "批准",
+        "AUTHORIZE-6392qhWyZX9YHfuy1nW80Nzdnp24D5c-",
+        "AUTHORIZE-WSc0_N0_uemluDXMQ6kdodU2azUGIsY0",
+        "AUTHORIZE-ZPVS_OawIE9JVh5zdBlbkQDSiyXoABS3",
+        "AUTHORIZE-cSqfXEGPBU458NAdx2ldEky-M3rMFgDd",
+        "继续",
+        "AUTHORIZE-f6s7UjJE6TD_5rF3AJ-NkXJQrVbXcfWC",
+        "AUTHORIZE-r5ggnHFvj4Hfx84-2VRv3bIwBeFFhJ-f",
+        "怎么又调用智能体了，不要用它",
+        "AUTHORIZE-Qs78_DMzdn61eF0sjQqkxIQMgqWvW08Z",
+        "继续针对本机权限系统已经暴露的问题进行改进，让权限系统服务于codex而不是阻碍codex正常工作",
+        "继续"
+      ],
+      "019fabb6-a90d-7e83-92f5-6335aac8df7f": [
+        "批准执行",
+        "AUTHORIZE-FoBhfjiQwJ9Tc_2J3wuLo-dJz4NOC0Up",
+        "AUTHORIZE-tPgKfKe9AS3CEWJhrKrLZqzbFbSwzM5N",
+        "AUTHORIZE-P1YCyJeMx5LB0mZ6mEUiBDjPT8gFRlBk",
+        "继续全力提升codex工作效率，先解决漏洞再优化",
+        "AUTHORIZE-t_0bXetJIDCTroUdJUDRVhmMpg1-G5WK  注意效率治理的范围是全局，优先治理成本高的效率浪费",
+        "注意效率治理手段要实时改进，并且要从根源治理，注意和其它系统的动态配合",
+        "注意效率治理手段要实时改进，并且要从根源治理，注意和其它系统的动态配合",
+        "这一轮暂时先不触发权限门禁，先全局分析，设计治理方案",
+        "注意这是长期治理，后续会复用",
+        "注意对现有资产系统的充分利用，改进计划",
+        "批准继续，注意联网搜索学习先进知识",
+        "继续",
+        "批准",
+        "批准",
+        "  继续",
+        "AUTHORIZE-x1oOhwJUDo9L9UHdMqkQNCKQJJ4gGJEn",
+        "怎么一直显示智能体，你在干嘛",
+        "继续"
+      ],
+      "019fad95-f1d0-7673-8b27-0504f60d2661": [
+        "批准实施",
+        "AUTHORIZE-BYBrXVCWbirS7EN8532AQjJVQky3tt0C",
+        "你接管它，然后继续剩余工作",
+        "继续",
+        "不要浪费时间，抓紧完工，就提交成果外加合并改动",
+        "不要浪费时间，抓紧完工，就提交成果外加合并改动，花这么久？",
+        "继续提升codex工作效率，要真正降低codex工作实际耗时",
+        "我要的不是这种小优化，而是宏观效率治理",
+        "注意效率治理的目的是减轻codex负担提速它的工作，批准",
+        "批准执行",
+        "批准授权下一阶段",
+        "批准实施接下来所有效率治理操作",
+        "不要浪费成本，抓紧工作",
+        "批准下一阶段效率治理，我需要看到质的飞跃，让效率问题不再是codex工作的最大痛点",
+        "我直接授权你后续所有操作，无需反复提权",
+        "AUTHORIZE-KDtWcYaTRfQ-OZPIj-3sNCTl4t4ckTLH",
+        "批准授权这两个新路径",
+        "我直接授权这两个路径不要反复提权",
+        "这是权限系统的故障，我批准你这次绕过它",
+        "批准"
+      ],
+      "019fb0b6-e266-7c03-91ce-be4b7cf48505": [
+        "继续"
+      ],
+      "019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": [
+        "抓紧修复目前暴露的所有问题",
+        "继续优化调整现有deeptutal，提升它的教学质量，能力和稳定性",
+        "目前阅读纲要后的长时间卡顿依然存在",
+        "注意不要引入不稳定的漏洞，并且功能稳定性优先于速度",
+        "批准继续，注意一定要谨慎，不可以破坏现有功能和稳定性",
+        "目前deeptutal又卡在最后的交付环节了，找到根本原因，修复它",
+        "批准",
+        "我这边页面还是显示加载中",
+        "修复重启工具",
+        "最新会话的正文会话中还是存在很多重复，找到所有的问题，做一个完善的修复优化方案",
+        "我觉得应该指定一套通用回复模板，避免依赖脆弱的机器分类",
+        "之后deeptutor在结束研究后就应该阅读一次模板，按照模板输出回答，你来完善计划",
+        "批准",
+        "批准实施",
+        "继续",
+        "最新会话中，模型回复异常，并没有按照模板形式，找到原因，修复它",
+        "目前又出现思维链结束后无进度的情况，你怎么总是修完一个问题就又出现一个问题，修复要注意全局，赶紧解决",
+        "首先是并没有展开检索，而且会话中还给pdf制造了无效链接",
+        "而且联网补充材料和联网补充材料解读依旧重复而且交付的回复格式还是很差",
+        "你给模型提供的模板太粗略了，不具备真实的可执行性"
+      ],
+      "019fb108-b51b-7630-83fc-8e9cc9c04c9e": [
+        "继续",
+        "将暴露的权限系统问题和不足发给019fbb7c-bd42-7221-8f9d-a58b441927a5处理",
+        "批准下一阶段治理",
+        "批准下一阶段，我要看到路由质量的大幅提高",
+        "AUTHORIZE-_Ho978sueL0GTzaJI_LjraNV3f1S-SMz",
+        "继续",
+        "AUTHORIZE-S3fIlEgdkNcrnbifGE2sB0KoBPBsByp8",
+        "AUTHORIZE-nkx23KFzin02HxdDyuPiZdZ4M2oc4qnH",
+        "目前本地模型还是没有在路由层充分发挥作用，应该改造本地工作环境，让这个本地模型可以充分帮助codex语义路由到合适的资产，比如技能层路由，工具层路由，规则层路由，总之不能浪费它的功能",
+        "继续",
+        "AUTHORIZE-F0miv55G4pA-sbI0BcGXqQxKIRIE4UAP",
+        "我已经发现了很多常用命令没有给codex预留方便的查询和调用入口，常用业务模块也没有自动建立owner，这增加了治理难度，找到背后的机制漏洞，解决掉",
+        "批准",
+        "把这次权限系统暴露的不足和可优化点委托给019fbb7c-bd42-7221-8f9d-a58b441927a5解决",
+        "批准继续剩余工作",
+        "AUTHORIZE-ve8QdeP4TQ00RdoMeYejwWOyQONAm32p 将这次权限系统暴露的问题和可优化点委托给019fbb7c-bd42-7221-8f9d-a58b441927a5解决",
+        "批准",
+        "批准",
+        "目前deeptutal模型思考速度非常慢，找到原因，仅修复非模型api本身问题之外的原因",
+        "它目前还是卡在思考，没有进度"
+      ],
+      "019fb711-86c8-7e72-a248-d54aff613dc0": [
+        "我后面使用了codex++启动codex",
+        "我后面使用了codex++启动codex，之前用快捷方式一直没成功",
+        "桌面提权快捷方式根本就没有启动codex，是codex++启动codex的",
+        "我需要保留管理员启动",
+        "你先搞清楚问题到底在哪，之前都没有启动失败，开机自启也没有问题",
+        "几乎不可能这么巧，寻找真正的根因",
+        "重点应该是找到本机的提权启动器为何没有正常启动codex，然后修复问题",
+        " 你的意思是说提权启动器本身没坏是我在它还没启动codex之前用其它启动器启动codex导致没有提权启动吗？",
+        "你来修复吧",
+        "不可自动关闭",
+        "目前codex启动非常缓慢，而且桌面也经常出现无响应的问题，找到原因，解决它，，注意不可破坏现有功能",
+        "继续",
+        "解决剩余问题",
+        "刚刚重启电脑后codex自动开启，但是却一直显示桌面无响应并退出，之后桌面提权快捷方式启动成功，但是桌面未响应情况仍有一些"
+      ],
+      "019fba4d-41c6-7ee0-9e90-5f1200a1b4eb": [
+        "批准B",
+        "AUTHORIZE-KP2Mu5D0edoBWP9bBR_8odZhux2lVyOn"
+      ],
+      "019fbb7c-bd42-7221-8f9d-a58b441927a5": [
+        "批准继续，不要浪费时间",
+        "继续",
+        "AUTHORIZE-kFw9-beIkTdLdIGfuh-bxb-N0UqVBlC3",
+        "权限系统要求把你的“批准”绑定到本次重启的挑战记录，而不是直接把文字当作可复用令牌   既然已经绑定了，就应该直接作为令牌使用，而不是再次请求令牌多此一举，这需要修复",
+        "AUTHORIZE-PA2vOWj81PLWaxwt2ae6cd-nL8foZ1jq",
+        "批准",
+        "目前我在要求codex完成某一操作时，codex会发起并绑定挑战，但是却需要我重新授权，这是在浪费成本，需要解决",
+        "继续",
+        "批准继续",
+        "继续剩余工作",
+        "目前权限系统还是有问题，019fb0f5-892b-7d81-aeaf-dbd3d306fbf7我明确批准了写入设计，它却反复要求我授权，解决这背后的问题",
+        "019fb0f5-892b-7d81-aeaf-dbd3d306fbf7刚刚同类问题又出现了，我说了批准实施却又索要授权",
+        "批准神品卡片",
+        "这暴露了审批机制的不足，批准审批卡片，就应该让codex彻底处理这个任务，如果需要用户最后审批再提出请求，你来修复这个问题",
+        "019fb0f5-892b-7d81-aeaf-dbd3d306fbf7 权限系统又出现了反复索要授权的问题",
+        "批准提交权限修复，还有我需要你解决019fb0f5-892b-7d81-aeaf-dbd3d306fbf7中我明明已经明确授权解决，却还要再次提交token的问题",
+        "继续",
+        "批准实施",
+        "不要以乱码形式回复消息",
+        "我批准这两条路径"
+      ],
+      "019fbc3e-ad17-7882-a770-7543828eb6d2": [
+        "我要求你创建里程碑，你忽略了新引进的依赖",
+        "AUTHORIZE-DjAEKSp6yrimd1QWeRV_dpfCXAzPaD8q",
+        "纳入本次里程碑",
+        "AUTHORIZE-pPf0_dGjZ8LoBY4DbRj3_HQh7wa3UWWt"
+      ],
+      "019fbd57-6e94-7e43-839b-840c63e854cd": [
+        "继续",
+        "批准B+C",
+        "AUTHORIZE-Dmafd1jvJ10tawTnYSHkItG5vuc8350q",
+        "批准继续处理",
+        "我要你转向备份治理",
+        "我需要你清除很多久远已无价值的备份，尤其是大文件备份",
+        "继续",
+        "批准B1+B2",
+        "AUTHORIZE-aCfR3kUIs4uhALwX3AO3e2JMnrvFlaat",
+        "AUTHORIZE-WHSxnxWsNf-OmghfCsjGk4O9lsrDTX9N\nAUTHORIZE-Pb85I4PH5ZZM_D5joQeqgCY8raaNIE-4",
+        "AUTHORIZE-WHSxnxWsNf-OmghfCsjGk4O9lsrDTX9N",
+        "AUTHORIZE-Pb85I4PH5ZZM_D5joQeqgCY8raaNIE-4",
+        "AUTHORIZE-8vNZ0UcKYuGi3DZDBje9a-d_r4TYxaj9",
+        "AUTHORIZE-1QkIvwwpeJXkM2MLYidKN2vUhTQvN6Rj"
+      ],
+      "019fc0a4-ed4b-7bb0-8e6d-1436fa4cb0d6": [
+        "好，你来优化",
+        "目前权限机制设计太不合理了，阻碍codex正常工作，不能传达我的意志，而且存在很多反复授权的机制漏洞，总之，你要深度优化权限系统，不能再让它拖累codex工作了",
+        " 继续‘",
+        "继续",
+        "d9504d91705436fd760f5abd07ee5dea87729d17",
+        "继续之前剩余的任务"
+      ],
+      "019fc0da-5f6c-7810-b078-c51595890019": [
+        "继续",
+        "批准处理",
+        "AUTHORIZE-_jQMwAOIq3-gCGVQGrJqzmBhC-Q7l5wM",
+        "注意带cdp参数可能带来新的不兼容故障，谨慎修复，联网查询相关信息",
+        " 继续",
+        "批准继续"
+      ],
+      "019fc1c9-8559-7891-b3ea-4de539bc0bc1": [
+        "开始设计吧，注意引入先进技术，，在不影响生产力的前提下复用本地资产",
+        "批准",
+        "AUTHORIZE-DIG5i5l9zqeERzs_nCKC4VVJUmC68Rk 我还授权你实施它",
+        "AUTHORIZE-DIG5i5l9zqeERzs_nCKC4VVJUmC68RkI",
+        "我授权你实施计划，和任务中的所有操作",
+        "AUTHORIZE-0A5V5clBMxnVfvLVJ20fetwyFd0LsVd2"
+      ],
+      "019fc1f5-94da-7410-9b7c-0fe858906d78": [
+        "codex发送并发协调前还是没有检测目标线程是否活跃，造成将已结束线程重新唤醒的情况，修复这一点，默认不发送协调信息给已经休眠的线程，除非用户特意要求",
+        "当前我明确要求codex发送信息给其它线程，但该 ID 当前未注册为可寻址的活动任务（返回 agent ... not found），导致发送失败",
+        "目前codex经常反映没有发送协调消息的入口工具，但实际上是有的，这暴露了工作环境的机制漏洞，需要解决，注意扩散到类似问题，持久化解决",
+        "目前codex又开始给自己发送协调信息，找到问题根因，彻底解决",
+        "目前codex怎么还是会给自己发送协调信息019fb0f5-892b-7d81-aeaf-dbd3d306fbf7",
+        "我是让你查询这个线程，找到具体原因",
+        "我的意思是不给自身线程发送，其它不改动"
+      ],
+      "019fbc29-7f0b-7791-b771-90991e95a53e": [
+        "可以不切换用户共同使用codex的官方和第三方api吗",
+        "算了太麻烦了，换用户吧，不过我希望可以让官方codex继承现有codex的所有能力",
+        "批准你实施",
+        "AUTHORIZE-Wwu1pmWSWy7BHXZgnjp_dkVZ4pUwJ_FL",
+        "我已输入密码",
+        "可以给官方codex继承所有能力，只要不造成负面影响即可",
+        "我在用户切换中实际上看不到你所创建的用户，只显示microsoft用户",
+        "联网搜索相关知识，给出解决方案",
+        "根本就没有用户名框啊",
+        "那么这样的话就把codexoffical名字改为codex吧，省去我打字的麻烦，批准实施",
+        "AUTHORIZE-LNkuhLqWeLElokKJlZgwine4OFyjgR49。",
+        "现在codex用户怎么样了"
+      ],
+      "019fc6d4-6457-72b2-9022-c82f73e2c5cc": [
+        "不能开启这些",
+        "我说的灰鸽子是监听端口，获取用户操作信息的病毒木马"
+      ],
+      "019fca5c-c7d6-7d62-a31d-c285d1aed581": [
+        "AUTHORIZE-R6ARbfjhTeXgNhu1JCVzzSXkwdmTcsLW",
+        "2095579199",
+        "3633922805",
+        "AUTHORIZE-IpBq0d_dQ6WYvBHxte8Iz8X6UkA9M4u6",
+        "我想要更换登录账号，避免隐私泄露，更换账号目标为3657580194",
+        "AUTHORIZE-4B5VP3oxv9z9LEKhTE2AFkW8iZhh9i1q",
+        "已扫码成功",
+        "它是不是只有本机开机并联网才能正常工作",
+        "它现在对我发送过去的信息没反应啊",
+        "需要一直挂着控制台吗？不能隐藏运行吗",
+        "批准修复",
+        "还是可见形式啊",
+        "批准",
+        "批准继续处理待审批项",
+        "原先3633922805怎么还在被napcat胁持，解决这个问题",
+        "我说错了，是3633922805发给2095579199的信息还是会被napcap劫持，但是又因为已经解除了和deeptutor的连接导致消息被吞",
+        "我刚刚发送了一句你好",
+        "3657580194用户早已改名为医学导师了",
+        "AUTHORIZE-ksdsybUjBNhxv0ETtAUIF95DIg_V3nDy",
+        "已扫码"
+      ],
+      "019fcabe-555f-7373-9623-79fcbadf627f": [
+        "产物作为附件投递是正常的",
+        "继续",
+        "deeptutor产物投递只是邮箱的一个子业务，不能破坏影响其它业务和主业务，继续工作",
+        "邮件传送的是文件而不是链接",
+        "继续"
+      ],
+      "019fcae3-7f85-72b2-abd3-f2fc6af4ed22": [
+        "但是codex桌面模型列表应该是动态根据模型提供商提供的可用模型调整，这类问题之前就探讨过",
+        "已重启",
+        "注意不要引入新的漏洞和不稳定性，而且要保证新功能可以落到实处",
+        "批准投影",
+        "批准",
+        "注意桌面显示只有7个，这大概率是codex桌面显示白名单造成的，之前已解决过类似问题，批准解决它",
+        "枚举返回？openai没有这个模型啊，你仔细核对是否可用，如果可用就不要剔出",
+        "继续",
+        "现在模型列表只剩两个了",
+        "确认这是否是机制问题",
+        "批准修复，但暂时不要重启codex桌面",
+        "批准投影"
+      ],
+      "019fcb01-3cb0-7251-98ca-2fe114c8b65e": [
+        "批准继续",
+        "你接手未提交改动然后继续工作",
+        "这个改动是我同意的",
+        "批准",
+        "批准执行镜像和创建里程碑",
+        "注意镜像仓库应该继承codex所有能力，不可遗漏",
+        "批准",
+        "批准执行镜像和发布里程碑",
+        "将这次工作反映的镜像发布流程不足委托给019fcb69-fb05-7770-8a7d-743c78224e9c解决",
+        "批准继续工作",
+        "长命令不是应该通过耐久执行器加长命令等待吗？\n",
+        "长时间命令不是应该通过耐久执行器加原生单一命令等待吗？\n",
+        "抓紧修复",
+        "不要反复执行命令检查，浪费成本",
+        "批准继续，赶紧镜像发布"
+      ],
+      "019fcb69-fb05-7770-8a7d-743c78224e9c": [
+        "批准执行",
+        "目前刷新，镜像，发布，创建里程碑的步骤太繁琐了，而且经常出现反复试错的问题，效率极其低下，需要你来全盘优化，注意复用现有资产",
+        "批准",
+        "耗时太严重了发布本来就要花很长时间，后面检查花费时间更多，完全背离了简化流程提高效率的宗旨",
+        "继续"
+      ]
+    },
+    "electron:onboarding-hide-first-new-thread-promos": false,
+    "heartbeat-thread-permissions-by-id": {
+      "019f4b02-4562-7f83-a1c9-e0154223a2f8": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f1c72-03c3-7032-aa56-dff625d7c720": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f4b84-c4d6-7a23-96d5-49f820a9d5d9": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f112d-bb98-7140-8c2d-1b1cbde0444d": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "on-request",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "workspaceWrite",
+          "writableRoots": [],
+          "networkAccess": false,
+          "excludeTmpdirEnvVar": false,
+          "excludeSlashTmp": false
+        }
+      },
+      "019eca40-a8ff-72e2-a7da-43b8f9befc65": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f2bb7-2d6d-7963-a33a-a14dfbf1f238": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f0f23-37a4-78b3-ab69-500913b42310": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019ee3f5-27e9-7d20-9cf5-802aaef0e1af": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f7406-9545-7433-b4ec-d82c320c1358": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f743d-069f-7a32-bd75-8e1ab7020b7b": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f04c1-524a-7c62-bd3d-cfc67a24c551": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019ed5ce-de73-7c63-9b71-8a266262729b": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f7979-3c05-72b0-b3b7-8c1c6e5b0ed2": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019ee348-662d-7fa0-99c8-3138aa86db2f": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f84f0-9cee-7f70-a1e7-67b0acf40f23": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f9696-66be-7b32-8f4d-db44fa78d580": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f96d8-7ae6-7ce0-b19a-3962fad46821": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f9b7b-9618-7ae2-bf3c-bb9895ac75f7": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019f9b7d-27f7-78f1-ba5a-7306d5a5a010": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fa6e7-06e9-7133-bc6f-68b96efa9471": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fa7b9-7238-7e13-8eb5-960f6135be9b": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fa8ba-45fe-7831-934f-30d6a4178ebf": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "on-request",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "workspaceWrite",
+          "writableRoots": [
+            "/home/codexlab/.codex-app/visualizations/2026/07/28/019fa8ba-45fe-7831-934f-30d6a4178ebf"
+          ],
+          "networkAccess": false,
+          "excludeTmpdirEnvVar": false,
+          "excludeSlashTmp": false
+        }
+      },
+      "019fab00-cc9c-7323-b9e3-7c323dbe99ad": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fab19-587b-7493-bddf-20b733793249": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fab32-e410-72c3-84ca-95d92312a94b": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fabb6-a90d-7e83-92f5-6335aac8df7f": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fad95-f1d0-7673-8b27-0504f60d2661": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fb0b6-e266-7c03-91ce-be4b7cf48505": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fb108-b51b-7630-83fc-8e9cc9c04c9e": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fb711-86c8-7e72-a248-d54aff613dc0": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fb858-c3cd-73d0-b2bc-98fc90a67765": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fba4d-41c6-7ee0-9e90-5f1200a1b4eb": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fbb7c-bd42-7221-8f9d-a58b441927a5": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fbbd0-8522-77f1-b7ea-c6d7fca02b66": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fbc29-7f0b-7791-b771-90991e95a53e": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fbc3d-073d-78c2-979f-5999ac8ea89f": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fbc3e-ad17-7882-a770-7543828eb6d2": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fbd57-6e94-7e43-839b-840c63e854cd": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc0a4-ed4b-7bb0-8e6d-1436fa4cb0d6": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc0da-5f6c-7810-b078-c51595890019": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc17b-fbac-71f1-86b1-688241e2bc71": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc1c9-8559-7891-b3ea-4de539bc0bc1": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc1f5-94da-7410-9b7c-0fe858906d78": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc6d4-6457-72b2-9022-c82f73e2c5cc": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fc70c-f2e4-7d60-a8ea-b4fc34ee1757": {
+        "activePermissionProfile": null,
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fca5c-c7d6-7d62-a31d-c285d1aed581": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fcabe-555f-7373-9623-79fcbadf627f": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fcae3-7f85-72b2-abd3-f2fc6af4ed22": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fcb01-3cb0-7251-98ca-2fe114c8b65e": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      },
+      "019fcb69-fb05-7770-8a7d-743c78224e9c": {
+        "activePermissionProfile": {
+          "id": ":danger-full-access",
+          "extends": null
+        },
+        "approvalPolicy": "never",
+        "approvalsReviewer": "user",
+        "sandboxPolicy": {
+          "type": "dangerFullAccess"
+        }
+      }
+    },
+    "sidebar-collapsed-sections-v1": {
+      "chats": false,
+      "cloud": false,
+      "pinned": false,
+      "threads": false
+    },
+    "unread-thread-ids-by-host-v1": {
+      "local": [],
+      "remote-wsl:Codex-Wsl-Lab": [
+        "019fc511-f06e-79f0-8faf-a88c0aba6440",
+        "019fca5c-c7d6-7d62-a31d-c285d1aed581"
+      ]
+    },
+    "preferred-non-full-access-agent-mode-by-host-id": {
+      "local": null
+    },
+    "codexCloudAccess": "disabled",
+    "thread-summary-panel-section-expanded-tool-sources": true,
+    "app-shell-bottom-panel-launcher-visible": true,
+    "browser-sidebar-comment-mode-coachmark-dismissed": true,
+    "flat-project-sidebar-preferences-v1": {
+      "chatSortMode": "priority",
+      "initialized": true,
+      "mode": "project",
+      "projectSortMode": "priority"
+    },
+    "chatgpt-migration-announcement-completed-v1": true,
+    "composer-model-picker-menu-view-v1": "advanced",
+    "thread-summary-panel-section-expanded-background-subagents": true,
+    "first-awake-pet-notification-avatar-ids": [
+      "codex"
+    ],
+    "thread-browser-tabs-v1:019f1c72-03c3-7032-aa56-dff625d7c720": null,
+    "thread-summary-panel-section-expanded-artifacts": true,
+    "codex-writing-block-deleted-thread-v1:019f112d-bb98-7140-8c2d-1b1cbde0444d": true,
+    "seen-model-upgrade-list": [
+      "gpt-5.6-sol",
+      "gpt-5.6-terra"
+    ],
+    "sidebar-project-expanded-v1-codex:C:\\Users\\45543\\Documents\\mc": true,
+    "sidebar-project-expanded-v1-codex:C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager": true,
+    "sidebar-width": 264.375,
+    "thread-summary-panel-section-expanded-background-tasks": true,
+    "sidebar-project-expanded-v1-codex:local-85b87743035d60b16db3b5da324ab209": false,
+    "has-used-legacy-wsl-agent-environment": true,
+    "codex-writing-block-deleted-thread-v1:019f7367-efa3-7fb1-8181-3d322d4ba772": true,
+    "sidebar-project-expanded-v1-codex:a58b0ff0-2d51-43b5-878b-7105810770ec": true,
+    "home-composer-mode-v1": "work",
+    "codex-writing-block-deleted-thread-v1:019f7384-d677-79a1-8721-882af5f914c0": true,
+    "thread-client-id-v1:local%3A019f7395-ff2b-7cc3-99dc-4ca80576a2c5": "client-new-thread:b77096c4-7413-45e9-8bd8-5e0be6e77fa7",
+    "thread-descriptions-v1": {
+      "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": "简短问候语请求",
+      "019f7406-9545-7433-b4ec-d82c320c1358": "Respond to a Chinese greeting",
+      "019f743d-069f-7a32-bd75-8e1ab7020b7b": "中文问候与日常对话",
+      "019f7979-3c05-72b0-b3b7-8c1c6e5b0ed2": "测试信息任务标题生成",
+      "019f84f0-9cee-7f70-a1e7-67b0acf40f23": "测试信息任务标题生成",
+      "019f9696-66be-7b32-8f4d-db44fa78d580": "解释远程项目的含义和用途",
+      "019f9b7b-9618-7ae2-bf3c-bb9895ac75f7": "使用 Sites 创建活动网站，先收集活动详情和参与者事项",
+      "019f9b7d-27f7-78f1-ba5a-7306d5a5a010": "参考 ChatGPT 会话 cd_6a653c391f6481918cce832e8b66ba27",
+      "019fa6e7-06e9-7133-bc6f-68b96efa9471": "审核当前 Codex 工作环境并输出全方位分析报告",
+      "019fa7b9-7238-7e13-8eb5-960f6135be9b": "搜索并下载电影阳光璀璨的日子",
+      "019fa8ba-45fe-7831-934f-30d6a4178ebf": "检查当前工作区未提交更改并总结潜在问题",
+      "019fab00-cc9c-7323-b9e3-7c323dbe99ad": "评估本机 Claude Code CLI 对 Codex 工作流的实际用途",
+      "019fab19-587b-7493-bddf-20b733793249": "完善工作环境压缩层，分析本地实现并参考成熟联网方案改造",
+      "019fabb6-a90d-7e83-92f5-6335aac8df7f": "系统改良 Codex 全局工作效率，结合本地环境与联网调研",
+      "019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": "继续完善教科书包 Markdown 转换工具与产物",
+      "019fb108-b51b-7630-83fc-8e9cc9c04c9e": "完善路由层以发现并利用已有资产能力规范，联网补充知识辅助工作",
+      "019fb711-86c8-7e72-a248-d54aff613dc0": "诊断并修复桌面快捷方式提权启动失败的根本原因",
+      "019fb858-c3cd-73d0-b2bc-98fc90a67765": "修复资源层外部依赖确认策略阻塞并优化资源层",
+      "019fba4d-41c6-7ee0-9e90-5f1200a1b4eb": "存储空间治理：优先识别并清除大体积低价值内容",
+      "019fbbd0-8522-77f1-b7ea-c6d7fca02b66": "提取报告价值，实施医学检索观测反馈与PMB自动质量检查",
+      "019fbd57-6e94-7e43-839b-840c63e854cd": "治理存储空间并清理无用内容",
+      "019fc0a4-ed4b-7bb0-8e6d-1436fa4cb0d6": "从AI自治角度评估74个owner、12个必需面与多owner联合责任制架构",
+      "019fc1c9-8559-7891-b3ea-4de539bc0bc1": "研究GitHub openviking项目并优化本地记忆系统",
+      "019fc1f5-94da-7410-9b7c-0fe858906d78": "修复 Codex 协调消息误发与线程活跃状态持续校验问题",
+      "019fc6d4-6457-72b2-9022-c82f73e2c5cc": "检查电脑是否存在灰鸽子等病毒木马并授权清除",
+      "019fc70c-f2e4-7d60-a8ea-b4fc34ee1757": "诊断 CC Switch 托盘无响应原因",
+      "019fca5c-c7d6-7d62-a31d-c285d1aed581": "安装项目并配置 Deeptutor 频道与 QQ 209579199 集成",
+      "019fcabe-555f-7373-9623-79fcbadf627f": "完善 deeptutal 邮件交付链路，仅回传 NapCat 消息并在正文提供可点击链接",
+      "019fcae3-7f85-72b2-abd3-f2fc6af4ed22": "诊断并修复 Codex Desktop 模型列表消失问题及相关根因"
+    },
+    "sidebar-project-expanded-v1-codex:local-db4683ddcff83eaa70418025f1333a0e": false,
+    "thread-client-id-v1:local%3A019f7406-9545-7433-b4ec-d82c320c1358": "client-new-thread:11f9f5b9-9d4b-4661-9b46-94fe8a6e2e43",
+    "codex-writing-block-deleted-thread-v1:019f7405-46ba-7563-ab87-170a94926cca": true,
+    "thread-client-id-v1:local%3A019f743d-069f-7a32-bd75-8e1ab7020b7b": "client-new-thread:0b562551-4a40-4eb6-81fd-26a0750df4ef",
+    "codex-writing-block-deleted-thread-v1:019f7582-1056-7ac0-9d94-c26a8915b74f": true,
+    "codex-writing-block-deleted-thread-v1:019f77ab-c897-7143-8498-d0fd5de6ee6e": true,
+    "thread-browser-tabs-v1:019f743d-069f-7a32-bd75-8e1ab7020b7b": null,
+    "has-seen-browser-profile-import-nux-v1": true,
+    "codex-writing-block-deleted-thread-v1:019f7804-7ab4-7063-bd98-6af2befac100": true,
+    "codex-writing-block-deleted-thread-v1:019f7843-c5db-77e3-8c23-a4ea141a70b5": true,
+    "codex-writing-block-deleted-thread-v1:019f78ca-92ef-7083-8062-e1754a8b83a4": true,
+    "codex-writing-block-deleted-thread-v1:019f78e1-8961-7c22-acd6-79a21b6ab417": true,
+    "codex-writing-block-deleted-thread-v1:019f78e1-d036-7b82-8677-379a1bbba8d0": true,
+    "thread-client-id-v1:local%3A019f7979-3c05-72b0-b3b7-8c1c6e5b0ed2": "client-new-thread:3fc3e5c5-511a-46b4-b5aa-a976ae6e0ece",
+    "thread-summary-panel-section-expanded-environment": true,
+    "codex-writing-block-deleted-thread-v1:019f4b02-4562-7f83-a1c9-e0154223a2f8": true,
+    "codex-writing-block-deleted-thread-v1:019f2bb7-2d6d-7963-a33a-a14dfbf1f238": true,
+    "codex-writing-block-deleted-thread-v1:019f0f23-37a4-78b3-ab69-500913b42310": true,
+    "editorDiffViewMode": "unified",
+    "codex-writing-block-deleted-thread-v1:019ed5ce-de73-7c63-9b71-8a266262729b": true,
+    "latest-model-seen": null,
+    "sidebar-project-expanded-v1-codex:7729bf8c-a9a4-42e4-b89a-6264ae14dfa8": false,
+    "app-shell-file-tree-open": false,
+    "diffRichPreview": true,
+    "codex-writing-block-deleted-thread-v1:019f8479-fa38-7421-9d02-dcbf86b5eef8": true,
+    "codex-writing-block-deleted-thread-v1:019f847a-4a78-7012-8cae-30479b7e6339": true,
+    "thread-client-id-v1:local%3A019f84f0-9cee-7f70-a1e7-67b0acf40f23": "client-new-thread:68069845-4739-40e5-b405-9517dbb0dd0c",
+    "full-access-warning-dismissed-at-v2": 1784880864394,
+    "sidebar-project-expanded-v1-codex:976b7c86-428c-414e-a4cd-b6a6247fae99": true,
+    "codex-writing-block-deleted-thread-v1:019f9696-1a11-70d3-947f-b1d5f0328626": true,
+    "thread-client-id-v1:local%3A019f9696-66be-7b32-8f4d-db44fa78d580": "client-new-thread:94596e02-9e34-471e-8cbf-ef58810de8be",
+    "thread-client-id-v1:local%3A019f96d8-7ae6-7ce0-b19a-3962fad46821": "client-new-thread:24363ff5-f805-49e4-8b82-b4729007048f",
+    "sidebar-project-expanded-v1-codex:1cfa5ce8-64b9-4440-a83a-653ecbf51fb6": true,
+    "ambient-suggestions:default-statuses": {
+      "ambient-suggestions:default-statuses:local:/home/codexlab/work/codex-workspace": {
+        "new-chat-page-create-site-event": "accepted"
+      }
+    },
+    "thread-client-id-v1:local%3A019f9b7b-9618-7ae2-bf3c-bb9895ac75f7": "client-new-thread:cc05c7c1-06cb-40d7-9ce1-307ec8232e0a",
+    "codex-writing-block-deleted-thread-v1:019f9b7c-e27b-7b00-96af-9060516afda1": true,
+    "thread-client-id-v1:local%3A019f9b7d-27f7-78f1-ba5a-7306d5a5a010": "client-new-thread:95c6eb87-b1d4-4810-9925-51f12f460743",
+    "codex-writing-block-deleted-thread-v1:019f9b7a-fb8b-7002-a6a9-360fe4256164": true,
+    "codex-writing-block-deleted-thread-v1:019f9c55-ff11-7e70-8ce0-b538388eec12": true,
+    "remote-host-globe-color-by-host-id": {
+      "remote-wsl:Codex-Wsl-Lab": "#e81347"
+    },
+    "codex-writing-block-deleted-thread-v1:019f9d3f-f5fd-7060-813c-20c48bc9d400": true,
+    "sidebar-project-expanded-v1-codex:9e38dae0-cb88-491d-b273-c5ee18349874": true,
+    "thread-client-id-v1:local%3A019fa6e7-06e9-7133-bc6f-68b96efa9471": "client-new-thread:eba97c7e-2b9d-4311-897a-ace4cc7cd0e7",
+    "thread-client-id-v1:local%3A019fa7b9-7238-7e13-8eb5-960f6135be9b": "client-new-thread:0e49a03b-4f34-44c3-b892-208560869170",
+    "last-explicit-review-diff-filter": "last-turn",
+    "codex-writing-block-deleted-thread-v1:019fa8ba-3463-7383-b890-f501bf739742": true,
+    "codex-writing-block-deleted-thread-v1:019faacb-a7d9-7f12-88b8-04c4ea65da9d": true,
+    "thread-client-id-v1:local%3A019fab00-cc9c-7323-b9e3-7c323dbe99ad": "client-new-thread:3cdbd415-0b1a-425d-91e6-95ef503eda32",
+    "thread-client-id-v1:local%3A019fab19-587b-7493-bddf-20b733793249": "client-new-thread:038cbba1-22d3-4084-90b8-8905c0c18c16",
+    "thread-client-id-v1:local%3A019fab32-e410-72c3-84ca-95d92312a94b": "client-new-thread:144f16df-0d8c-4700-a7f1-b2ba52a1aafb",
+    "app-shell:right-panel-width:v3": 1,
+    "codex-writing-block-deleted-thread-v1:019fabb5-ca2f-74e0-9731-05f1a988129c": true,
+    "thread-client-id-v1:local%3A019fabb6-a90d-7e83-92f5-6335aac8df7f": "client-new-thread:6743fcc5-56b1-4d3a-9ade-0387a4361179",
+    "thread-client-id-v1:local%3A019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": "client-new-thread:a8787648-ce15-4230-809b-cdf79937f3e7",
+    "codex-writing-block-deleted-thread-v1:019fb107-2f48-7bc0-80c7-8438da262ac7": true,
+    "thread-client-id-v1:local%3A019fb108-b51b-7630-83fc-8e9cc9c04c9e": "client-new-thread:2c78e7d4-89b5-4fe0-a5a8-72b7ee6150e5",
+    "thread-client-id-v1:local%3A019fb711-86c8-7e72-a248-d54aff613dc0": "client-new-thread:b9adcc53-4311-470f-b9d9-4bb872a4f027",
+    "thread-client-id-v1:local%3A019fb858-c3cd-73d0-b2bc-98fc90a67765": "client-new-thread:4de223ad-bc5d-481a-b81f-7bf4ea281ad4",
+    "thread-client-id-v1:local%3A019fba4d-41c6-7ee0-9e90-5f1200a1b4eb": "client-new-thread:297e51b2-c5b4-4de1-bb0a-c7f1f0b7b551",
+    "thread-client-id-v1:local%3A019fbb7c-bd42-7221-8f9d-a58b441927a5": "client-new-thread:9a7b54ed-100d-43d6-944f-595c03988d68",
+    "thread-client-id-v1:local%3A019fbbd0-8522-77f1-b7ea-c6d7fca02b66": "client-new-thread:5c376e74-bf25-4815-bd55-365f47a2188e",
+    "has-seen-multi-agent-composer-banner": true,
+    "thread-reference-capability:019fbc29-7f0b-7791-b771-90991e95a53e": true,
+    "thread-client-id-v1:local%3A019fbc29-7f0b-7791-b771-90991e95a53e": "client-new-thread:453e9919-c106-473f-af8e-631647fd615b",
+    "thread-reference-capability:019fbc3c-b21b-78e1-abd0-8a926e19fdf6": true,
+    "codex-writing-block-deleted-thread-v1:019fbc3c-b21b-78e1-abd0-8a926e19fdf6": true,
+    "thread-reference-capability:019fbc3d-073d-78c2-979f-5999ac8ea89f": true,
+    "thread-client-id-v1:local%3A019fbc3d-073d-78c2-979f-5999ac8ea89f": "client-new-thread:b9fb2986-d8c1-41f1-becb-61ef3dd78856",
+    "thread-reference-capability:019fbc3e-ad17-7882-a770-7543828eb6d2": true,
+    "thread-client-id-v1:local%3A019fbc3e-ad17-7882-a770-7543828eb6d2": "client-new-thread:a50b9041-1362-4c29-b673-2d59efe366c5",
+    "thread-tab-routes-v1:019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/mnt/c/Users/45543/Desktop/Codex资源库/论文/教科书包-md/_Agent医学教材知识包-v2/reports/2026-08-01-retrieval-routing-acceptance.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/mnt/c/Users/45543/Desktop/Codex资源库/论文/教科书包-md/_Agent医学教材知识包-v2/reports/2026-08-01-retrieval-routing-acceptance.md"
+        },
+        {
+          "kind": "workspace-file",
+          "params": {
+            "endLine": null,
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/data/user/logs/deeptutor.jsonl",
+            "title": null,
+            "workspaceRoot": "/home/codexlab/work/codex-workspace"
+          },
+          "payloadVersion": 1,
+          "tabId": "file:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/data/user/logs/deeptutor.jsonl"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 971,
+            "path": "/home/codexlab/tools/DeepTutor/deeptutor/services/partners/runtime.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/deeptutor/services/partners/runtime.py"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/tools/DeepTutor/tests/services/partners/test_partner_runtime.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/services/partners/test_partner_runtime.py"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 42,
+            "path": "/home/codexlab/tools/DeepTutor/runtime/data/partners/medical-textbook-tutor/workspace/user/workspace/SOUL.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/runtime/data/partners/medical-textbook-tutor/workspace/user/workspace/SOUL.md"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 2317,
+            "path": "/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/tools/DeepTutor/deeptutor/skills/builtin/deeptutor-action-guide/SKILL.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/deeptutor/skills/builtin/deeptutor-action-guide/SKILL.md"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 3250,
+            "path": "/home/codexlab/tools/DeepTutor/deeptutor/agents/chat/agent_loop.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/deeptutor/agents/chat/agent_loop.py"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/tools/DeepTutor/docs/superpowers/specs/2026-08-04-deeptutor-universal-response-template-design.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/docs/superpowers/specs/2026-08-04-deeptutor-universal-response-template-design.md"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/tools/DeepTutor/web/tests/partner-chat-autoscroll.test.ts"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/web/tests/partner-chat-autoscroll.test.ts"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/web/tests/partner-chat-autoscroll.test.ts",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/mnt/c/Users/45543/Desktop/Codex资源库/论文/教科书包-md/_Agent医学教材知识包-v2/reports/2026-08-01-retrieval-routing-acceptance.md",
+            "file:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/data/user/logs/deeptutor.jsonl",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/deeptutor/services/partners/runtime.py",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/services/partners/test_partner_runtime.py",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/runtime/data/partners/medical-textbook-tutor/workspace/user/workspace/SOUL.md",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/deeptutor/skills/builtin/deeptutor-action-guide/SKILL.md",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/deeptutor/agents/chat/agent_loop.py",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/docs/superpowers/specs/2026-08-04-deeptutor-universal-response-template-design.md",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/web/tests/partner-chat-autoscroll.test.ts"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-tab-routes-v1:019fbc3e-ad17-7882-a770-7543828eb6d2": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/long_command_receipts/intent-f1a14340bb162dd260cb01503dccc2a8/stdout.log"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/long_command_receipts/intent-f1a14340bb162dd260cb01503dccc2a8/stdout.log"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/codex_environment_mirror/refresh-receipt-20260801T093220Z-a49962c5b133.json"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/codex_environment_mirror/refresh-receipt-20260801T093220Z-a49962c5b133.json"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/codex_environment_mirror/refresh-receipt-20260801T093220Z-a49962c5b133.json",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/long_command_receipts/intent-f1a14340bb162dd260cb01503dccc2a8/stdout.log",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/runtime/codex_environment_mirror/refresh-receipt-20260801T093220Z-a49962c5b133.json"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-reference-capability:019fbd57-6e94-7e43-839b-840c63e854cd": true,
+    "thread-client-id-v1:local%3A019fbd57-6e94-7e43-839b-840c63e854cd": "client-new-thread:57e70bab-b2b4-4ed5-a4b5-f94c83769749",
+    "has-dismissed-priority-filter-coachmark-v1": true,
+    "thread-browser-tabs-v1:019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": null,
+    "thread-reference-capability:019fc0a4-ed4b-7bb0-8e6d-1436fa4cb0d6": true,
+    "thread-client-id-v1:local%3A019fc0a4-ed4b-7bb0-8e6d-1436fa4cb0d6": "client-new-thread:0596b445-6403-48dc-a31e-1e04b4a802d3",
+    "thread-reference-capability:019fc0da-5f6c-7810-b078-c51595890019": true,
+    "thread-client-id-v1:local%3A019fc0da-5f6c-7810-b078-c51595890019": "client-new-thread:5af65a8e-7773-420e-8dd2-aeda19cfc5bb",
+    "thread-reference-capability:019fc17b-fbac-71f1-86b1-688241e2bc71": true,
+    "thread-client-id-v1:local%3A019fc17b-fbac-71f1-86b1-688241e2bc71": "client-new-thread:774a7682-7e4b-4b74-8fc5-a84500054f7d",
+    "thread-tab-routes-v1:019fc17b-fbac-71f1-86b1-688241e2bc71": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/workspace/_bridge/docs/maintenance_surfaces/hardware.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/docs/maintenance_surfaces/hardware.md"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/.codex-app/memories/MEMORY.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/memories/MEMORY.md"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/docs/maintenance_surfaces/hardware.md",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/docs/maintenance_surfaces/hardware.md",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/memories/MEMORY.md"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-reference-capability:019fc1c9-61b5-76f1-ab7e-01274fdf04ff": true,
+    "codex-writing-block-deleted-thread-v1:019fc1c9-61b5-76f1-ab7e-01274fdf04ff": true,
+    "thread-reference-capability:019fc1c9-8559-7891-b3ea-4de539bc0bc1": true,
+    "thread-client-id-v1:local%3A019fc1c9-8559-7891-b3ea-4de539bc0bc1": "client-new-thread:63eb386f-1b63-4fbe-97e3-4e6929658f9f",
+    "codex-writing-block-deleted-thread-v1:019fc1c9-611c-7cb3-9ccc-5eeb505713ef": true,
+    "thread-reference-capability:019fc1f5-94da-7410-9b7c-0fe858906d78": true,
+    "thread-client-id-v1:local%3A019fc1f5-94da-7410-9b7c-0fe858906d78": "client-new-thread:efc3ace3-10d1-4440-bec9-dad758933016",
+    "thread-reference-capability:019fc6d4-6457-72b2-9022-c82f73e2c5cc": true,
+    "thread-client-id-v1:local%3A019fc6d4-6457-72b2-9022-c82f73e2c5cc": "client-new-thread:4895771f-069b-4408-945e-04e5da8e0a14",
+    "thread-tab-routes-v1:019fc6d4-6457-72b2-9022-c82f73e2c5cc": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/codex-home/skills/diagnose/SKILL.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/codex-home/skills/diagnose/SKILL.md"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/codex-home/skills/hardware-ops/SKILL.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/codex-home/skills/hardware-ops/SKILL.md"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/codex-home/skills/hardware-ops/SKILL.md",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/codex-home/skills/diagnose/SKILL.md",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/codex-home/skills/hardware-ops/SKILL.md"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-reference-capability:019fc70c-f2e4-7d60-a8ea-b4fc34ee1757": true,
+    "thread-client-id-v1:local%3A019fc70c-f2e4-7d60-a8ea-b4fc34ee1757": "client-new-thread:36b020f9-9efe-451f-8d85-04b6b35d21fa",
+    "thread-tab-routes-v1:019fbb7c-bd42-7221-8f9d-a58b441927a5": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 1330,
+            "path": "/home/codexlab/.codex-app/worktrees/codex-workspace/auth-prepare-observability-v2-20260803/workspace/_bridge/work_git_change_owner.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/worktrees/codex-workspace/auth-prepare-observability-v2-20260803/workspace/_bridge/work_git_change_owner.py"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/worktrees/codex-workspace/auth-prepare-observability-v2-20260803/workspace/_bridge/work_git_change_owner.py",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/worktrees/codex-workspace/auth-prepare-observability-v2-20260803/workspace/_bridge/work_git_change_owner.py"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-tab-routes-v1:019fb108-b51b-7630-83fc-8e9cc9c04c9e": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 1,
+            "path": "/home/codexlab/.codex-app/worktrees/codex-workspace/governed-asset-owner-auto-admission-plan-20260803/docs/superpowers/plans/2026-08-03-governed-asset-owner-auto-admission-implementation-plan.md"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/worktrees/codex-workspace/governed-asset-owner-auto-admission-plan-20260803/docs/superpowers/plans/2026-08-03-governed-asset-owner-auto-admission-implementation-plan.md"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/worktrees/codex-workspace/governed-asset-owner-auto-admission-plan-20260803/docs/superpowers/plans/2026-08-03-governed-asset-owner-auto-admission-implementation-plan.md",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/tools/DeepTutor/tests/agents/chat/test_agent_loop.py"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-reference-capability:019fca5c-c7d6-7d62-a31d-c285d1aed581": true,
+    "thread-client-id-v1:local%3A019fca5c-c7d6-7d62-a31d-c285d1aed581": "client-new-thread:13caeffe-5681-45f5-b71e-8ed55c96089a",
+    "thread-reference-capability:019fcabe-555f-7373-9623-79fcbadf627f": true,
+    "thread-client-id-v1:local%3A019fcabe-555f-7373-9623-79fcbadf627f": "client-new-thread:c25598f2-a575-478b-8671-f38232defa7b",
+    "thread-reference-capability:019fcae3-7f85-72b2-abd3-f2fc6af4ed22": true,
+    "thread-client-id-v1:local%3A019fcae3-7f85-72b2-abd3-f2fc6af4ed22": "client-new-thread:8f8af990-bed2-48c8-aaec-9842dec6b525",
+    "thread-reference-capability:019fcb01-3cb0-7251-98ca-2fe114c8b65e": true,
+    "thread-client-id-v1:local%3A019fcb01-3cb0-7251-98ca-2fe114c8b65e": "client-new-thread:cae254ec-4c3e-4ad6-8e38-0b26ac1ca916",
+    "thread-tab-routes-v1:019fcae3-7f85-72b2-abd3-f2fc6af4ed22": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 2,
+            "path": "/tmp/codex-model-provider-host-projection-assessment.json"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/tmp/codex-model-provider-host-projection-assessment.json"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/.codex-app/sessions/2026/08/04/rollout-2026-08-04T11-48-54-019fcae3-7f85-72b2-abd3-f2fc6af4ed22.jsonl"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/sessions/2026/08/04/rollout-2026-08-04T11-48-54-019fcae3-7f85-72b2-abd3-f2fc6af4ed22.jsonl"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 1913,
+            "path": "/home/codexlab/work/codex-workspace/workspace/_bridge/codex_desktop_model_runtime.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/codex_desktop_model_runtime.py"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": null,
+            "path": "/home/codexlab/work/codex-workspace/workspace/_bridge/codex_model_provider_tests.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/codex_model_provider_tests.py"
+        },
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 1,
+            "path": "/home/codexlab/.codex-app/runtime/work-git-change-owner/assessment-codex-desktop-model-list-live-binding-health-r2-20260804-1341.json"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/runtime/work-git-change-owner/assessment-codex-desktop-model-list-live-binding-health-r2-20260804-1341.json"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/runtime/work-git-change-owner/assessment-codex-desktop-model-list-live-binding-health-r2-20260804-1341.json",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/tmp/codex-model-provider-host-projection-assessment.json",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/sessions/2026/08/04/rollout-2026-08-04T11-48-54-019fcae3-7f85-72b2-abd3-f2fc6af4ed22.jsonl",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/codex_desktop_model_runtime.py",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-workspace/workspace/_bridge/codex_model_provider_tests.py",
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/.codex-app/runtime/work-git-change-owner/assessment-codex-desktop-model-list-live-binding-health-r2-20260804-1341.json"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    },
+    "thread-reference-capability:019fcb69-fb05-7770-8a7d-743c78224e9c": true,
+    "thread-client-id-v1:local%3A019fcb69-fb05-7770-8a7d-743c78224e9c": "client-new-thread:546c451a-51f1-46c3-a8d2-09b582ad7b0d",
+    "thread-reference-capability:019fcb90-b776-7933-8824-0afe1566e200": true,
+    "codex-writing-block-deleted-thread-v1:019fcb90-b776-7933-8824-0afe1566e200": true,
+    "thread-tab-routes-v1:019fcb69-fb05-7770-8a7d-743c78224e9c": {
+      "routes": [
+        {
+          "kind": "text-file-editor",
+          "params": {
+            "hostId": "remote-wsl:Codex-Wsl-Lab",
+            "line": 4234,
+            "path": "/home/codexlab/work/codex-worktrees/mirror-publication-convergence-019fcb69/workspace/_bridge/codex_environment_mirror.py"
+          },
+          "payloadVersion": 1,
+          "tabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-worktrees/mirror-publication-convergence-019fcb69/workspace/_bridge/codex_environment_mirror.py"
+        }
+      ],
+      "topology": {
+        "bottom": {
+          "activeTabId": null,
+          "open": false,
+          "tabIds": []
+        },
+        "focusArea": "main",
+        "right": {
+          "activeTabId": "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-worktrees/mirror-publication-convergence-019fcb69/workspace/_bridge/codex_environment_mirror.py",
+          "open": false,
+          "tabIds": [
+            "text-editor:remote-wsl:Codex-Wsl-Lab:/home/codexlab/work/codex-worktrees/mirror-publication-convergence-019fcb69/workspace/_bridge/codex_environment_mirror.py"
+          ]
+        },
+        "rightPanelFullWidth": false
+      },
+      "version": 1
+    }
+  },
+  "electron-main-window-bounds": {
+    "x": -20000,
+    "y": -20000,
+    "width": 480,
+    "height": 600,
+    "isMaximized": true
+  },
+  "electron-saved-workspace-roots": [
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+    "C:\\Users\\45543\\Documents\\mc"
+  ],
+  "project-order": [
+    "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+    "9e38dae0-cb88-491d-b273-c5ee18349874",
+    "local-85b87743035d60b16db3b5da324ab209",
+    "local-db4683ddcff83eaa70418025f1333a0e"
+  ],
+  "active-workspace-roots": [
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager"
+  ],
+  "queued-follow-ups": {},
+  "use-copilot-auth-if-available": false,
+  "pinned-thread-ids": [
+    "019f1c72-03c3-7032-aa56-dff625d7c720"
+  ],
+  "electron-avatar-overlay-open": false,
+  "electron-avatar-overlay-bounds": {
+    "x": 1088,
+    "y": 197,
+    "displayBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1201,
+      "height": 676
+    },
+    "displayId": 3928336421,
+    "placement": "bottom-end",
+    "byDisplayId": {
+      "51768007": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 51768007,
+        "placement": "bottom-end"
+      },
+      "219169100": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 219169100,
+        "placement": "bottom-end"
+      },
+      "978686913": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 978686913,
+        "placement": "bottom-end"
+      },
+      "1207667429": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 1207667429,
+        "placement": "bottom-end"
+      },
+      "2057208635": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 2057208635,
+        "placement": "bottom-end"
+      },
+      "2097100853": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 2097100853,
+        "placement": "bottom-end"
+      },
+      "2681032021": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 2681032021,
+        "placement": "bottom-end"
+      },
+      "2798640025": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 2798640025,
+        "placement": "bottom-end"
+      },
+      "3062429521": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 3062429521,
+        "placement": "bottom-end"
+      },
+      "3082497264": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 3082497264,
+        "placement": "bottom-end"
+      },
+      "3928336421": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 3928336421,
+        "placement": "bottom-end"
+      },
+      "4102448580": {
+        "x": 845,
+        "y": 135,
+        "width": 356,
+        "height": 320,
+        "anchor": {
+          "x": 1088,
+          "y": 197,
+          "width": 113,
+          "height": 123
+        },
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 4102448580,
+        "mascot": {
+          "left": 243,
+          "top": 62,
+          "width": 113,
+          "height": 123
+        },
+        "placement": "bottom-end",
+        "tray": {
+          "left": 11,
+          "top": 189,
+          "width": 345,
+          "height": 131
+        }
+      },
+      "4153175014": {
+        "x": 845,
+        "y": 135,
+        "width": 356,
+        "height": 320,
+        "anchor": {
+          "x": 1088,
+          "y": 197,
+          "width": 113,
+          "height": 123
+        },
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 4153175014,
+        "mascot": {
+          "left": 243,
+          "top": 62,
+          "width": 113,
+          "height": 123
+        },
+        "placement": "bottom-end",
+        "tray": {
+          "left": 80,
+          "top": 189,
+          "width": 276,
+          "height": 131
+        }
+      }
+    },
+    "byResolution": {
+      "1201x676": {
+        "x": 1088,
+        "y": 197,
+        "displayBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1201,
+          "height": 676
+        },
+        "displayId": 3928336421,
+        "placement": "bottom-end"
+      }
+    }
+  },
+  "electron-internal-update-cdn-enabled": false,
+  "computer-use-bundled-plugin-auto-install-disabled": false,
+  "electron-openai-mcp-form-elicitations-enabled": false,
+  "projectless-thread-ids": [
+    "019f112d-bb98-7140-8c2d-1b1cbde0444d",
+    "019f112d-ccf4-73a0-bf98-42c56c67f0ce",
+    "019f112d-cfde-7fb2-9a72-91672326eb88",
+    "019f112d-cfe0-7cf0-9c6d-aba4b1bd9971",
+    "019f112d-cfde-7fb2-9a72-91712d3f299e",
+    "019f112d-cfe4-7d33-9ce4-7e6a01903d65",
+    "019f112e-ee0c-70d3-bfba-483e7fb4cbde",
+    "019f112f-1725-79d0-83e7-1ebf30131ae3",
+    "019f7406-9545-7433-b4ec-d82c320c1358",
+    "019f743d-069f-7a32-bd75-8e1ab7020b7b",
+    "019f569d-b7d9-7802-afc9-781df6cc234d",
+    "019f569c-7bcb-75c0-9f41-b9be309fc336"
+  ],
+  "thread-workspace-root-hints": {
+    "019f112d-bb98-7140-8c2d-1b1cbde0444d": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-ccf4-73a0-bf98-42c56c67f0ce": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfde-7fb2-9a72-91672326eb88": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfe0-7cf0-9c6d-aba4b1bd9971": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfde-7fb2-9a72-91712d3f299e": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112d-cfe4-7d33-9ce4-7e6a01903d65": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112e-ee0c-70d3-bfba-483e7fb4cbde": "C:\\Users\\45543\\Documents\\Codex",
+    "019f112f-1725-79d0-83e7-1ebf30131ae3": "C:\\Users\\45543\\Documents\\Codex",
+    "019f7406-9545-7433-b4ec-d82c320c1358": "C:\\Users\\45543\\Documents\\Codex",
+    "019f743d-069f-7a32-bd75-8e1ab7020b7b": "C:\\Users\\45543\\Documents\\Codex"
+  },
+  "thread-projectless-output-directories": {
+    "019f112d-bb98-7140-8c2d-1b1cbde0444d": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\c\\outputs",
+    "019f112d-ccf4-73a0-bf98-42c56c67f0ce": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\new-chat\\outputs",
+    "019f112d-cfde-7fb2-9a72-91672326eb88": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread-4\\outputs",
+    "019f112d-cfe0-7cf0-9c6d-aba4b1bd9971": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread-5\\outputs",
+    "019f112d-cfde-7fb2-9a72-91712d3f299e": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread-2\\outputs",
+    "019f112d-cfe4-7d33-9ce4-7e6a01903d65": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\schedule-executor-thread\\outputs",
+    "019f112e-ee0c-70d3-bfba-483e7fb4cbde": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\new-chat-2\\outputs",
+    "019f112f-1725-79d0-83e7-1ebf30131ae3": "C:\\Users\\45543\\Documents\\Codex\\2026-06-29\\new-chat-3\\outputs",
+    "019f7406-9545-7433-b4ec-d82c320c1358": "C:\\Users\\45543\\Documents\\Codex\\2026-07-18\\new-chat-3\\outputs",
+    "019f743d-069f-7a32-bd75-8e1ab7020b7b": "C:\\Users\\45543\\Documents\\Codex\\2026-07-18\\ni\\outputs"
+  },
+  "electron-chrome-extension-sync-managed-plugin-ids": [
+    "chrome@openai-bundled"
+  ],
+  "electron-local-data-migration-id": 3,
+  "electron-workspace-root-labels": {
+    "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager": "主项目"
+  },
+  "electron-completed-local-data-migration-ids": [
+    "2026-07-13-string-based-remote-projects",
+    "2026-07-13-automation-project-targets",
+    "2026-07-13-local-projects",
+    "2026-07-13-remap-legacy-automation-project-targets",
+    "2026-07-13-clear-legacy-browser-download-history",
+    "2026-07-14-repair-metadata-local-projects"
+  ],
+  "local-projects": {
+    "local-db4683ddcff83eaa70418025f1333a0e": {
+      "id": "local-db4683ddcff83eaa70418025f1333a0e",
+      "name": "主项目",
+      "rootPaths": [
+        "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager"
+      ],
+      "createdAt": 1784346563321,
+      "updatedAt": 1784346563321
+    },
+    "local-85b87743035d60b16db3b5da324ab209": {
+      "id": "local-85b87743035d60b16db3b5da324ab209",
+      "name": "mc",
+      "rootPaths": [
+        "C:\\Users\\45543\\Documents\\mc"
+      ],
+      "createdAt": 1784346563320,
+      "updatedAt": 1784346563320
+    },
+    "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8": {
+      "id": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "name": "WSL Codex 工作区",
+      "rootPaths": [
+        "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace"
+      ],
+      "createdAt": 1784441078862,
+      "updatedAt": 1784942710827
+    }
+  },
+  "selected-project": {
+    "type": "remote",
+    "projectId": "9e38dae0-cb88-491d-b273-c5ee18349874"
+  },
+  "electron-remote-control-config-migration-completed": true,
+  "thread-project-assignments": {
+    "019f7395-ff2b-7cc3-99dc-4ca80576a2c5": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f1c72-03c3-7032-aa56-dff625d7c720": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f4b02-4562-7f83-a1c9-e0154223a2f8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0f23-37a4-78b3-ab69-500913b42310": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019ee3f5-27e9-7d20-9cf5-802aaef0e1af": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2bb7-2d6d-7963-a33a-a14dfbf1f238": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f555b-fa5d-7af1-9fa9-32ca83a379b1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager\\_bridge",
+      "pendingCoreUpdate": false
+    },
+    "019ee348-662d-7fa0-99c8-3138aa86db2f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019eca40-a8ff-72e2-a7da-43b8f9befc65": {
+      "projectKind": "local",
+      "projectId": "local-85b87743035d60b16db3b5da324ab209",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Documents\\mc",
+      "pendingCoreUpdate": false
+    },
+    "019f3b9c-93e7-7b43-9ed4-c37595e78bbe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3ac7-41da-7101-9588-c38f27e37df0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3ac1-a702-7aa2-9dc7-25f244d08815": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34ee-7f1d-7e21-8901-bf5c073555a1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34ec-967c-76f0-852a-0e4a686e7508": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34ea-ce4e-7ac3-b92d-f8d13df79b01": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f34dd-671c-7d73-9d18-16ccbeebce25": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30c0-29f7-7c31-82a8-bb0d1d566886": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30bf-8229-7e62-8633-de6a66734822": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30bd-c3a4-7483-8d01-77df759364bd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b9-4d0e-70b3-9866-a0b05c3ce5a1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b8-f466-72b3-8dce-d94c83bf51d3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b7-4eae-7160-984b-575c6210a7e0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b5-628d-7130-b2a8-8a3940fa164d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30b4-ead5-7ef0-82da-9ed48004db8e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30a1-a26f-71d0-884b-7d001cb8a1ce": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f30a0-6b28-7741-9d48-1cf19bbbdaee": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309f-7117-72d3-8b55-9f5a1999dbdf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-9b21-77f0-8f3c-1bf75e99fa14": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-6dff-7572-913b-894c5b4a39c0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-45a5-7262-833f-db448afbc2bb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f309b-1be5-7c60-9346-17c600bd33d1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3092-ae6c-7391-b20e-6a9f065cd24d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3092-769a-7251-920a-82495505d139": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3091-7e7e-74e3-9810-7ac62f454125": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3091-52c0-70a2-a4e1-f51feaa1fa53": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3091-2951-7a93-b754-35ad643b39b8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3090-f852-7b50-8a82-ac1d03398977": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f308d-6c7f-78d2-8ef6-67b0db09d7cd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3082-b7ad-7813-85e1-6d52a038bd94": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3082-b7ac-7601-9035-cffb433146b8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3081-8db4-7d30-97bc-6e9d2058e7cb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3081-8db3-78f2-b357-7914695834e5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f307f-2bc5-7ed2-b475-b583f5e42184": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f307f-2ae4-7333-8295-fee9d5d2e876": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f307c-9291-7372-b2fa-8784bc0d8caa": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3078-fb3b-7173-ba54-d1c5f4d293c9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-cdbb-7a42-af78-3880f61c9668": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-a440-7fd3-9e26-2c2e9c87c5be": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-79e0-7053-aa01-cc1d7a55b9c0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-5110-75c3-8b9b-876150d9e90e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-1b4f-7e00-ba83-3edfacf75b5d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3073-10d8-7971-9b6f-d49e8063f86c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3070-a09a-7ec2-9ac3-1b8fd9ecdd03": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303d-ced9-7d00-8d5e-43b5ce3218bd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303d-93f4-7093-92e0-0d9ae8ed5156": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303d-615d-7c31-85b8-103ee744ec7c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-e0f9-7993-bf54-e159673ce46a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-e09c-79d3-91b5-a0ba4167aead": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-931d-76a0-9a5d-a0f7c83ddb43": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-9279-7d22-b85c-80e303404b0d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-471f-7393-9d47-9592f8092749": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-463c-7a70-8a8a-ee294e28cd20": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-0516-7641-8508-2eadf5553a55": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303b-04cf-7952-b2a5-fb57a4015430": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303a-c74d-75e3-9d2e-24a4ab783928": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f303a-c74c-7db2-94dc-66740d1b5f82": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3039-fb35-77a1-80b3-5dcd1f1e2ea3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3039-fb2b-7ae0-858f-0c6a41faa5e6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3036-84ed-74f3-b9c0-c859113a94c2": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3036-4151-7e72-8e22-1f8b8bb54e95": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3036-4150-7a10-9844-508f35ce8691": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-f6ca-7ee0-9b6a-4a28c27e2e4d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-f10e-74d1-907b-46f6d21e55d9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-ac9c-7211-9844-85f2619445f5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-ac90-7072-a666-cf735ee74eec": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-6d01-7363-a900-de966fa26c6e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3035-583a-7891-acaa-0fe73cd13581": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3001-7d93-7661-bc46-84b1de9cd31f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-bf29-7c82-b2c6-2ef3c972d843": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-8eaf-7840-9271-9413d77360a8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-4e56-7503-a026-477450932523": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f3000-1b61-76b1-9a13-f233a0bf377e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-efed-7a22-ad4b-098e865e5438": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-5f1c-79d3-bb6b-913ff3b9f6ff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-346d-7381-a188-c0092882f984": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2fff-0b39-7f73-afc7-3be1f8e3cbd2": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffe-e109-70c2-9d95-ee7aaf578e90": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffc-de0f-7c53-b30c-9e7f449af51c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffc-b9c6-7762-a2fb-2fb907ca2e2a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ffc-8c4a-7171-87ee-5ddbc5632b2f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ff7-fd82-7e82-8b62-ca2e7801d542": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ff7-cd5b-78e1-80ca-39b741306716": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2ff7-46ae-7681-9525-e2b9711f5432": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27db-4ecc-7253-8de8-342218ce250c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d8-3038-7650-81cc-ffd0bbfcb22f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d5-ff1e-7930-84b0-28c932142514": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d5-0d50-73c3-a4aa-ac6d00fe9bb9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d4-3065-7573-8e81-c0cf7d259bb1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d3-6799-78f1-b419-1414de2bb72a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d1-e22e-7e83-a1cc-0e36f6df1888": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27d0-dc28-7bb2-a879-09ca4f722bd4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f27cd-9825-7032-b5fe-63218effa591": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2308-6c03-7e92-833b-1814737d498a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213e-e670-75c1-b553-3a8a5be1002f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213d-05fd-7291-8f76-e6b45b01b1b0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-e933-7723-bf4d-c8f5bf78dd80": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-cc92-75e1-8175-59cd93001653": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-b3bc-7011-bbd3-ac4cd71777e4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f213c-9c2e-7442-bf2a-267e9957c437": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-bf44-7f52-bb89-eea78da5a958": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-a2cd-7373-828e-17039656de30": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-83ff-7352-9afd-c6dfd77c514a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-69fa-7771-b34f-a5949ee00fef": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2136-5400-7773-8fd1-ea2938ca5c77": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2134-47fb-7ef1-bd35-deeb89ebabe7": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2134-292f-7e60-a690-3ae022b97cdd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2134-0cc8-78c1-a6d7-bee1f1f773fc": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2133-f63b-7f63-a0d3-3300b37d7c1f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f2133-ddae-7781-b461-95c783ba5309": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212b-2684-78b3-9056-183daa2b5c05": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212b-0af5-7b40-b71b-43f691fe25fe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212a-f27f-7110-96f5-206472e7c994": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212a-d8b8-79b2-abaf-a9983c79c74f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f212a-c0d2-76d1-a4f8-0b16a82789ef": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-670a-7cc3-a25c-df48e29ce89d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-49e4-7821-9b6b-5bb23d4e6ab7": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-3182-7961-a5b6-be7d4019fa2c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-1bd8-7d31-8787-bcbfb686362b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f20e9-0476-7c00-a5f9-8168a8150ada": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc8-043a-7560-9c36-602958fc3bed": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc6-c750-7742-84f5-571c1a7743f9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc5-74bf-7120-a5d4-aac49766a851": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bc3-3950-75f1-8f4e-3f881b81d306": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1bbf-bf58-7273-bd57-ea960a507c7b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f16e1-7474-7cc3-9825-7edb186b1640": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1446-6598-7a11-93d8-ed532237ba63": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f140a-05d9-78a0-a909-a6414d9940ce": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1409-c4c9-7273-bdc9-85997f1c258d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1409-7e68-7650-bda5-6af5a2414a1a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1409-3e99-7dc2-b563-7061e0d1f9be": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1408-fa90-78f0-8f00-e2362a71b788": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1406-adf4-7732-abf4-1f32b01a4cd0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1406-70e2-7281-b47b-aad020d2f359": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1406-258d-7433-98c4-9233c24687d3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1405-d6e0-7c31-afdf-13616d69ce9a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f1405-9b2a-7830-bcf8-ee9a779d1d7e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-f2f0-7663-b12a-7e33c0b324bf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-b2cf-7761-a518-cb8fdc62bf9e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-739d-7782-a326-85a76a7095bb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fd-2e15-7741-9a02-4ef01dc70e93": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fc-e924-74a1-b7a0-a419b0a03df0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f13fc-e913-78f2-a395-03f64cb983f8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e6-34b0-74b2-b10a-356049e8805f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e5-5b2a-72e0-9758-17390c1949c9": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e4-7a08-7133-824c-d47fc21e49c6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e3-a1e7-71f0-8e72-d81723bc838a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11e2-c65b-7ec3-bda8-0d9195aba60d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11cb-7761-7f42-8a4f-ccfeaf8d4040": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11ca-d99d-7ad3-815e-a49c34435d92": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11ca-81a9-7cc2-9897-0dadde61345f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c9-f592-7262-b85f-49de8ec6d070": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c9-9e8a-7b73-9cd6-52ef52933a07": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c8-fe7b-73b3-85fe-eee88d97b085": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c8-b610-76a3-898c-66fe70bd878e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c7-f83b-7f33-8c61-0151788a7eeb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f11c7-d3d0-70c2-9b53-1cd9f1a93772": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e30-f291-75c0-857d-429d60dba319": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e30-5e69-7f23-8ebd-b49b89f9b974": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e30-17da-7742-9ccd-9cd327096661": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2f-5286-71d3-b199-33d0927b1b9d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2f-3aa3-75b1-ba44-202e4e6e17a3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-71f4-7872-a751-fd64927a4aad": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-6b6d-7e61-9443-b4046543fdfb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-5e50-7f03-ab13-c54bea74cf16": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2e-3738-7a72-9ac7-478b5d1ebaa5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-fa63-77b0-a814-8138a1c1af60": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-bd50-71d1-b475-52f56f0c0e62": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-856c-74a1-b059-0e8da10b484c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-76f2-7c43-a64f-6408660e1748": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2d-76d5-78d1-b757-99a0ed21c2f1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e2c-b078-75a2-8f09-e60eca38b23b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-cc73-7cb3-999b-79a32dfbe3e5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-9b95-7ff2-8513-15bc145045e0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-62c7-7c73-90c8-2d63eabd31ff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1c-25e6-7753-a585-565da9fb563e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e1b-f0f4-74a1-a2f8-b0a7d302abf8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e10-097f-78a0-9d4a-c8b30b0c0908": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-d8b9-7dc3-b9e9-3f576fa9f3b2": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-a740-7b21-8018-c8d8b20eeac6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-70fc-7cb2-a1f4-9222a29317bf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0e0f-3c81-7350-b65b-02f47a6d4ef1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-7d3c-79d0-8672-2092a703bfca": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-778a-7393-9a45-7d681cb9f06d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-71da-79a0-aeeb-3ea84748bb1c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-6c3f-72c3-891c-7b1899b6ecde": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0952-6636-78d1-b9e0-75878eb20e35": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-fceb-7050-9c1e-ff0349ff36bc": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-f799-7f93-b6c0-cf7e636151d3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-f1fb-7342-adcd-7cf4a38196d0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-ec59-7c62-8406-4caeb3f6998d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-e6ea-79e1-bb47-2632d8c343e1": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-49e3-7571-aa7d-7794c167ed7a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-4431-7e92-8af7-431b9db676a8": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-3e2c-7502-a86f-08c0ddfc7fab": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-3825-7cc3-8190-00a80f6a63b7": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0951-29f8-7c10-a58b-68c5837e74cd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04c1-524a-7c62-bd3d-cfc67a24c551": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ba59-7c72-9a1a-8475251b0ba0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ba32-7462-81e2-bba185aece75": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-b3db-7362-9c04-f966ba8159d6": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-b3b8-7302-aabb-5f1349339a89": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ac52-7852-96e4-7b61fe3206a3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-ac3f-7d22-8329-de9c39e8bf76": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-a0a0-7f10-a58f-81d55395b095": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08c1-a09f-7280-8245-6ea8a19eebb4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08af-22a0-7d31-b72c-d8f0cf76596d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08af-2228-7431-8116-244a3015d16e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ae-34fa-7bf1-9d61-95cf045b9328": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ae-2edf-7320-b778-0bf59e13e92c": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ad-78b4-7d22-88af-66844d08df7f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-e847-71e1-85bd-1f8377fad4fb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-d144-7190-920b-58a545a1b2a0": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-3a13-7fa0-86e6-6af9bd292051": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ac-293c-7822-8cfd-65c349903eef": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ab-9630-7c83-90af-63a165d47d56": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08ab-8116-75f2-be59-969b7ef9897d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08aa-e63f-75f1-a7b4-d10e0c5d9c56": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08aa-ddd0-7042-847b-0baf24668a7d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08aa-38e6-7382-a1b1-c496054c8819": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-b296-78f2-928e-5eab665d7be4": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-acfa-7820-a1e7-007ff6d3487f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-a741-7fb3-8f4a-913933fdc084": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-a1b3-7521-9c55-4a9af492f255": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f08a8-9bf1-7aa2-9485-1a6d2e3e4b57": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-79eb-78e2-bab7-894ae3e0230a": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-74a4-7b31-b5c3-6ad85c0a16cf": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-6f80-7f61-81ff-1326498a010d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-6a57-7d41-8868-1a01150d2d5d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f089f-6033-7dd1-a11b-3d908e92ee26": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-d4a5-7f91-ade7-d42ba73c9c9e": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-cf63-7a62-bfa8-2fc78735c695": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-ca16-7910-ad34-75de78b55eff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-c490-72e0-a750-f992565fedcd": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0899-bada-77f1-882e-d3e938a02800": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-a69a-7961-85bf-1de9ff8b256f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-a140-7ff2-b761-410ff401ff64": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-9b8f-73e0-8e9d-d5ef32eb268f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-95fc-7261-b31c-b67efa47f594": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0898-8b0b-7d01-b444-609286072eed": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088e-444e-7e43-b056-73d3428c3874": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-a21f-7ef3-aefb-ab08aff9f0a3": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-3421-70d3-98f5-1db791526187": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-2e96-7ff1-9afa-3fab2589c823": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-2937-7a51-9e20-cf9190417466": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-23d6-7cc2-bc83-4591eb98b135": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088d-1e5f-73d2-8808-c92cae660e52": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088c-ffdd-7f21-a674-7d43b47e19fe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088c-5d3e-7b81-a062-c973633e430b": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f088b-b45a-7cf2-8e5c-fd6aa57ccefe": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0507-b55d-7060-9569-50882b8804ff": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0506-968c-7102-b543-f065e3f6140d": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0505-13f7-7b70-bfde-95326a60245f": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f0503-6645-73d3-9ad5-f7c315c6b600": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f9-e2c0-7cc0-adc4-e8c9615ee192": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f9-d280-7750-9efd-f56ada42a6bb": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f9-beb1-72d0-9de0-290d8111ab45": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f3-ddf0-78c3-987f-b88b531a26b5": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f04f3-d4e3-7ba3-aae7-c7dce0b5fa71": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019eeafc-1677-7723-992f-b31590c0fe66": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "\\\\?\\C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019ee3d8-9514-7971-899b-bac452c1c697": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019ee3d7-5a0d-7121-8a8c-87f75cbd91be": {
+      "projectKind": "local",
+      "projectId": "local-db4683ddcff83eaa70418025f1333a0e",
+      "cwd": "C:\\Users\\45543\\Downloads\\mcsmanager_windows_release\\mcsmanager",
+      "pendingCoreUpdate": false
+    },
+    "019f7979-3c05-72b0-b3b7-8c1c6e5b0ed2": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f84f0-9cee-7f70-a1e7-67b0acf40f23": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "\\\\wsl.localhost\\Codex-Wsl-Lab\\home\\codexlab\\work\\codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019ed5ce-de73-7c63-9b71-8a266262729b": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f7933-7071-73d0-b0eb-45c38a5de413": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f9696-66be-7b32-8f4d-db44fa78d580": {
+      "projectKind": "remote",
+      "projectId": "976b7c86-428c-414e-a4cd-b6a6247fae99",
+      "path": "/home/codexlab",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "pendingCoreUpdate": false
+    },
+    "019f96d8-7ae6-7ce0-b19a-3962fad46821": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f9b7b-9618-7ae2-bf3c-bb9895ac75f7": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f9b7d-27f7-78f1-ba5a-7306d5a5a010": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fa6e7-06e9-7133-bc6f-68b96efa9471": {
+      "projectKind": "remote",
+      "projectId": "9e38dae0-cb88-491d-b273-c5ee18349874",
+      "path": "/home/codexlab/work/codex-workspace",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "pendingCoreUpdate": false
+    },
+    "019fa7b9-7238-7e13-8eb5-960f6135be9b": {
+      "projectKind": "remote",
+      "projectId": "9e38dae0-cb88-491d-b273-c5ee18349874",
+      "path": "/home/codexlab/work/codex-workspace",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "pendingCoreUpdate": false
+    },
+    "019fa8ba-45fe-7831-934f-30d6a4178ebf": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fab00-cc9c-7323-b9e3-7c323dbe99ad": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fab19-587b-7493-bddf-20b733793249": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fab32-e410-72c3-84ca-95d92312a94b": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fabb6-a90d-7e83-92f5-6335aac8df7f": {
+      "projectKind": "remote",
+      "projectId": "9e38dae0-cb88-491d-b273-c5ee18349874",
+      "path": "/home/codexlab/work/codex-workspace",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "pendingCoreUpdate": false
+    },
+    "019fad95-f1d0-7673-8b27-0504f60d2661": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fb0b6-e266-7c03-91ce-be4b7cf48505": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fb0f5-892b-7d81-aeaf-dbd3d306fbf7": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fb108-b51b-7630-83fc-8e9cc9c04c9e": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f54e4-c722-7b00-a5a8-2418c4a22254": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019f54f9-9852-78d3-9988-044f1b90f87f": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fb711-86c8-7e72-a248-d54aff613dc0": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fb858-c3cd-73d0-b2bc-98fc90a67765": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fba4d-41c6-7ee0-9e90-5f1200a1b4eb": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fbb7c-bd42-7221-8f9d-a58b441927a5": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fbbd0-8522-77f1-b7ea-c6d7fca02b66": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fbc29-7f0b-7791-b771-90991e95a53e": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fbc3d-073d-78c2-979f-5999ac8ea89f": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fbc3e-ad17-7882-a770-7543828eb6d2": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fbd57-6e94-7e43-839b-840c63e854cd": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc0a4-ed4b-7bb0-8e6d-1436fa4cb0d6": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc0da-5f6c-7810-b078-c51595890019": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc17b-fbac-71f1-86b1-688241e2bc71": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc1c9-8559-7891-b3ea-4de539bc0bc1": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc1f5-94da-7410-9b7c-0fe858906d78": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc6d4-6457-72b2-9022-c82f73e2c5cc": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fc70c-f2e4-7d60-a8ea-b4fc34ee1757": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fca5c-c7d6-7d62-a31d-c285d1aed581": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fcabe-555f-7373-9623-79fcbadf627f": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fcae3-7f85-72b2-abd3-f2fc6af4ed22": {
+      "projectKind": "local",
+      "projectId": "7729bf8c-a9a4-42e4-b89a-6264ae14dfa8",
+      "cwd": "/home/codexlab/work/codex-workspace",
+      "pendingCoreUpdate": false
+    },
+    "019fcb01-3cb0-7251-98ca-2fe114c8b65e": {
+      "projectKind": "remote",
+      "projectId": "9e38dae0-cb88-491d-b273-c5ee18349874",
+      "path": "/home/codexlab/work/codex-workspace",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "pendingCoreUpdate": false
+    },
+    "019fcb69-fb05-7770-8a7d-743c78224e9c": {
+      "projectKind": "remote",
+      "projectId": "9e38dae0-cb88-491d-b273-c5ee18349874",
+      "path": "/home/codexlab/work/codex-workspace",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "pendingCoreUpdate": false
+    }
+  },
+  "electron-desktop-otraces-sample-rate": 0,
+  "remote-connection-analytics-id-by-host-id": {
+    "remote-wsl:Codex-Wsl-Lab": "c0e2b530-8364-4109-a2d1-354c43bb4ccb"
+  },
+  "remote-projects": [
+    {
+      "id": "9e38dae0-cb88-491d-b273-c5ee18349874",
+      "hostId": "remote-wsl:Codex-Wsl-Lab",
+      "remotePath": "/home/codexlab/work/codex-workspace",
+      "label": "codex-workspace"
+    }
+  ],
+  "host-id-remote-control-allowed": [
+    "remote-wsl:Codex-Wsl-Lab"
+  ],
+  "thread-writable-roots": {
+    "019fa8ba-45fe-7831-934f-30d6a4178ebf": [
+      "/home/codexlab/work/codex-workspace"
+    ]
+  }
+}

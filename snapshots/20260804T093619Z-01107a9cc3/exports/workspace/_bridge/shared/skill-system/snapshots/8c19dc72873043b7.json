@@ -1,0 +1,20 @@
+{
+  "skill_id": "8c19dc72873043b7",
+  "name": "context7-cli",
+  "path": "C:\\Users\\45543\\.codex\\skills\\context7-cli",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "483e5180381d80bbeba833681b319ee43991bd3d0d13aec4ba25e99c5d91b537",
+    "agents": null,
+    "scripts": null,
+    "references": "0746e5341dd4b36fc559a3b3f30bd86e3cb357f4b63c866c6152ab3bf8e7896a",
+    "assets": null
+  }
+}

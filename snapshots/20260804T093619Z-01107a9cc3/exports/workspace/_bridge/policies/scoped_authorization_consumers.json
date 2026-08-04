@@ -1,0 +1,229 @@
+{
+  "schema": "scoped_authorization.consumer_migration.v2",
+  "authority": "scoped_authorization",
+  "rule": "Static confirmations and approval booleans are anti-mistake inputs, not user authorization. Every user turn or automation run derives one attenuated permit; environment changes may preserve equivalent authority or tighten, pause, and fence it, but never expand it automatically.",
+  "connected": [
+    {
+      "consumer": "scoped_authorization_process",
+      "actions": [
+        "create_current_task_intent",
+        "issue_current_task_permit"
+      ],
+      "status": "enforced",
+      "permit_model": "verified_current_task_R0_R2_low_cost_non_bearer_single_operation",
+      "effect_journal": true
+    },
+    {
+      "consumer": "work_git_change_owner_process",
+      "actions": [
+        "r2-prepare",
+        "r2-start",
+        "r2-commit",
+        "r2-sync",
+        "r2-integrate"
+      ],
+      "status": "enforced",
+      "permit_model": "verified_current_task_R2_low_cost_declared_changeset_single_lifecycle",
+      "effect_journal": true,
+      "hard_boundaries": [
+        "mechanical_confirm_required",
+        "declared_paths_and_base_head_bound",
+        "local_bare_sync_only",
+        "high_risk_high_cost_or_R3_R4_rejected",
+        "unknown_effect_requires_reconciliation"
+      ]
+    },
+    {
+      "consumer": "execution_route_pack",
+      "actions": [
+        "inspect_authorization_need",
+        "project_environment_signature"
+      ],
+      "status": "enforced",
+      "permission_effect": "read_only_information_entry"
+    },
+    {
+      "consumer": "codex_scheduler_runner",
+      "actions": [
+        "registered_task_run"
+      ],
+      "status": "enforced",
+      "permit_model": "registry_backed_system_default_per_automation_run"
+    },
+    {
+      "consumer": "workflow_review_delivery",
+      "actions": [
+        "approve",
+        "reject",
+        "revise",
+        "defer"
+      ],
+      "status": "enforced",
+      "effect_journal": true
+    },
+    {
+      "consumer": "codex_environment_mirror",
+      "actions": [
+        "release",
+        "resume_release_draft"
+      ],
+      "status": "enforced",
+      "effect_journal": true
+    },
+    {
+      "consumer": "resource_python_package_installer",
+      "actions": [
+        "verified_auto_install"
+      ],
+      "status": "enforced",
+      "permit_model": "turn_or_automation_grant_bound_to_lock_abi_target_and_operation",
+      "effect_journal": true
+    },
+    {
+      "consumer": "local_mcp_hub_process",
+      "actions": [
+        "reload-authorization-plan",
+        "reload --confirm-reload"
+      ],
+      "status": "enforced",
+      "permit_model": "verified_current_task_R2_low_cost_single_hub_lifecycle_reload",
+      "effect_journal": true,
+      "hard_boundaries": [
+        "mechanical_confirm_required_but_not_authorization",
+        "exact_service_or_fallback_authority_port_process_and_source_signature_bound",
+        "permit_consumed_before_cache_cleanup_or_restart",
+        "failed_or_uncertain_reload_requires_effect_reconciliation",
+        "arbitrary_process_or_service_management_not_in_scope"
+      ]
+    },
+    {
+      "consumer": "wsl_workspace_owner",
+      "actions": [
+        "host-projection-authorization-plan",
+        "host-projection-apply --confirm PROJECT-WSL-HOST-COMPATIBILITY"
+      ],
+      "status": "enforced",
+      "permit_model": "verified_current_task_R2_low_cost_single_one_way_host_compatibility_projection",
+      "effect_journal": true,
+      "hard_boundaries": [
+        "mechanical_confirm_required_but_not_authorization",
+        "exact_source_target_selection_hash_manifest_and_source_signature_bound",
+        "permit_consumed_before_routed_backup_or_host_write",
+        "effect_readback_precedes_completion_and_failed_or_uncertain_write_is_effect_unknown",
+        "reverse_sync_arbitrary_host_write_mirror_publish_refresh_release_and_milestone_not_in_scope"
+      ]
+    },
+    {
+      "consumer": "resource_process_doctor",
+      "actions": [
+        "cleanup-authorization-plan",
+        "cleanup --safe-apply --apply"
+      ],
+      "status": "enforced",
+      "permit_model": "challenge_grant_bound_to_fresh_non_protected_candidate_identity_single_operation",
+      "effect_journal": true,
+      "hard_boundaries": [
+        "safe_apply_only",
+        "protected_groups_not_migrated",
+        "candidate_identity_mismatch_fails_closed",
+        "post_cleanup_validation_required"
+      ]
+    },
+    {
+      "consumer": "codex_environment_mirror",
+      "actions": [
+        "refresh-authorization-plan",
+        "refresh"
+      ],
+      "status": "enforced",
+      "permit_model": "challenge_grant_bound_to_work_git_and_changed_path_identity_single_operation",
+      "effect_journal": true,
+      "hard_boundaries": [
+        "local_refresh_only",
+        "publish_release_restore_not_in_scope",
+        "work_git_bare_identity_mismatch_fails_closed",
+        "owner_preflight_and_state_write_gates_remain_required"
+      ]
+    }
+  ],
+  "pending": [
+    {
+      "family": "remaining_package_and_plugin_install",
+      "signals": [
+        "install_approved",
+        "INSTALL-*"
+      ],
+      "completed_consumers": [
+        "resource_python_package_installer"
+      ],
+      "remaining_scope": [
+        "node_package_owner",
+        "windows_package_manager",
+        "plugin_install_owners"
+      ]
+    },
+    {
+      "family": "skill_rule_and_config_apply",
+      "signals": [
+        "apply_approved",
+        "confirm-apply"
+      ]
+    },
+    {
+      "family": "external_send_and_remote_write",
+      "signals": [
+        "remote_write_approved",
+        "SEND",
+        "publish"
+      ]
+    },
+    {
+      "family": "device_windows_and_runtime_mutation",
+      "signals": [
+        "confirmation_required",
+        "confirm"
+      ],
+      "completed_consumers": [
+        "resource_process_doctor"
+      ]
+    },
+    {
+      "family": "mirror_refresh_publish_restore_stage",
+      "signals": [
+        "REFRESH-*",
+        "PUBLISH-*",
+        "STAGE-*"
+      ],
+      "completed_consumers": [
+        "codex_environment_mirror.refresh"
+      ],
+      "remaining_scope": [
+        "publish",
+        "restore",
+        "stage"
+      ]
+    }
+  ],
+  "dynamic_environment": {
+    "authority": "scoped_authorization",
+    "sources": [
+      "workflow",
+      "owner_capability",
+      "system_membership",
+      "rule_governance",
+      "maintenance_capability",
+      "state_write_authority",
+      "dependency_intelligence",
+      "runtime_health"
+    ],
+    "automatic_outcomes": [
+      "equivalent_reuse",
+      "tighten",
+      "pause",
+      "fence"
+    ],
+    "expansion_outcome": "authorization_reconciliation_required",
+    "automatic_expansion_allowed": false
+  },
+  "completion_rule": "A pending family is complete only after every high-impact owner consumes turn/run permits, records effect readback, and negative regressions prove broad, stale, static, or environment-expanded authority cannot cause side effects. Current-task task_intent is limited to PDP-verified R0-R2 low-cost reversible work and never substitutes for high-impact authorization."
+}

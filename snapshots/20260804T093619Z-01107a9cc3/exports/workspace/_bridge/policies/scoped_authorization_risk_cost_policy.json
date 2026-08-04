@@ -1,0 +1,76 @@
+{
+  "schema": "scoped_authorization_risk_cost_policy.v1",
+  "policy_version": "2026-07-30.phase-01-selected-enforcement.1",
+  "mode": "enforce_selected_consumers",
+  "selected_consumers": ["execution_route_pack"],
+  "risk": {
+    "levels": ["R0", "R1", "R2", "R3", "R4"],
+    "challenge_at": "R3",
+    "deny_at": "R4",
+    "severity_likelihood_matrix": {
+      "S0": {"L0": "R0", "L1": "R0", "L2": "R1", "L3": "R1", "L4": "R2"},
+      "S1": {"L0": "R0", "L1": "R1", "L2": "R1", "L3": "R2", "L4": "R2"},
+      "S2": {"L0": "R1", "L1": "R1", "L2": "R2", "L3": "R2", "L4": "R3"},
+      "S3": {"L0": "R2", "L1": "R2", "L2": "R3", "L3": "R3", "L4": "R4"},
+      "S4": {"L0": "R3", "L1": "R3", "L2": "R3", "L3": "R4", "L4": "R4"}
+    },
+    "hard_trigger_facts": {
+      "public_or_remote_business_write": "R3",
+      "privilege_elevation": "R3",
+      "high_sensitivity_data": "R3",
+      "irreversible_delete": "R3",
+      "illegal_action": "R4",
+      "unauthorized_access": "R4",
+      "secret_exfiltration": "R4",
+      "safety_boundary_bypass": "R4",
+      "privacy_boundary_bypass": "R4"
+    }
+  },
+  "cost_dimensions": {
+    "money_single_cny": {"unit": "CNY", "high_threshold": 50},
+    "money_daily_cny": {"unit": "CNY/day", "high_threshold": 20},
+    "elapsed_minutes": {"unit": "minute", "high_threshold": 30},
+    "cpu_core_hours": {"unit": "core-hour", "high_threshold": 4},
+    "gpu_minutes": {"unit": "GPU-minute", "high_threshold": 15},
+    "network_gib": {"unit": "GiB", "high_threshold": 2},
+    "read_gib": {"unit": "GiB", "high_threshold": 10},
+    "read_records": {"unit": "record", "high_threshold": 1000000},
+    "write_gib": {"unit": "GiB", "high_threshold": 1},
+    "write_records": {"unit": "record", "high_threshold": 100000},
+    "files_touched": {"unit": "file", "high_threshold": 10000},
+    "external_calls": {"unit": "call", "high_threshold": 10000}
+  },
+  "owner_override": {
+    "rule": "tighten_only",
+    "unknown_dimension": "reject",
+    "threshold_increase": "reject"
+  },
+  "unknown": {
+    "decision": "bounded_preflight",
+    "preflight_must_be_read_only": true,
+    "preflight_must_have_no_business_side_effect": true
+  },
+  "bounded_preflight": {
+    "max_elapsed_seconds": 30,
+    "max_network_mib": 8,
+    "max_files": 1000,
+    "max_records": 10000,
+    "max_external_calls": 20,
+    "max_depth": 4,
+    "recursive_unbounded_scan": false,
+    "business_side_effects": false
+  },
+  "central_forbids": [
+    "illegal_action",
+    "unauthorized_access",
+    "secret_exfiltration",
+    "safety_boundary_bypass",
+    "privacy_boundary_bypass"
+  ],
+  "degraded_allowlist": [
+    "read_only_local_metadata",
+    "read_only_local_source",
+    "read_only_bounded_status"
+  ],
+  "near_limit_ratio": 0.9
+}
