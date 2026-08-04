@@ -145,9 +145,12 @@ environment's owners after backup and validation.
 - `mirror_valid`: manifests, text/binary hashes, text secret scans, generated
   snapshot assets, references, membership guards, and repository governance are
   internally valid.
-- `capability_restore_ready`: rules, owner source, stable configuration
-  requirements, skills, and bootstrap evidence can be staged and validated;
-  target-local provider/model selection remains an explicit reacquisition step.
+- `capability_restore_ready`: only true after the target has restored or
+  reacquired declared dependencies and external archives, completed the required
+  owner handoffs, and passed the required capability probes. `restore-plan` and
+  isolated `stage` prove planned assets and hashes only; they do not by
+  themselves establish capability readiness. Target-local provider/model
+  selection remains an explicit reacquisition step.
 - `source_freshness_checked` / `source_freshness_ok`: whether the optional live
   source comparison ran and whether the active source still matches the snapshot.
 - `full_state_restore_ready`: all required encrypted external archives and
