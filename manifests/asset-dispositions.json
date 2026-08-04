@@ -66,7 +66,7 @@
             ".sandbox", ".sandbox-bin", ".tmp", "ambient-suggestions", "backups_state",
             "bin", "cache", "computer-use", "diagnostics", "disabled-startup-shortcuts", "logs",
             "mcp-oauth-locks", "node_repl", "pets", "plugins", "process_manager",
-            "state", "tmp", "vendor_imports", "worktrees"
+            "state", "thread-writer-locks", "tmp", "vendor_imports", "worktrees"
           ],
           "disposition": "regenerate",
           "owner": "codex_cli",
