@@ -1,0 +1,20 @@
+{
+  "skill_id": "352d9c38d652e85d",
+  "name": "product-strategy-analyzer",
+  "path": "C:\\Users\\45543\\.codex\\skills\\product-strategy-analyzer",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "106e6076fb791e8c61e34004b6445d223041cca9f355cb4ba1ed9c1ae2cba307",
+    "agents": null,
+    "scripts": null,
+    "references": "ff9e23faa98ca9c61bf9266cea105c5ede002fa1f199b2ecf69a201115bf8c75",
+    "assets": null
+  }
+}

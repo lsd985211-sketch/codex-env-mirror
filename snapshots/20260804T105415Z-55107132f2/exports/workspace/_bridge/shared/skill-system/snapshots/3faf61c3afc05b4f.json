@@ -1,0 +1,20 @@
+{
+  "skill_id": "3faf61c3afc05b4f",
+  "name": "deep-security-scan",
+  "path": "C:\\Users\\45543\\.codex\\plugins\\cache\\openai-curated\\codex-security\\c6ea566d\\skills\\deep-security-scan",
+  "source": "plugin-managed",
+  "state": "discovered",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "cd55b36361e44796343737be3b54b8099e4236b91267e44f17c6e2da0be3fcc2",
+    "agents": "a46db3eda4450fbac6f2b1cae8a2afa6a71b70ab7197df8968b51824d2a79bd1",
+    "scripts": null,
+    "references": null,
+    "assets": null
+  }
+}

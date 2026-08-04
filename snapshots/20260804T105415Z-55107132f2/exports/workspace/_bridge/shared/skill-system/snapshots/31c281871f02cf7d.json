@@ -1,0 +1,20 @@
+{
+  "skill_id": "31c281871f02cf7d",
+  "name": "agent-reach",
+  "path": "C:\\Users\\45543\\.codex\\skills\\agent-reach",
+  "source": "user-managed",
+  "state": "audit-pending",
+  "declared_primary_layer": null,
+  "last_detected_at": "2026-07-12T10:49:35+08:00",
+  "last_audited_at": null,
+  "last_approved_at": null,
+  "last_change_level": "none",
+  "last_report_path": null,
+  "fingerprints": {
+    "skill_md": "22370e600a07eb44d13f3a7bc023e9d009bba5afd89979725afe59a5ce2ff65b",
+    "agents": null,
+    "scripts": null,
+    "references": "293282955d2617c0786605f9082a3c8bba0bd61f6d27f97e8e3bd4e16686274c",
+    "assets": null
+  }
+}
